@@ -451,14 +451,23 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
         anchor = num(p.get("_anchor_price"))
         delta = pct(now / anchor - 1.0) if (anchor and now) else None
         m[0].metric(f"현재가 · {quote_age_label(quotes.get('fetched_at'))}",
-                    price(now, currency), delta)
+                    price(now, currency), delta,
+                    help="quotes.py 가 올린 최신 체결가입니다. 델타는 예측 계산 시점 대비 변동률.")
     else:
-        m[0].metric("현재가", price(now, currency))
-    m[1].metric(f"{horizon}일 후 P50", price(p.get("p50"), currency), pct(ret_of(p)))
+        m[0].metric("현재가", price(now, currency),
+                    help="예측을 계산한 시점의 가격입니다. quotes.py 를 돌리면 최신가로 갱신됩니다.")
+    m[1].metric(f"{horizon}일 후 P50", price(p.get("p50"), currency), pct(ret_of(p)),
+                help="예측 분포의 중앙값. 이보다 높을 확률과 낮을 확률이 각각 50% 라는 뜻이며, "
+                     "가장 가능성 높은 하나의 값이 아닙니다.")
     m[2].metric("P10 ~ P90",
-                f"{price(p.get('p10'), currency, False)} ~ {price(p.get('p90'), currency, False)}")
-    m[3].metric("상승 확률", pct(p.get("prob_up"), signed=False))
-    m[4].metric("변동성(연율)", pct(p.get("expected_volatility_annual"), signed=False))
+                f"{price(p.get('p10'), currency, False)} ~ {price(p.get('p90'), currency, False)}",
+                help="80% 예측구간. 과거 검증 기준으로 실제 가격이 이 범위에 들어올 확률이 80%. "
+                     "폭이 넓을수록 불확실성이 큽니다.")
+    m[3].metric("상승 확률", pct(p.get("prob_up"), signed=False),
+                help="현재가보다 높을 확률. OOF 잔차 분포에서 계산한 뒤 isotonic 보정을 거칩니다. "
+                     "50% 근처면 방향성 정보가 없다는 뜻입니다.")
+    m[4].metric("변동성(연율)", pct(p.get("expected_volatility_annual"), signed=False),
+                help="최근 일간 수익률 표준편차를 연율화(×√252)한 값. 예측이 아니라 현재 상태 지표입니다.")
 
     # ---- 접힌 상세 ----
     with st.expander("분위수 · 참고 레벨"):
@@ -603,10 +612,14 @@ def main() -> None:
             "(모델 입력은 마지막 확정 봉 기준)."
         )
 
-    names = [str(df[df["symbol"] == s]["name"].iloc[0]) for s in symbols]
-    for tab, symbol, name in zip(st.tabs(names), symbols, names):
-        with tab:
-            render_symbol(symbol, df[df["symbol"] == symbol], payload, quotes)
+    # 종목은 드롭다운으로 선택한다. 탭으로 늘어놓으면 종목이 늘어날수록 폭이 부족하고,
+    # 선택하지 않은 종목까지 전부 렌더링되어 느려진다.
+    name_of = {sym: str(df[df["symbol"] == sym]["name"].iloc[0]) for sym in symbols}
+    symbol = st.selectbox(
+        "종목 선택", symbols, key="symbol_select",
+        format_func=lambda sym: f"{name_of.get(sym, sym)}  ·  {sym}",
+    )
+    render_symbol(symbol, df[df["symbol"] == symbol], payload, quotes)
 
     st.divider()
     st.caption(DISCLAIMER)
