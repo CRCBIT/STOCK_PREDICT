@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.1",
+  "generated_at": "2026-08-21T11:09:39+09:00",
+  "published_at": "2026-08-21T02:09:40+00:00",
+  "symbols": [
+    "000660",
+    "005930",
+    "MU",
+    "SNDK"
+  ],
+  "horizons": [
+    5,
+    10,
+    30,
+    60
+  ],
+  "n_predictions": 16,
+  "files": {
+    "predictions_json": "predictions.json",
+    "predictions_csv": "predictions.csv",
+    "history": [
+      "000660.csv",
+      "005930.csv",
+      "MU.csv",
+      "SNDK.csv"
+    ],
+    "backtest": [
+      "backtest_000660_h5.csv",
+      "backtest_000660_h10.csv",
+      "backtest_000660_h30.csv",
+      "backtest_000660_h60.csv",
+      "backtest_005930_h5.csv",
+      "backtest_005930_h10.csv",
+      "backtest_005930_h30.csv",
+      "backtest_005930_h60.csv",
+      "backtest_MU_h5.csv",
+      "backtest_MU_h10.csv",
+      "backtest_MU_h30.csv",
+      "backtest_MU_h60.csv",
+      "backtest_SNDK_h5.csv",
+      "backtest_SNDK_h10.csv",
+      "backtest_SNDK_h30.csv"
+    ]
+  },
+  "notice": "로컬에서 계산된 결과의 스냅샷입니다. 이 대시보드는 읽기 전용이며 실시간 시세를 조회하지 않습니다."
+}
