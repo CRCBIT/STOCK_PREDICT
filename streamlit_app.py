@@ -368,7 +368,7 @@ def main() -> None:
         d1, d2 = st.columns(2)
         with d1:
             st.markdown("**OOS 성능**")
-            st.write(pd.DataFrame({
+            st.dataframe(pd.DataFrame({
                 "지표": ["IC (Spearman)", "방향 정확도", "RMSE", "baseline RMSE",
                          "80% 구간 커버리지"],
                 "값": [
