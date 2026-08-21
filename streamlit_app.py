@@ -218,22 +218,45 @@ def reanchor(p: Dict, live_price: Optional[float]) -> Dict:
     return out
 
 
-def last_close_ref(hist: Optional[pd.DataFrame]) -> Tuple[Optional[float], str]:
-    """
-    비교 기준이 될 '마지막 확정 종가' 와 그 날짜 라벨을 돌려준다.
+def _exchange_today(country: str) -> Optional[pd.Timestamp]:
+    """해당 시장 현지 기준 '오늘' 날짜."""
+    try:
+        from zoneinfo import ZoneInfo
+    except ImportError:
+        return None
+    tz = "Asia/Seoul" if country == "KR" else "America/New_York"
+    return pd.Timestamp(datetime.now(ZoneInfo(tz)).date())
 
-    현재가 변동률은 예측을 계산한 시점이 아니라 직전 확정 종가 대비여야 한다.
-    (예측 시점 기준이면 main.py 를 언제 돌렸는지에 따라 값이 달라진다)
-    수집기가 장중 미완성 봉을 제외하므로 히스토리의 마지막 봉이 곧 직전 확정 종가다.
-    다만 장 마감 후 수집한 경우에는 당일 종가가 마지막 봉이 되므로,
-    어느 날짜와 비교한 것인지 라벨로 함께 표시해 오해를 막는다.
+
+def prev_close_ref(hist: Optional[pd.DataFrame],
+                   country: str) -> Tuple[Optional[float], str]:
+    """
+    현재가 변동률의 기준이 되는 **전일 종가**와 날짜 라벨을 돌려준다.
+
+    마지막 봉이 오늘(거래소 현지 기준)이면 그것은 오늘의 종가이므로,
+    전일 대비를 구하려면 그 앞의 봉을 써야 한다.
+      - 장중: 마지막 봉 = 전일 -> 마지막 봉 사용
+      - 장 마감 후 수집: 마지막 봉 = 당일 -> 그 앞 봉 사용
+    두 경우 모두 결과는 '전일 종가 대비' 가 된다.
     """
     if hist is None or hist.empty or "close" not in hist.columns:
         return None, ""
+    if "date" not in hist.columns or len(hist) == 0:
+        return None, ""
+
+    idx = len(hist) - 1
+    today = _exchange_today(country)
     try:
-        close = float(hist["close"].iloc[-1])
-        day = pd.Timestamp(hist["date"].iloc[-1])
-    except (IndexError, KeyError, TypeError, ValueError):
+        last_day = pd.Timestamp(hist["date"].iloc[idx]).normalize()
+    except (IndexError, TypeError, ValueError):
+        return None, ""
+    if today is not None and last_day >= today and len(hist) >= 2:
+        idx -= 1
+
+    try:
+        close = float(hist["close"].iloc[idx])
+        day = pd.Timestamp(hist["date"].iloc[idx]).normalize()
+    except (IndexError, TypeError, ValueError):
         return None, ""
     if not (close > 0):
         return None, ""
@@ -470,16 +493,16 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
 
     # ---- 핵심 수치 ----
     m = st.columns(5)
-    prev_close, prev_label = last_close_ref(hist)
+    prev_close, prev_label = prev_close_ref(hist, str(p.get("country") or "KR"))
     delta = pct(now / prev_close - 1.0) if (prev_close and now) else None
     if p.get("_reanchored"):
         label = f"현재가 · {quote_age_label(quotes.get('fetched_at'))}"
         tip = ("quotes.py 가 올린 최신 체결가입니다. "
-               f"변동률은 {prev_label or '직전 확정 종가'} 대비입니다.")
+               f"변동률은 전일({prev_label or '?'}) 대비입니다.")
     else:
         label = "현재가"
         tip = ("예측을 계산한 시점의 가격입니다. quotes.py 를 돌리면 최신가로 갱신됩니다. "
-               f"변동률은 {prev_label or '직전 확정 종가'} 대비입니다.")
+               f"변동률은 전일({prev_label or '?'}) 대비입니다.")
     m[0].metric(label, price(now, currency), delta, help=tip)
     m[1].metric(f"{horizon}일 후 P50", price(p.get("p50"), currency), pct(ret_of(p)),
                 help="예측 분포의 중앙값. 이보다 높을 확률과 낮을 확률이 각각 50% 라는 뜻이며, "
