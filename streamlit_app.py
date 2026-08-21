@@ -85,7 +85,9 @@ def load_predictions() -> Optional[Dict]:
     cpath = PUBLISHED / "predictions.csv"
     if not cpath.exists():
         return None
-    df = pd.read_csv(cpath)
+    # 종목코드 005930 이 정수로 읽히면 앞의 0 이 사라진다 (히스토리 조회 실패)
+    df = pd.read_csv(cpath, dtype={"symbol": str, "confidence_grade": str,
+                                   "country": str, "currency": str})
     df = df.where(pd.notna(df), None)
     return {
         "schema_version": "csv-only", "generated_at": None,
@@ -116,6 +118,19 @@ def load_history(symbol: str) -> Optional[pd.DataFrame]:
     if not path.exists():
         return None
     return pd.read_csv(path, parse_dates=["date"]).sort_values("date").reset_index(drop=True)
+
+
+@st.cache_data(ttl=300, show_spinner=False)
+def load_track() -> Dict:
+    """track.py 가 만든 라이브 검증 성적. 없으면 빈 dict."""
+    path = PUBLISHED / "track_summary.json"
+    if not path.exists():
+        return {}
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except (OSError, json.JSONDecodeError):
+        return {}
 
 
 @st.cache_data(ttl=300, show_spinner=False)
@@ -594,6 +609,52 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
                 if n.strip():
                     st.caption(f"· {n.strip()}")
 
+    # ---- 라이브 검증 성적 ----
+    track = load_track()
+    cands = [g for g in (track.get("groups") or [])
+             if str(g.get("symbol")) == symbol and int(g.get("horizon", -1)) == horizon]
+    # 라이브 기록이 있으면 그것을 우선한다 (백필은 대용치)
+    tg = next((g for g in cands if str(g.get("source")) == "LIVE"),
+              cands[0] if cands else None)
+    if tg or track:
+        with st.expander("실적 추적 (예측 기록 vs 실제 결과)"):
+            if tg and tg.get("n_resolved"):
+                if str(tg.get("source")) == "BACKFILL":
+                    st.caption(
+                        "구분: **BACKFILL** — 과거 시점마다 그 시점 정보만으로 재학습해 "
+                        "만든 기록입니다. 라이브 기록이 쌓이기 전의 대용치입니다."
+                    )
+                n = int(tg["n_resolved"])
+                cov, ci = tg.get("coverage_80"), tg.get("coverage_80_ci") or [None, None]
+                dh, dci = tg.get("direction_hit"), tg.get("direction_hit_ci") or [None, None]
+                c = st.columns(4)
+                c[0].metric("확정 표본", f"{n}건",
+                            help="예측을 먼저 기록하고 만기 후 결과를 채운 건수입니다.")
+                c[1].metric("80% 구간 적중", pct(cov, signed=False),
+                            help=f"목표 80%. 95% 신뢰구간 "
+                                 f"{pct(ci[0], signed=False)}~{pct(ci[1], signed=False)}")
+                c[2].metric("방향 적중", pct(dh, signed=False),
+                            help=f"50% 가 동전 던지기. 95% 신뢰구간 "
+                                 f"{pct(dci[0], signed=False)}~{pct(dci[1], signed=False)}")
+                c[3].metric("P50 평균오차", pct(tg.get("mae_p50"), signed=False))
+                if n < 30:
+                    st.caption(
+                        f"표본 {n}건은 판단 근거가 되기에 부족합니다. "
+                        "신뢰구간이 넓어 어떤 결론도 내리기 어렵습니다."
+                    )
+                elif cov is not None and (ci[1] is not None and ci[1] < 0.8):
+                    st.caption("⚠️ 80% 구간 적중률이 목표를 유의하게 밑돕니다 — 구간이 좁습니다.")
+            else:
+                st.caption(
+                    f"이 조합은 아직 만기 도래분이 없습니다. "
+                    f"기록 {track.get('n_total', 0)}건 · 대기 {track.get('n_pending', 0)}건. "
+                    f"h={horizon} 이므로 기록 후 약 {horizon}거래일 뒤부터 채워집니다."
+                )
+            st.caption(
+                "백테스트와 달리 예측을 먼저 남기고 나중에 결과를 채우므로 "
+                "사후 조정이 불가능한 검증입니다. 대신 표본이 쌓이는 데 시간이 걸립니다."
+            )
+
     bt_meta = (payload.get("backtests") or {}).get(f"{symbol}_h{horizon}")
     bt_df = load_backtest(symbol, horizon)
     if bt_meta or bt_df is not None:
@@ -610,7 +671,12 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
                 fig = equity_chart(bt_df)
                 if fig is not None:
                     st.plotly_chart(fig, use_container_width=True, key=f"equity_{uid}")
-            st.caption("상승장에서는 타이밍 전략이 단순 보유를 이기기 어렵습니다.")
+            st.caption(
+                "⚠️ 모델 채택·가중치가 이 OOS 구간 전체 성능으로 정해졌으므로 "
+                "**selection bias** 가 있습니다. 실제 운용 성과는 이보다 낮을 가능성이 큽니다. "
+                "또 여러 종목·기간을 동시에 보면 일부는 우연히 좋아 보입니다(다중검정). "
+                "상승장에서는 타이밍 전략이 단순 보유를 이기기 어렵다는 점도 함께 보십시오."
+            )
 
 
 # ======================================================================================
