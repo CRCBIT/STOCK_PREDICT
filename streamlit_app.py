@@ -1,13 +1,17 @@
 """
 streamlit_app.py
 ================
-Streamlit Cloud 용 **읽기 전용** 예측 대시보드 (다크 테마).
+Streamlit Cloud 용 **읽기 전용** 예측 대시보드 (다크).
 
 토스 API 를 호출하지 않는다. `publish.py` 가 저장소에 올린 `published/` 스냅샷
 (predictions.json 또는 predictions.csv)만 읽는다.
 
-화면 구성은 캔들 차트 하나를 중심으로 한다.
-과거 구간은 캔들, 미래 구간은 예측 분포(P10~P90) 음영으로 같은 축에 이어 그린다.
+설계 원칙
+--------
+1. 화면당 질문 하나 — "이 종목이 h거래일 뒤 어디쯤에 있을까".
+2. 캔들 차트가 중심. 과거는 캔들, 미래는 예측 분포를 같은 축에 이어 그린다.
+3. 숫자보다 먼저 **판정 한 줄**을 보여준다. 이 시스템은 신뢰도 LOW 가 대부분이고,
+   그 경우 중앙값을 방향성 근거로 쓰면 안 되기 때문이다.
 
 로컬 확인:
     streamlit run streamlit_app.py
@@ -17,7 +21,7 @@ from __future__ import annotations
 import json
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Tuple
 
 import pandas as pd
 import plotly.graph_objects as go
@@ -30,24 +34,27 @@ STALE_HOURS = 36
 
 DISCLAIMER = "통계 모델의 예측 분포이며 투자 조언이 아닙니다. 투자 판단의 책임은 이용자에게 있습니다."
 
-# ---- 다크 팔레트 -----------------------------------------------------------------
+# ---- 다크 팔레트 ---------------------------------------------------------------------
 BG = "rgba(0,0,0,0)"
 GRID = "rgba(255,255,255,0.06)"
 TEXT = "#8b949e"
 UP = "#f23645"        # 상승 (국내 관행: 빨강)
-DOWN = "#2196f3"      # 하락 (파랑)
-FORECAST = "#f0b90b"  # 예측 (앰버)
-GRADE_DOT = {"HIGH": "🟢", "MEDIUM": "🟡", "LOW": "⚪"}
+DOWN = "#2196f3"      # 하락
+FCOL = "#f0b90b"      # 예측 (앰버)
+DOT = {"HIGH": "🟢", "MEDIUM": "🟡", "LOW": "⚪"}
 
 st.set_page_config(page_title="주가 예측", page_icon="📈", layout="wide")
 
 st.markdown("""
 <style>
-  #MainMenu, footer {visibility: hidden;}
-  .block-container {padding-top: 2.2rem; padding-bottom: 2rem;}
-  [data-testid="stMetricValue"] {font-size: 1.5rem;}
-  [data-testid="stMetricLabel"] {color: #8b949e;}
-  hr {margin: 0.8rem 0;}
+  #MainMenu, footer, header {visibility: hidden;}
+  .block-container {padding-top: 1.6rem; padding-bottom: 2rem; max-width: 1400px;}
+  [data-testid="stMetricValue"] {font-size: 1.35rem;}
+  [data-testid="stMetricLabel"] {color: #8b949e; font-size: 0.8rem;}
+  [data-testid="stMetricDelta"] {font-size: 0.9rem;}
+  .stTabs [data-baseweb="tab-list"] {gap: 4px;}
+  .verdict {border-left: 3px solid #30363d; padding: 6px 0 6px 12px;
+            color: #c9d1d9; font-size: 0.95rem; margin: 4px 0 14px 0;}
 </style>
 """, unsafe_allow_html=True)
 
@@ -78,7 +85,8 @@ def load_predictions() -> Optional[Dict]:
     cpath = PUBLISHED / "predictions.csv"
     if not cpath.exists():
         return None
-    df = pd.read_csv(cpath).where(lambda d: d.notna(), None)
+    df = pd.read_csv(cpath)
+    df = df.where(pd.notna(df), None)
     return {
         "schema_version": "csv-only", "generated_at": None,
         "predictions": df.to_dict(orient="records"),
@@ -91,8 +99,7 @@ def load_history(symbol: str) -> Optional[pd.DataFrame]:
     path = PUBLISHED / "history" / f"{symbol}.csv"
     if not path.exists():
         return None
-    df = pd.read_csv(path, parse_dates=["date"])
-    return df.sort_values("date").reset_index(drop=True)
+    return pd.read_csv(path, parse_dates=["date"]).sort_values("date").reset_index(drop=True)
 
 
 @st.cache_data(ttl=300, show_spinner=False)
@@ -121,49 +128,51 @@ def is_missing(v) -> bool:
         return False
 
 
-def fmt_price(v, currency: str) -> str:
+def num(v) -> Optional[float]:
     if is_missing(v):
-        return "N/A"
-    return f"{float(v):,.0f}" if currency == "KRW" else f"{float(v):,.2f}"
-
-
-def fmt_price_unit(v, currency: str) -> str:
-    if is_missing(v):
-        return "N/A"
-    return f"{float(v):,.0f}원" if currency == "KRW" else f"${float(v):,.2f}"
-
-
-def fmt_pct(v, signed: bool = True) -> str:
-    if is_missing(v):
-        return "N/A"
-    return f"{float(v) * 100:+.2f}%" if signed else f"{float(v) * 100:.1f}%"
-
-
-def fmt_num(v, digits: int = 2) -> str:
-    if is_missing(v):
-        return "N/A"
+        return None
     try:
-        return f"{float(v):.{digits}f}"
-    except (TypeError, ValueError):
-        return "N/A"
-
-
-def grade_of(pred: Dict) -> str:
-    return str(pred.get("confidence_grade") or "LOW").upper()
-
-
-def ret_of(pred: Dict) -> Optional[float]:
-    v = pred.get("expected_return")
-    if not is_missing(v):
         return float(v)
-    p50, now = pred.get("p50"), pred.get("current_price")
-    if not is_missing(p50) and not is_missing(now) and float(now) > 0:
-        return float(p50) / float(now) - 1.0
+    except (TypeError, ValueError):
+        return None
+
+
+def price(v, currency: str, unit: bool = True) -> str:
+    f = num(v)
+    if f is None:
+        return "N/A"
+    if currency == "KRW":
+        return f"{f:,.0f}원" if unit else f"{f:,.0f}"
+    return f"${f:,.2f}" if unit else f"{f:,.2f}"
+
+
+def pct(v, signed: bool = True) -> str:
+    f = num(v)
+    if f is None:
+        return "N/A"
+    return f"{f * 100:+.2f}%" if signed else f"{f * 100:.1f}%"
+
+
+def fnum(v, digits: int = 2) -> str:
+    f = num(v)
+    return "N/A" if f is None else f"{f:.{digits}f}"
+
+
+def grade_of(p: Dict) -> str:
+    return str(p.get("confidence_grade") or "LOW").upper()
+
+
+def ret_of(p: Dict) -> Optional[float]:
+    v = num(p.get("expected_return"))
+    if v is not None:
+        return v
+    p50, now = num(p.get("p50")), num(p.get("current_price"))
+    if p50 is not None and now:
+        return p50 / now - 1.0
     return None
 
 
-def snapshot_label(manifest: Dict) -> tuple[str, bool]:
-    """(표시 문자열, 오래되었는지)"""
+def snapshot_label(manifest: Dict) -> Tuple[str, bool]:
     gen = manifest.get("generated_at")
     if not gen:
         return "시각 정보 없음", False
@@ -173,23 +182,63 @@ def snapshot_label(manifest: Dict) -> tuple[str, bool]:
             ts = ts.replace(tzinfo=timezone.utc)
     except (TypeError, ValueError):
         return str(gen), False
-    age_h = (datetime.now(timezone.utc) - ts).total_seconds() / 3600.0
-    return f"{ts.astimezone():%Y-%m-%d %H:%M} · {age_h:.0f}시간 전", age_h > STALE_HOURS
+    age = (datetime.now(timezone.utc) - ts).total_seconds() / 3600.0
+    return f"{ts.astimezone():%Y-%m-%d %H:%M} · {age:.0f}시간 전", age > STALE_HOURS
+
+
+def verdict(p: Dict) -> str:
+    """
+    숫자를 어떻게 읽어야 하는지 한 줄로 말해준다.
+
+    이 시스템은 대부분의 조합에서 신뢰도 LOW 로 떨어진다. 그 상태의 중앙값을
+    방향성 근거로 쓰는 것이 가장 위험하므로, 화면 최상단에서 먼저 경고한다.
+    """
+    g = grade_of(p)
+    shrink = num(p.get("shrinkage"))
+    cov = num(p.get("coverage_80"))
+    parts: List[str] = []
+
+    if shrink is not None and shrink < 0.05:
+        parts.append(
+            "모델이 예측에 쓸 방향성 정보를 찾지 못해 **점 예측을 0으로 축소**했습니다. "
+            "아래 분포는 사실상 과거 변동 범위이며, 방향 판단 근거가 아닙니다."
+        )
+    elif g == "LOW":
+        parts.append(
+            "신뢰도가 낮습니다. **중앙값(P50)을 방향 근거로 쓰지 마시고**, "
+            "구간의 폭만 위험 크기 참고용으로 보십시오."
+        )
+    elif g == "MEDIUM":
+        parts.append("참고 가능한 수준입니다. 다만 단독 근거로 삼기에는 부족합니다.")
+    else:
+        parts.append("상대적으로 신뢰도가 높은 구간입니다.")
+
+    # 커버리지는 과소/과대를 구분해야 한다.
+    # 80% 미만 = 구간이 좁아 실제 변동을 놓침(위험 과소평가), 초과 = 과도하게 보수적.
+    if cov is not None:
+        if cov < 0.68:
+            parts.append(
+                f"과거 검증에서 80% 구간이 실제로 {cov * 100:.0f}% 만 포함했습니다 — "
+                "구간이 좁아 **위험을 과소평가**하고 있습니다."
+            )
+        elif cov > 0.92:
+            parts.append(
+                f"과거 검증 커버리지가 {cov * 100:.0f}% 로 목표보다 높습니다 — "
+                "구간이 과도하게 넓어 보수적입니다."
+            )
+    return " ".join(parts)
 
 
 # ======================================================================================
-# 메인 차트 — 캔들 + 예측 구간
+# 차트 — 캔들 + 예측 구간
 # ======================================================================================
-def candle_forecast_chart(hist: Optional[pd.DataFrame], pred: Dict,
-                          lookback: int = 120, show_volume: bool = True) -> go.Figure:
-    """
-    좌: 과거 캔들 / 우: 미래 h거래일 예측 분포를 같은 x축에 이어 그린다.
-    분포의 폭은 √t 로 보간한 시각적 근사다 (모델은 h일 후 시점 분포만 산출).
-    """
-    currency = pred.get("currency", "KRW")
+def candle_chart(hist: Optional[pd.DataFrame], p: Dict,
+                 lookback: int, show_volume: bool) -> go.Figure:
+    """과거 캔들과 미래 예측 분포를 같은 x축에 이어 그린다."""
+    currency = p.get("currency", "KRW")
     rows = 2 if show_volume else 1
     fig = make_subplots(rows=rows, cols=1, shared_xaxes=True,
-                        row_heights=[0.78, 0.22] if show_volume else [1.0],
+                        row_heights=[0.8, 0.2] if show_volume else [1.0],
                         vertical_spacing=0.02)
 
     last_date = None
@@ -202,21 +251,19 @@ def candle_forecast_chart(hist: Optional[pd.DataFrame], pred: Dict,
             name="주가", showlegend=False,
         ), row=1, col=1)
         last_date = h["date"].iloc[-1]
-
         if show_volume and "volume" in h.columns:
-            vcolor = [UP if c >= o else DOWN for o, c in zip(h["open"], h["close"])]
+            colors = [UP if c >= o else DOWN for o, c in zip(h["open"], h["close"])]
             fig.add_trace(go.Bar(
-                x=h["date"], y=h["volume"], marker=dict(color=vcolor, opacity=0.35),
-                name="거래량", showlegend=False, hoverinfo="skip",
+                x=h["date"], y=h["volume"], marker=dict(color=colors, opacity=0.3),
+                showlegend=False, hoverinfo="skip",
             ), row=2, col=1)
 
     if last_date is None:
         last_date = pd.Timestamp.today().normalize()
 
-    hz = int(pred.get("horizon") or 0)
-    now = pred.get("current_price")
-    if hz and not is_missing(now):
-        now = float(now)
+    hz = int(p.get("horizon") or 0)
+    now = num(p.get("current_price"))
+    if hz and now:
         future = pd.bdate_range(last_date + pd.Timedelta(days=1), periods=hz)
         steps = len(future)
         if steps:
@@ -224,53 +271,41 @@ def candle_forecast_chart(hist: Optional[pd.DataFrame], pred: Dict,
             fx = [last_date] + list(future)
 
             def cone(key: str) -> List[float]:
-                v = pred.get(key)
-                if is_missing(v):
-                    return []
-                return [now] + [now + (float(v) - now) * s for s in scale]
+                v = num(p.get(key))
+                return [] if v is None else [now] + [now + (v - now) * s for s in scale]
 
-            p10, p25, p50, p75, p90 = (cone(k) for k in ("p10", "p25", "p50", "p75", "p90"))
-
-            if p10 and p90:
+            c10, c25, c50, c75, c90 = (cone(k) for k in ("p10", "p25", "p50", "p75", "p90"))
+            if c10 and c90:
                 fig.add_trace(go.Scatter(
-                    x=fx + fx[::-1], y=p90 + p10[::-1], fill="toself",
+                    x=fx + fx[::-1], y=c90 + c10[::-1], fill="toself",
                     fillcolor="rgba(240,185,11,0.10)", line=dict(width=0),
-                    name="80% 구간", hoverinfo="skip",
-                ), row=1, col=1)
-            if p25 and p75:
+                    name="80%", hoverinfo="skip"), row=1, col=1)
+            if c25 and c75:
                 fig.add_trace(go.Scatter(
-                    x=fx + fx[::-1], y=p75 + p25[::-1], fill="toself",
+                    x=fx + fx[::-1], y=c75 + c25[::-1], fill="toself",
                     fillcolor="rgba(240,185,11,0.22)", line=dict(width=0),
-                    name="50% 구간", hoverinfo="skip",
-                ), row=1, col=1)
-            if p50:
+                    name="50%", hoverinfo="skip"), row=1, col=1)
+            if c50:
                 fig.add_trace(go.Scatter(
-                    x=fx, y=p50, mode="lines", name="예측 중앙(P50)",
-                    line=dict(color=FORECAST, width=1.8, dash="dot"),
-                    hovertemplate="%{x|%m/%d}<br>P50 %{y:,.0f}<extra></extra>",
-                ), row=1, col=1)
-                fig.add_annotation(
-                    x=fx[-1], y=p50[-1], text=f" {fmt_price(p50[-1], currency)}",
-                    showarrow=False, xanchor="left", font=dict(color=FORECAST, size=12),
-                    row=1, col=1,
-                )
-            fig.add_vline(x=last_date, line=dict(color="rgba(255,255,255,0.25)",
-                                                 width=1, dash="dot"))
+                    x=fx, y=c50, mode="lines", name="P50",
+                    line=dict(color=FCOL, width=1.8, dash="dot"),
+                    hovertemplate="%{x|%m/%d} · %{y:,.0f}<extra></extra>"), row=1, col=1)
+                fig.add_annotation(x=fx[-1], y=c50[-1], text=f" {price(c50[-1], currency, False)}",
+                                   showarrow=False, xanchor="left",
+                                   font=dict(color=FCOL, size=12), row=1, col=1)
+            fig.add_vline(x=last_date,
+                          line=dict(color="rgba(255,255,255,0.22)", width=1, dash="dot"))
 
     fig.update_layout(
-        template="plotly_dark", height=520 if show_volume else 440,
-        margin=dict(l=8, r=64, t=10, b=8),
-        paper_bgcolor=BG, plot_bgcolor=BG,
-        font=dict(color=TEXT, size=12),
-        hovermode="x unified", xaxis_rangeslider_visible=False,
-        legend=dict(orientation="h", y=1.06, x=0, bgcolor=BG,
-                    font=dict(color=TEXT, size=11)),
-        bargap=0.1,
+        template="plotly_dark", height=500 if show_volume else 430,
+        margin=dict(l=8, r=70, t=8, b=8), paper_bgcolor=BG, plot_bgcolor=BG,
+        font=dict(color=TEXT, size=12), hovermode="x unified",
+        xaxis_rangeslider_visible=False, showlegend=False, bargap=0.1,
     )
-    fig.update_xaxes(showgrid=False, rangebreaks=[dict(bounds=["sat", "mon"])],
-                     linecolor=GRID)
-    fig.update_yaxes(showgrid=True, gridcolor=GRID, linecolor=GRID,
-                     side="right", row=1, col=1)
+    fig.update_xaxes(showgrid=False, linecolor=GRID,
+                     rangebreaks=[dict(bounds=["sat", "mon"])])
+    fig.update_yaxes(showgrid=True, gridcolor=GRID, linecolor=GRID, side="right",
+                     row=1, col=1)
     if show_volume:
         fig.update_yaxes(showgrid=False, showticklabels=False, row=2, col=1)
     return fig
@@ -282,26 +317,144 @@ def equity_chart(bt: pd.DataFrame) -> Optional[go.Figure]:
     ycol = next((c for c in ["equity", "strategy_equity", "cum_return", "nav"]
                  if c in bt.columns), None)
     if ycol is None:
-        num = [c for c in bt.columns if pd.api.types.is_numeric_dtype(bt[c])]
-        if not num:
+        numeric = [c for c in bt.columns if pd.api.types.is_numeric_dtype(bt[c])]
+        if not numeric:
             return None
-        ycol = num[0]
+        ycol = numeric[0]
     xcol = "date" if "date" in bt.columns else bt.columns[0]
 
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=bt[xcol], y=bt[ycol], mode="lines", name="전략",
-                             line=dict(color=FORECAST, width=1.6)))
+                             line=dict(color=FCOL, width=1.6)))
     bh = next((c for c in ["buy_hold", "bh_equity", "benchmark"] if c in bt.columns), None)
     if bh:
         fig.add_trace(go.Scatter(x=bt[xcol], y=bt[bh], mode="lines", name="Buy & Hold",
                                  line=dict(color="#6e7681", width=1.3, dash="dot")))
-    fig.update_layout(template="plotly_dark", height=260,
-                      margin=dict(l=8, r=8, t=8, b=8),
-                      paper_bgcolor=BG, plot_bgcolor=BG, font=dict(color=TEXT, size=11),
-                      legend=dict(orientation="h", y=1.15, bgcolor=BG))
+    fig.update_layout(template="plotly_dark", height=250,
+                      margin=dict(l=8, r=8, t=8, b=8), paper_bgcolor=BG, plot_bgcolor=BG,
+                      font=dict(color=TEXT, size=11),
+                      legend=dict(orientation="h", y=1.18, bgcolor=BG))
     fig.update_xaxes(showgrid=False, linecolor=GRID)
     fig.update_yaxes(showgrid=True, gridcolor=GRID, linecolor=GRID)
     return fig
+
+
+# ======================================================================================
+# 종목 화면
+# ======================================================================================
+def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict) -> None:
+    horizons = sorted(int(h) for h in sub["horizon"].unique())
+
+    c_h, c_lb, c_vol = st.columns([3, 2, 1])
+    with c_h:
+        horizon = st.radio("예측 기간", horizons, horizontal=True, key=f"h_{symbol}",
+                           format_func=lambda h: f"{h}일", label_visibility="collapsed")
+    with c_lb:
+        lookback = st.select_slider("과거", options=[60, 120, 250, 400], value=120,
+                                    key=f"lb_{symbol}", format_func=lambda v: f"{v}일",
+                                    label_visibility="collapsed")
+    with c_vol:
+        show_volume = st.checkbox("거래량", value=True, key=f"v_{symbol}")
+
+    row = sub[sub["horizon"] == horizon]
+    if row.empty:
+        st.warning("해당 기간의 예측이 없습니다.")
+        return
+    p = row.iloc[0].to_dict()
+    currency = p.get("currency", "KRW")
+    now = num(p.get("current_price"))
+
+    # ---- 결론 한 줄 ----
+    st.markdown(
+        f"<div class='verdict'>{DOT.get(grade_of(p), '⚪')} "
+        f"<b>신뢰도 {fnum(p.get('confidence'), 0)}/100 · {grade_of(p)}</b> — {verdict(p)}</div>",
+        unsafe_allow_html=True,
+    )
+
+    # ---- 차트 ----
+    st.plotly_chart(candle_chart(load_history(symbol), p, lookback, show_volume),
+                    use_container_width=True)
+
+    # ---- 핵심 수치 ----
+    m = st.columns(5)
+    m[0].metric("현재가", price(now, currency))
+    m[1].metric(f"{horizon}일 후 P50", price(p.get("p50"), currency), pct(ret_of(p)))
+    m[2].metric("P10 ~ P90",
+                f"{price(p.get('p10'), currency, False)} ~ {price(p.get('p90'), currency, False)}")
+    m[3].metric("상승 확률", pct(p.get("prob_up"), signed=False))
+    m[4].metric("변동성(연율)", pct(p.get("expected_volatility_annual"), signed=False))
+
+    # ---- 접힌 상세 ----
+    with st.expander("분위수 · 참고 레벨"):
+        left, right = st.columns(2)
+        with left:
+            rows = []
+            for key, lab in [("p90", "P90"), ("p75", "P75"), ("p50", "P50"),
+                             ("p25", "P25"), ("p10", "P10")]:
+                v = num(p.get(key))
+                chg = (v / now - 1.0) if (v is not None and now) else None
+                rows.append({"구간": lab, "가격": price(v, currency), "현재가 대비": pct(chg)})
+            st.dataframe(pd.DataFrame(rows), hide_index=True, use_container_width=True)
+        with right:
+            lv = [("2차 목표", "target_2"), ("1차 목표", "target_1"),
+                  ("추가매수 고려", "add_buy_reference"), ("손절 고려", "stop_loss_reference")]
+            st.dataframe(
+                pd.DataFrame([{"항목": k, "가격": price(p.get(v), currency)} for k, v in lv]),
+                hide_index=True, use_container_width=True)
+            st.caption(
+                f"R/R {fnum(p.get('risk_reward'))} · ATR {pct(p.get('atr_pct'), signed=False)} · "
+                f"지지 {price(p.get('support_20d'), currency, False)} / "
+                f"저항 {price(p.get('resistance_20d'), currency, False)}"
+            )
+        st.caption("참고용 레벨이며 투자 조언이 아닙니다.")
+
+    with st.expander("모델 진단"):
+        d1, d2 = st.columns(2)
+        with d1:
+            st.dataframe(pd.DataFrame({
+                "지표": ["IC (Spearman)", "방향 정확도", "RMSE", "baseline RMSE",
+                         "80% 구간 실측 커버리지"],
+                "값": [fnum(p.get("oos_ic"), 3),
+                       pct(p.get("oos_directional_accuracy"), signed=False),
+                       fnum(p.get("oos_rmse"), 4), fnum(p.get("baseline_rmse"), 4),
+                       pct(p.get("coverage_80"), signed=False)],
+            }), hide_index=True, use_container_width=True)
+        with d2:
+            info = [("선택된 모델", str(p.get("model_weights") or p.get("models") or "-")),
+                    ("Fallback level", str(p.get("fallback_level"))),
+                    ("마지막 데이터", str(p.get("last_data_time"))),
+                    ("학습 시각", str(p.get("trained_at")))]
+            sh = num(p.get("shrinkage"))
+            if sh is not None and sh < 0.999:
+                info.insert(1, ("과대외삽 보정", f"x{sh:.2f}"))
+            if p.get("missing_data"):
+                info.append(("누락 데이터", str(p.get("missing_data"))))
+            st.dataframe(pd.DataFrame(info, columns=["항목", "값"]),
+                         hide_index=True, use_container_width=True)
+        if p.get("regime"):
+            st.caption(f"시장 regime · {p.get('regime')}")
+        if p.get("notes"):
+            for n in str(p.get("notes")).split(" | "):
+                if n.strip():
+                    st.caption(f"· {n.strip()}")
+
+    bt_meta = (payload.get("backtests") or {}).get(f"{symbol}_h{horizon}")
+    bt_df = load_backtest(symbol, horizon)
+    if bt_meta or bt_df is not None:
+        with st.expander("백테스트 (Out-of-Sample)"):
+            if bt_meta:
+                mm = bt_meta.get("metrics") or {}
+                bb = bt_meta.get("buy_hold") or {}
+                c = st.columns(4)
+                c[0].metric("Sharpe", fnum(mm.get("sharpe")))
+                c[1].metric("연환산 수익", pct(mm.get("annual_return")))
+                c[2].metric("MDD", pct(mm.get("max_drawdown")))
+                c[3].metric("B&H Sharpe", fnum(bb.get("sharpe")))
+            if bt_df is not None:
+                fig = equity_chart(bt_df)
+                if fig is not None:
+                    st.plotly_chart(fig, use_container_width=True)
+            st.caption("상승장에서는 타이밍 전략이 단순 보유를 이기기 어렵습니다.")
 
 
 # ======================================================================================
@@ -324,182 +477,31 @@ def main() -> None:
         st.stop()
 
     df = pd.DataFrame(preds)
-    symbols = sorted(df["symbol"].astype(str).unique())
-    name_of = {s: str(df[df["symbol"].astype(str) == s]["name"].iloc[0]) for s in symbols}
-
-    # ---------------- 사이드바 ----------------
-    with st.sidebar:
-        st.markdown("### 종목")
-        symbol = st.selectbox("종목", symbols, label_visibility="collapsed",
-                              format_func=lambda s: f"{name_of.get(s, s)}  ·  {s}")
-        sub = df[df["symbol"].astype(str) == symbol]
-        horizons = sorted(int(h) for h in sub["horizon"].unique())
-
-        st.markdown("### 예측 기간")
-        horizon = st.radio("예측 기간", horizons, label_visibility="collapsed",
-                           format_func=lambda h: f"{h} 거래일", horizontal=True)
-
-        st.markdown("### 차트")
-        lookback = st.select_slider("과거 구간", options=[60, 120, 250, 400], value=120,
-                                    format_func=lambda v: f"{v}일")
-        show_volume = st.checkbox("거래량 표시", value=True)
-
-        st.divider()
-        label, stale = snapshot_label(manifest)
-        st.caption(f"스냅샷 {label}")
-        st.caption(f"종목 {len(symbols)} · 예측 {len(preds)}건")
-
-    row = sub[sub["horizon"] == horizon]
-    if row.empty:
-        st.warning("해당 조합의 예측이 없습니다.")
-        st.stop()
-    pred = row.iloc[0].to_dict()
-    currency = pred.get("currency", "KRW")
-    now = pred.get("current_price")
-
-    # ---------------- 헤더 ----------------
+    df["symbol"] = df["symbol"].astype(str)
+    symbols = sorted(df["symbol"].unique())
     label, stale = snapshot_label(manifest)
+
+    top_l, top_r = st.columns([3, 2])
+    with top_l:
+        st.markdown("## 📈 주가 예측")
+    with top_r:
+        st.markdown(
+            f"<div style='text-align:right;padding-top:18px;color:#8b949e;font-size:0.85rem'>"
+            f"스냅샷 {label} · 종목 {len(symbols)} · 예측 {len(preds)}건</div>",
+            unsafe_allow_html=True,
+        )
+
     if stale:
         st.error(f"이 스냅샷은 {label} 결과입니다. 로컬에서 다시 실행 후 게시하세요.")
     if payload.get("source") == "predictions.csv":
         st.info("CSV 만으로 구동 중 · 백테스트와 진단은 publish.py 게시 시 표시됩니다.")
 
-    head_l, head_r = st.columns([4, 2])
-    with head_l:
-        st.markdown(f"## {pred.get('name', symbol)}")
-        st.caption(f"{symbol} · {pred.get('country', '')} · {horizon}거래일 후 예측")
-    with head_r:
-        st.markdown(
-            f"<div style='text-align:right;padding-top:14px'>"
-            f"<span style='color:#8b949e;font-size:0.85rem'>신뢰도</span><br>"
-            f"<span style='font-size:1.35rem'>{GRADE_DOT.get(grade_of(pred), '⚪')} "
-            f"{fmt_num(pred.get('confidence'), 0)}"
-            f"<span style='color:#8b949e;font-size:0.9rem'> / 100 · {grade_of(pred)}</span>"
-            f"</span></div>",
-            unsafe_allow_html=True,
-        )
-
-    # ---------------- 메인 차트 ----------------
-    st.plotly_chart(
-        candle_forecast_chart(load_history(symbol), pred, lookback, show_volume),
-        use_container_width=True,
-    )
-
-    # ---------------- 핵심 수치 ----------------
-    m1, m2, m3, m4, m5 = st.columns(5)
-    m1.metric("현재가", fmt_price_unit(now, currency))
-    m2.metric("예측 중앙 P50", fmt_price_unit(pred.get("p50"), currency), fmt_pct(ret_of(pred)))
-    m3.metric("예측 범위 P10~P90",
-              f"{fmt_price(pred.get('p10'), currency)} ~ {fmt_price(pred.get('p90'), currency)}")
-    m4.metric("상승 확률", fmt_pct(pred.get("prob_up"), signed=False))
-    m5.metric("변동성 (연율)", fmt_pct(pred.get("expected_volatility_annual"), signed=False))
-
-    if grade_of(pred) == "LOW":
-        st.caption("⚪ 신뢰도가 낮은 예측입니다. 중앙값보다 구간의 폭을 근거로 삼으십시오.")
+    names = [str(df[df["symbol"] == s]["name"].iloc[0]) for s in symbols]
+    for tab, symbol, name in zip(st.tabs(names), symbols, names):
+        with tab:
+            render_symbol(symbol, df[df["symbol"] == symbol], payload)
 
     st.divider()
-
-    # ---------------- 분위수 · 레벨 ----------------
-    left, right = st.columns(2)
-    with left:
-        st.markdown("###### 분위수")
-        q_rows = []
-        for key, label_q in [("p90", "P90"), ("p75", "P75"), ("p50", "P50"),
-                             ("p25", "P25"), ("p10", "P10")]:
-            v = pred.get(key)
-            chg = (float(v) / float(now) - 1.0) if (
-                not is_missing(v) and not is_missing(now) and float(now) > 0) else None
-            q_rows.append({"구간": label_q, "가격": fmt_price_unit(v, currency),
-                           "현재가 대비": fmt_pct(chg)})
-        st.dataframe(pd.DataFrame(q_rows), hide_index=True, use_container_width=True)
-
-    with right:
-        st.markdown("###### 참고 레벨 · 투자 조언 아님")
-        lv = [
-            {"항목": "2차 목표", "가격": fmt_price_unit(pred.get("target_2"), currency)},
-            {"항목": "1차 목표", "가격": fmt_price_unit(pred.get("target_1"), currency)},
-            {"항목": "추가매수 고려", "가격": fmt_price_unit(pred.get("add_buy_reference"), currency)},
-            {"항목": "손절 고려", "가격": fmt_price_unit(pred.get("stop_loss_reference"), currency)},
-        ]
-        st.dataframe(pd.DataFrame(lv), hide_index=True, use_container_width=True)
-        st.caption(
-            f"R/R {fmt_num(pred.get('risk_reward'))} · "
-            f"ATR {fmt_pct(pred.get('atr_pct'), signed=False)} · "
-            f"지지 {fmt_price(pred.get('support_20d'), currency)} / "
-            f"저항 {fmt_price(pred.get('resistance_20d'), currency)}"
-        )
-
-    # ---------------- 접힌 영역 ----------------
-    with st.expander("모델 진단"):
-        d1, d2 = st.columns(2)
-        with d1:
-            st.dataframe(pd.DataFrame({
-                "지표": ["IC (Spearman)", "방향 정확도", "RMSE", "baseline RMSE",
-                         "80% 구간 실측 커버리지"],
-                "값": [
-                    fmt_num(pred.get("oos_ic"), 3),
-                    fmt_pct(pred.get("oos_directional_accuracy"), signed=False),
-                    fmt_num(pred.get("oos_rmse"), 4),
-                    fmt_num(pred.get("baseline_rmse"), 4),
-                    fmt_pct(pred.get("coverage_80"), signed=False),
-                ],
-            }), hide_index=True, use_container_width=True)
-            st.caption("커버리지가 80%에서 크게 벗어나면 구간 추정을 믿기 어렵습니다.")
-        with d2:
-            info = [
-                ("선택된 모델", str(pred.get("model_weights") or pred.get("models") or "-")),
-                ("Fallback level", str(pred.get("fallback_level"))),
-                ("마지막 데이터", str(pred.get("last_data_time"))),
-                ("학습 시각", str(pred.get("trained_at"))),
-            ]
-            shrink = pred.get("shrinkage")
-            if not is_missing(shrink) and float(shrink) < 0.999:
-                info.insert(1, ("과대외삽 보정", f"x{float(shrink):.2f}"))
-            if pred.get("missing_data"):
-                info.append(("누락 데이터", str(pred.get("missing_data"))))
-            st.dataframe(pd.DataFrame(info, columns=["항목", "값"]),
-                         hide_index=True, use_container_width=True)
-        if pred.get("regime"):
-            st.caption(f"시장 regime · {pred.get('regime')}")
-        if pred.get("notes"):
-            for n in str(pred.get("notes")).split(" | "):
-                if n.strip():
-                    st.caption(f"· {n.strip()}")
-
-    bt_meta = (payload.get("backtests") or {}).get(f"{symbol}_h{horizon}")
-    bt_df = load_backtest(symbol, horizon)
-    if bt_meta or bt_df is not None:
-        with st.expander("백테스트 (Out-of-Sample)"):
-            if bt_meta:
-                m = bt_meta.get("metrics") or {}
-                b = bt_meta.get("buy_hold") or {}
-                c = st.columns(4)
-                c[0].metric("Sharpe", fmt_num(m.get("sharpe")))
-                c[1].metric("연환산 수익", fmt_pct(m.get("annual_return")))
-                c[2].metric("MDD", fmt_pct(m.get("max_drawdown")))
-                c[3].metric("B&H Sharpe", fmt_num(b.get("sharpe")))
-            if bt_df is not None:
-                fig = equity_chart(bt_df)
-                if fig is not None:
-                    st.plotly_chart(fig, use_container_width=True)
-            st.caption("상승장에서는 타이밍 전략이 단순 보유를 이기기 어렵습니다.")
-
-    with st.expander("전체 종목 요약"):
-        rows = []
-        for p in preds:
-            cur = p.get("currency", "KRW")
-            rows.append({
-                "종목": f"{p.get('name', p.get('symbol'))}",
-                "기간": f"{int(p.get('horizon', 0))}일",
-                "현재가": fmt_price_unit(p.get("current_price"), cur),
-                "P50": fmt_price_unit(p.get("p50"), cur),
-                "예상": fmt_pct(ret_of(p)),
-                "P10~P90": f"{fmt_price(p.get('p10'), cur)} ~ {fmt_price(p.get('p90'), cur)}",
-                "상승확률": fmt_pct(p.get("prob_up"), signed=False),
-                "신뢰도": f"{GRADE_DOT.get(grade_of(p), '⚪')} {fmt_num(p.get('confidence'), 0)}",
-            })
-        st.dataframe(pd.DataFrame(rows), hide_index=True, use_container_width=True)
-
     st.caption(DISCLAIMER)
 
 
