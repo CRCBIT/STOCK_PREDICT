@@ -508,6 +508,28 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
                 info.append(("누락 데이터", str(p.get("missing_data"))))
             st.dataframe(pd.DataFrame(info, columns=["항목", "값"]),
                          hide_index=True, use_container_width=True, key=f"meta_{uid}")
+        comps = p.get("confidence_components")
+        if isinstance(comps, dict) and comps:
+            st.markdown("**신뢰도 구성** — 어느 항목에서 점수를 잃었는지")
+            label = {
+                "baseline_improvement": "baseline 대비 RMSE 개선",
+                "information_coefficient": "IC (순위 상관)",
+                "directional_accuracy": "방향 정확도",
+                "probability_calibration": "확률 보정 정확도",
+                "interval_coverage": "구간 커버리지",
+                "fold_stability": "fold 간 안정성",
+                "recent_regime": "최근 구간 성능",
+                "data_quantity": "데이터 양",
+                "data_freshness": "데이터 최신성",
+                "feature_completeness": "feature 완결성",
+            }
+            rows = [{"항목": label.get(k, k), "달성도": f"{float(v) * 100:.0f}%"}
+                    for k, v in comps.items() if not k.startswith("_")]
+            st.dataframe(pd.DataFrame(rows), hide_index=True,
+                         use_container_width=True, key=f"comp_{uid}")
+            if comps.get("_baseline_only_cap"):
+                st.caption("ML 모델이 baseline 을 이기지 못해 신뢰도 상한 25 가 적용되었습니다.")
+
         if p.get("regime"):
             st.caption(f"시장 regime · {p.get('regime')}")
         if p.get("notes"):
