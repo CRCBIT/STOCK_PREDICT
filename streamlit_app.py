@@ -218,6 +218,28 @@ def reanchor(p: Dict, live_price: Optional[float]) -> Dict:
     return out
 
 
+def last_close_ref(hist: Optional[pd.DataFrame]) -> Tuple[Optional[float], str]:
+    """
+    비교 기준이 될 '마지막 확정 종가' 와 그 날짜 라벨을 돌려준다.
+
+    현재가 변동률은 예측을 계산한 시점이 아니라 직전 확정 종가 대비여야 한다.
+    (예측 시점 기준이면 main.py 를 언제 돌렸는지에 따라 값이 달라진다)
+    수집기가 장중 미완성 봉을 제외하므로 히스토리의 마지막 봉이 곧 직전 확정 종가다.
+    다만 장 마감 후 수집한 경우에는 당일 종가가 마지막 봉이 되므로,
+    어느 날짜와 비교한 것인지 라벨로 함께 표시해 오해를 막는다.
+    """
+    if hist is None or hist.empty or "close" not in hist.columns:
+        return None, ""
+    try:
+        close = float(hist["close"].iloc[-1])
+        day = pd.Timestamp(hist["date"].iloc[-1])
+    except (IndexError, KeyError, TypeError, ValueError):
+        return None, ""
+    if not (close > 0):
+        return None, ""
+    return close, f"{day:%m/%d} 종가"
+
+
 def quote_age_label(fetched_at: Optional[str]) -> str:
     if not fetched_at:
         return ""
@@ -442,20 +464,23 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
     )
 
     # ---- 차트 ----
-    st.plotly_chart(candle_chart(load_history(symbol), p, lookback, show_volume),
+    hist = load_history(symbol)
+    st.plotly_chart(candle_chart(hist, p, lookback, show_volume),
                     use_container_width=True, key=f"candle_{uid}")
 
     # ---- 핵심 수치 ----
     m = st.columns(5)
+    prev_close, prev_label = last_close_ref(hist)
+    delta = pct(now / prev_close - 1.0) if (prev_close and now) else None
     if p.get("_reanchored"):
-        anchor = num(p.get("_anchor_price"))
-        delta = pct(now / anchor - 1.0) if (anchor and now) else None
-        m[0].metric(f"현재가 · {quote_age_label(quotes.get('fetched_at'))}",
-                    price(now, currency), delta,
-                    help="quotes.py 가 올린 최신 체결가입니다. 델타는 예측 계산 시점 대비 변동률.")
+        label = f"현재가 · {quote_age_label(quotes.get('fetched_at'))}"
+        tip = ("quotes.py 가 올린 최신 체결가입니다. "
+               f"변동률은 {prev_label or '직전 확정 종가'} 대비입니다.")
     else:
-        m[0].metric("현재가", price(now, currency),
-                    help="예측을 계산한 시점의 가격입니다. quotes.py 를 돌리면 최신가로 갱신됩니다.")
+        label = "현재가"
+        tip = ("예측을 계산한 시점의 가격입니다. quotes.py 를 돌리면 최신가로 갱신됩니다. "
+               f"변동률은 {prev_label or '직전 확정 종가'} 대비입니다.")
+    m[0].metric(label, price(now, currency), delta, help=tip)
     m[1].metric(f"{horizon}일 후 P50", price(p.get("p50"), currency), pct(ret_of(p)),
                 help="예측 분포의 중앙값. 이보다 높을 확률과 낮을 확률이 각각 50% 라는 뜻이며, "
                      "가장 가능성 높은 하나의 값이 아닙니다.")
