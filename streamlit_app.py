@@ -94,6 +94,22 @@ def load_predictions() -> Optional[Dict]:
     }
 
 
+@st.cache_data(ttl=30, show_spinner=False)
+def load_quotes() -> Dict:
+    """
+    현재가 스냅샷(quotes.json). `quotes.py` 가 짧은 주기로 갱신해 올린다.
+    없으면 빈 dict — 이 경우 예측 계산 시점의 가격을 그대로 쓴다.
+    """
+    path = PUBLISHED / "quotes.json"
+    if not path.exists():
+        return {}
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except (OSError, json.JSONDecodeError):
+        return {}
+
+
 @st.cache_data(ttl=300, show_spinner=False)
 def load_history(symbol: str) -> Optional[pd.DataFrame]:
     path = PUBLISHED / "history" / f"{symbol}.csv"
@@ -170,6 +186,53 @@ def ret_of(p: Dict) -> Optional[float]:
     if p50 is not None and now:
         return p50 / now - 1.0
     return None
+
+
+def reanchor(p: Dict, live_price: Optional[float]) -> Dict:
+    """
+    예측 분포를 최신 현재가 기준으로 다시 스케일한다.
+
+    모델이 산출하는 것은 '현재가 대비 로그수익률의 분포' 이므로, 기준 가격이
+    바뀌면 모든 분위수를 같은 비율로 옮기면 된다. 비율만 곱하는 것이지
+    예측을 다시 계산하는 것이 아니다 (특징량은 여전히 마지막 확정 봉 기준).
+    """
+    anchor = num(p.get("current_price"))
+    if live_price is None or anchor is None or anchor <= 0:
+        return p
+    ratio = live_price / anchor
+    if not (0.5 < ratio < 2.0):          # 통화·종목 불일치 등 이상값 방어
+        return p
+    out = dict(p)
+    for key in ("p10", "p25", "p50", "p75", "p90",
+                "interval_80_low", "interval_80_high",
+                "interval_90_low", "interval_90_high",
+                "conservative_price", "optimistic_price", "target_1", "target_2",
+                "stop_loss_reference", "add_buy_reference",
+                "support_20d", "resistance_20d"):
+        v = num(p.get(key))
+        if v is not None:
+            out[key] = v * ratio
+    out["current_price"] = live_price
+    out["_anchor_price"] = anchor
+    out["_reanchored"] = True
+    return out
+
+
+def quote_age_label(fetched_at: Optional[str]) -> str:
+    if not fetched_at:
+        return ""
+    try:
+        ts = datetime.fromisoformat(str(fetched_at))
+        if ts.tzinfo is None:
+            ts = ts.replace(tzinfo=timezone.utc)
+    except (TypeError, ValueError):
+        return str(fetched_at)
+    mins = (datetime.now(timezone.utc) - ts).total_seconds() / 60.0
+    if mins < 1:
+        return "방금"
+    if mins < 60:
+        return f"{mins:.0f}분 전"
+    return f"{mins / 60:.1f}시간 전"
 
 
 def snapshot_label(manifest: Dict) -> Tuple[str, bool]:
@@ -342,7 +405,8 @@ def equity_chart(bt: pd.DataFrame) -> Optional[go.Figure]:
 # ======================================================================================
 # 종목 화면
 # ======================================================================================
-def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict) -> None:
+def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
+                  quotes: Optional[Dict] = None) -> None:
     horizons = sorted(int(h) for h in sub["horizon"].unique())
 
     c_h, c_lb, c_vol = st.columns([3, 2, 1])
@@ -360,7 +424,13 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict) -> None:
     if row.empty:
         st.warning("해당 기간의 예측이 없습니다.")
         return
+    # Streamlit 은 요소 id 를 인자 조합으로 계산하므로, 탭마다 같은 모양의 차트/표를
+    # 그리면 id 가 충돌한다(StreamlitDuplicateElementId). 종목·기간으로 키를 준다.
+    uid = f"{symbol}_{horizon}"
     p = row.iloc[0].to_dict()
+    quotes = quotes or {}
+    live = num((quotes.get("quotes") or {}).get(symbol, {}).get("price"))
+    p = reanchor(p, live)
     currency = p.get("currency", "KRW")
     now = num(p.get("current_price"))
 
@@ -373,11 +443,17 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict) -> None:
 
     # ---- 차트 ----
     st.plotly_chart(candle_chart(load_history(symbol), p, lookback, show_volume),
-                    use_container_width=True)
+                    use_container_width=True, key=f"candle_{uid}")
 
     # ---- 핵심 수치 ----
     m = st.columns(5)
-    m[0].metric("현재가", price(now, currency))
+    if p.get("_reanchored"):
+        anchor = num(p.get("_anchor_price"))
+        delta = pct(now / anchor - 1.0) if (anchor and now) else None
+        m[0].metric(f"현재가 · {quote_age_label(quotes.get('fetched_at'))}",
+                    price(now, currency), delta)
+    else:
+        m[0].metric("현재가", price(now, currency))
     m[1].metric(f"{horizon}일 후 P50", price(p.get("p50"), currency), pct(ret_of(p)))
     m[2].metric("P10 ~ P90",
                 f"{price(p.get('p10'), currency, False)} ~ {price(p.get('p90'), currency, False)}")
@@ -394,13 +470,14 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict) -> None:
                 v = num(p.get(key))
                 chg = (v / now - 1.0) if (v is not None and now) else None
                 rows.append({"구간": lab, "가격": price(v, currency), "현재가 대비": pct(chg)})
-            st.dataframe(pd.DataFrame(rows), hide_index=True, use_container_width=True)
+            st.dataframe(pd.DataFrame(rows), hide_index=True, use_container_width=True,
+                         key=f"quant_{uid}")
         with right:
             lv = [("2차 목표", "target_2"), ("1차 목표", "target_1"),
                   ("추가매수 고려", "add_buy_reference"), ("손절 고려", "stop_loss_reference")]
             st.dataframe(
                 pd.DataFrame([{"항목": k, "가격": price(p.get(v), currency)} for k, v in lv]),
-                hide_index=True, use_container_width=True)
+                hide_index=True, use_container_width=True, key=f"levels_{uid}")
             st.caption(
                 f"R/R {fnum(p.get('risk_reward'))} · ATR {pct(p.get('atr_pct'), signed=False)} · "
                 f"지지 {price(p.get('support_20d'), currency, False)} / "
@@ -418,7 +495,7 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict) -> None:
                        pct(p.get("oos_directional_accuracy"), signed=False),
                        fnum(p.get("oos_rmse"), 4), fnum(p.get("baseline_rmse"), 4),
                        pct(p.get("coverage_80"), signed=False)],
-            }), hide_index=True, use_container_width=True)
+            }), hide_index=True, use_container_width=True, key=f"diag_{uid}")
         with d2:
             info = [("선택된 모델", str(p.get("model_weights") or p.get("models") or "-")),
                     ("Fallback level", str(p.get("fallback_level"))),
@@ -430,7 +507,7 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict) -> None:
             if p.get("missing_data"):
                 info.append(("누락 데이터", str(p.get("missing_data"))))
             st.dataframe(pd.DataFrame(info, columns=["항목", "값"]),
-                         hide_index=True, use_container_width=True)
+                         hide_index=True, use_container_width=True, key=f"meta_{uid}")
         if p.get("regime"):
             st.caption(f"시장 regime · {p.get('regime')}")
         if p.get("notes"):
@@ -453,7 +530,7 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict) -> None:
             if bt_df is not None:
                 fig = equity_chart(bt_df)
                 if fig is not None:
-                    st.plotly_chart(fig, use_container_width=True)
+                    st.plotly_chart(fig, use_container_width=True, key=f"equity_{uid}")
             st.caption("상승장에서는 타이밍 전략이 단순 보유를 이기기 어렵습니다.")
 
 
@@ -496,10 +573,18 @@ def main() -> None:
     if payload.get("source") == "predictions.csv":
         st.info("CSV 만으로 구동 중 · 백테스트와 진단은 publish.py 게시 시 표시됩니다.")
 
+    quotes = load_quotes()
+    if quotes.get("fetched_at"):
+        st.caption(
+            f"💹 현재가 {quote_age_label(quotes['fetched_at'])} 갱신 · "
+            "예측 분포는 이 가격 기준으로 재조정되어 표시됩니다 "
+            "(모델 입력은 마지막 확정 봉 기준)."
+        )
+
     names = [str(df[df["symbol"] == s]["name"].iloc[0]) for s in symbols]
     for tab, symbol, name in zip(st.tabs(names), symbols, names):
         with tab:
-            render_symbol(symbol, df[df["symbol"] == symbol], payload)
+            render_symbol(symbol, df[df["symbol"] == symbol], payload, quotes)
 
     st.divider()
     st.caption(DISCLAIMER)
