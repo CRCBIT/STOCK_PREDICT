@@ -578,6 +578,74 @@ st.markdown("""
     outline-color: rgba(240,185,11,0.22) !important;
   }
 
+
+  /* ===============================================================
+     v9: 종목 선택 박스는 테두리 자체를 없앤다.
+     색을 어둡게 바꾸는 게 아니라 border/outline/focus ring을 전부 제거.
+     =============================================================== */
+  div[data-testid="stSelectbox"],
+  div[data-testid="stSelectbox"] [data-baseweb="select"],
+  div[data-testid="stSelectbox"] [data-baseweb="select"] > div,
+  div[data-testid="stSelectbox"] [data-baseweb="select"] > div > div,
+  div[data-testid="stSelectbox"] div[role="combobox"] {
+    border: 0 !important;
+    border-width: 0 !important;
+    border-color: transparent !important;
+    outline: 0 !important;
+    outline-offset: 0 !important;
+    box-shadow: none !important;
+  }
+
+  div[data-testid="stSelectbox"] [data-baseweb="select"] {
+    background: #0d1117 !important;
+    border-radius: 11px !important;
+    overflow: hidden !important;
+  }
+
+  div[data-testid="stSelectbox"] [data-baseweb="select"] > div,
+  div[data-testid="stSelectbox"] div[role="combobox"] {
+    background: #0d1117 !important;
+    min-height: 46px !important;
+    border-radius: 11px !important;
+  }
+
+  /* 내부 BaseWeb 레이어가 자체 border를 다시 만드는 경우까지 제거 */
+  div[data-testid="stSelectbox"] [data-baseweb="select"] * {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
+  div[data-testid="stSelectbox"] [data-baseweb="select"] > div:hover,
+  div[data-testid="stSelectbox"] div[role="combobox"]:hover {
+    background: #111720 !important;
+    border: 0 !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+  }
+
+  div[data-testid="stSelectbox"] [data-baseweb="select"] > div:focus,
+  div[data-testid="stSelectbox"] [data-baseweb="select"] > div:focus-within,
+  div[data-testid="stSelectbox"] div[role="combobox"]:focus,
+  div[data-testid="stSelectbox"] div[role="combobox"]:focus-within {
+    background: #111720 !important;
+    border: 0 !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+  }
+
+  /* 브라우저 접근성 focus ring도 selectbox에는 흰색으로 나오지 않게 */
+  div[data-testid="stSelectbox"] *:focus,
+  div[data-testid="stSelectbox"] *:focus-visible {
+    border: 0 !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+  }
+
+  /* 테두리 대신 배경 차이만으로 박스를 구분 */
+  div[data-testid="stSelectbox"] [data-baseweb="select"] {
+    box-shadow: inset 0 0 0 0 transparent !important;
+  }
+
 </style>
 """, unsafe_allow_html=True)
 
