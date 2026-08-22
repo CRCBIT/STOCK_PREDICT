@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-08-22T20:40:01+09:00",
+  "fetched_at": "2026-08-22T20:45:02+09:00",
   "quotes": {
     "000660": {
       "price": 1761000.0,
@@ -30,11 +30,6 @@
       "price": 309.65,
       "currency": "USD",
       "timestamp": "2026-08-22T08:59:45.000+09:00"
-    },
-    "AMAT": {
-      "price": 492.1,
-      "currency": "USD",
-      "timestamp": "2026-08-22T08:58:20.000+09:00"
     },
     "AMD": {
       "price": 472.361,
@@ -91,6 +86,11 @@
       "currency": "USD",
       "timestamp": "2026-08-22T08:59:55.000+09:00"
     },
+    "SPCX": {
+      "price": 136.75,
+      "currency": "USD",
+      "timestamp": "2026-08-22T08:59:58.000+09:00"
+    },
     "TSM": {
       "price": 419.68,
       "currency": "USD",
@@ -101,10 +101,10 @@
       "currency": "USD",
       "timestamp": "2026-08-22T08:59:33.000+09:00"
     },
-    "SPCX": {
-      "price": 136.75,
+    "AMAT": {
+      "price": 492.1,
       "currency": "USD",
-      "timestamp": "2026-08-22T08:59:58.000+09:00"
+      "timestamp": "2026-08-22T08:58:20.000+09:00"
     }
   }
 }
