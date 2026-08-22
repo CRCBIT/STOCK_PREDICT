@@ -739,6 +739,18 @@ st.markdown("""
     color: #f0f3f7 !important;
   }
 
+
+  /* v12 fallback: selected selectbox value / placeholder text */
+  div[data-testid="stSelectbox"] input,
+  div[data-testid="stSelectbox"] input::placeholder,
+  div[data-testid="stSelectbox"] [data-baseweb="select"] input,
+  div[data-testid="stSelectbox"] [data-baseweb="select"] input::placeholder {
+    color: #e8edf3 !important;
+    -webkit-text-fill-color: #e8edf3 !important;
+    opacity: 1 !important;
+    font-weight: 600 !important;
+  }
+
 </style>
 """, unsafe_allow_html=True)
 
