@@ -701,6 +701,44 @@ st.markdown("""
     background-color: #111720 !important;
   }
 
+
+  /* ===============================================================
+     v11: 종목 선택 텍스트 가독성 강화
+     선택된 종목명은 주요 정보이므로 보조 회색이 아니라 밝은 본문색 사용.
+     =============================================================== */
+  div[data-testid="stSelectbox"] [data-baseweb="select"] span,
+  div[data-testid="stSelectbox"] [data-baseweb="select"] div[role="combobox"],
+  div[data-testid="stSelectbox"] [data-baseweb="select"] div[role="combobox"] span,
+  div[data-testid="stSelectbox"] [data-baseweb="select"] input {
+    color: #e8edf3 !important;
+    -webkit-text-fill-color: #e8edf3 !important;
+    opacity: 1 !important;
+    font-weight: 620 !important;
+  }
+
+  /* 종목 선택 label은 본문보다 한 단계 낮게 */
+  div[data-testid="stSelectbox"] > label p {
+    color: #b8c2cf !important;
+    opacity: 1 !important;
+    font-weight: 560 !important;
+  }
+
+  /* 드롭다운 목록 안 종목명도 동일하게 읽히도록 */
+  ul[role="listbox"] li[role="option"],
+  ul[role="listbox"] li[role="option"] span,
+  div[data-baseweb="menu"] li[role="option"],
+  div[data-baseweb="menu"] li[role="option"] span {
+    color: #d7dee8 !important;
+    -webkit-text-fill-color: #d7dee8 !important;
+    opacity: 1 !important;
+    font-weight: 540 !important;
+  }
+
+  ul[role="listbox"] li[role="option"]:hover,
+  ul[role="listbox"] li[role="option"][aria-selected="true"] {
+    color: #f0f3f7 !important;
+  }
+
 </style>
 """, unsafe_allow_html=True)
 
