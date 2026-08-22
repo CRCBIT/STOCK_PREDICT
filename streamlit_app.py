@@ -65,8 +65,8 @@ st.markdown("""
     --bg: #080b10;
     --panel: rgba(18, 23, 31, 0.78);
     --panel-2: rgba(13, 17, 23, 0.72);
-    --line: rgba(255,255,255,0.09);
-    --line-strong: rgba(255,255,255,0.15);
+    --line: rgba(120,132,148,0.16);
+    --line-strong: rgba(120,132,148,0.24);
     --text: #e8edf3;
     --text-soft: #c5ced9;
     --muted: #a1adbb;
@@ -251,7 +251,7 @@ st.markdown("""
 
   div[data-testid="stSelectbox"] div[role="combobox"] {
     color: #d7dee8 !important;
-    border-color: rgba(255,255,255,0.10) !important;
+    border-color: rgba(120,132,148,0.18) !important;
     box-shadow: none !important;
     border-radius: 11px !important;
   }
@@ -532,6 +532,52 @@ st.markdown("""
     .dash-meta {text-align: left; white-space: normal;}
     .block-container {padding-left: 0.9rem; padding-right: 0.9rem;}
   }
+
+  /* ===============================================================
+     최종 border override
+     Streamlit/BaseWeb가 상태별로 넣는 흰 테두리/outline을 제거한다.
+     =============================================================== */
+  div[data-testid="stSelectbox"] [data-baseweb="select"] > div,
+  div[data-testid="stSelectbox"] div[role="combobox"] {
+    border: 1px solid rgba(120,132,148,0.18) !important;
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
+  div[data-testid="stSelectbox"] [data-baseweb="select"] > div:hover,
+  div[data-testid="stSelectbox"] div[role="combobox"]:hover {
+    border-color: rgba(120,132,148,0.28) !important;
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
+  div[data-testid="stSelectbox"] [data-baseweb="select"] > div:focus,
+  div[data-testid="stSelectbox"] [data-baseweb="select"] > div:focus-within,
+  div[data-testid="stSelectbox"] div[role="combobox"]:focus,
+  div[data-testid="stSelectbox"] div[role="combobox"]:focus-within {
+    border-color: rgba(240,185,11,0.24) !important;
+    outline: none !important;
+    box-shadow: 0 0 0 1px rgba(240,185,11,0.035) !important;
+  }
+
+  div[data-testid="stExpander"],
+  div[data-testid="stExpander"] details,
+  div[data-testid="stExpander"] details summary,
+  div[data-testid="stMetric"],
+  div[data-testid="stPlotlyChart"],
+  div[data-testid="stDataFrame"] {
+    border-color: rgba(120,132,148,0.16) !important;
+  }
+
+  div[data-testid="stExpander"] details summary:hover {
+    border-color: rgba(120,132,148,0.24) !important;
+  }
+
+  /* 브라우저/테마 기본 focus ring 제거 */
+  *:focus-visible {
+    outline-color: rgba(240,185,11,0.22) !important;
+  }
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -941,7 +987,7 @@ def kcs_memory_chart(df: pd.DataFrame, years: int = 5,
             y=1.13,
             x=0,
             bgcolor="rgba(13,17,23,0.78)",
-            bordercolor="rgba(255,255,255,0.10)",
+            bordercolor="rgba(120,132,148,0.20)",
             borderwidth=1,
             font=dict(size=12, color="#d7dee8"),
             itemsizing="constant",
@@ -1137,7 +1183,7 @@ def equity_chart(bt: pd.DataFrame) -> Optional[go.Figure]:
             y=1.16,
             x=0,
             bgcolor="rgba(13,17,23,0.78)",
-            bordercolor="rgba(255,255,255,0.10)",
+            bordercolor="rgba(120,132,148,0.20)",
             borderwidth=1,
             font=dict(size=12, color="#d7dee8"),
             itemsizing="constant",
