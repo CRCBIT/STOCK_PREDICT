@@ -43,6 +43,14 @@ DOWN = "#2196f3"      # 하락
 FCOL = "#f0b90b"      # 예측 (앰버)
 DOT = {"HIGH": "🟢", "MEDIUM": "🟡", "LOW": "⚪"}
 
+# 관세청 월별 수출단가. HBM은 전용 HS코드가 아니라 MCP를 대리지표로 표시한다.
+KCS_MEMORY_SERIES = {
+    "8542321010": "DRAM",
+    "8542321030": "NAND Flash",
+    "8542323000": "MCP / HBM proxy",
+}
+KCS_LOGIC_CODE = "8542311000"
+
 st.set_page_config(page_title="주가 예측", page_icon="📈", layout="wide")
 
 st.markdown("""
@@ -110,6 +118,34 @@ def load_quotes() -> Dict:
             return json.load(f)
     except (OSError, json.JSONDecodeError):
         return {}
+
+
+@st.cache_data(ttl=300, show_spinner=False)
+def load_kcs_memory() -> Optional[pd.DataFrame]:
+    """publish.py가 올린 관세청 메모리 월별 수출단가 스냅샷을 읽는다."""
+    path = PUBLISHED / "kcs_memory_prices.csv"
+    if not path.exists():
+        return None
+    try:
+        df = pd.read_csv(path, dtype={"hs_code": str}, encoding="utf-8-sig")
+    except (OSError, pd.errors.ParserError, UnicodeDecodeError):
+        return None
+
+    required = {"period", "hs_code", "series", "export_unit_price_weight"}
+    if not required.issubset(df.columns):
+        return None
+
+    df["hs_code"] = df["hs_code"].astype(str).str.strip()
+    df["date"] = pd.to_datetime(df["period"].astype(str) + "-01", errors="coerce")
+    df["export_unit_price_weight"] = pd.to_numeric(
+        df["export_unit_price_weight"], errors="coerce"
+    )
+    if "export_value" in df.columns:
+        df["export_value"] = pd.to_numeric(df["export_value"], errors="coerce")
+    if "export_weight" in df.columns:
+        df["export_weight"] = pd.to_numeric(df["export_weight"], errors="coerce")
+    df = df.dropna(subset=["date", "export_unit_price_weight"])
+    return df.sort_values(["date", "series"]).reset_index(drop=True)
 
 
 @st.cache_data(ttl=300, show_spinner=False)
@@ -356,6 +392,125 @@ def verdict(p: Dict) -> str:
                 "구간이 과도하게 넓어 보수적입니다."
             )
     return " ".join(parts)
+
+
+# ======================================================================================
+# 관세청 메모리 수출단가
+# ======================================================================================
+def _kcs_change(g: pd.DataFrame, periods: int) -> Optional[float]:
+    """마지막 관측값 대비 periods개월 전 변화율. 월 누락 시 해당 행 간격 기준."""
+    s = g["export_unit_price_weight"].dropna().astype("float64")
+    if len(s) <= periods:
+        return None
+    prev, cur = float(s.iloc[-1 - periods]), float(s.iloc[-1])
+    if prev <= 0:
+        return None
+    return cur / prev - 1.0
+
+
+def kcs_memory_chart(df: pd.DataFrame, years: int = 5,
+                     include_logic: bool = False) -> go.Figure:
+    """DRAM/NAND/MCP 월별 관세청 수출단가(USD/kg) 선그래프."""
+    fig = go.Figure()
+    if df is None or df.empty:
+        return fig
+
+    cutoff = df["date"].max() - pd.DateOffset(years=int(years))
+    shown = df[df["date"] >= cutoff].copy()
+    wanted = dict(KCS_MEMORY_SERIES)
+    if include_logic:
+        wanted[KCS_LOGIC_CODE] = "Logic comparator"
+
+    # 기존 대시보드 팔레트와 충돌하지 않게 제품별 고정 색을 쓴다.
+    colors = {
+        "DRAM": "#f0b90b",
+        "NAND Flash": "#58a6ff",
+        "MCP / HBM proxy": "#3fb950",
+        "Logic comparator": "#8b949e",
+    }
+    for code, label in wanted.items():
+        g = shown[shown["hs_code"] == code].sort_values("date")
+        if g.empty:
+            continue
+        fig.add_trace(go.Scatter(
+            x=g["date"], y=g["export_unit_price_weight"],
+            mode="lines+markers", name=label,
+            line=dict(color=colors.get(label), width=2,
+                      dash="dot" if code == KCS_LOGIC_CODE else "solid"),
+            marker=dict(size=4),
+            customdata=g[["period"]],
+            hovertemplate=(
+                "%{customdata[0]}<br>" + label +
+                "<br><b>%{y:,.0f} USD/kg</b><extra></extra>"
+            ),
+        ))
+
+    fig.update_layout(
+        template="plotly_dark", height=360,
+        margin=dict(l=8, r=20, t=8, b=8),
+        paper_bgcolor=BG, plot_bgcolor=BG,
+        font=dict(color=TEXT, size=11), hovermode="x unified",
+        legend=dict(orientation="h", y=1.12, x=0, bgcolor=BG),
+        yaxis_title="수출단가 (USD/kg)",
+    )
+    fig.update_xaxes(showgrid=False, linecolor=GRID)
+    fig.update_yaxes(showgrid=True, gridcolor=GRID, linecolor=GRID, side="right")
+    return fig
+
+
+def render_kcs_memory(df: Optional[pd.DataFrame]) -> None:
+    """대시보드 상단에 메모리 수출단가 최신값과 월별 추이를 표시한다."""
+    if df is None or df.empty:
+        return
+
+    focus = df[df["hs_code"].isin(KCS_MEMORY_SERIES)].copy()
+    if focus.empty:
+        return
+
+    latest_period = str(focus["period"].max())
+    with st.expander(f"🧠 메모리 반도체 수출단가 · 최근 {latest_period}", expanded=True):
+        cols = st.columns(3)
+        for col, (code, label) in zip(cols, KCS_MEMORY_SERIES.items()):
+            g = focus[focus["hs_code"] == code].sort_values("date")
+            if g.empty:
+                col.metric(label, "N/A")
+                continue
+            latest = float(g["export_unit_price_weight"].iloc[-1])
+            mom = _kcs_change(g, 1)
+            yoy = _kcs_change(g, 12)
+            delta = pct(mom) if mom is not None else None
+            help_text = (
+                f"관세청 품목별 수출입실적의 월별 수출금액/중량 기준 단가. "
+                f"최근 YoY {pct(yoy) if yoy is not None else 'N/A'}."
+            )
+            col.metric(
+                label, f"{latest:,.0f} USD/kg", delta,
+                help=help_text,
+            )
+
+        c1, c2 = st.columns([2, 1])
+        with c1:
+            years = st.select_slider(
+                "표시 기간", options=[3, 5, 7, 10], value=5,
+                key="kcs_years", format_func=lambda v: f"{v}년",
+                label_visibility="collapsed",
+            )
+        with c2:
+            include_logic = st.checkbox(
+                "Logic 대조군", value=False, key="kcs_logic",
+                help="메모리 사이클과 일반 로직 IC 단가를 상대 비교할 때 사용합니다.",
+            )
+
+        st.plotly_chart(
+            kcs_memory_chart(df, years, include_logic),
+            use_container_width=True, key="kcs_memory_chart",
+        )
+        st.caption(
+            "관세청 월별 **수출단가(USD/kg)** 입니다. DRAM/NAND 현물 칩 가격이 아니라 "
+            "수출금액÷중량으로 계산된 제품 믹스 포함 지표입니다. "
+            "MCP는 HBM 전용 가격이 아니라 **HBM을 포함할 수 있는 대리지표**이며, "
+            "모델 학습에서는 공표 지연을 반영해 해당 월의 익월 15일 이후에만 사용합니다."
+        )
 
 
 # ======================================================================================
@@ -740,6 +895,10 @@ def main() -> None:
             "예측 분포는 이 가격 기준으로 재조정되어 표시됩니다 "
             "(모델 입력은 마지막 확정 봉 기준)."
         )
+
+    # 관세청 메모리 단가는 로컬 publish 단계에서 정적 CSV로 함께 올라온다.
+    # Streamlit Cloud가 관세청 API나 로컬 절대경로를 직접 호출하지 않는다.
+    render_kcs_memory(load_kcs_memory())
 
     # 종목은 드롭다운으로 선택한다. 탭으로 늘어놓으면 종목이 늘어날수록 폭이 부족하고,
     # 선택하지 않은 종목까지 전부 렌더링되어 느려진다.

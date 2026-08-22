@@ -1,7 +1,7 @@
 {
-  "schema_version": "1.1",
+  "schema_version": "1.2",
   "generated_at": "2026-08-22T17:37:44+09:00",
-  "published_at": "2026-08-22T14:27:24+00:00",
+  "published_at": "2026-08-22T15:43:54+00:00",
   "symbols": [
     "000660",
     "005930",
@@ -118,7 +118,8 @@
       "backtest_VST_h5.csv",
       "backtest_VST_h10.csv",
       "backtest_VST_h30.csv"
-    ]
+    ],
+    "kcs_memory_prices": "kcs_memory_prices.csv"
   },
   "notice": "로컬에서 계산된 결과의 스냅샷입니다. 이 대시보드는 읽기 전용이며 실시간 시세를 조회하지 않습니다."
 }
