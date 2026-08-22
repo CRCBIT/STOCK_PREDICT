@@ -751,6 +751,66 @@ st.markdown("""
     font-weight: 600 !important;
   }
 
+
+  /* ===============================================================
+     v13: 상세 표를 대시보드 카드와 동일한 다크 톤으로 통일
+     st.dataframe의 밝은 Glide 테마 대신 직접 렌더링하는 읽기 전용 표.
+     =============================================================== */
+  .dash-table-wrap {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid rgba(120,132,148,0.16);
+    border-radius: 10px;
+    background: #0d1117;
+    margin: 2px 0 7px 0;
+  }
+
+  table.dash-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    background: #0d1117;
+    color: #d7dee8;
+    font-size: 0.79rem;
+    line-height: 1.35;
+  }
+
+  table.dash-table thead th {
+    background: #111720;
+    color: #bfc9d6;
+    font-weight: 650;
+    text-align: left;
+    padding: 9px 10px;
+    border-bottom: 1px solid rgba(120,132,148,0.20);
+    white-space: nowrap;
+  }
+
+  table.dash-table tbody td {
+    background: #0d1117;
+    color: #d7dee8;
+    padding: 8px 10px;
+    border-bottom: 1px solid rgba(120,132,148,0.11);
+    vertical-align: middle;
+  }
+
+  table.dash-table tbody tr:last-child td {
+    border-bottom: 0;
+  }
+
+  table.dash-table tbody tr:hover td {
+    background: #111720;
+  }
+
+  table.dash-table td + td,
+  table.dash-table th + th {
+    border-left: 1px solid rgba(120,132,148,0.08);
+  }
+
+  /* 숫자/값 열은 살짝 더 밝게 */
+  table.dash-table tbody td:not(:first-child) {
+    color: #e4e9ef;
+  }
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -926,6 +986,22 @@ def section_head(kicker: str, title: str, note: str = "") -> None:
           {note_html}
         </div>
         """,
+        unsafe_allow_html=True,
+    )
+
+
+def render_dark_table(df: pd.DataFrame) -> None:
+    """작은 진단/레벨 표를 대시보드 다크 톤으로 렌더링한다."""
+    if df is None or df.empty:
+        return
+    html = df.to_html(
+        index=False,
+        escape=True,
+        border=0,
+        classes="dash-table",
+    )
+    st.markdown(
+        f'<div class="dash-table-wrap">{html}</div>',
         unsafe_allow_html=True,
     )
 
@@ -1469,14 +1545,13 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
                 v = num(p.get(key))
                 chg = (v / now - 1.0) if (v is not None and now) else None
                 rows.append({"구간": lab, "가격": price(v, currency), "현재가 대비": pct(chg)})
-            st.dataframe(pd.DataFrame(rows), hide_index=True, use_container_width=True,
-                         key=f"quant_{uid}")
+            render_dark_table(pd.DataFrame(rows))
         with right:
             lv = [("2차 목표", "target_2"), ("1차 목표", "target_1"),
                   ("추가매수 고려", "add_buy_reference"), ("손절 고려", "stop_loss_reference")]
-            st.dataframe(
-                pd.DataFrame([{"항목": k, "가격": price(p.get(v), currency)} for k, v in lv]),
-                hide_index=True, use_container_width=True, key=f"levels_{uid}")
+            render_dark_table(
+                pd.DataFrame([{"항목": k, "가격": price(p.get(v), currency)} for k, v in lv])
+            )
             st.caption(
                 f"R/R {fnum(p.get('risk_reward'))} · ATR {pct(p.get('atr_pct'), signed=False)} · "
                 f"지지 {price(p.get('support_20d'), currency, False)} / "
@@ -1487,14 +1562,14 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
     with st.expander("모델 진단"):
         d1, d2 = st.columns(2)
         with d1:
-            st.dataframe(pd.DataFrame({
+            render_dark_table(pd.DataFrame({
                 "지표": ["IC (Spearman)", "방향 정확도", "RMSE", "baseline RMSE",
                          "80% 구간 실측 커버리지"],
                 "값": [fnum(p.get("oos_ic"), 3),
                        pct(p.get("oos_directional_accuracy"), signed=False),
                        fnum(p.get("oos_rmse"), 4), fnum(p.get("baseline_rmse"), 4),
                        pct(p.get("coverage_80"), signed=False)],
-            }), hide_index=True, use_container_width=True, key=f"diag_{uid}")
+            }))
         with d2:
             info = [("선택된 모델", str(p.get("model_weights") or p.get("models") or "-")),
                     ("Fallback level", str(p.get("fallback_level"))),
@@ -1505,8 +1580,7 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
                 info.insert(1, ("과대외삽 보정", f"x{sh:.2f}"))
             if p.get("missing_data"):
                 info.append(("누락 데이터", str(p.get("missing_data"))))
-            st.dataframe(pd.DataFrame(info, columns=["항목", "값"]),
-                         hide_index=True, use_container_width=True, key=f"meta_{uid}")
+            render_dark_table(pd.DataFrame(info, columns=["항목", "값"]))
         comps = p.get("confidence_components")
         if isinstance(comps, dict) and comps:
             st.markdown("**신뢰도 구성** — 어느 항목에서 점수를 잃었는지")
@@ -1524,8 +1598,7 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
             }
             rows = [{"항목": label.get(k, k), "달성도": f"{float(v) * 100:.0f}%"}
                     for k, v in comps.items() if not k.startswith("_")]
-            st.dataframe(pd.DataFrame(rows), hide_index=True,
-                         use_container_width=True, key=f"comp_{uid}")
+            render_dark_table(pd.DataFrame(rows))
             if comps.get("_baseline_only_cap"):
                 st.caption("ML 모델이 baseline 을 이기지 못해 신뢰도 상한 25 가 적용되었습니다.")
 
