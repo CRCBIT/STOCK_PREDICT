@@ -196,10 +196,57 @@ st.markdown("""
     gap: 6px;
   }
   div[role="radiogroup"] label {
-    background: rgba(13,17,23,0.72);
-    border: 1px solid var(--line);
+    background: rgba(13,17,23,0.72) !important;
+    border: 1px solid var(--line) !important;
     border-radius: 9px;
-    padding: 4px 9px;
+    padding: 5px 10px;
+    color: var(--muted) !important;
+    transition: 120ms ease;
+  }
+  div[role="radiogroup"] label:hover {
+    background: rgba(255,255,255,0.035) !important;
+    border-color: var(--line-strong) !important;
+  }
+  /* 선택된 예측기간: 흰색 대신 어두운 앰버 톤 */
+  div[role="radiogroup"] label:has(input:checked) {
+    background: rgba(240,185,11,0.10) !important;
+    border-color: rgba(240,185,11,0.32) !important;
+    color: var(--text) !important;
+    box-shadow: inset 0 0 0 1px rgba(240,185,11,0.05);
+  }
+  div[data-testid="stRadio"] input[type="radio"] {
+    accent-color: #f0b90b !important;
+  }
+
+  /* Streamlit 탭도 흰색 면이 뜨지 않도록 같은 톤으로 통일 */
+  .stTabs [data-baseweb="tab-list"] {
+    gap: 5px;
+    background: rgba(13,17,23,0.58);
+    border: 1px solid var(--line);
+    border-radius: 11px;
+    padding: 4px;
+  }
+  .stTabs button[data-baseweb="tab"] {
+    background: transparent !important;
+    color: var(--muted) !important;
+    border-radius: 8px;
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+  .stTabs button[data-baseweb="tab"]:hover {
+    background: rgba(255,255,255,0.035) !important;
+    color: var(--text) !important;
+  }
+  .stTabs button[data-baseweb="tab"][aria-selected="true"] {
+    background: rgba(240,185,11,0.10) !important;
+    color: var(--text) !important;
+  }
+  .stTabs [data-baseweb="tab-highlight"] {
+    background-color: #f0b90b !important;
+    height: 2px !important;
+  }
+  .stTabs [data-baseweb="tab-border"] {
+    background-color: transparent !important;
   }
 
   /* 판정 카드 */
