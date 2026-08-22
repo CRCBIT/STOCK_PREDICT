@@ -191,24 +191,75 @@ st.markdown("""
     font-size: 0.86rem;
   }
 
-  /* selectbox: 기본 흰 배경을 강하게 덮어쓴다 */
+  /* 종목 선택: 메모리 단가 패널과 같은 어두운 톤으로 통일 */
+  div[data-testid="stSelectbox"] {
+    background: transparent !important;
+  }
+
+  div[data-testid="stSelectbox"] [data-baseweb="select"],
   div[data-testid="stSelectbox"] [data-baseweb="select"] > div,
-  div[data-testid="stSelectbox"] [data-baseweb="select"] > div:hover,
-  div[data-testid="stSelectbox"] [data-baseweb="select"] > div:focus,
-  div[data-testid="stSelectbox"] [data-baseweb="select"] > div:focus-within {
-    background: rgba(13,17,23,0.92) !important;
-    border-color: var(--line-strong) !important;
-    border-radius: 10px !important;
+  div[data-testid="stSelectbox"] [data-baseweb="select"] > div > div,
+  div[data-testid="stSelectbox"] [data-baseweb="select"] input {
+    background-color: #0d1117 !important;
+    color: var(--text) !important;
+  }
+
+  div[data-testid="stSelectbox"] [data-baseweb="select"] > div {
+    min-height: 46px !important;
+    border: 1px solid var(--line) !important;
+    border-radius: 11px !important;
     box-shadow: none !important;
   }
-  div[data-testid="stSelectbox"] [data-baseweb="select"] span,
-  div[data-testid="stSelectbox"] [data-baseweb="select"] div,
-  div[data-testid="stSelectbox"] [data-baseweb="select"] svg {
-    color: var(--text) !important;
-    fill: var(--text) !important;
+
+  div[data-testid="stSelectbox"] [data-baseweb="select"] > div:hover {
+    background-color: #111720 !important;
+    border-color: var(--line-strong) !important;
   }
-  div[data-testid="stSelectbox"] label p {
+
+  div[data-testid="stSelectbox"] [data-baseweb="select"] > div:focus,
+  div[data-testid="stSelectbox"] [data-baseweb="select"] > div:focus-within {
+    background-color: #111720 !important;
+    border-color: rgba(240,185,11,0.28) !important;
+    box-shadow: 0 0 0 1px rgba(240,185,11,0.06) !important;
+  }
+
+  div[data-testid="stSelectbox"] [data-baseweb="select"] span,
+  div[data-testid="stSelectbox"] [data-baseweb="select"] div {
+    color: var(--text-soft) !important;
+  }
+
+  div[data-testid="stSelectbox"] [data-baseweb="select"] svg {
     color: var(--muted) !important;
+    fill: var(--muted) !important;
+  }
+
+  div[data-testid="stSelectbox"] label p {
+    color: var(--text-soft) !important;
+    font-weight: 560;
+  }
+
+  /* 드롭다운을 열었을 때 목록도 흰색으로 뜨지 않게 */
+  div[data-baseweb="popover"] {
+    background: transparent !important;
+  }
+
+  div[data-baseweb="popover"] > div,
+  div[data-baseweb="menu"],
+  ul[role="listbox"] {
+    background-color: #0d1117 !important;
+    border-color: var(--line-strong) !important;
+    color: var(--text-soft) !important;
+  }
+
+  li[role="option"] {
+    background-color: #0d1117 !important;
+    color: var(--text-soft) !important;
+  }
+
+  li[role="option"]:hover,
+  li[role="option"][aria-selected="true"] {
+    background-color: #161b22 !important;
+    color: var(--text) !important;
   }
 
   /* expander summary/header: 흰 막대 제거 */
