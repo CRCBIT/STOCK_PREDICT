@@ -36,8 +36,8 @@ DISCLAIMER = "통계 모델의 예측 분포이며 투자 조언이 아닙니다
 
 # ---- 다크 팔레트 ---------------------------------------------------------------------
 BG = "rgba(0,0,0,0)"
-GRID = "rgba(255,255,255,0.06)"
-TEXT = "#8b949e"
+GRID = "rgba(255,255,255,0.075)"
+TEXT = "#aeb9c7"      # Plotly 축/범례용: 본문보다 낮지만 충분히 읽히는 회색
 UP = "#f23645"        # 상승 (국내 관행: 빨강)
 DOWN = "#2196f3"      # 하락
 FCOL = "#f0b90b"      # 예측 (앰버)
@@ -65,10 +65,12 @@ st.markdown("""
     --bg: #080b10;
     --panel: rgba(18, 23, 31, 0.78);
     --panel-2: rgba(13, 17, 23, 0.72);
-    --line: rgba(255,255,255,0.075);
-    --line-strong: rgba(255,255,255,0.12);
-    --text: #e6edf3;
-    --muted: #8b949e;
+    --line: rgba(255,255,255,0.09);
+    --line-strong: rgba(255,255,255,0.15);
+    --text: #e8edf3;
+    --text-soft: #c5ced9;
+    --muted: #a1adbb;
+    --muted-2: #7f8b99;
     --accent: #f0b90b;
     --blue: #58a6ff;
     --green: #3fb950;
@@ -116,7 +118,7 @@ st.markdown("""
     line-height: 1.1;
   }
   .dash-subtitle {
-    color: var(--muted);
+    color: var(--text-soft);
     font-size: 0.82rem;
     margin-top: 7px;
   }
@@ -136,7 +138,7 @@ st.markdown("""
     margin: 22px 0 10px 0;
   }
   .section-kicker {
-    color: var(--muted);
+    color: #9ca8b7;
     font-size: 0.68rem;
     font-weight: 800;
     letter-spacing: 0.12em;
@@ -169,8 +171,9 @@ st.markdown("""
     transition: 120ms ease;
   }
   [data-testid="stMetricLabel"] {
-    color: var(--muted);
+    color: var(--text-soft) !important;
     font-size: 0.76rem;
+    font-weight: 560;
   }
   [data-testid="stMetricValue"] {
     font-size: 1.24rem;
@@ -297,7 +300,7 @@ st.markdown("""
     border-radius: 11px;
     background: rgba(22,27,35,0.72);
     padding: 11px 14px;
-    color: #c9d1d9;
+    color: #d0d8e2;
     font-size: 0.91rem;
     line-height: 1.55;
     margin: 8px 0 14px 0;
@@ -333,7 +336,7 @@ st.markdown("""
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    color: var(--muted);
+    color: var(--text-soft);
     font-size: 0.76rem;
     padding: 5px 8px;
     border: 1px solid var(--line);
@@ -342,6 +345,90 @@ st.markdown("""
   }
 
   hr { border-color: var(--line) !important; }
+
+  /* -----------------------------------------------------------------
+     읽기성: 흰색으로 번쩍이지 않으면서 보조 텍스트를 충분히 띄운다.
+     ----------------------------------------------------------------- */
+  [data-testid="stAppViewContainer"] {
+    color: var(--text);
+  }
+
+  /* Streamlit caption이 기본 테마에서 너무 어두워지는 문제 보정 */
+  [data-testid="stCaptionContainer"],
+  [data-testid="stCaptionContainer"] p,
+  .stCaption,
+  .stCaption p {
+    color: var(--muted) !important;
+    opacity: 1 !important;
+    line-height: 1.5;
+  }
+
+  /* 일반 안내 문구는 제목보다 낮고 caption보다 살짝 밝게 */
+  div[data-testid="stMarkdownContainer"] > p {
+    color: var(--text-soft);
+  }
+
+  /* 입력 컨트롤 라벨 */
+  div[data-testid="stSelectbox"] > label p,
+  div[data-testid="stSelectSlider"] > label p,
+  div[data-testid="stSlider"] > label p,
+  div[data-testid="stRadio"] > label p,
+  div[data-testid="stCheckbox"] label p,
+  div[data-testid="stCheckbox"] label span {
+    color: var(--text-soft) !important;
+    opacity: 1 !important;
+  }
+
+  /* 라디오 비선택 텍스트도 너무 죽지 않게 */
+  div[role="radiogroup"] label,
+  div[role="radiogroup"] label p,
+  div[role="radiogroup"] label span {
+    color: var(--muted) !important;
+    opacity: 1 !important;
+  }
+  div[role="radiogroup"] label:has(input:checked),
+  div[role="radiogroup"] label:has(input:checked) p,
+  div[role="radiogroup"] label:has(input:checked) span {
+    color: var(--text) !important;
+  }
+
+  /* 체크박스 문구와 help 아이콘 */
+  div[data-testid="stCheckbox"] svg,
+  [data-testid="stTooltipHoverTarget"] svg {
+    color: var(--muted) !important;
+    fill: var(--muted) !important;
+  }
+
+  /* 슬라이더: 빨간 기본 테마보다 대시보드의 앰버 포인트와 맞춘다 */
+  div[data-testid="stSlider"] [data-baseweb="slider"] div[role="slider"] {
+    background-color: var(--accent) !important;
+    border-color: var(--accent) !important;
+  }
+  div[data-testid="stSlider"] [data-baseweb="slider"] div {
+    color: var(--text-soft);
+  }
+
+  /* Expander 안 설명이 배경에 묻히지 않도록 */
+  div[data-testid="stExpander"] [data-testid="stMarkdownContainer"] p {
+    color: var(--muted) !important;
+  }
+  div[data-testid="stExpander"] details summary p,
+  div[data-testid="stExpander"] details summary span {
+    color: var(--text-soft) !important;
+    font-weight: 600;
+  }
+
+  /* 상태/경고 박스 텍스트는 명도만 확보하고 배경색은 기존 유지 */
+  div[data-testid="stAlert"] p,
+  div[data-testid="stAlert"] span {
+    color: var(--text-soft) !important;
+  }
+
+  /* 데이터프레임 위/아래의 작은 레이블 */
+  div[data-testid="stDataFrame"] + div,
+  div[data-testid="stDataFrame"] ~ div[data-testid="stCaptionContainer"] {
+    color: var(--muted) !important;
+  }
 
   @media (max-width: 850px) {
     .dash-hero {align-items: flex-start; flex-direction: column;}
