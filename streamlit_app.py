@@ -336,6 +336,12 @@ def verdict(p: Dict) -> str:
     else:
         parts.append("상대적으로 신뢰도가 높은 구간입니다.")
 
+    # P50 의 성격을 항상 알려준다 — 이름 때문에 '목표가' 로 읽히기 쉽다.
+    parts.append(
+        "P50 은 목표가가 아니라 추세를 연장하지 않은 기준점입니다. "
+        "상승 국면에서는 실제 가격이 그 위에 놓이는 편이 정상입니다."
+    )
+
     # 커버리지는 과소/과대를 구분해야 한다.
     # 80% 미만 = 구간이 좁아 실제 변동을 놓침(위험 과소평가), 초과 = 과도하게 보수적.
     if cov is not None:
@@ -410,7 +416,7 @@ def candle_chart(hist: Optional[pd.DataFrame], p: Dict,
                     name="50%", hoverinfo="skip"), row=1, col=1)
             if c50:
                 fig.add_trace(go.Scatter(
-                    x=fx, y=c50, mode="lines", name="P50",
+                    x=fx, y=c50, mode="lines", name="P50 (기준값)",
                     line=dict(color=FCOL, width=1.8, dash="dot"),
                     hovertemplate="%{x|%m/%d} · %{y:,.0f}<extra></extra>"), row=1, col=1)
                 fig.add_annotation(x=fx[-1], y=c50[-1], text=f" {price(c50[-1], currency, False)}",
@@ -505,6 +511,13 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
     hist = load_history(symbol)
     st.plotly_chart(candle_chart(hist, p, lookback, show_volume),
                     use_container_width=True, key=f"candle_{uid}")
+    st.caption(
+        "음영이 예측 분포입니다. 점선(P50)은 **목표가가 아니라 기준점**이며, "
+        "이 시스템은 최근 추세를 미래로 연장하지 않습니다. "
+        "상승 국면에서는 실제 가격이 점선 위에 놓이는 편이 정상이므로, "
+        "읽어야 할 것은 점선의 위치가 아니라 **음영의 폭**입니다. "
+        "콘의 폭은 √t 로 보간한 시각적 근사이고 미래 날짜는 공휴일 미반영입니다."
+    )
 
     # ---- 핵심 수치 ----
     m = st.columns(5)
@@ -519,9 +532,11 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
         tip = ("예측을 계산한 시점의 가격입니다. quotes.py 를 돌리면 최신가로 갱신됩니다. "
                f"변동률은 전일({prev_label or '?'}) 대비입니다.")
     m[0].metric(label, price(now, currency), delta, help=tip)
-    m[1].metric(f"{horizon}일 후 P50", price(p.get("p50"), currency), pct(ret_of(p)),
-                help="예측 분포의 중앙값. 이보다 높을 확률과 낮을 확률이 각각 50% 라는 뜻이며, "
-                     "가장 가능성 높은 하나의 값이 아닙니다.")
+    m[1].metric(f"{horizon}일 후 기준값 (P50)", price(p.get("p50"), currency), pct(ret_of(p)),
+                help="목표가가 아닙니다. 이 시스템은 최근 추세를 미래로 연장하지 않도록 "
+                     "설계되어 있어, P50 은 '추세를 연장하지 않았을 때의 기준점' 에 가깝습니다. "
+                     "상승 국면에서는 실제 가격이 P50 위에 놓이는 경우가 더 많은 것이 정상입니다. "
+                     "방향 근거가 아니라 구간 폭을 보는 용도로 쓰십시오.")
     m[2].metric("P10 ~ P90",
                 f"{price(p.get('p10'), currency, False)} ~ {price(p.get('p90'), currency, False)}",
                 help="80% 예측구간. 과거 검증 기준으로 실제 가격이 이 범위에 들어올 확률이 80%. "
@@ -537,7 +552,7 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
         left, right = st.columns(2)
         with left:
             rows = []
-            for key, lab in [("p90", "P90"), ("p75", "P75"), ("p50", "P50"),
+            for key, lab in [("p90", "P90"), ("p75", "P75"), ("p50", "P50 (기준값)"),
                              ("p25", "P25"), ("p10", "P10")]:
                 v = num(p.get(key))
                 chg = (v / now - 1.0) if (v is not None and now) else None
