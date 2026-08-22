@@ -187,10 +187,51 @@ st.markdown("""
   div[data-testid="stCheckbox"] {
     font-size: 0.86rem;
   }
-  div[data-baseweb="select"] > div {
-    background: rgba(13,17,23,0.76);
-    border-color: var(--line-strong);
-    border-radius: 10px;
+
+  /* selectbox: 기본 흰 배경을 강하게 덮어쓴다 */
+  div[data-testid="stSelectbox"] [data-baseweb="select"] > div,
+  div[data-testid="stSelectbox"] [data-baseweb="select"] > div:hover,
+  div[data-testid="stSelectbox"] [data-baseweb="select"] > div:focus,
+  div[data-testid="stSelectbox"] [data-baseweb="select"] > div:focus-within {
+    background: rgba(13,17,23,0.92) !important;
+    border-color: var(--line-strong) !important;
+    border-radius: 10px !important;
+    box-shadow: none !important;
+  }
+  div[data-testid="stSelectbox"] [data-baseweb="select"] span,
+  div[data-testid="stSelectbox"] [data-baseweb="select"] div,
+  div[data-testid="stSelectbox"] [data-baseweb="select"] svg {
+    color: var(--text) !important;
+    fill: var(--text) !important;
+  }
+  div[data-testid="stSelectbox"] label p {
+    color: var(--muted) !important;
+  }
+
+  /* expander summary/header: 흰 막대 제거 */
+  div[data-testid="stExpander"] details {
+    background: rgba(13,17,23,0.55) !important;
+    border-radius: 12px !important;
+  }
+  div[data-testid="stExpander"] details summary {
+    background: rgba(13,17,23,0.90) !important;
+    color: var(--text) !important;
+    border: 1px solid var(--line) !important;
+    border-radius: 12px !important;
+  }
+  div[data-testid="stExpander"] details[open] summary {
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    border-bottom-color: rgba(255,255,255,0.06) !important;
+  }
+  div[data-testid="stExpander"] details summary:hover {
+    background: rgba(18,23,31,0.95) !important;
+  }
+  div[data-testid="stExpander"] details summary p,
+  div[data-testid="stExpander"] details summary span,
+  div[data-testid="stExpander"] details summary svg {
+    color: var(--text) !important;
+    fill: var(--text) !important;
   }
   div[role="radiogroup"] {
     gap: 6px;
@@ -269,7 +310,7 @@ st.markdown("""
   div[data-testid="stExpander"] {
     border: 1px solid var(--line);
     border-radius: 12px;
-    background: rgba(13,17,23,0.55);
+    background: rgba(13,17,23,0.55) !important;
     overflow: hidden;
     margin-top: 8px;
   }
