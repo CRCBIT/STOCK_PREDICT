@@ -238,6 +238,46 @@ st.markdown("""
     font-weight: 560;
   }
 
+  /* Streamlit 버전에 따라 실제 입력 박스가 role=combobox 레이어에 그려진다.
+     종목명이 표시되는 칸 자체를 완전히 다크 톤으로 고정한다. */
+  div[data-testid="stSelectbox"] div[role="combobox"],
+  div[data-testid="stSelectbox"] div[role="combobox"] > div,
+  div[data-testid="stSelectbox"] div[role="combobox"] span,
+  div[data-testid="stSelectbox"] [data-baseweb="select"] *,
+  div[data-testid="stSelectbox"] input {
+    background-color: #0d1117 !important;
+    background-image: none !important;
+  }
+
+  div[data-testid="stSelectbox"] div[role="combobox"] {
+    color: #d7dee8 !important;
+    border-color: rgba(255,255,255,0.10) !important;
+    box-shadow: none !important;
+    border-radius: 11px !important;
+  }
+
+  div[data-testid="stSelectbox"] div[role="combobox"]:hover {
+    background-color: #111720 !important;
+  }
+
+  div[data-testid="stSelectbox"] div[role="combobox"]:focus,
+  div[data-testid="stSelectbox"] div[role="combobox"]:focus-within {
+    background-color: #111720 !important;
+    border-color: rgba(240,185,11,0.28) !important;
+    outline: none !important;
+  }
+
+  /* 종목명 텍스트와 화살표는 충분히 보이게 */
+  div[data-testid="stSelectbox"] div[role="combobox"] span {
+    color: #d7dee8 !important;
+  }
+
+  div[data-testid="stSelectbox"] div[role="combobox"] svg {
+    color: #a1adbb !important;
+    fill: #a1adbb !important;
+    background-color: transparent !important;
+  }
+
   /* 드롭다운을 열었을 때 목록도 흰색으로 뜨지 않게 */
   div[data-baseweb="popover"] {
     background: transparent !important;
