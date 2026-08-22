@@ -1444,6 +1444,32 @@ def equity_chart(bt: pd.DataFrame) -> Optional[go.Figure]:
     return fig
 
 
+
+def format_used_data_brief(value) -> str:
+    """예측 결과의 used_data 필드를 대시보드용 한 줄로 정리한다."""
+    if value is None:
+        return ""
+
+    if isinstance(value, (list, tuple, set)):
+        items = [str(x).strip() for x in value if str(x).strip()]
+    else:
+        raw = str(value).strip()
+        if not raw or raw.lower() in {"none", "nan", "[]"}:
+            return ""
+
+        # CSV 경로에서는 "ohlcv,technical,market" 같은 문자열일 수 있고,
+        # JSON/문자열화된 list 형태도 가볍게 처리한다.
+        raw = raw.strip("[]")
+        items = [
+            x.strip().strip("'\"")
+            for x in raw.split(",")
+            if x.strip().strip("'\"")
+        ]
+
+    # 순서를 유지하면서 중복만 제거한다.
+    return " · ".join(dict.fromkeys(items))
+
+
 # ======================================================================================
 # 종목 화면
 # ======================================================================================
@@ -1534,6 +1560,12 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
                      "50% 근처면 방향성 정보가 없다는 뜻입니다.")
     m[4].metric("변동성(연율)", pct(p.get("expected_volatility_annual"), signed=False),
                 help="최근 일간 수익률 표준편차를 연율화(×√252)한 값. 예측이 아니라 현재 상태 지표입니다.")
+
+    # 실제 Dataset.availability에서 사용 가능(True)로 기록되어 예측 결과에 저장된 데이터 그룹.
+    # 다른 계산/모델/차트 로직은 건드리지 않고 화면에만 간략히 표시한다.
+    used_brief = format_used_data_brief(p.get("used_data"))
+    if used_brief:
+        st.caption(f"🧠 **실제 학습 입력 데이터** · {used_brief}")
 
     # ---- 접힌 상세 ----
     with st.expander("분위수 · 참고 레벨"):
