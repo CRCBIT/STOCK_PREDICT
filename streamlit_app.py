@@ -51,18 +51,215 @@ KCS_MEMORY_SERIES = {
 }
 KCS_LOGIC_CODE = "8542311000"
 
-st.set_page_config(page_title="주가 예측", page_icon="📈", layout="wide")
+st.set_page_config(
+    page_title="주가 예측",
+    page_icon="📈",
+    layout="wide",
+    initial_sidebar_state="collapsed",
+)
 
+# 시각적 계층만 정리한다. 데이터/계산/판정 로직은 건드리지 않는다.
 st.markdown("""
 <style>
+  :root {
+    --bg: #080b10;
+    --panel: rgba(18, 23, 31, 0.78);
+    --panel-2: rgba(13, 17, 23, 0.72);
+    --line: rgba(255,255,255,0.075);
+    --line-strong: rgba(255,255,255,0.12);
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --accent: #f0b90b;
+    --blue: #58a6ff;
+    --green: #3fb950;
+    --red: #f85149;
+  }
+
   #MainMenu, footer, header {visibility: hidden;}
-  .block-container {padding-top: 1.6rem; padding-bottom: 2rem; max-width: 1400px;}
-  [data-testid="stMetricValue"] {font-size: 1.35rem;}
-  [data-testid="stMetricLabel"] {color: #8b949e; font-size: 0.8rem;}
-  [data-testid="stMetricDelta"] {font-size: 0.9rem;}
-  .stTabs [data-baseweb="tab-list"] {gap: 4px;}
-  .verdict {border-left: 3px solid #30363d; padding: 6px 0 6px 12px;
-            color: #c9d1d9; font-size: 0.95rem; margin: 4px 0 14px 0;}
+
+  [data-testid="stAppViewContainer"] {
+    background:
+      radial-gradient(1100px 420px at 15% -10%, rgba(240,185,11,0.075), transparent 55%),
+      radial-gradient(900px 380px at 88% 0%, rgba(88,166,255,0.06), transparent 52%),
+      var(--bg);
+  }
+
+  .block-container {
+    padding-top: 1.15rem;
+    padding-bottom: 2.5rem;
+    max-width: 1460px;
+  }
+
+  /* 상단 헤더 */
+  .dash-hero {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 22px;
+    padding: 8px 2px 18px 2px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 14px;
+  }
+  .dash-eyebrow {
+    color: var(--accent);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+  .dash-title {
+    color: var(--text);
+    font-size: clamp(1.55rem, 2.1vw, 2.15rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+  }
+  .dash-subtitle {
+    color: var(--muted);
+    font-size: 0.82rem;
+    margin-top: 7px;
+  }
+  .dash-meta {
+    color: var(--muted);
+    font-size: 0.78rem;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  /* 섹션 */
+  .section-head {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 22px 0 10px 0;
+  }
+  .section-kicker {
+    color: var(--muted);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+  .section-title {
+    color: var(--text);
+    font-size: 1.05rem;
+    font-weight: 750;
+    letter-spacing: -0.02em;
+  }
+  .section-note {
+    color: var(--muted);
+    font-size: 0.76rem;
+  }
+
+  /* Metric 카드 */
+  div[data-testid="stMetric"] {
+    background: linear-gradient(180deg, rgba(22,27,35,0.9), rgba(13,17,23,0.82));
+    border: 1px solid var(--line);
+    border-radius: 13px;
+    padding: 13px 14px 11px 14px;
+    box-shadow: 0 7px 20px rgba(0,0,0,0.13);
+    min-height: 94px;
+  }
+  div[data-testid="stMetric"]:hover {
+    border-color: var(--line-strong);
+    transform: translateY(-1px);
+    transition: 120ms ease;
+  }
+  [data-testid="stMetricLabel"] {
+    color: var(--muted);
+    font-size: 0.76rem;
+  }
+  [data-testid="stMetricValue"] {
+    font-size: 1.24rem;
+    font-weight: 760;
+    letter-spacing: -0.025em;
+    color: var(--text);
+  }
+  [data-testid="stMetricDelta"] {font-size: 0.82rem;}
+
+  /* 컨트롤 */
+  div[data-testid="stSelectbox"],
+  div[data-testid="stSelectSlider"],
+  div[data-testid="stRadio"],
+  div[data-testid="stCheckbox"] {
+    font-size: 0.86rem;
+  }
+  div[data-baseweb="select"] > div {
+    background: rgba(13,17,23,0.76);
+    border-color: var(--line-strong);
+    border-radius: 10px;
+  }
+  div[role="radiogroup"] {
+    gap: 6px;
+  }
+  div[role="radiogroup"] label {
+    background: rgba(13,17,23,0.72);
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    padding: 4px 9px;
+  }
+
+  /* 판정 카드 */
+  .verdict {
+    border: 1px solid var(--line);
+    border-left: 4px solid #6e7681;
+    border-radius: 11px;
+    background: rgba(22,27,35,0.72);
+    padding: 11px 14px;
+    color: #c9d1d9;
+    font-size: 0.91rem;
+    line-height: 1.55;
+    margin: 8px 0 14px 0;
+  }
+  .verdict.high { border-left-color: var(--green); }
+  .verdict.medium { border-left-color: var(--accent); }
+  .verdict.low { border-left-color: #6e7681; }
+
+  /* Expander / table */
+  div[data-testid="stExpander"] {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: rgba(13,17,23,0.55);
+    overflow: hidden;
+    margin-top: 8px;
+  }
+  div[data-testid="stDataFrame"] {
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  /* Plotly 영역 */
+  div[data-testid="stPlotlyChart"] {
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: rgba(13,17,23,0.42);
+    padding: 2px;
+    overflow: hidden;
+  }
+
+  .micro-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--muted);
+    font-size: 0.76rem;
+    padding: 5px 8px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: rgba(13,17,23,0.58);
+  }
+
+  hr { border-color: var(--line) !important; }
+
+  @media (max-width: 850px) {
+    .dash-hero {align-items: flex-start; flex-direction: column;}
+    .dash-meta {text-align: left; white-space: normal;}
+    .block-container {padding-left: 0.9rem; padding-right: 0.9rem;}
+  }
 </style>
 """, unsafe_allow_html=True)
 
@@ -223,6 +420,23 @@ def pct(v, signed: bool = True) -> str:
 def fnum(v, digits: int = 2) -> str:
     f = num(v)
     return "N/A" if f is None else f"{f:.{digits}f}"
+
+
+def section_head(kicker: str, title: str, note: str = "") -> None:
+    """일관된 섹션 헤더. 표시 계층만 담당한다."""
+    note_html = f"<div class='section-note'>{note}</div>" if note else ""
+    st.markdown(
+        f"""
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">{kicker}</div>
+            <div class="section-title">{title}</div>
+          </div>
+          {note_html}
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
 
 def grade_of(p: Dict) -> str:
@@ -446,15 +660,26 @@ def kcs_memory_chart(df: pd.DataFrame, years: int = 5,
         ))
 
     fig.update_layout(
-        template="plotly_dark", height=360,
-        margin=dict(l=8, r=20, t=8, b=8),
+        template="plotly_dark", height=380,
+        margin=dict(l=12, r=28, t=22, b=12),
         paper_bgcolor=BG, plot_bgcolor=BG,
         font=dict(color=TEXT, size=11), hovermode="x unified",
-        legend=dict(orientation="h", y=1.12, x=0, bgcolor=BG),
+        legend=dict(
+            orientation="h", y=1.12, x=0,
+            bgcolor="rgba(0,0,0,0)", font=dict(size=11),
+        ),
         yaxis_title="수출단가 (USD/kg)",
+        hoverlabel=dict(bgcolor="#161b22", bordercolor="#30363d"),
     )
-    fig.update_xaxes(showgrid=False, linecolor=GRID)
-    fig.update_yaxes(showgrid=True, gridcolor=GRID, linecolor=GRID, side="right")
+    fig.update_xaxes(
+        showgrid=False, linecolor=GRID,
+        showspikes=True, spikecolor="rgba(255,255,255,0.18)",
+        spikethickness=1, spikedash="dot",
+    )
+    fig.update_yaxes(
+        showgrid=True, gridcolor=GRID, linecolor=GRID, side="right",
+        separatethousands=True,
+    )
     return fig
 
 
@@ -468,7 +693,12 @@ def render_kcs_memory(df: Optional[pd.DataFrame]) -> None:
         return
 
     latest_period = str(focus["period"].max())
-    with st.expander(f"🧠 메모리 반도체 수출단가 · 최근 {latest_period}", expanded=True):
+    section_head(
+        "MEMORY CYCLE",
+        "메모리 반도체 수출단가",
+        f"최근 통계 {latest_period} · USD/kg",
+    )
+    with st.expander("관세청 월별 단가 · 상세 보기", expanded=True):
         cols = st.columns(3)
         for col, (code, label) in zip(cols, KCS_MEMORY_SERIES.items()):
             g = focus[focus["hs_code"] == code].sort_values("date")
@@ -581,13 +811,18 @@ def candle_chart(hist: Optional[pd.DataFrame], p: Dict,
                           line=dict(color="rgba(255,255,255,0.22)", width=1, dash="dot"))
 
     fig.update_layout(
-        template="plotly_dark", height=500 if show_volume else 430,
-        margin=dict(l=8, r=70, t=8, b=8), paper_bgcolor=BG, plot_bgcolor=BG,
+        template="plotly_dark", height=510 if show_volume else 445,
+        margin=dict(l=12, r=72, t=18, b=12), paper_bgcolor=BG, plot_bgcolor=BG,
         font=dict(color=TEXT, size=12), hovermode="x unified",
         xaxis_rangeslider_visible=False, showlegend=False, bargap=0.1,
+        hoverlabel=dict(bgcolor="#161b22", bordercolor="#30363d"),
     )
-    fig.update_xaxes(showgrid=False, linecolor=GRID,
-                     rangebreaks=[dict(bounds=["sat", "mon"])])
+    fig.update_xaxes(
+        showgrid=False, linecolor=GRID,
+        rangebreaks=[dict(bounds=["sat", "mon"])],
+        showspikes=True, spikecolor="rgba(255,255,255,0.18)",
+        spikethickness=1, spikedash="dot",
+    )
     fig.update_yaxes(showgrid=True, gridcolor=GRID, linecolor=GRID, side="right",
                      row=1, col=1)
     if show_volume:
@@ -614,10 +849,14 @@ def equity_chart(bt: pd.DataFrame) -> Optional[go.Figure]:
     if bh:
         fig.add_trace(go.Scatter(x=bt[xcol], y=bt[bh], mode="lines", name="Buy & Hold",
                                  line=dict(color="#6e7681", width=1.3, dash="dot")))
-    fig.update_layout(template="plotly_dark", height=250,
-                      margin=dict(l=8, r=8, t=8, b=8), paper_bgcolor=BG, plot_bgcolor=BG,
-                      font=dict(color=TEXT, size=11),
-                      legend=dict(orientation="h", y=1.18, bgcolor=BG))
+    fig.update_layout(
+        template="plotly_dark", height=270,
+        margin=dict(l=12, r=14, t=22, b=10),
+        paper_bgcolor=BG, plot_bgcolor=BG,
+        font=dict(color=TEXT, size=11),
+        legend=dict(orientation="h", y=1.16, bgcolor=BG),
+        hoverlabel=dict(bgcolor="#161b22", bordercolor="#30363d"),
+    )
     fig.update_xaxes(showgrid=False, linecolor=GRID)
     fig.update_yaxes(showgrid=True, gridcolor=GRID, linecolor=GRID)
     return fig
@@ -629,17 +868,28 @@ def equity_chart(bt: pd.DataFrame) -> Optional[go.Figure]:
 def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
                   quotes: Optional[Dict] = None) -> None:
     horizons = sorted(int(h) for h in sub["horizon"].unique())
+    stock_name = str(sub["name"].iloc[0]) if "name" in sub.columns and len(sub) else symbol
 
-    c_h, c_lb, c_vol = st.columns([3, 2, 1])
+    section_head(
+        "FORECAST",
+        f"{stock_name} · {symbol}",
+        "확정 데이터 기반 확률 예측",
+    )
+
+    c_h, c_lb, c_vol = st.columns([3, 2, 1.2])
     with c_h:
-        horizon = st.radio("예측 기간", horizons, horizontal=True, key=f"h_{symbol}",
-                           format_func=lambda h: f"{h}일", label_visibility="collapsed")
+        horizon = st.radio(
+            "예측 기간", horizons, horizontal=True, key=f"h_{symbol}",
+            format_func=lambda h: f"{h}일",
+        )
     with c_lb:
-        lookback = st.select_slider("과거", options=[60, 120, 250, 400], value=120,
-                                    key=f"lb_{symbol}", format_func=lambda v: f"{v}일",
-                                    label_visibility="collapsed")
+        lookback = st.select_slider(
+            "차트 기간", options=[60, 120, 250, 400], value=120,
+            key=f"lb_{symbol}", format_func=lambda v: f"{v}일",
+        )
     with c_vol:
-        show_volume = st.checkbox("거래량", value=True, key=f"v_{symbol}")
+        st.markdown("<div style='height:2px'></div>", unsafe_allow_html=True)
+        show_volume = st.checkbox("거래량 표시", value=True, key=f"v_{symbol}")
 
     row = sub[sub["horizon"] == horizon]
     if row.empty:
@@ -656,9 +906,10 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
     now = num(p.get("current_price"))
 
     # ---- 결론 한 줄 ----
+    grade = grade_of(p)
     st.markdown(
-        f"<div class='verdict'>{DOT.get(grade_of(p), '⚪')} "
-        f"<b>신뢰도 {fnum(p.get('confidence'), 0)}/100 · {grade_of(p)}</b> — {verdict(p)}</div>",
+        f"<div class='verdict {grade.lower()}'>{DOT.get(grade, '⚪')} "
+        f"<b>신뢰도 {fnum(p.get('confidence'), 0)}/100 · {grade}</b> — {verdict(p)}</div>",
         unsafe_allow_html=True,
     )
 
@@ -873,15 +1124,22 @@ def main() -> None:
     symbols = sorted(df["symbol"].unique())
     label, stale = snapshot_label(manifest)
 
-    top_l, top_r = st.columns([3, 2])
-    with top_l:
-        st.markdown("## 📈 주가 예측")
-    with top_r:
-        st.markdown(
-            f"<div style='text-align:right;padding-top:18px;color:#8b949e;font-size:0.85rem'>"
-            f"스냅샷 {label} · 종목 {len(symbols)} · 예측 {len(preds)}건</div>",
-            unsafe_allow_html=True,
-        )
+    st.markdown(
+        f"""
+        <div class="dash-hero">
+          <div>
+            <div class="dash-eyebrow">QUANT FORECAST DASHBOARD</div>
+            <div class="dash-title">📈 주가 예측</div>
+            <div class="dash-subtitle">확률분포 · 위험구간 · 라이브 검증을 한 화면에서 확인합니다.</div>
+          </div>
+          <div class="dash-meta">
+            스냅샷 {label}<br>
+            종목 {len(symbols)} · 예측 {len(preds)}건
+          </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
     if stale:
         st.error(f"이 스냅샷은 {label} 결과입니다. 로컬에서 다시 실행 후 게시하세요.")
@@ -890,11 +1148,12 @@ def main() -> None:
 
     quotes = load_quotes()
     if quotes.get("fetched_at"):
-        st.caption(
-            f"💹 현재가 {quote_age_label(quotes['fetched_at'])} 갱신 · "
-            "예측 분포는 이 가격 기준으로 재조정되어 표시됩니다 "
-            "(모델 입력은 마지막 확정 봉 기준)."
+        st.markdown(
+            f"<span class='micro-status'>💹 현재가 {quote_age_label(quotes['fetched_at'])} 갱신 · "
+            "예측 분포 재조정</span>",
+            unsafe_allow_html=True,
         )
+        st.caption("모델 입력은 마지막 확정 봉 기준입니다.")
 
     # 관세청 메모리 단가는 로컬 publish 단계에서 정적 CSV로 함께 올라온다.
     # Streamlit Cloud가 관세청 API나 로컬 절대경로를 직접 호출하지 않는다.
@@ -902,6 +1161,7 @@ def main() -> None:
 
     # 종목은 드롭다운으로 선택한다. 탭으로 늘어놓으면 종목이 늘어날수록 폭이 부족하고,
     # 선택하지 않은 종목까지 전부 렌더링되어 느려진다.
+    section_head("ASSET", "분석 종목 선택", "종목을 바꾸면 아래 예측 화면만 갱신됩니다.")
     name_of = {sym: str(df[df["symbol"] == sym]["name"].iloc[0]) for sym in symbols}
     symbol = st.selectbox(
         "종목 선택", symbols, key="symbol_select",
