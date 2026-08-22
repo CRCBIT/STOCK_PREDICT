@@ -646,6 +646,61 @@ st.markdown("""
     box-shadow: inset 0 0 0 0 transparent !important;
   }
 
+
+  /* ===============================================================
+     v10: 종목 선택 우측 화살표 칸까지 완전 다크 처리
+     스크린샷에서 남아 있던 흰색 사각형은 BaseWeb select의
+     우측 indicator container 레이어에서 발생한다.
+     =============================================================== */
+  div[data-testid="stSelectbox"] [data-baseweb="select"] > div > div:last-child,
+  div[data-testid="stSelectbox"] [data-baseweb="select"] > div > div:last-child > div,
+  div[data-testid="stSelectbox"] [data-baseweb="select"] > div > div:last-child span,
+  div[data-testid="stSelectbox"] [data-baseweb="select"] > div > div:last-child button,
+  div[data-testid="stSelectbox"] [data-baseweb="select"] [data-baseweb="icon"],
+  div[data-testid="stSelectbox"] [data-baseweb="select"] svg {
+    background: #0d1117 !important;
+    background-color: #0d1117 !important;
+    border: 0 !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+  }
+
+  /* 우측 indicator 영역이 별도 flex item일 때 */
+  div[data-testid="stSelectbox"] [data-baseweb="select"] > div > div:last-of-type {
+    background: #0d1117 !important;
+    background-color: #0d1117 !important;
+    border-left: 0 !important;
+  }
+
+  /* 화살표 자체는 밝은 회색 */
+  div[data-testid="stSelectbox"] [data-baseweb="select"] svg,
+  div[data-testid="stSelectbox"] [data-baseweb="select"] svg path {
+    color: #aeb9c7 !important;
+    fill: #aeb9c7 !important;
+  }
+
+  /* 전체 선택칸에 남아 있는 외곽선도 완전히 제거 */
+  div[data-testid="stSelectbox"] [data-baseweb="select"],
+  div[data-testid="stSelectbox"] [data-baseweb="select"] > div,
+  div[data-testid="stSelectbox"] div[role="combobox"] {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
+  /* 선택칸 전체를 하나의 동일한 배경으로 보이게 */
+  div[data-testid="stSelectbox"] [data-baseweb="select"],
+  div[data-testid="stSelectbox"] [data-baseweb="select"] > div,
+  div[data-testid="stSelectbox"] [data-baseweb="select"] > div > div {
+    background-color: #0d1117 !important;
+  }
+
+  div[data-testid="stSelectbox"] [data-baseweb="select"]:hover,
+  div[data-testid="stSelectbox"] [data-baseweb="select"]:hover > div,
+  div[data-testid="stSelectbox"] [data-baseweb="select"]:hover > div > div {
+    background-color: #111720 !important;
+  }
+
 </style>
 """, unsafe_allow_html=True)
 
