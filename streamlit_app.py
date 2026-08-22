@@ -383,6 +383,12 @@ st.markdown("""
     overflow: hidden;
   }
 
+  /* Plotly SVG 보조 텍스트 대비. 실제 legend 색은 figure 설정에서 별도 지정한다. */
+  div[data-testid="stPlotlyChart"] .xtick text,
+  div[data-testid="stPlotlyChart"] .ytick text {
+    fill: #aeb9c7 !important;
+  }
+
   .micro-status {
     display: inline-flex;
     align-items: center;
@@ -891,8 +897,14 @@ def kcs_memory_chart(df: pd.DataFrame, years: int = 5,
         paper_bgcolor=BG, plot_bgcolor=BG,
         font=dict(color=TEXT, size=11), hovermode="x unified",
         legend=dict(
-            orientation="h", y=1.12, x=0,
-            bgcolor="rgba(0,0,0,0)", font=dict(size=11),
+            orientation="h",
+            y=1.13,
+            x=0,
+            bgcolor="rgba(13,17,23,0.78)",
+            bordercolor="rgba(255,255,255,0.10)",
+            borderwidth=1,
+            font=dict(size=12, color="#d7dee8"),
+            itemsizing="constant",
         ),
         yaxis_title="수출단가 (USD/kg)",
         hoverlabel=dict(bgcolor="#161b22", bordercolor="#30363d"),
@@ -1080,7 +1092,16 @@ def equity_chart(bt: pd.DataFrame) -> Optional[go.Figure]:
         margin=dict(l=12, r=14, t=22, b=10),
         paper_bgcolor=BG, plot_bgcolor=BG,
         font=dict(color=TEXT, size=11),
-        legend=dict(orientation="h", y=1.16, bgcolor=BG),
+        legend=dict(
+            orientation="h",
+            y=1.16,
+            x=0,
+            bgcolor="rgba(13,17,23,0.78)",
+            bordercolor="rgba(255,255,255,0.10)",
+            borderwidth=1,
+            font=dict(size=12, color="#d7dee8"),
+            itemsizing="constant",
+        ),
         hoverlabel=dict(bgcolor="#161b22", bordercolor="#30363d"),
     )
     fig.update_xaxes(showgrid=False, linecolor=GRID)
