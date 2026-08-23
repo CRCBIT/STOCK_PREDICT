@@ -1444,32 +1444,6 @@ def equity_chart(bt: pd.DataFrame) -> Optional[go.Figure]:
     return fig
 
 
-
-def format_used_data_brief(value) -> str:
-    """예측 결과의 used_data 필드를 대시보드용 한 줄로 정리한다."""
-    if value is None:
-        return ""
-
-    if isinstance(value, (list, tuple, set)):
-        items = [str(x).strip() for x in value if str(x).strip()]
-    else:
-        raw = str(value).strip()
-        if not raw or raw.lower() in {"none", "nan", "[]"}:
-            return ""
-
-        # CSV 경로에서는 "ohlcv,technical,market" 같은 문자열일 수 있고,
-        # JSON/문자열화된 list 형태도 가볍게 처리한다.
-        raw = raw.strip("[]")
-        items = [
-            x.strip().strip("'\"")
-            for x in raw.split(",")
-            if x.strip().strip("'\"")
-        ]
-
-    # 순서를 유지하면서 중복만 제거한다.
-    return " · ".join(dict.fromkeys(items))
-
-
 # ======================================================================================
 # 종목 화면
 # ======================================================================================
@@ -1561,12 +1535,6 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
     m[4].metric("변동성(연율)", pct(p.get("expected_volatility_annual"), signed=False),
                 help="최근 일간 수익률 표준편차를 연율화(×√252)한 값. 예측이 아니라 현재 상태 지표입니다.")
 
-    # 실제 Dataset.availability에서 사용 가능(True)로 기록되어 예측 결과에 저장된 데이터 그룹.
-    # 다른 계산/모델/차트 로직은 건드리지 않고 화면에만 간략히 표시한다.
-    used_brief = format_used_data_brief(p.get("used_data"))
-    if used_brief:
-        st.caption(f"🧠 **실제 학습 입력 데이터** · {used_brief}")
-
     # ---- 접힌 상세 ----
     with st.expander("분위수 · 참고 레벨"):
         left, right = st.columns(2)
@@ -1613,6 +1581,27 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
             if p.get("missing_data"):
                 info.append(("누락 데이터", str(p.get("missing_data"))))
             render_dark_table(pd.DataFrame(info, columns=["항목", "값"]))
+
+        # 실제 학습 과정에서 계산된 feature importance 중 상위 10개만 표시한다.
+        # main.py가 latest_predictions.json -> diagnostics에 저장한 top_features를 그대로 사용하므로
+        # Streamlit에서 중요도를 다시 계산하거나 추정하지 않는다.
+        diag = (((payload.get("diagnostics") or {}).get(symbol) or {}).get(str(horizon)) or {})
+        top_features = diag.get("top_features") or {}
+        if isinstance(top_features, dict) and top_features:
+            top10_rows = []
+            for rank, (feature_name, importance) in enumerate(list(top_features.items())[:10], start=1):
+                importance_num = num(importance)
+                top10_rows.append({
+                    "순위": rank,
+                    "Feature": str(feature_name),
+                    "중요도": f"{importance_num:.6f}" if importance_num is not None else str(importance),
+                })
+
+            st.markdown("**실제 학습 Feature Top 10** — 선택된 Feature 중 중요도 상위 10개")
+            render_dark_table(pd.DataFrame(top10_rows))
+        else:
+            st.caption("실제 학습 Feature 중요도 정보가 이 스냅샷에는 없습니다.")
+
         comps = p.get("confidence_components")
         if isinstance(comps, dict) and comps:
             st.markdown("**신뢰도 구성** — 어느 항목에서 점수를 잃었는지")
