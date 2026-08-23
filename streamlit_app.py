@@ -1910,6 +1910,62 @@ st.markdown("""
     }
   }
 
+
+
+  /* 모델 진단 메타정보: PC에서는 한 줄 카드, 모바일에서는 자연스럽게 줄바꿈 */
+  .diag-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+    margin: 10px 0 14px 0;
+  }
+
+  .diag-meta-card {
+    min-width: 0;
+    padding: 9px 10px;
+    border: 1px solid rgba(120,132,148,0.14);
+    border-radius: 9px;
+    background: rgba(13,17,23,0.72);
+  }
+
+  .diag-meta-label {
+    color: #8f9baa;
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    margin-bottom: 3px;
+  }
+
+  .diag-meta-value {
+    color: #e3e9f0;
+    font-size: 0.79rem;
+    font-weight: 700;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+  }
+
+  .diag-meta-desc {
+    color: #9da9b7;
+    font-size: 0.66rem;
+    line-height: 1.35;
+    margin-top: 4px;
+  }
+
+  .diag-subhead {
+    color: #c7d0dc;
+    font-size: 0.74rem;
+    font-weight: 700;
+    margin: 1px 0 6px 0;
+  }
+
+  @media (max-width: 980px) {
+    .diag-meta-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  @media (max-width: 620px) {
+    .diag-meta-grid { grid-template-columns: 1fr; gap: 6px; }
+    .diag-meta-card { padding: 8px 9px; }
+  }
 </style>
 """, unsafe_allow_html=True)
 
@@ -3472,8 +3528,11 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
     diag = (((payload.get("diagnostics") or {}).get(symbol) or {}).get(str(horizon)) or {})
 
     with st.expander("모델 진단"):
-        d1, d2 = st.columns(2)
+        # 첫 줄은 높이가 비슷한 두 블록만 나란히 둔다.
+        # 이전 UI에서는 오른쪽 열에 메타정보 표까지 몰려 왼쪽 아래가 크게 비어 보였다.
+        d1, d2 = st.columns([1.12, 1.0], gap="medium")
         with d1:
+            st.markdown("<div class='diag-subhead'>검증 성능</div>", unsafe_allow_html=True)
             render_dark_table(pd.DataFrame({
                 "지표": ["IC (Spearman)", "방향 정확도", "RMSE", "baseline RMSE",
                          "80% 구간 실측 커버리지"],
@@ -3490,32 +3549,47 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
                 ],
             }))
         with d2:
-            st.markdown("**선택된 모델** — 최종 앙상블 가중치")
+            st.markdown("<div class='diag-subhead'>선택된 모델 · 최종 앙상블 가중치</div>",
+                        unsafe_allow_html=True)
             render_model_weights(
                 diag.get("weights"),
                 p.get("models"),
             )
 
-            info = [
-                ("Fallback level", str(p.get("fallback_level")),
-                 "데이터 부족 시 단순화 단계. 1이 가장 완전한 구성이고 숫자가 커질수록 보수적 fallback"),
-                ("마지막 데이터", str(p.get("last_data_time")),
-                 "모델 입력에 사용된 마지막 확정 거래일"),
-                ("학습 시각", str(p.get("trained_at")),
-                 "현재 게시된 모델을 마지막으로 다시 학습한 시각"),
-            ]
-            sh = num(p.get("shrinkage"))
-            if sh is not None and sh < 0.999:
-                info.insert(1, (
-                    "과대외삽 보정", f"x{sh:.2f}",
-                    "예측값을 과도하게 멀리 보내지 않도록 0수익률 방향으로 축소한 정도"
-                ))
-            if p.get("missing_data"):
-                info.append((
-                    "누락 데이터", str(p.get("missing_data")),
-                    "이번 학습에서 확보되지 않아 자동 제외된 데이터 그룹"
-                ))
-            render_dark_table(pd.DataFrame(info, columns=["항목", "값", "간단 해석"]))
+        # 실행/학습 메타정보는 두 열 아래의 공통 행으로 내려서 좌우 높이 불균형을 없앤다.
+        info = [
+            ("Fallback level", str(p.get("fallback_level")),
+             "1이 가장 완전한 구성"),
+            ("마지막 데이터", str(p.get("last_data_time")),
+             "모델 입력 마지막 확정 거래일"),
+            ("학습 시각", str(p.get("trained_at")),
+             "현재 게시 모델의 재학습 시각"),
+        ]
+        sh = num(p.get("shrinkage"))
+        if sh is not None and sh < 0.999:
+            info.insert(1, (
+                "과대외삽 보정", f"x{sh:.2f}",
+                "예측을 0수익률 방향으로 축소"
+            ))
+        if p.get("missing_data"):
+            info.append((
+                "누락 데이터", str(p.get("missing_data")),
+                "이번 학습에서 자동 제외된 데이터"
+            ))
+
+        meta_cards = []
+        for label, value, desc in info:
+            meta_cards.append(
+                "<div class='diag-meta-card'>"
+                f"<div class='diag-meta-label'>{html.escape(str(label))}</div>"
+                f"<div class='diag-meta-value'>{html.escape(str(value))}</div>"
+                f"<div class='diag-meta-desc'>{html.escape(str(desc))}</div>"
+                "</div>"
+            )
+        st.markdown(
+            "<div class='diag-meta-grid'>" + "".join(meta_cards) + "</div>",
+            unsafe_allow_html=True,
+        )
 
         # 실제 학습 과정에서 계산된 feature importance 중 상위 10개만 표시한다.
         # main.py가 latest_predictions.json -> diagnostics에 저장한 top_features를 그대로 사용하므로
