@@ -1426,6 +1426,10 @@ def feature_meaning(feature_name: str) -> str:
         return "프로그램 차익거래 순매수·순매도 방향이 연속해서 이어지는 정도. 프로그램 수급 추세의 지속성을 나타냄"
     if low == "mom_12_1":
         return "12-1 모멘텀. 최근 1개월을 제외하고 약 12개월 전부터 1개월 전까지의 중장기 가격 모멘텀을 나타냄"
+    if low == "px_zscore60":
+        return "가격의 60거래일 Z-score. 현재 가격이 최근 60일 평균에서 표준편차 기준으로 얼마나 위·아래 벗어나 있는지 나타냄"
+    if low == "ma_alignment":
+        return "단기·중기·장기 이동평균선의 정렬 상태. 정배열·역배열 등 현재 추세 구조와 방향성을 나타냄"
 
     # ---- 관세청 메모리 사이클 ----
     if low.startswith("kcs_"):
