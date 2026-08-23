@@ -59,7 +59,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
-# 시각적 계층만 정리한다. 데이터/계산/판정 로직은 건드리지 않는다.
+# FINAL UI BUILD — 데이터/계산/판정 로직은 변경하지 않는다.
 st.markdown("""
 <style>
   :root {
@@ -485,7 +485,7 @@ st.markdown("""
   }
   .feature-row {
     display: grid;
-    grid-template-columns: 28px minmax(180px, 1.45fr) minmax(120px, 1fr) 78px;
+    grid-template-columns: 28px minmax(155px, 1.05fr) minmax(210px, 1.55fr) minmax(105px, 0.7fr) 78px;
     align-items: center;
     gap: 9px;
     min-height: 34px;
@@ -504,6 +504,12 @@ st.markdown("""
     color: #dde4ec;
     font-size: 0.77rem;
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    overflow-wrap: anywhere;
+  }
+  .feature-meaning {
+    color: var(--text-soft);
+    font-size: 0.74rem;
+    line-height: 1.38;
     overflow-wrap: anywhere;
   }
   .feature-track {
@@ -664,7 +670,7 @@ st.markdown("""
     .dash-meta {text-align: left; white-space: normal;}
     .block-container {padding-left: 0.9rem; padding-right: 0.9rem;}
     .feature-row {
-      grid-template-columns: 24px minmax(150px, 1fr) 64px;
+      grid-template-columns: 24px minmax(125px, 0.9fr) minmax(150px, 1.35fr) 64px;
     }
     .feature-track {display: none;}
   }
@@ -947,6 +953,261 @@ st.markdown("""
     color: #e4e9ef;
   }
 
+
+  /* ===============================================================
+     FINAL POLISH
+     기능/데이터 요소는 유지하고, 계층·간격·가독성·반응형만 최종 정리.
+     =============================================================== */
+
+  html {
+    scrollbar-color: #2a323d #080b10;
+    scrollbar-width: thin;
+  }
+  * {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    background: rgba(240,185,11,0.24);
+    color: #ffffff;
+  }
+
+  .block-container {
+    padding-left: clamp(0.9rem, 2vw, 2.1rem);
+    padding-right: clamp(0.9rem, 2vw, 2.1rem);
+  }
+
+  .dash-hero {
+    padding-top: 10px;
+    padding-bottom: 19px;
+    margin-bottom: 12px;
+  }
+  .dash-title {
+    text-shadow: 0 1px 18px rgba(255,255,255,0.025);
+  }
+  .dash-meta {
+    line-height: 1.55;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .section-head {
+    position: relative;
+    padding-left: 11px;
+    margin-top: 26px;
+    margin-bottom: 11px;
+  }
+  .section-head::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 3px;
+    bottom: 3px;
+    width: 2px;
+    border-radius: 2px;
+    background: linear-gradient(180deg, rgba(240,185,11,0.95), rgba(240,185,11,0.18));
+  }
+  .section-title {
+    font-size: 1.08rem;
+  }
+  .section-note {
+    line-height: 1.4;
+  }
+
+  .status-strip {
+    margin-top: 1px;
+    margin-bottom: 17px;
+  }
+  .status-pill {
+    padding: 7px 11px;
+    background: linear-gradient(180deg, rgba(18,23,31,0.76), rgba(13,17,23,0.72));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.018);
+  }
+
+  div[data-testid="stMetric"] {
+    position: relative;
+    min-height: 96px;
+    padding: 13px 14px 12px 14px;
+    transition: border-color 130ms ease, background 130ms ease, box-shadow 130ms ease;
+  }
+  div[data-testid="stMetric"]::before {
+    content: "";
+    position: absolute;
+    left: 13px;
+    right: 13px;
+    top: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(240,185,11,0.18), transparent);
+  }
+  div[data-testid="stMetric"]:hover {
+    transform: none;
+    background: linear-gradient(180deg, rgba(24,30,39,0.93), rgba(13,17,23,0.85));
+    border-color: rgba(120,132,148,0.25) !important;
+    box-shadow: 0 9px 25px rgba(0,0,0,0.16);
+  }
+  [data-testid="stMetricValue"],
+  [data-testid="stMetricDelta"] {
+    font-variant-numeric: tabular-nums;
+  }
+  [data-testid="stMetricLabel"] {
+    line-height: 1.25;
+  }
+
+  div[role="radiogroup"] label {
+    min-height: 34px;
+    align-items: center;
+  }
+  div[data-testid="stCheckbox"] label {
+    min-height: 32px;
+  }
+  div[data-testid="stSlider"],
+  div[data-testid="stSelectSlider"] {
+    padding-top: 1px;
+  }
+
+  div[data-testid="stExpander"] details[open] {
+    background: rgba(13,17,23,0.64) !important;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.10);
+  }
+  div[data-testid="stExpander"] details > div {
+    padding-top: 5px;
+  }
+  div[data-testid="stExpander"] details summary {
+    min-height: 44px;
+  }
+
+  div[data-testid="stPlotlyChart"] {
+    background: linear-gradient(180deg, rgba(13,17,23,0.55), rgba(8,11,16,0.34));
+    box-shadow: 0 8px 28px rgba(0,0,0,0.10);
+  }
+
+  .dash-table-wrap {
+    box-shadow: 0 7px 20px rgba(0,0,0,0.08);
+  }
+  table.dash-table {
+    font-variant-numeric: tabular-nums;
+  }
+  table.dash-table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    letter-spacing: -0.01em;
+  }
+  table.dash-table tbody td {
+    line-height: 1.48;
+  }
+  table.dash-table tbody td:first-child {
+    color: #c7d0dc;
+    font-weight: 580;
+  }
+
+  .feature-head {
+    display: grid;
+    grid-template-columns: 28px minmax(155px, 1.05fr) minmax(210px, 1.55fr) minmax(105px, 0.7fr) 78px;
+    gap: 9px;
+    align-items: center;
+    padding: 0 8px 4px 8px;
+    color: var(--muted-2);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.035em;
+    text-transform: uppercase;
+  }
+  .feature-head > div:first-child,
+  .feature-head > div:last-child {
+    text-align: right;
+  }
+  .feature-row {
+    min-height: 42px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    transition: background 110ms ease, border-color 110ms ease;
+  }
+  .feature-row:hover {
+    background: rgba(18,23,31,0.90);
+    border-color: rgba(120,132,148,0.21);
+  }
+  .feature-row:nth-child(1) .feature-rank,
+  .feature-row:nth-child(2) .feature-rank,
+  .feature-row:nth-child(3) .feature-rank {
+    color: #d9a90d;
+    font-weight: 750;
+  }
+  .feature-name {
+    font-size: 0.755rem;
+  }
+  .feature-meaning {
+    color: #b9c4d1;
+  }
+  .feature-score {
+    color: #cdd6e1;
+  }
+
+  .verdict {
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.016);
+  }
+  .verdict b {
+    color: #edf2f7;
+  }
+
+  [data-testid="stCaptionContainer"] p {
+    max-width: 1180px;
+  }
+
+  hr {
+    margin-top: 1.65rem !important;
+    margin-bottom: 1.15rem !important;
+    opacity: 0.78;
+  }
+
+  @media (max-width: 980px) {
+    .feature-head,
+    .feature-row {
+      grid-template-columns: 26px minmax(135px, 0.95fr) minmax(190px, 1.45fr) 72px;
+    }
+    .feature-head > div:nth-child(4),
+    .feature-track {
+      display: none;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .dash-title {
+      font-size: 1.58rem;
+    }
+    .dash-subtitle {
+      font-size: 0.78rem;
+    }
+    .section-head {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .status-pill {
+      font-size: 0.70rem;
+    }
+    .feature-head {
+      display: none;
+    }
+    .feature-row {
+      grid-template-columns: 22px minmax(112px, 0.8fr) minmax(155px, 1.25fr) 62px;
+      gap: 7px;
+      padding-left: 6px;
+      padding-right: 6px;
+    }
+    .feature-name {
+      font-size: 0.70rem;
+    }
+    .feature-meaning {
+      font-size: 0.69rem;
+    }
+    .feature-score {
+      font-size: 0.68rem;
+    }
+    div[data-testid="stMetric"] {
+      min-height: 88px;
+    }
+  }
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -1143,6 +1404,191 @@ def render_dark_table(df: pd.DataFrame) -> None:
 
 
 
+
+def feature_meaning(feature_name: str) -> str:
+    """
+    현재 프로젝트의 feature naming convention을 사람이 읽기 쉽게 설명한다.
+    모르는 이름은 억지로 추정하지 않고 일반 설명으로 남긴다.
+    """
+    n = str(feature_name).strip()
+    low = n.lower()
+
+    # ---- 관세청 메모리 사이클 ----
+    if low.startswith("kcs_"):
+        product = "메모리 품목"
+        for key, label in {
+            "dram": "DRAM", "nand": "NAND", "mcp": "MCP(HBM 포함 가능)",
+            "logic": "Logic IC",
+        }.items():
+            if f"kcs_{key}_" in low:
+                product = label
+                break
+
+        if low == "kcs_mcp_share":
+            return "MCP 수출금액이 MCP+DRAM 수출금액에서 차지하는 비중. HBM 전환 흐름의 대리지표"
+        if low == "kcs_mcp_share_chg6":
+            return "MCP 수출금액 비중의 6개월 변화. HBM/MCP 쪽 믹스 변화 속도를 보는 대리지표"
+        if "dram_nand_ratio_yoy" in low:
+            return "DRAM/NAND 수출단가 비율의 전년 대비 변화. 두 메모리 품목의 상대적 가격 강도"
+        if "dram_nand_ratio_z12" in low:
+            return "DRAM/NAND 단가 비율이 최근 12개월 평균에서 얼마나 벗어났는지 나타내는 Z-score"
+        if "dram_logic_ratio_yoy" in low:
+            return "DRAM/Logic 수출단가 비율의 전년 대비 변화. 메모리와 일반 로직 IC의 상대 가격 강도"
+        if "dram_logic_ratio_z12" in low:
+            return "DRAM/Logic 단가 비율의 최근 12개월 표준화 위치"
+        if "_price_mom" in low:
+            return f"{product} 수출단가의 전월 대비 변화율(MoM)"
+        if "_price_qoq" in low:
+            return f"{product} 수출단가의 3개월 전 대비 변화율(QoQ)"
+        if "_price_yoy" in low:
+            return f"{product} 수출단가의 12개월 전 대비 변화율(YoY)"
+        if "_price_z12" in low:
+            return f"{product} 수출단가가 최근 12개월 평균에서 얼마나 벗어났는지 나타내는 Z-score"
+        if "_value_yoy" in low:
+            return f"{product} 수출금액의 전년 대비 변화율. 가격뿐 아니라 수요·출하 규모 변화도 일부 반영"
+        if "_up_streak" in low:
+            return f"{product} 수출단가가 연속으로 상승한 개월 수. 업황 상승세의 지속성 지표"
+        return "관세청 월별 수출실적에서 만든 메모리/반도체 사이클 파생지표"
+
+    # ---- 수익률 / 가격 위치 ----
+    m = re.search(r"(?:^|_)ret_(\d+)(?:d)?(?:$|_)", low)
+    if m:
+        return f"최근 {m.group(1)}거래일 가격 수익률. 단기·중기 가격 모멘텀을 나타냄"
+    if "log_ret" in low:
+        return "로그수익률. 기간별 가격 변화율을 시계열 모델이 다루기 쉬운 형태로 변환한 값"
+    if "overnight" in low:
+        return "전일 종가에서 당일 시가까지의 야간(갭) 수익률"
+    if "intraday" in low:
+        return "당일 시가에서 종가까지의 장중 수익률"
+    if low in {"gap", "gap1"} or "gap_ret" in low:
+        return "전일 종가 대비 당일 시가의 갭 변화율"
+    if "52w" in low or "range_pos252" in low:
+        return "최근 약 52주 가격 범위에서 현재 가격이 어느 위치에 있는지 나타냄"
+    if "range_pos" in low:
+        nums = re.findall(r"\d+", low)
+        return f"최근 {nums[-1]}일 가격 범위에서 현재 가격의 상대적 위치" if nums else "최근 가격 범위 내 현재 위치"
+
+    # ---- 추세 / 기술적 지표 ----
+    if "dist_sma" in low or "price_sma" in low or "over_sma" in low:
+        nums = re.findall(r"\d+", low)
+        d = nums[-1] if nums else "해당"
+        return f"현재 가격이 {d}일 단순이동평균(SMA)에서 얼마나 위/아래 떨어져 있는지"
+    if "dist_ema" in low or "over_ema" in low:
+        nums = re.findall(r"\d+", low)
+        d = nums[-1] if nums else "해당"
+        return f"현재 가격이 {d}일 지수이동평균(EMA)에서 얼마나 이격돼 있는지"
+    if "sma_slope" in low or "ma_slope" in low:
+        return "이동평균선의 기울기. 추세의 방향과 속도를 수치화한 값"
+    if "macd_hist" in low or "macd_diff" in low:
+        return "MACD와 시그널선의 차이. 추세 모멘텀이 강화·약화되는 정도"
+    if "macd_signal" in low:
+        return "MACD의 시그널선. MACD 추세 신호를 부드럽게 만든 기준선"
+    if "macd" in low:
+        return "단기·장기 지수이동평균 차이로 만든 MACD 추세 모멘텀"
+    if "stoch" in low and "rsi" in low:
+        return "RSI가 최근 범위에서 어느 위치인지 보는 Stochastic RSI. 단기 과열·침체 정도"
+    if "rsi" in low:
+        return "RSI. 최근 상승폭과 하락폭을 비교해 과열·침체 및 모멘텀을 나타내는 지표"
+    if "cci" in low:
+        return "CCI. 가격이 최근 평균 수준에서 얼마나 이탈했는지 보는 모멘텀/평균회귀 지표"
+    if "williams" in low:
+        return "Williams %R. 최근 고가·저가 범위 안에서 종가 위치를 이용한 과열·침체 지표"
+    if "bb_" in low or "bollinger" in low:
+        if "width" in low:
+            return "볼린저밴드 폭. 최근 가격 변동성이 커졌는지 작아졌는지 나타냄"
+        return "볼린저밴드 안에서 현재 가격의 상대적 위치. 과열·평균회귀 상태를 나타냄"
+
+    # ---- 변동성 / 위험 ----
+    if "parkinson" in low:
+        return "고가와 저가 범위를 이용한 Parkinson 변동성. 종가만 쓴 변동성보다 일중 정보를 더 반영"
+    if "garman" in low or "gk_vol" in low:
+        return "시가·고가·저가·종가를 함께 이용한 Garman–Klass 변동성 추정치"
+    if "atr" in low:
+        return "ATR 기반 변동폭을 가격 대비 비율로 본 값. 최근 실제 가격 움직임의 크기"
+    if "down_vol" in low or "downvol" in low:
+        return "하락 수익률에 초점을 둔 하방 변동성. 손실 쪽 위험의 크기"
+    if "drawdown" in low:
+        return "최근 고점 대비 현재/최근 가격의 낙폭. 하락 위험과 회복 정도를 나타냄"
+    if "skew" in low:
+        return "수익률 분포의 왜도. 상승·하락 꼬리가 어느 쪽으로 더 치우쳤는지"
+    if "kurt" in low:
+        return "수익률 분포의 첨도. 극단적 가격변동이 얼마나 자주 나타나는지"
+    if "tail_loss" in low:
+        return "최근 구간에서 나타난 큰 하락 꼬리의 크기"
+    if "tail_gain" in low:
+        return "최근 구간에서 나타난 큰 상승 꼬리의 크기"
+    if "realized_vol" in low or re.search(r"(?:^|_)vol_\d+", low) or re.search(r"(?:^|_)vol\d+", low):
+        nums = re.findall(r"\d+", low)
+        d = nums[-1] if nums else "최근"
+        return f"{d}일 수익률로 계산한 실현 변동성. 가격 움직임의 불확실성 크기"
+    if "vol_ratio" in low:
+        return "단기 변동성과 중기 변동성의 비율. 변동성이 최근 급격히 확대·축소됐는지"
+
+    # ---- 거래량 / 유동성 ----
+    if "amihud" in low:
+        return "Amihud 비유동성. 적은 거래대금으로 가격이 크게 움직일수록 값이 커지는 유동성 위험 지표"
+    if "obv" in low:
+        return "OBV(On-Balance Volume) 기반 지표. 가격 방향에 따라 누적한 거래량으로 매수·매도 압력을 추정"
+    if "mfi" in low:
+        return "MFI(Money Flow Index). 가격과 거래량을 함께 이용해 자금 유입·유출 강도를 측정"
+    if "cmf" in low:
+        return "CMF(Chaikin Money Flow). 종가 위치와 거래량을 이용한 매집·분산 압력"
+    if "volume" in low or "volu_" in low or "dollar_vol" in low:
+        if "z" in low:
+            return "현재 거래량이 최근 평균보다 얼마나 이례적으로 많은지/적은지 나타내는 Z-score"
+        if "dollar" in low:
+            return "가격×거래량 기준 거래대금의 변화. 시장 참여와 유동성 규모를 나타냄"
+        return "최근 거래량의 수준·변화·추세를 나타내는 시장 참여도 지표"
+
+    # ---- 시장 / 상대강도 / 금리 / 환율 ----
+    if low.startswith("fx_") or "usdkrw" in low or "krw" in low and ("chg" in low or "ret" in low):
+        return "달러/원 환율의 수준·변화·모멘텀/변동성. 원화와 글로벌 위험선호 변화의 영향을 반영"
+    if "kospi" in low or "kosdaq" in low:
+        return "한국 주가지수의 수익률·추세·변동성. 개별 종목이 놓인 국내 시장 환경을 반영"
+    if "sox" in low:
+        return "필라델피아 반도체지수(SOX)의 수익률·추세·변동성. 글로벌 반도체 업황/주가 환경을 반영"
+    if "nasdaq" in low:
+        return "NASDAQ 시장의 수익률·추세·변동성. 성장주·기술주 위험선호 환경을 반영"
+    if "benchmark" in low or "relative" in low or "rel_" in low:
+        return "종목을 기준 시장/지수와 비교한 상대강도 또는 초과수익 성격의 지표"
+    if "beta" in low:
+        return "종목 수익률이 시장 움직임에 얼마나 민감하게 반응하는지 나타내는 베타"
+    if "corr" in low:
+        return "종목과 시장/기준자산 수익률이 함께 움직이는 정도를 나타내는 상관계수"
+    if "residual" in low or "market_adjust" in low:
+        return "시장 움직임으로 설명되는 부분을 제거한 종목 고유의 초과수익 성분"
+    if "bond" in low or "yield" in low or "dgs" in low or "fred" in low:
+        if "slope" in low or "curve" in low or "spread" in low:
+            return "장·단기 금리 차이 또는 수익률곡선 기울기. 경기·통화정책 기대를 반영"
+        return "국채금리 수준 또는 변화. 할인율·경기·통화정책 환경을 반영"
+
+    # ---- 한국 수급 ----
+    if "foreign" in low:
+        return "외국인 투자자의 순매수·보유·거래 흐름에서 만든 수급 지표"
+    if "institution" in low or "pension" in low or "fund" in low or "insurance" in low:
+        return "기관/연기금/투신/보험 등의 매매 흐름에서 만든 수급 지표"
+    if "program" in low:
+        return "프로그램 매매의 차익·비차익 또는 순매수 흐름을 나타내는 지표"
+    if "short" in low:
+        return "공매도 거래량·비율·변화에서 만든 매도 압력/포지셔닝 지표"
+    if "credit" in low:
+        return "신용융자·신용대주 신규/상환/잔고 등 레버리지 수급을 나타내는 지표"
+    if "lending" in low or "loan" in low or "borrow" in low:
+        return "주식 대차 체결·상환·잔고에서 만든 공매도 잠재수요/포지셔닝 지표"
+    if "cfd" in low:
+        return "CFD 잔고·거래 흐름을 이용한 레버리지 포지셔닝 지표"
+
+    # ---- Regime / 달력 ----
+    if "regime" in low or "gmm" in low or "cluster" in low:
+        return "추세·변동성 등으로 분류한 시장 국면(regime). 같은 신호도 국면에 따라 다르게 해석하도록 사용"
+    if "dow_" in low:
+        return "요일을 주기형(sin/cos) 변수로 바꾼 계절성 Feature"
+    if "month_" in low:
+        return "월(month)을 주기형(sin/cos) 변수로 바꾼 계절성 Feature"
+
+    return "모델에 실제 입력된 파생 Feature. 이름만으로 정의를 확정하기 어려워 원본 Feature명을 그대로 표시"
+
+
 def render_feature_importance(top_features: Dict, limit: int = 10) -> None:
     """
     최종 앙상블이 기록한 feature importance를 시각화한다.
@@ -1167,10 +1613,12 @@ def render_feature_importance(top_features: Dict, limit: int = 10) -> None:
     rows = []
     for rank, (name, score) in enumerate(items, start=1):
         rel = max(0.0, min(100.0, abs(score) / peak * 100.0))
+        meaning = feature_meaning(name)
         rows.append(
             "<div class='feature-row'>"
             f"<div class='feature-rank'>{rank}</div>"
             f"<div class='feature-name'>{html.escape(name)}</div>"
+            f"<div class='feature-meaning'>{html.escape(meaning)}</div>"
             "<div class='feature-track'>"
             f"<div class='feature-fill' style='width:{rel:.1f}%'></div>"
             "</div>"
@@ -1179,6 +1627,10 @@ def render_feature_importance(top_features: Dict, limit: int = 10) -> None:
         )
 
     st.markdown(
+        "<div class='feature-head'>"
+        "<div>#</div><div>Feature</div><div>의미</div>"
+        "<div>상대 강도</div><div>중요도</div>"
+        "</div>"
         "<div class='feature-list'>" + "".join(rows) + "</div>",
         unsafe_allow_html=True,
     )
@@ -1761,30 +2213,50 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
                        pct(p.get("oos_directional_accuracy"), signed=False),
                        fnum(p.get("oos_rmse"), 4), fnum(p.get("baseline_rmse"), 4),
                        pct(p.get("coverage_80"), signed=False)],
+                "간단 해석": [
+                    "예측 순위와 실제 수익률 순위의 상관. +1에 가까울수록 좋고 0이면 순위 예측력이 거의 없음",
+                    "상승·하락 방향을 맞힌 비율. 50% 부근이면 방향 정보가 약함",
+                    "실제값과 예측값의 평균 오차 크기. 낮을수록 좋음",
+                    "단순 기준모델의 RMSE. 위 RMSE가 이것보다 낮아야 모델 개선으로 볼 수 있음",
+                    "실제 결과가 80% 예측구간 안에 들어온 비율. 대략 80% 부근이 이상적",
+                ],
             }))
         with d2:
-            info = [("선택된 모델", str(p.get("model_weights") or p.get("models") or "-")),
-                    ("Fallback level", str(p.get("fallback_level"))),
-                    ("마지막 데이터", str(p.get("last_data_time"))),
-                    ("학습 시각", str(p.get("trained_at")))]
+            info = [
+                ("선택된 모델", str(p.get("model_weights") or p.get("models") or "-"),
+                 "최종 예측에 사용된 모델과 앙상블 가중치"),
+                ("Fallback level", str(p.get("fallback_level")),
+                 "데이터 부족 시 단순화 단계. 1이 가장 완전한 구성이고 숫자가 커질수록 보수적 fallback"),
+                ("마지막 데이터", str(p.get("last_data_time")),
+                 "모델 입력에 사용된 마지막 확정 거래일"),
+                ("학습 시각", str(p.get("trained_at")),
+                 "현재 게시된 모델을 마지막으로 다시 학습한 시각"),
+            ]
             sh = num(p.get("shrinkage"))
             if sh is not None and sh < 0.999:
-                info.insert(1, ("과대외삽 보정", f"x{sh:.2f}"))
+                info.insert(1, (
+                    "과대외삽 보정", f"x{sh:.2f}",
+                    "예측값을 과도하게 멀리 보내지 않도록 0수익률 방향으로 축소한 정도"
+                ))
             if p.get("missing_data"):
-                info.append(("누락 데이터", str(p.get("missing_data"))))
-            render_dark_table(pd.DataFrame(info, columns=["항목", "값"]))
+                info.append((
+                    "누락 데이터", str(p.get("missing_data")),
+                    "이번 학습에서 확보되지 않아 자동 제외된 데이터 그룹"
+                ))
+            render_dark_table(pd.DataFrame(info, columns=["항목", "값", "간단 해석"]))
 
         # 실제 학습 과정에서 계산된 feature importance 중 상위 10개만 표시한다.
         # main.py가 latest_predictions.json -> diagnostics에 저장한 top_features를 그대로 사용하므로
         # Streamlit에서 중요도를 다시 계산하거나 추정하지 않는다.
         diag = (((payload.get("diagnostics") or {}).get(symbol) or {}).get(str(horizon)) or {})
         top_features = diag.get("top_features") or {}
-        st.markdown("**실제 학습 Feature Top 10** — 최종 모델 중요도 상위 10개")
+        st.markdown("**실제 학습 Feature Top 10** — 이름 · 의미 · 최종 모델 중요도")
         render_feature_importance(top_features, limit=10)
 
         comps = p.get("confidence_components")
         if isinstance(comps, dict) and comps:
-            st.markdown("**신뢰도 구성** — 어느 항목에서 점수를 잃었는지")
+            st.markdown("**신뢰도 구성** — 100점 만점 신뢰도를 어떤 항목이 깎거나 받쳐주는지")
+            st.caption("각 달성도는 독립적인 성공확률이 아니라 모델 신뢰도 점수를 구성하는 내부 진단값입니다.")
             label = {
                 "baseline_improvement": "baseline 대비 RMSE 개선",
                 "information_coefficient": "IC (순위 상관)",
