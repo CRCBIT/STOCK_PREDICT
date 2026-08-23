@@ -3066,6 +3066,10 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
             )
         st.caption("참고용 레벨이며 투자 조언이 아닙니다.")
 
+    # 모델 가중치/Feature 중요도는 predictions 행이 아니라 diagnostics에 저장된다.
+    # main.py의 latest_predictions.json 구조를 그대로 사용한다.
+    diag = (((payload.get("diagnostics") or {}).get(symbol) or {}).get(str(horizon)) or {})
+
     with st.expander("모델 진단"):
         d1, d2 = st.columns(2)
         with d1:
@@ -3086,7 +3090,10 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
             }))
         with d2:
             st.markdown("**선택된 모델** — 최종 앙상블 가중치")
-            render_model_weights(p.get("model_weights"), p.get("models"))
+            render_model_weights(
+                p.get("model_weights") or diag.get("weights"),
+                p.get("models"),
+            )
 
             info = [
                 ("Fallback level", str(p.get("fallback_level")),
@@ -3112,7 +3119,6 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
         # 실제 학습 과정에서 계산된 feature importance 중 상위 10개만 표시한다.
         # main.py가 latest_predictions.json -> diagnostics에 저장한 top_features를 그대로 사용하므로
         # Streamlit에서 중요도를 다시 계산하거나 추정하지 않는다.
-        diag = (((payload.get("diagnostics") or {}).get(symbol) or {}).get(str(horizon)) or {})
         top_features = diag.get("top_features") or {}
         st.markdown("**실제 학습 Feature Top 10** — 이름 · 의미 · 최종 모델 중요도")
         render_feature_importance(top_features, limit=10)
