@@ -533,6 +533,56 @@ st.markdown("""
     text-align: right;
   }
 
+  /* 최종 사용 모델: 단순 텍스트 대신 실제 ensemble weight를 bar로 표시 */
+  .model-weight-list {
+    display: grid;
+    gap: 7px;
+    margin: 7px 0 11px 0;
+  }
+
+  .model-weight-row {
+    display: grid;
+    grid-template-columns: minmax(118px, 0.85fr) minmax(150px, 1.5fr) 58px;
+    align-items: center;
+    gap: 9px;
+    min-height: 34px;
+    padding: 6px 8px;
+    border: 1px solid rgba(120,132,148,0.12);
+    border-radius: 8px;
+    background: rgba(13,17,23,0.76);
+  }
+
+  .model-weight-name {
+    min-width: 0;
+    color: #dde4ec;
+    font-size: 0.75rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    overflow-wrap: anywhere;
+  }
+
+  .model-weight-track {
+    width: 100%;
+    height: 8px;
+    border-radius: 999px;
+    background: rgba(120,132,148,0.14);
+    overflow: hidden;
+  }
+
+  .model-weight-fill {
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, rgba(240,185,11,0.48), rgba(240,185,11,0.96));
+  }
+
+  .model-weight-score {
+    color: #d6dee8;
+    font-size: 0.71rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+    white-space: nowrap;
+  }
+
   hr { border-color: var(--line) !important; }
 
   /* -----------------------------------------------------------------
@@ -1282,6 +1332,24 @@ st.markdown("""
     div[data-testid="stMetric"] {
       min-height: 88px;
     }
+
+    .model-weight-row {
+      grid-template-columns: minmax(92px, 0.9fr) minmax(90px, 1.35fr) 52px;
+      gap: 7px;
+      padding: 7px 7px;
+    }
+
+    .model-weight-name {
+      font-size: 0.68rem;
+    }
+
+    .model-weight-score {
+      font-size: 0.66rem;
+    }
+
+    .model-weight-track {
+      height: 7px;
+    }
   }
 
 
@@ -1654,6 +1722,53 @@ def render_dark_table(df: pd.DataFrame) -> None:
         unsafe_allow_html=True,
     )
 
+
+def render_model_weights(model_weights, models=None) -> None:
+    """최종 예측에 사용된 ensemble model weight를 실제 비율 bar로 표시한다."""
+    if not isinstance(model_weights, dict) or not model_weights:
+        # 구형 snapshot 등 weight dict 자체가 없는 경우에는 값을 추정하지 않는다.
+        fallback = str(models or "-")
+        st.caption(f"모델 가중치 정보 없음 · {fallback}")
+        return
+
+    items = []
+    for name, raw in model_weights.items():
+        weight = num(raw)
+        if weight is None or weight < 0:
+            continue
+        items.append((str(name), float(weight)))
+
+    if not items:
+        st.caption("모델 가중치 정보가 없습니다.")
+        return
+
+    items.sort(key=lambda x: x[1], reverse=True)
+    total = sum(weight for _, weight in items)
+
+    # 저장된 weight 합이 1이 아닌 예외 snapshot에서도 bar는 구성비로 안전하게 표시한다.
+    # 숫자 라벨 역시 같은 구성비를 보여줘 bar와 값이 정확히 일치하게 한다.
+    if total <= 0:
+        st.caption("유효한 모델 가중치가 없습니다.")
+        return
+
+    rows = []
+    for name, weight in items:
+        share = max(0.0, min(1.0, weight / total))
+        pct_value = share * 100.0
+        rows.append(
+            "<div class='model-weight-row'>"
+            f"<div class='model-weight-name'>{html.escape(name)}</div>"
+            "<div class='model-weight-track'>"
+            f"<div class='model-weight-fill' style='width:{pct_value:.2f}%'></div>"
+            "</div>"
+            f"<div class='model-weight-score'>{pct_value:.1f}%</div>"
+            "</div>"
+        )
+
+    st.markdown(
+        "<div class='model-weight-list'>" + "".join(rows) + "</div>",
+        unsafe_allow_html=True,
+    )
 
 
 
@@ -2970,9 +3085,10 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
                 ],
             }))
         with d2:
+            st.markdown("**선택된 모델** — 최종 앙상블 가중치")
+            render_model_weights(p.get("model_weights"), p.get("models"))
+
             info = [
-                ("선택된 모델", str(p.get("model_weights") or p.get("models") or "-"),
-                 "최종 예측에 사용된 모델과 앙상블 가중치"),
                 ("Fallback level", str(p.get("fallback_level")),
                  "데이터 부족 시 단순화 단계. 1이 가장 완전한 구성이고 숫자가 커질수록 보수적 fallback"),
                 ("마지막 데이터", str(p.get("last_data_time")),

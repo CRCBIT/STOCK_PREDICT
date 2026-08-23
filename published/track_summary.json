@@ -1,8 +1,1206 @@
 {
-  "generated_at": "2026-08-23T10:29:52+09:00",
-  "n_total": 63,
+  "generated_at": "2026-08-23T15:45:12+09:00",
+  "n_total": 747,
   "n_pending": 63,
-  "n_resolved": 0,
-  "groups": [],
+  "n_resolved": 684,
+  "groups": [
+    {
+      "source": "BACKFILL",
+      "symbol": "000660",
+      "name": "000660",
+      "horizon": 5,
+      "n_resolved": 12,
+      "coverage_80": 0.6666666666666666,
+      "coverage_80_ci": [
+        0.3906175873976139,
+        0.8618821601026385
+      ],
+      "coverage_50": 0.5,
+      "direction_hit": 0.5555555555555556,
+      "direction_hit_ci": [
+        0.2666473457440297,
+        0.811224570528086
+      ],
+      "mae_p50": 0.07174494418145284,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-08-28"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "000660",
+      "name": "000660",
+      "horizon": 10,
+      "n_resolved": 12,
+      "coverage_80": 0.8333333333333334,
+      "coverage_80_ci": [
+        0.5519636426153274,
+        0.9530358523851776
+      ],
+      "coverage_50": 0.6666666666666666,
+      "direction_hit": 0.8333333333333334,
+      "direction_hit_ci": [
+        0.5519636426153274,
+        0.9530358523851776
+      ],
+      "mae_p50": 0.08230315055631336,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-09-04"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "000660",
+      "name": "000660",
+      "horizon": 30,
+      "n_resolved": 12,
+      "coverage_80": 0.75,
+      "coverage_80_ci": [
+        0.46768966087934005,
+        0.9110599603710386
+      ],
+      "coverage_50": 0.4166666666666667,
+      "direction_hit": 0.6666666666666666,
+      "direction_hit_ci": [
+        0.3906175873976139,
+        0.8618821601026385
+      ],
+      "mae_p50": 0.19156161826533805,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-10-02"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "005930",
+      "name": "005930",
+      "horizon": 5,
+      "n_resolved": 12,
+      "coverage_80": 0.9166666666666666,
+      "coverage_80_ci": [
+        0.6461140782014047,
+        0.9851352905492264
+      ],
+      "coverage_50": 0.5833333333333334,
+      "direction_hit": 0.5,
+      "direction_hit_ci": [
+        0.15003570882017148,
+        0.8499642911798285
+      ],
+      "mae_p50": 0.034563433200266495,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-08-28"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "005930",
+      "name": "005930",
+      "horizon": 10,
+      "n_resolved": 12,
+      "coverage_80": 0.9166666666666666,
+      "coverage_80_ci": [
+        0.6461140782014047,
+        0.9851352905492264
+      ],
+      "coverage_50": 0.75,
+      "direction_hit": 0.36363636363636365,
+      "direction_hit_ci": [
+        0.15166223614131383,
+        0.6462032231083628
+      ],
+      "mae_p50": 0.04035026790354181,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-09-04"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "005930",
+      "name": "005930",
+      "horizon": 30,
+      "n_resolved": 12,
+      "coverage_80": 0.6666666666666666,
+      "coverage_80_ci": [
+        0.3906175873976139,
+        0.8618821601026385
+      ],
+      "coverage_50": 0.5,
+      "direction_hit": 0.6666666666666666,
+      "direction_hit_ci": [
+        0.3906175873976139,
+        0.8618821601026385
+      ],
+      "mae_p50": 0.09355219922644192,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-10-02"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "034020",
+      "name": "034020",
+      "horizon": 5,
+      "n_resolved": 12,
+      "coverage_80": 0.75,
+      "coverage_80_ci": [
+        0.46768966087934005,
+        0.9110599603710386
+      ],
+      "coverage_50": 0.5,
+      "direction_hit": 0.7272727272727273,
+      "direction_hit_ci": [
+        0.4343497069897537,
+        0.9025411942607853
+      ],
+      "mae_p50": 0.07234618731295499,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-08-28"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "034020",
+      "name": "034020",
+      "horizon": 10,
+      "n_resolved": 12,
+      "coverage_80": 0.75,
+      "coverage_80_ci": [
+        0.46768966087934005,
+        0.9110599603710386
+      ],
+      "coverage_50": 0.3333333333333333,
+      "direction_hit": 0.6666666666666666,
+      "direction_hit_ci": [
+        0.3906175873976139,
+        0.8618821601026385
+      ],
+      "mae_p50": 0.13482070070101831,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-09-04"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "034020",
+      "name": "034020",
+      "horizon": 30,
+      "n_resolved": 12,
+      "coverage_80": 0.75,
+      "coverage_80_ci": [
+        0.46768966087934005,
+        0.9110599603710386
+      ],
+      "coverage_50": 0.5,
+      "direction_hit": 0.6666666666666666,
+      "direction_hit_ci": [
+        0.3906175873976139,
+        0.8618821601026385
+      ],
+      "mae_p50": 0.29802330972242885,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-10-02"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "042700",
+      "name": "042700",
+      "horizon": 5,
+      "n_resolved": 12,
+      "coverage_80": 0.9166666666666666,
+      "coverage_80_ci": [
+        0.6461140782014047,
+        0.9851352905492264
+      ],
+      "coverage_50": 0.75,
+      "direction_hit": 0.5,
+      "direction_hit_ci": [
+        0.2537781703934222,
+        0.7462218296065778
+      ],
+      "mae_p50": 0.0815226869040858,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-08-28"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "042700",
+      "name": "042700",
+      "horizon": 10,
+      "n_resolved": 12,
+      "coverage_80": 0.9166666666666666,
+      "coverage_80_ci": [
+        0.6461140782014047,
+        0.9851352905492264
+      ],
+      "coverage_50": 0.6666666666666666,
+      "direction_hit": 0.5454545454545454,
+      "direction_hit_ci": [
+        0.28008775568998817,
+        0.7872904245601196
+      ],
+      "mae_p50": 0.09610278459927966,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-09-04"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "042700",
+      "name": "042700",
+      "horizon": 30,
+      "n_resolved": 12,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.7574992425007574,
+        1.0
+      ],
+      "coverage_50": 0.75,
+      "direction_hit": 0.5,
+      "direction_hit_ci": [
+        0.2537781703934222,
+        0.7462218296065778
+      ],
+      "mae_p50": 0.1830760431653623,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-10-02"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "403870",
+      "name": "403870",
+      "horizon": 5,
+      "n_resolved": 12,
+      "coverage_80": 0.6666666666666666,
+      "coverage_80_ci": [
+        0.3906175873976139,
+        0.8618821601026385
+      ],
+      "coverage_50": 0.5,
+      "direction_hit": 0.36363636363636365,
+      "direction_hit_ci": [
+        0.15166223614131383,
+        0.6462032231083628
+      ],
+      "mae_p50": 0.05885360538467221,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-08-28"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "403870",
+      "name": "403870",
+      "horizon": 10,
+      "n_resolved": 12,
+      "coverage_80": 0.9166666666666666,
+      "coverage_80_ci": [
+        0.6461140782014047,
+        0.9851352905492264
+      ],
+      "coverage_50": 0.75,
+      "direction_hit": 0.18181818181818182,
+      "direction_hit_ci": [
+        0.05136660067100063,
+        0.4769861375782448
+      ],
+      "mae_p50": 0.07372713349802049,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-09-04"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "403870",
+      "name": "403870",
+      "horizon": 30,
+      "n_resolved": 12,
+      "coverage_80": 0.8333333333333334,
+      "coverage_80_ci": [
+        0.5519636426153274,
+        0.9530358523851776
+      ],
+      "coverage_50": 0.6666666666666666,
+      "direction_hit": 0.3333333333333333,
+      "direction_hit_ci": [
+        0.13811783989736134,
+        0.609382412602386
+      ],
+      "mae_p50": 0.1485490516872163,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-10-02"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "AAPL",
+      "name": "AAPL",
+      "horizon": 5,
+      "n_resolved": 12,
+      "coverage_80": 0.6666666666666666,
+      "coverage_80_ci": [
+        0.3906175873976139,
+        0.8618821601026385
+      ],
+      "coverage_50": 0.5833333333333334,
+      "direction_hit": 0.5833333333333334,
+      "direction_hit_ci": [
+        0.3195073356553728,
+        0.8067425380947535
+      ],
+      "mae_p50": 0.04469693552821019,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-08-28"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "AAPL",
+      "name": "AAPL",
+      "horizon": 10,
+      "n_resolved": 12,
+      "coverage_80": 0.75,
+      "coverage_80_ci": [
+        0.46768966087934005,
+        0.9110599603710386
+      ],
+      "coverage_50": 0.5,
+      "direction_hit": 0.5,
+      "direction_hit_ci": [
+        0.2537781703934222,
+        0.7462218296065778
+      ],
+      "mae_p50": 0.054666616559688685,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-09-05"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "AAPL",
+      "name": "AAPL",
+      "horizon": 30,
+      "n_resolved": 12,
+      "coverage_80": 0.75,
+      "coverage_80_ci": [
+        0.46768966087934005,
+        0.9110599603710386
+      ],
+      "coverage_50": 0.5,
+      "direction_hit": 0.5,
+      "direction_hit_ci": [
+        0.2537781703934222,
+        0.7462218296065778
+      ],
+      "mae_p50": 0.0801374968001741,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-10-03"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "AMAT",
+      "name": "AMAT",
+      "horizon": 5,
+      "n_resolved": 12,
+      "coverage_80": 0.9166666666666666,
+      "coverage_80_ci": [
+        0.6461140782014047,
+        0.9851352905492264
+      ],
+      "coverage_50": 0.5833333333333334,
+      "direction_hit": 0.5833333333333334,
+      "direction_hit_ci": [
+        0.3195073356553728,
+        0.8067425380947535
+      ],
+      "mae_p50": 0.03914330443966118,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-08-28"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "AMAT",
+      "name": "AMAT",
+      "horizon": 10,
+      "n_resolved": 12,
+      "coverage_80": 0.9166666666666666,
+      "coverage_80_ci": [
+        0.6461140782014047,
+        0.9851352905492264
+      ],
+      "coverage_50": 0.5833333333333334,
+      "direction_hit": 0.6666666666666666,
+      "direction_hit_ci": [
+        0.3906175873976139,
+        0.8618821601026385
+      ],
+      "mae_p50": 0.05679094632330326,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-09-05"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "AMAT",
+      "name": "AMAT",
+      "horizon": 30,
+      "n_resolved": 12,
+      "coverage_80": 0.9166666666666666,
+      "coverage_80_ci": [
+        0.6461140782014047,
+        0.9851352905492264
+      ],
+      "coverage_50": 0.5833333333333334,
+      "direction_hit": 0.6666666666666666,
+      "direction_hit_ci": [
+        0.3906175873976139,
+        0.8618821601026385
+      ],
+      "mae_p50": 0.1207642334447872,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-10-03"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "AMD",
+      "name": "AMD",
+      "horizon": 5,
+      "n_resolved": 12,
+      "coverage_80": 0.9166666666666666,
+      "coverage_80_ci": [
+        0.6461140782014047,
+        0.9851352905492264
+      ],
+      "coverage_50": 0.8333333333333334,
+      "direction_hit": 0.5833333333333334,
+      "direction_hit_ci": [
+        0.3195073356553728,
+        0.8067425380947535
+      ],
+      "mae_p50": 0.042746763697216174,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-08-28"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "AMD",
+      "name": "AMD",
+      "horizon": 10,
+      "n_resolved": 12,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.7574992425007574,
+        1.0
+      ],
+      "coverage_50": 0.5833333333333334,
+      "direction_hit": 0.2222222222222222,
+      "direction_hit_ci": [
+        0.06322376231222723,
+        0.5474166563271946
+      ],
+      "mae_p50": 0.061520534805606326,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-09-05"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "AMD",
+      "name": "AMD",
+      "horizon": 30,
+      "n_resolved": 12,
+      "coverage_80": 0.9166666666666666,
+      "coverage_80_ci": [
+        0.6461140782014047,
+        0.9851352905492264
+      ],
+      "coverage_50": 0.75,
+      "direction_hit": 0.4166666666666667,
+      "direction_hit_ci": [
+        0.19325746190524656,
+        0.6804926643446272
+      ],
+      "mae_p50": 0.14280749264373369,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-10-03"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "ASML",
+      "name": "ASML",
+      "horizon": 5,
+      "n_resolved": 12,
+      "coverage_80": 0.9166666666666666,
+      "coverage_80_ci": [
+        0.6461140782014047,
+        0.9851352905492264
+      ],
+      "coverage_50": 0.6666666666666666,
+      "direction_hit": 0.6363636363636364,
+      "direction_hit_ci": [
+        0.35379677689163724,
+        0.8483377638586862
+      ],
+      "mae_p50": 0.03238918823102955,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-08-28"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "ASML",
+      "name": "ASML",
+      "horizon": 10,
+      "n_resolved": 12,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.7574992425007574,
+        1.0
+      ],
+      "coverage_50": 0.5833333333333334,
+      "direction_hit": 0.9166666666666666,
+      "direction_hit_ci": [
+        0.6461140782014047,
+        0.9851352905492264
+      ],
+      "mae_p50": 0.04590509137985168,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-09-05"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "ASML",
+      "name": "ASML",
+      "horizon": 30,
+      "n_resolved": 12,
+      "coverage_80": 0.75,
+      "coverage_80_ci": [
+        0.46768966087934005,
+        0.9110599603710386
+      ],
+      "coverage_50": 0.5,
+      "direction_hit": 0.45454545454545453,
+      "direction_hit_ci": [
+        0.21270957543988045,
+        0.7199122443100118
+      ],
+      "mae_p50": 0.13109973194425972,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-10-03"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "CAT",
+      "name": "CAT",
+      "horizon": 5,
+      "n_resolved": 12,
+      "coverage_80": 0.8333333333333334,
+      "coverage_80_ci": [
+        0.5519636426153274,
+        0.9530358523851776
+      ],
+      "coverage_50": 0.5833333333333334,
+      "direction_hit": 0.5833333333333334,
+      "direction_hit_ci": [
+        0.3195073356553728,
+        0.8067425380947535
+      ],
+      "mae_p50": 0.03874659211443392,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-08-28"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "CAT",
+      "name": "CAT",
+      "horizon": 10,
+      "n_resolved": 12,
+      "coverage_80": 0.9166666666666666,
+      "coverage_80_ci": [
+        0.6461140782014047,
+        0.9851352905492264
+      ],
+      "coverage_50": 0.4166666666666667,
+      "direction_hit": 0.45454545454545453,
+      "direction_hit_ci": [
+        0.21270957543988045,
+        0.7199122443100118
+      ],
+      "mae_p50": 0.05133573627857122,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-09-05"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "CAT",
+      "name": "CAT",
+      "horizon": 30,
+      "n_resolved": 12,
+      "coverage_80": 0.75,
+      "coverage_80_ci": [
+        0.46768966087934005,
+        0.9110599603710386
+      ],
+      "coverage_50": 0.5833333333333334,
+      "direction_hit": 0.5,
+      "direction_hit_ci": [
+        0.2537781703934222,
+        0.7462218296065778
+      ],
+      "mae_p50": 0.08511221767085324,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-10-03"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "GOOGL",
+      "name": "GOOGL",
+      "horizon": 5,
+      "n_resolved": 12,
+      "coverage_80": 0.75,
+      "coverage_80_ci": [
+        0.46768966087934005,
+        0.9110599603710386
+      ],
+      "coverage_50": 0.5,
+      "direction_hit": 0.5833333333333334,
+      "direction_hit_ci": [
+        0.3195073356553728,
+        0.8067425380947535
+      ],
+      "mae_p50": 0.03594897711367578,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-08-28"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "GOOGL",
+      "name": "GOOGL",
+      "horizon": 10,
+      "n_resolved": 12,
+      "coverage_80": 0.75,
+      "coverage_80_ci": [
+        0.46768966087934005,
+        0.9110599603710386
+      ],
+      "coverage_50": 0.6666666666666666,
+      "direction_hit": 0.75,
+      "direction_hit_ci": [
+        0.46768966087934005,
+        0.9110599603710386
+      ],
+      "mae_p50": 0.05036322708629665,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-09-05"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "GOOGL",
+      "name": "GOOGL",
+      "horizon": 30,
+      "n_resolved": 12,
+      "coverage_80": 0.5,
+      "coverage_80_ci": [
+        0.2537781703934222,
+        0.7462218296065778
+      ],
+      "coverage_50": 0.4166666666666667,
+      "direction_hit": 0.75,
+      "direction_hit_ci": [
+        0.46768966087934005,
+        0.9110599603710386
+      ],
+      "mae_p50": 0.11371207606146877,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-10-03"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "KLAC",
+      "name": "KLAC",
+      "horizon": 5,
+      "n_resolved": 12,
+      "coverage_80": 0.8333333333333334,
+      "coverage_80_ci": [
+        0.5519636426153274,
+        0.9530358523851776
+      ],
+      "coverage_50": 0.75,
+      "direction_hit": 0.8333333333333334,
+      "direction_hit_ci": [
+        0.5519636426153274,
+        0.9530358523851776
+      ],
+      "mae_p50": 0.033316291884248485,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-08-28"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "KLAC",
+      "name": "KLAC",
+      "horizon": 10,
+      "n_resolved": 12,
+      "coverage_80": 0.8333333333333334,
+      "coverage_80_ci": [
+        0.5519636426153274,
+        0.9530358523851776
+      ],
+      "coverage_50": 0.6666666666666666,
+      "direction_hit": 0.8333333333333334,
+      "direction_hit_ci": [
+        0.5519636426153274,
+        0.9530358523851776
+      ],
+      "mae_p50": 0.05837026887280761,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-09-05"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "KLAC",
+      "name": "KLAC",
+      "horizon": 30,
+      "n_resolved": 12,
+      "coverage_80": 0.8333333333333334,
+      "coverage_80_ci": [
+        0.5519636426153274,
+        0.9530358523851776
+      ],
+      "coverage_50": 0.4166666666666667,
+      "direction_hit": 0.6666666666666666,
+      "direction_hit_ci": [
+        0.3906175873976139,
+        0.8618821601026385
+      ],
+      "mae_p50": 0.12085823261519661,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-10-03"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "MU",
+      "name": "MU",
+      "horizon": 5,
+      "n_resolved": 12,
+      "coverage_80": 0.6666666666666666,
+      "coverage_80_ci": [
+        0.3906175873976139,
+        0.8618821601026385
+      ],
+      "coverage_50": 0.5833333333333334,
+      "direction_hit": 0.45454545454545453,
+      "direction_hit_ci": [
+        0.21270957543988045,
+        0.7199122443100118
+      ],
+      "mae_p50": 0.07571143391955876,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-08-28"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "MU",
+      "name": "MU",
+      "horizon": 10,
+      "n_resolved": 12,
+      "coverage_80": 0.6666666666666666,
+      "coverage_80_ci": [
+        0.3906175873976139,
+        0.8618821601026385
+      ],
+      "coverage_50": 0.5,
+      "direction_hit": 0.4166666666666667,
+      "direction_hit_ci": [
+        0.19325746190524656,
+        0.6804926643446272
+      ],
+      "mae_p50": 0.12260744578656978,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-09-05"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "MU",
+      "name": "MU",
+      "horizon": 30,
+      "n_resolved": 12,
+      "coverage_80": 0.6666666666666666,
+      "coverage_80_ci": [
+        0.3906175873976139,
+        0.8618821601026385
+      ],
+      "coverage_50": 0.5833333333333334,
+      "direction_hit": 0.6666666666666666,
+      "direction_hit_ci": [
+        0.3906175873976139,
+        0.8618821601026385
+      ],
+      "mae_p50": 0.2146175535153997,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-10-03"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "NVDA",
+      "name": "NVDA",
+      "horizon": 5,
+      "n_resolved": 12,
+      "coverage_80": 0.9166666666666666,
+      "coverage_80_ci": [
+        0.6461140782014047,
+        0.9851352905492264
+      ],
+      "coverage_50": 0.75,
+      "direction_hit": 0.8333333333333334,
+      "direction_hit_ci": [
+        0.5519636426153274,
+        0.9530358523851776
+      ],
+      "mae_p50": 0.048926101089785755,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-08-28"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "NVDA",
+      "name": "NVDA",
+      "horizon": 10,
+      "n_resolved": 12,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.7574992425007574,
+        1.0
+      ],
+      "coverage_50": 0.6666666666666666,
+      "direction_hit": 0.6666666666666666,
+      "direction_hit_ci": [
+        0.3906175873976139,
+        0.8618821601026385
+      ],
+      "mae_p50": 0.06750195648474645,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-09-05"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "NVDA",
+      "name": "NVDA",
+      "horizon": 30,
+      "n_resolved": 12,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.7574992425007574,
+        1.0
+      ],
+      "coverage_50": 0.8333333333333334,
+      "direction_hit": 0.6666666666666666,
+      "direction_hit_ci": [
+        0.3906175873976139,
+        0.8618821601026385
+      ],
+      "mae_p50": 0.11846130680367696,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-10-03"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "OKLO",
+      "name": "OKLO",
+      "horizon": 5,
+      "n_resolved": 12,
+      "coverage_80": 0.8333333333333334,
+      "coverage_80_ci": [
+        0.5519636426153274,
+        0.9530358523851776
+      ],
+      "coverage_50": 0.5,
+      "direction_hit": 0.6666666666666666,
+      "direction_hit_ci": [
+        0.3906175873976139,
+        0.8618821601026385
+      ],
+      "mae_p50": 0.14301863761710717,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-08-28"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "OKLO",
+      "name": "OKLO",
+      "horizon": 10,
+      "n_resolved": 12,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.7574992425007574,
+        1.0
+      ],
+      "coverage_50": 0.6666666666666666,
+      "direction_hit": 0.7272727272727273,
+      "direction_hit_ci": [
+        0.4343497069897537,
+        0.9025411942607853
+      ],
+      "mae_p50": 0.15826155837522032,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-09-05"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "OKLO",
+      "name": "OKLO",
+      "horizon": 30,
+      "n_resolved": 12,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.7574992425007574,
+        1.0
+      ],
+      "coverage_50": 0.5833333333333334,
+      "direction_hit": 0.8333333333333334,
+      "direction_hit_ci": [
+        0.5519636426153274,
+        0.9530358523851776
+      ],
+      "mae_p50": 0.6430260854713107,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-10-03"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "PLTR",
+      "name": "PLTR",
+      "horizon": 5,
+      "n_resolved": 12,
+      "coverage_80": 0.6666666666666666,
+      "coverage_80_ci": [
+        0.3906175873976139,
+        0.8618821601026385
+      ],
+      "coverage_50": 0.3333333333333333,
+      "direction_hit": 0.5833333333333334,
+      "direction_hit_ci": [
+        0.3195073356553728,
+        0.8067425380947535
+      ],
+      "mae_p50": 0.11459145634205081,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-08-28"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "PLTR",
+      "name": "PLTR",
+      "horizon": 10,
+      "n_resolved": 12,
+      "coverage_80": 0.8333333333333334,
+      "coverage_80_ci": [
+        0.5519636426153274,
+        0.9530358523851776
+      ],
+      "coverage_50": 0.5833333333333334,
+      "direction_hit": 0.8333333333333334,
+      "direction_hit_ci": [
+        0.5519636426153274,
+        0.9530358523851776
+      ],
+      "mae_p50": 0.1310770822432857,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-09-05"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "PLTR",
+      "name": "PLTR",
+      "horizon": 30,
+      "n_resolved": 12,
+      "coverage_80": 0.8333333333333334,
+      "coverage_80_ci": [
+        0.5519636426153274,
+        0.9530358523851776
+      ],
+      "coverage_50": 0.75,
+      "direction_hit": 1.0,
+      "direction_hit_ci": [
+        0.7574992425007574,
+        1.0
+      ],
+      "mae_p50": 0.23298724630733833,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-10-03"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "SMR",
+      "name": "SMR",
+      "horizon": 5,
+      "n_resolved": 12,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.7574992425007574,
+        1.0
+      ],
+      "coverage_50": 0.6666666666666666,
+      "direction_hit": 0.2727272727272727,
+      "direction_hit_ci": [
+        0.09745880573921467,
+        0.5656502930102463
+      ],
+      "mae_p50": 0.09066474873511403,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-08-28"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "SMR",
+      "name": "SMR",
+      "horizon": 10,
+      "n_resolved": 12,
+      "coverage_80": 0.75,
+      "coverage_80_ci": [
+        0.46768966087934005,
+        0.9110599603710386
+      ],
+      "coverage_50": 0.75,
+      "direction_hit": 0.25,
+      "direction_hit_ci": [
+        0.08894003962896138,
+        0.53231033912066
+      ],
+      "mae_p50": 0.18119315016031803,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-09-05"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "SMR",
+      "name": "SMR",
+      "horizon": 30,
+      "n_resolved": 12,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.7574992425007574,
+        1.0
+      ],
+      "coverage_50": 0.5,
+      "direction_hit": 0.5,
+      "direction_hit_ci": [
+        0.2537781703934222,
+        0.7462218296065778
+      ],
+      "mae_p50": 0.42043372518460265,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-10-03"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "TSM",
+      "name": "TSM",
+      "horizon": 5,
+      "n_resolved": 12,
+      "coverage_80": 0.8333333333333334,
+      "coverage_80_ci": [
+        0.5519636426153274,
+        0.9530358523851776
+      ],
+      "coverage_50": 0.4166666666666667,
+      "direction_hit": 0.75,
+      "direction_hit_ci": [
+        0.46768966087934005,
+        0.9110599603710386
+      ],
+      "mae_p50": 0.04597368715804753,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-08-28"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "TSM",
+      "name": "TSM",
+      "horizon": 10,
+      "n_resolved": 12,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.7574992425007574,
+        1.0
+      ],
+      "coverage_50": 0.5,
+      "direction_hit": 0.5833333333333334,
+      "direction_hit_ci": [
+        0.3195073356553728,
+        0.8067425380947535
+      ],
+      "mae_p50": 0.06347401458989647,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-09-05"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "TSM",
+      "name": "TSM",
+      "horizon": 30,
+      "n_resolved": 12,
+      "coverage_80": 0.9166666666666666,
+      "coverage_80_ci": [
+        0.6461140782014047,
+        0.9851352905492264
+      ],
+      "coverage_50": 0.5833333333333334,
+      "direction_hit": 0.8333333333333334,
+      "direction_hit_ci": [
+        0.5519636426153274,
+        0.9530358523851776
+      ],
+      "mae_p50": 0.12895322903998824,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-10-03"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "VST",
+      "name": "VST",
+      "horizon": 5,
+      "n_resolved": 12,
+      "coverage_80": 0.9166666666666666,
+      "coverage_80_ci": [
+        0.6461140782014047,
+        0.9851352905492264
+      ],
+      "coverage_50": 0.6666666666666666,
+      "direction_hit": 0.5833333333333334,
+      "direction_hit_ci": [
+        0.3195073356553728,
+        0.8067425380947535
+      ],
+      "mae_p50": 0.07342860391003214,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-08-28"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "VST",
+      "name": "VST",
+      "horizon": 10,
+      "n_resolved": 12,
+      "coverage_80": 0.9166666666666666,
+      "coverage_80_ci": [
+        0.6461140782014047,
+        0.9851352905492264
+      ],
+      "coverage_50": 0.8333333333333334,
+      "direction_hit": 0.4166666666666667,
+      "direction_hit_ci": [
+        0.19325746190524656,
+        0.6804926643446272
+      ],
+      "mae_p50": 0.09381189222714055,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-09-05"
+    },
+    {
+      "source": "BACKFILL",
+      "symbol": "VST",
+      "name": "VST",
+      "horizon": 30,
+      "n_resolved": 12,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.7574992425007574,
+        1.0
+      ],
+      "coverage_50": 0.9166666666666666,
+      "direction_hit": 0.8333333333333334,
+      "direction_hit_ci": [
+        0.5519636426153274,
+        0.9530358523851776
+      ],
+      "mae_p50": 0.1423543894624316,
+      "first_anchor": "2024-09-30",
+      "last_target": "2025-10-03"
+    }
+  ],
   "note": "예측을 먼저 기록하고 나중에 결과를 채운 라이브 검증입니다. 백테스트와 달리 사후 조정이 불가능하지만, 표본이 쌓이기 전에는 신뢰구간이 매우 넓다는 점을 감안하십시오."
 }
