@@ -1211,6 +1211,176 @@ st.markdown("""
     }
   }
 
+
+  /* 전체 Feature 사전: 선택/미선택 후보를 한눈에 비교 */
+  .feature-catalog-summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin: 8px 0 10px 0;
+  }
+  .feature-catalog-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 9px;
+    border: 1px solid rgba(120,132,148,0.18);
+    border-radius: 999px;
+    background: rgba(18,23,31,0.72);
+    color: #cbd5e1;
+    font-size: 0.72rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .feature-catalog-chip strong { color: #f0b90b; }
+
+  .feature-catalog-wrap {
+    max-height: 610px;
+    overflow: auto;
+    border: 1px solid rgba(120,132,148,0.16);
+    border-radius: 10px;
+    background: #0b0f15;
+  }
+  table.feature-catalog {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    table-layout: fixed;
+    font-size: 0.75rem;
+  }
+  table.feature-catalog thead th {
+    position: sticky;
+    top: 0;
+    z-index: 3;
+    background: #111720;
+    color: #aeb9c7;
+    text-align: left;
+    font-weight: 700;
+    padding: 8px 9px;
+    border-bottom: 1px solid rgba(120,132,148,0.20);
+  }
+  table.feature-catalog tbody td {
+    padding: 7px 9px;
+    border-bottom: 1px solid rgba(120,132,148,0.09);
+    color: #d6dee8;
+    vertical-align: top;
+    line-height: 1.42;
+  }
+  table.feature-catalog tbody tr:hover td { background: #111720; }
+  table.feature-catalog th:nth-child(1),
+  table.feature-catalog td:nth-child(1) { width: 76px; }
+  table.feature-catalog th:nth-child(2),
+  table.feature-catalog td:nth-child(2) { width: 92px; }
+  table.feature-catalog th:nth-child(3),
+  table.feature-catalog td:nth-child(3) { width: 245px; }
+  table.feature-catalog td:nth-child(3) {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    color: #e3e9f0;
+    overflow-wrap: anywhere;
+  }
+  .feature-status {
+    display: inline-block;
+    min-width: 54px;
+    text-align: center;
+    padding: 2px 6px;
+    border-radius: 999px;
+    font-size: 0.66rem;
+    font-weight: 750;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+  }
+  .feature-status-top {
+    color: #ffd54a;
+    background: rgba(240,185,11,0.12);
+    border: 1px solid rgba(240,185,11,0.27);
+  }
+  .feature-status-selected {
+    color: #7ee787;
+    background: rgba(63,185,80,0.10);
+    border: 1px solid rgba(63,185,80,0.24);
+  }
+  .feature-status-unused {
+    color: #9aa7b5;
+    background: rgba(120,132,148,0.08);
+    border: 1px solid rgba(120,132,148,0.15);
+  }
+
+  @media (max-width: 850px) {
+    table.feature-catalog th:nth-child(2),
+    table.feature-catalog td:nth-child(2) { display: none; }
+    table.feature-catalog th:nth-child(3),
+    table.feature-catalog td:nth-child(3) { width: 150px; }
+  }
+
+  /* 휴대폰: 가로 표를 세로 카드로 전환해 좌우 잘림을 없앤다. */
+  @media (max-width: 600px) {
+    .feature-catalog-wrap {
+      max-height: 680px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 6px;
+    }
+    table.feature-catalog,
+    table.feature-catalog tbody,
+    table.feature-catalog tr,
+    table.feature-catalog td {
+      display: block;
+      width: 100% !important;
+      box-sizing: border-box;
+    }
+    table.feature-catalog {
+      table-layout: auto;
+      font-size: 0.74rem;
+    }
+    table.feature-catalog thead {
+      display: none;
+    }
+    table.feature-catalog tbody tr {
+      margin: 0 0 8px 0;
+      padding: 8px 9px;
+      border: 1px solid rgba(120,132,148,0.16);
+      border-radius: 9px;
+      background: #0d1219;
+    }
+    table.feature-catalog tbody td {
+      display: grid;
+      grid-template-columns: 64px minmax(0, 1fr);
+      gap: 8px;
+      align-items: start;
+      padding: 4px 0;
+      border-bottom: 0;
+      min-width: 0;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+    table.feature-catalog tbody td::before {
+      content: attr(data-label);
+      color: #8795a7;
+      font-size: 0.66rem;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+    table.feature-catalog tbody td:nth-child(2) {
+      display: grid;
+    }
+    table.feature-catalog tbody td:nth-child(3) {
+      font-size: 0.70rem;
+      line-height: 1.35;
+    }
+    table.feature-catalog tbody td:nth-child(4) {
+      font-size: 0.72rem;
+      line-height: 1.48;
+    }
+    .feature-status {
+      min-width: 48px;
+      width: fit-content;
+      font-size: 0.63rem;
+    }
+    .feature-catalog-chip {
+      font-size: 0.68rem;
+      padding: 4px 7px;
+    }
+  }
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -1248,7 +1418,7 @@ def load_predictions() -> Optional[Dict]:
     return {
         "schema_version": "csv-only", "generated_at": None,
         "predictions": df.to_dict(orient="records"),
-        "backtests": {}, "diagnostics": {}, "source": "predictions.csv",
+        "backtests": {}, "diagnostics": {}, "feature_catalog": {}, "source": "predictions.csv",
     }
 
 
@@ -1439,6 +1609,66 @@ def feature_meaning(feature_name: str) -> str:
     # 0. 실제 Top feature에서 확인된 이름 — 가장 구체적으로 설명
     # ------------------------------------------------------------------
     exact = {
+        "px_zscore60":
+            "현재 종가의 60거래일 Z-score. 최근 60일 평균에서 표준편차 몇 배만큼 떨어져 있는지",
+        "ma_alignment":
+            "단기·중기·장기 이동평균의 정렬 상태. 정배열이면 상승 추세, 역배열이면 하락 추세 성격",
+        "positive_days20":
+            "최근 20거래일 중 상승 마감한 날의 비율. 단기 상승 흐름의 지속성",
+        "range_pct":
+            "당일 고가-저가 범위를 가격 수준으로 정규화한 일중 변동폭",
+        "adx14":
+            "ADX(14). 상승·하락 방향과 무관하게 현재 추세가 얼마나 강한지 측정",
+        "plus_di14":
+            "+DI(14). 최근 상승 방향 움직임의 강도",
+        "minus_di14":
+            "-DI(14). 최근 하락 방향 움직임의 강도",
+        "di_spread":
+            "+DI와 -DI의 차이. 양수면 상승 방향, 음수면 하락 방향 우위",
+        "bb_pctb":
+            "볼린저밴드 %B. 현재 가격이 하단(0)~상단(1) 사이 어디에 위치하는지",
+        "bb_width":
+            "볼린저밴드 폭. 최근 변동성이 확대되는지 축소되는지",
+        "stoch_k":
+            "Stochastic %K. 최근 고가·저가 범위에서 현재 종가의 상대 위치",
+        "stoch_d":
+            "Stochastic %D. %K를 평활한 신호선으로 단기 과열·침체 전환을 확인",
+        "williams_r":
+            "Williams %R. 최근 가격 범위에서 종가 위치를 이용한 과매수·과매도 지표",
+        "cci20":
+            "CCI(20). 현재 가격이 최근 평균 가격에서 얼마나 이탈했는지 측정",
+        "volu_ratio":
+            "최근 5일 평균 거래량 ÷ 60일 평균 거래량. 최근 거래 참여가 평소보다 강한지",
+        "volu_z20":
+            "로그 거래량의 20일 Z-score. 최근 거래량이 평소보다 이례적으로 많은지",
+        "dollar_vol_chg20":
+            "가격×거래량(거래대금)의 20거래일 로그 변화. 유동성과 시장 참여 변화",
+        "amihud20":
+            "20일 Amihud 비유동성의 장기 Z-score. 거래대금 대비 가격충격이 클수록 높음",
+        "mfi14":
+            "MFI(14). 가격과 거래량을 함께 사용한 자금 유입·유출 강도",
+        "obv_mom20":
+            "OBV의 20일 변화량을 장기 OBV 규모로 정규화한 거래량 모멘텀",
+        "gap1":
+            "전일 종가 대비 당일 시가의 갭 수익률. 장 마감 이후 정보 반영 정도",
+        "intraday_ret":
+            "당일 시가 대비 종가 수익률. 장중 매수·매도 방향",
+        "skew20":
+            "최근 20일 수익률 왜도. 상승·하락 꼬리 중 어느 쪽이 더 긴지",
+        "kurt60":
+            "최근 60일 수익률 첨도. 극단적인 가격 변화가 나타나는 정도",
+        "tail_loss60":
+            "최근 60일 중 가장 큰 일간 하락 수익률. 단기 극단손실 위험",
+        "tail_gain60":
+            "최근 60일 중 가장 큰 일간 상승 수익률. 단기 극단상승 정도",
+        "range_pos20":
+            "최근 20일 고가·저가 범위에서 현재 종가의 위치",
+        "range_pos60":
+            "최근 60일 고가·저가 범위에서 현재 종가의 위치",
+        "range_pos252":
+            "최근 252거래일(약 52주) 고가·저가 범위에서 현재 종가의 위치",
+        "atr_pct14":
+            "ATR(14) ÷ 현재가. 종목 가격수준을 제거한 최근 실제 변동폭",
         "roc_120":
             "120거래일 전 대비 현재 가격의 변화율(ROC). 약 6개월 중기 가격 추세와 모멘텀",
         "mom_12_1":
@@ -1946,8 +2176,8 @@ def feature_meaning(feature_name: str) -> str:
         return " / ".join(pieces) + " 형태로 변환한 학습 후보 Feature. 이름의 변환 규칙까지는 식별 가능"
 
     return (
-        f"학습 전 후보군에서 생성된 파생 Feature({n}). "
-        "현재 게시 스냅샷에는 생성 모듈의 산식 자체가 포함되지 않아 원본 이름을 보존해 표시"
+        f"{n}: 모델 후보군에서 생성된 파생 Feature. "
+        "이름에 포함된 기간·비율·정규화·변화 규칙을 그대로 사용하며, 세부 산식은 생성 모듈 정의를 따름"
     )
 
 
@@ -2001,6 +2231,117 @@ def render_feature_importance(top_features: Dict, limit: int = 10) -> None:
         "중요도는 최종 모델의 예측 기여도를 나타내며 인과관계를 뜻하지 않습니다."
     )
 
+
+
+def _feature_group_lookup(feature_groups: Dict) -> Dict[str, str]:
+    lookup: Dict[str, str] = {}
+    labels = {
+        "technical": "기술",
+        "momentum": "모멘텀",
+        "volatility": "변동성",
+        "liquidity": "유동성",
+        "market": "시장",
+        "kr_flow": "수급",
+        "regime": "국면",
+        "kcs": "관세청",
+    }
+    if not isinstance(feature_groups, dict):
+        return lookup
+    for group, cols in feature_groups.items():
+        if not isinstance(cols, list):
+            continue
+        label = labels.get(str(group), str(group))
+        for col in cols:
+            lookup[str(col)] = label
+    return lookup
+
+
+def render_all_feature_catalog(
+    symbol: str,
+    horizon: int,
+    payload: Dict,
+    diag: Dict,
+    top_features: Dict,
+) -> None:
+    """
+    Dataset 생성 후 pruning을 통과한 전체 후보 Feature와,
+    최종 학습에서 선택된 Feature를 함께 보여준다.
+
+    - 후보: Spearman 상위 K개를 고르기 전 모델이 검토한 입력 컬럼
+    - 선택: 해당 horizon 최종 모델 재학습에 실제 입력된 컬럼
+    - 미선택: 후보에는 있었지만 최종 K개에 들지 않은 컬럼
+    """
+    catalog = ((payload.get("feature_catalog") or {}).get(symbol) or {})
+    candidates = catalog.get("candidate_features") or diag.get("candidate_features") or []
+    selected = diag.get("selected_features") or []
+    groups = catalog.get("feature_groups") or diag.get("feature_groups") or {}
+
+    candidates = [str(x) for x in candidates if str(x).strip()]
+    selected = [str(x) for x in selected if str(x).strip()]
+
+    # 구버전 스냅샷은 전체 후보/선택 목록을 publish하지 않았다.
+    if not candidates:
+        st.caption(
+            "전체 Feature 목록은 새 main.py로 한 번 재학습·publish한 뒤 표시됩니다. "
+            "기존 스냅샷에는 Top Feature만 저장되어 있습니다."
+        )
+        return
+
+    selected_set = set(selected)
+    top_set = {str(k) for k in (top_features or {}).keys()}
+    group_lookup = _feature_group_lookup(groups)
+
+    # 데이터셋 후보 순서를 보존하되 실제 선택 항목을 위로 모은다.
+    indexed = list(enumerate(candidates))
+    indexed.sort(key=lambda t: (
+        0 if t[1] in top_set else 1 if t[1] in selected_set else 2,
+        t[0],
+    ))
+
+    selected_count = sum(1 for x in candidates if x in selected_set)
+    unused_count = len(candidates) - selected_count
+    top_count = sum(1 for x in candidates if x in top_set)
+
+    st.markdown(
+        "<div class='feature-catalog-summary'>"
+        f"<span class='feature-catalog-chip'>전체 후보 <strong>{len(candidates)}</strong></span>"
+        f"<span class='feature-catalog-chip'>최종 선택 <strong>{selected_count}</strong></span>"
+        f"<span class='feature-catalog-chip'>미선택 <strong>{unused_count}</strong></span>"
+        f"<span class='feature-catalog-chip'>Top 중요도 <strong>{top_count}</strong></span>"
+        "</div>",
+        unsafe_allow_html=True,
+    )
+    st.caption(
+        "‘미선택’은 쓸모없는 지표라는 뜻이 아니라, 이 종목·예측기간의 최종 Feature 선택 단계에서 "
+        "상위 K개에 들지 않았다는 뜻입니다."
+    )
+
+    rows = []
+    for _, name in indexed:
+        if name in top_set:
+            status, cls = "TOP", "feature-status-top"
+        elif name in selected_set:
+            status, cls = "선택", "feature-status-selected"
+        else:
+            status, cls = "미선택", "feature-status-unused"
+        group = group_lookup.get(name, "기타")
+        rows.append(
+            "<tr>"
+            f"<td data-label='상태'><span class='feature-status {cls}'>{status}</span></td>"
+            f"<td data-label='분류'>{html.escape(group)}</td>"
+            f"<td data-label='Feature'>{html.escape(name)}</td>"
+            f"<td data-label='의미'>{html.escape(feature_meaning(name))}</td>"
+            "</tr>"
+        )
+
+    st.markdown(
+        "<div class='feature-catalog-wrap'>"
+        "<table class='feature-catalog'>"
+        "<thead><tr><th>상태</th><th>분류</th><th>Feature</th><th>의미</th></tr></thead>"
+        "<tbody>" + "".join(rows) + "</tbody>"
+        "</table></div>",
+        unsafe_allow_html=True,
+    )
 
 def grade_of(p: Dict) -> str:
     return str(p.get("confidence_grade") or "LOW").upper()
@@ -2615,6 +2956,9 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
         top_features = diag.get("top_features") or {}
         st.markdown("**실제 학습 Feature Top 10** — 이름 · 의미 · 최종 모델 중요도")
         render_feature_importance(top_features, limit=10)
+
+        st.markdown("**Feature 전체 사전** — 선택된 항목과 미선택 후보를 모두 표시")
+        render_all_feature_catalog(symbol, horizon, payload, diag, top_features)
 
         comps = p.get("confidence_components")
         if isinstance(comps, dict) and comps:
