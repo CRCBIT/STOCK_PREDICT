@@ -1207,9 +1207,10 @@ st.markdown("""
       grid-template-columns: 24px minmax(0, 1fr) auto;
       grid-template-areas:
         "rank name score"
+        "rank track track"
         "rank meaning meaning";
       column-gap: 8px;
-      row-gap: 4px;
+      row-gap: 5px;
       align-items: start;
       padding: 9px 8px;
     }
@@ -1248,9 +1249,9 @@ st.markdown("""
       align-self: start;
       text-align: right;
       white-space: nowrap;
-      font-size: 0.64rem;
+      font-size: 0.63rem;
       line-height: 1.38;
-      padding: 2px 6px;
+      padding: 2px 5px;
       border: 1px solid rgba(120,132,148,0.18);
       border-radius: 999px;
       background: rgba(18,23,31,0.72);
@@ -1263,7 +1264,19 @@ st.markdown("""
       font-weight: 650;
     }
     .feature-track {
-      display: none !important;
+      grid-area: track;
+      display: block !important;
+      width: 100%;
+      min-width: 0;
+      height: 6px;
+      margin: 1px 0 2px 0;
+      border-radius: 999px;
+      background: rgba(120,132,148,0.16);
+      overflow: hidden;
+    }
+    .feature-fill {
+      height: 100%;
+      border-radius: 999px;
     }
 
     div[data-testid="stMetric"] {
