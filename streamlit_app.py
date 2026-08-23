@@ -1966,6 +1966,286 @@ st.markdown("""
     .diag-meta-grid { grid-template-columns: 1fr; gap: 6px; }
     .diag-meta-card { padding: 8px 9px; }
   }
+
+
+  /* ===============================================================
+     MOBILE POLISH V3 — 모델 진단/Feature 영역 최종 반응형 override
+     앞쪽의 여러 버전 CSS보다 마지막에 위치해 cascade 충돌을 없앤다.
+     =============================================================== */
+  .diag-overview-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+    gap: 12px;
+    align-items: start;
+    margin: 2px 0 10px 0;
+  }
+  .diag-panel {
+    min-width: 0;
+    padding: 10px;
+    border: 1px solid rgba(120,132,148,0.14);
+    border-radius: 11px;
+    background: rgba(11,15,21,0.58);
+  }
+  .diag-panel .diag-subhead {
+    margin: 0 0 8px 0;
+    color: #d9e0e8;
+    font-size: 0.78rem;
+  }
+  .diag-panel .diag-subhead span {
+    color: #8f9baa;
+    font-weight: 560;
+    margin-left: 6px;
+  }
+  .diag-perf-list {
+    display: grid;
+    gap: 6px;
+  }
+  .diag-perf-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 10px;
+    align-items: center;
+    min-width: 0;
+    padding: 8px 9px;
+    border: 1px solid rgba(120,132,148,0.11);
+    border-radius: 8px;
+    background: rgba(13,17,23,0.68);
+  }
+  .diag-perf-copy { min-width: 0; }
+  .diag-perf-label {
+    color: #dce3eb;
+    font-size: 0.72rem;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+  .diag-perf-desc {
+    margin-top: 3px;
+    color: #8f9baa;
+    font-size: 0.63rem;
+    line-height: 1.38;
+    word-break: keep-all;
+  }
+  .diag-perf-value {
+    color: #f1f4f8;
+    font-size: 0.78rem;
+    font-weight: 760;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .diag-empty {
+    padding: 9px 10px;
+    border: 1px dashed rgba(120,132,148,0.18);
+    border-radius: 8px;
+    color: #8f9baa;
+    font-size: 0.69rem;
+  }
+  .diag-section-title {
+    display: flex;
+    align-items: baseline;
+    gap: 7px;
+    margin: 17px 0 8px 0;
+    color: #dce3eb;
+    font-size: 0.84rem;
+    font-weight: 760;
+    letter-spacing: -0.015em;
+  }
+  .diag-section-title span {
+    color: #8f9baa;
+    font-size: 0.68rem;
+    font-weight: 520;
+  }
+
+  @media (max-width: 760px) {
+    /* 모델 진단의 핵심: PC 2열 -> 모바일 1열. st.columns에 의존하지 않는다. */
+    .diag-overview-grid {
+      grid-template-columns: 1fr !important;
+      gap: 8px !important;
+      margin-top: 0 !important;
+    }
+    .diag-panel {
+      padding: 9px !important;
+      border-radius: 10px !important;
+    }
+    .diag-panel .diag-subhead {
+      font-size: 0.76rem !important;
+      margin-bottom: 7px !important;
+    }
+    .diag-panel .diag-subhead span {
+      display: inline;
+      margin-left: 5px;
+      font-size: 0.65rem;
+    }
+
+    .diag-perf-row {
+      grid-template-columns: minmax(0, 1fr) auto !important;
+      gap: 8px !important;
+      padding: 8px 9px !important;
+    }
+    .diag-perf-label { font-size: 0.70rem !important; }
+    .diag-perf-desc {
+      font-size: 0.61rem !important;
+      line-height: 1.38 !important;
+      max-width: 100% !important;
+    }
+    .diag-perf-value { font-size: 0.74rem !important; }
+
+    /* 모델명 + 비율을 첫 줄, bar를 그 아래 전체 폭으로. */
+    .model-weight-list {
+      gap: 7px !important;
+      margin: 0 !important;
+    }
+    .model-weight-row {
+      display: grid !important;
+      grid-template-columns: minmax(0, 1fr) auto !important;
+      grid-template-areas:
+        "mw-name mw-score"
+        "mw-track mw-track" !important;
+      column-gap: 8px !important;
+      row-gap: 6px !important;
+      min-height: 0 !important;
+      padding: 8px 9px !important;
+      border-radius: 8px !important;
+    }
+    .model-weight-name {
+      grid-area: mw-name !important;
+      min-width: 0 !important;
+      font-size: 0.68rem !important;
+      line-height: 1.35 !important;
+      overflow-wrap: anywhere !important;
+    }
+    .model-weight-score {
+      grid-area: mw-score !important;
+      align-self: center !important;
+      font-size: 0.67rem !important;
+    }
+    .model-weight-track {
+      grid-area: mw-track !important;
+      width: 100% !important;
+      min-width: 0 !important;
+      height: 6px !important;
+    }
+
+    /* 메타정보는 휴대폰에서도 2x2. 설명은 숨겨 세로 길이를 줄인다. */
+    .diag-meta-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      gap: 6px !important;
+      margin: 9px 0 12px 0 !important;
+    }
+    .diag-meta-card {
+      padding: 8px 9px !important;
+      min-height: 58px !important;
+      border-radius: 9px !important;
+    }
+    .diag-meta-label { font-size: 0.62rem !important; }
+    .diag-meta-value {
+      font-size: 0.73rem !important;
+      line-height: 1.3 !important;
+      overflow-wrap: anywhere !important;
+    }
+    .diag-meta-desc { display: none !important; }
+
+    .diag-section-title {
+      display: block !important;
+      margin: 15px 0 8px 0 !important;
+      font-size: 0.82rem !important;
+      line-height: 1.25 !important;
+    }
+    .diag-section-title span {
+      display: block !important;
+      margin-top: 3px !important;
+      font-size: 0.64rem !important;
+      line-height: 1.35 !important;
+    }
+
+    /* Feature Top10: 1행 헤더 + 전체폭 bar + 전체폭 설명. */
+    .feature-head { display: none !important; }
+    .feature-list {
+      display: grid !important;
+      gap: 7px !important;
+      width: 100% !important;
+      min-width: 0 !important;
+      overflow: visible !important;
+    }
+    .feature-row {
+      display: grid !important;
+      width: 100% !important;
+      min-width: 0 !important;
+      box-sizing: border-box !important;
+      grid-template-columns: auto minmax(0, 1fr) auto !important;
+      grid-template-areas:
+        "rank name score"
+        "track track track"
+        "meaning meaning meaning" !important;
+      column-gap: 7px !important;
+      row-gap: 7px !important;
+      align-items: center !important;
+      padding: 10px 11px !important;
+      border-radius: 10px !important;
+      overflow: hidden !important;
+    }
+    .feature-rank {
+      grid-area: rank !important;
+      align-self: center !important;
+      text-align: left !important;
+      padding: 0 !important;
+      font-size: 0.66rem !important;
+      white-space: nowrap !important;
+    }
+    .feature-name {
+      grid-area: name !important;
+      min-width: 0 !important;
+      font-size: 0.68rem !important;
+      line-height: 1.35 !important;
+      overflow-wrap: anywhere !important;
+      word-break: break-word !important;
+    }
+    .feature-score {
+      grid-area: score !important;
+      justify-self: end !important;
+      align-self: center !important;
+      max-width: 104px !important;
+      padding: 2px 6px !important;
+      font-size: 0.60rem !important;
+      line-height: 1.3 !important;
+      white-space: nowrap !important;
+    }
+    .feature-score::before { font-size: 0.57rem !important; }
+    .feature-track {
+      grid-area: track !important;
+      display: block !important;
+      width: 100% !important;
+      min-width: 0 !important;
+      height: 6px !important;
+      margin: 0 !important;
+    }
+    .feature-meaning {
+      grid-area: meaning !important;
+      min-width: 0 !important;
+      font-size: 0.65rem !important;
+      line-height: 1.48 !important;
+      overflow-wrap: anywhere !important;
+      word-break: keep-all !important;
+    }
+
+    /* Streamlit expander 안의 다른 2열 구성도 휴대폰에선 세로로 쌓는다. */
+    div[data-testid="stExpander"] div[data-testid="stHorizontalBlock"] {
+      display: grid !important;
+      grid-template-columns: 1fr !important;
+      gap: 0.45rem !important;
+    }
+    div[data-testid="stExpander"] div[data-testid="stHorizontalBlock"] > div[data-testid="stColumn"] {
+      width: 100% !important;
+      min-width: 0 !important;
+      flex: none !important;
+    }
+  }
+
+  @media (max-width: 390px) {
+    .diag-meta-grid { grid-template-columns: 1fr 1fr !important; }
+    .diag-meta-card { padding: 7px 8px !important; }
+    .feature-row { padding: 9px !important; }
+    .feature-score { max-width: 92px !important; }
+  }
 </style>
 """, unsafe_allow_html=True)
 
@@ -2173,13 +2453,11 @@ def render_dark_table(df: pd.DataFrame) -> None:
     st.markdown(table_html, unsafe_allow_html=True)
 
 
-def render_model_weights(model_weights, models=None) -> None:
-    """최종 예측에 사용된 ensemble model weight를 실제 비율 bar로 표시한다."""
+def _model_weights_html(model_weights, models=None) -> str:
+    """모델 가중치 영역의 HTML. Streamlit column에 의존하지 않아 모바일에서도 안정적이다."""
     if not isinstance(model_weights, dict) or not model_weights:
-        # 구형 snapshot 등 weight dict 자체가 없는 경우에는 값을 추정하지 않는다.
-        fallback = str(models or "-")
-        st.caption(f"모델 가중치 정보 없음 · {fallback}")
-        return
+        fallback = html.escape(str(models or "-"))
+        return f"<div class='diag-empty'>모델 가중치 정보 없음 · {fallback}</div>"
 
     items = []
     for name, raw in model_weights.items():
@@ -2189,17 +2467,12 @@ def render_model_weights(model_weights, models=None) -> None:
         items.append((str(name), float(weight)))
 
     if not items:
-        st.caption("모델 가중치 정보가 없습니다.")
-        return
+        return "<div class='diag-empty'>모델 가중치 정보가 없습니다.</div>"
 
     items.sort(key=lambda x: x[1], reverse=True)
     total = sum(weight for _, weight in items)
-
-    # 저장된 weight 합이 1이 아닌 예외 snapshot에서도 bar는 구성비로 안전하게 표시한다.
-    # 숫자 라벨 역시 같은 구성비를 보여줘 bar와 값이 정확히 일치하게 한다.
     if total <= 0:
-        st.caption("유효한 모델 가중치가 없습니다.")
-        return
+        return "<div class='diag-empty'>유효한 모델 가중치가 없습니다.</div>"
 
     rows = []
     for name, weight in items:
@@ -2214,14 +2487,72 @@ def render_model_weights(model_weights, models=None) -> None:
             f"<div class='model-weight-score'>{pct_value:.1f}%</div>"
             "</div>"
         )
+    return "<div class='model-weight-list'>" + "".join(rows) + "</div>"
 
+
+def render_model_weights(model_weights, models=None) -> None:
+    """최종 예측에 사용된 ensemble model weight를 실제 비율 bar로 표시한다."""
+    st.markdown(_model_weights_html(model_weights, models), unsafe_allow_html=True)
+
+
+def _diag_performance_html(p: Dict) -> str:
+    """검증 성능을 3열 표 대신 짧은 행 카드로 만든다."""
+    metrics = [
+        (
+            "IC (Spearman)", fnum(p.get("oos_ic"), 3),
+            "예측 순위와 실제 수익률 순위의 상관. +1에 가까울수록 좋음",
+        ),
+        (
+            "방향 정확도", pct(p.get("oos_directional_accuracy"), signed=False),
+            "상승·하락 방향을 맞힌 비율. 50% 부근이면 방향 정보가 약함",
+        ),
+        (
+            "RMSE", fnum(p.get("oos_rmse"), 4),
+            "실제값과 예측값의 평균 오차 크기. 낮을수록 좋음",
+        ),
+        (
+            "baseline RMSE", fnum(p.get("baseline_rmse"), 4),
+            "단순 기준모델의 RMSE. 위 RMSE가 이것보다 낮아야 개선",
+        ),
+        (
+            "80% 구간 커버리지", pct(p.get("coverage_80"), signed=False),
+            "실제 결과가 80% 예측구간 안에 들어온 비율. 80% 부근이 이상적",
+        ),
+    ]
+    rows = []
+    for label, value, desc in metrics:
+        rows.append(
+            "<div class='diag-perf-row'>"
+            "<div class='diag-perf-copy'>"
+            f"<div class='diag-perf-label'>{html.escape(str(label))}</div>"
+            f"<div class='diag-perf-desc'>{html.escape(str(desc))}</div>"
+            "</div>"
+            f"<div class='diag-perf-value'>{html.escape(str(value))}</div>"
+            "</div>"
+        )
+    return "<div class='diag-perf-list'>" + "".join(rows) + "</div>"
+
+
+def render_diag_overview(p: Dict, diag: Dict) -> None:
+    """검증 성능 + 모델 가중치를 CSS grid 하나로 렌더링한다.
+
+    st.columns를 쓰지 않으므로 PC에서는 2열, 휴대폰에서는 1열로 확실하게 전환된다.
+    """
+    perf = _diag_performance_html(p)
+    weights = _model_weights_html(diag.get("weights"), p.get("models"))
     st.markdown(
-        "<div class='model-weight-list'>" + "".join(rows) + "</div>",
+        "<div class='diag-overview-grid'>"
+        "<section class='diag-panel'>"
+        "<div class='diag-subhead'>검증 성능</div>"
+        f"{perf}"
+        "</section>"
+        "<section class='diag-panel'>"
+        "<div class='diag-subhead'>선택된 모델 <span>최종 앙상블 가중치</span></div>"
+        f"{weights}"
+        "</section>"
+        "</div>",
         unsafe_allow_html=True,
     )
-
-
-
 
 def _build_source_feature_catalog() -> Dict[str, List[str]]:
     """업로드된 Feature 생성 소스에서 코드상 정의된 전체 Feature 목록."""
@@ -3528,41 +3859,22 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
     diag = (((payload.get("diagnostics") or {}).get(symbol) or {}).get(str(horizon)) or {})
 
     with st.expander("모델 진단"):
-        # 첫 줄은 높이가 비슷한 두 블록만 나란히 둔다.
-        # 이전 UI에서는 오른쪽 열에 메타정보 표까지 몰려 왼쪽 아래가 크게 비어 보였다.
-        d1, d2 = st.columns([1.12, 1.0], gap="medium")
-        with d1:
-            st.markdown("<div class='diag-subhead'>검증 성능</div>", unsafe_allow_html=True)
-            render_dark_table(pd.DataFrame({
-                "지표": ["IC (Spearman)", "방향 정확도", "RMSE", "baseline RMSE",
-                         "80% 구간 실측 커버리지"],
-                "값": [fnum(p.get("oos_ic"), 3),
-                       pct(p.get("oos_directional_accuracy"), signed=False),
-                       fnum(p.get("oos_rmse"), 4), fnum(p.get("baseline_rmse"), 4),
-                       pct(p.get("coverage_80"), signed=False)],
-                "간단 해석": [
-                    "예측 순위와 실제 수익률 순위의 상관. +1에 가까울수록 좋고 0이면 순위 예측력이 거의 없음",
-                    "상승·하락 방향을 맞힌 비율. 50% 부근이면 방향 정보가 약함",
-                    "실제값과 예측값의 평균 오차 크기. 낮을수록 좋음",
-                    "단순 기준모델의 RMSE. 위 RMSE가 이것보다 낮아야 모델 개선으로 볼 수 있음",
-                    "실제 결과가 80% 예측구간 안에 들어온 비율. 대략 80% 부근이 이상적",
-                ],
-            }))
-        with d2:
-            st.markdown("<div class='diag-subhead'>선택된 모델 · 최종 앙상블 가중치</div>",
-                        unsafe_allow_html=True)
-            render_model_weights(
-                diag.get("weights"),
-                p.get("models"),
-            )
+        # 검증 성능과 모델 가중치는 Streamlit columns 대신 자체 반응형 grid로 렌더링한다.
+        # 모바일에서 반쪽 폭으로 찌그러지지 않고 확실히 1열로 쌓인다.
+        render_diag_overview(p, diag)
 
         # 실행/학습 메타정보는 두 열 아래의 공통 행으로 내려서 좌우 높이 불균형을 없앤다.
+        trained_raw = str(p.get("trained_at") or "—")
+        trained_display = trained_raw.replace("T", " ")
+        if len(trained_display) >= 16:
+            trained_display = trained_display[:16]
+
         info = [
             ("Fallback level", str(p.get("fallback_level")),
              "1이 가장 완전한 구성"),
             ("마지막 데이터", str(p.get("last_data_time")),
              "모델 입력 마지막 확정 거래일"),
-            ("학습 시각", str(p.get("trained_at")),
+            ("학습 시각", trained_display,
              "현재 게시 모델의 재학습 시각"),
         ]
         sh = num(p.get("shrinkage"))
@@ -3595,10 +3907,10 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
         # main.py가 latest_predictions.json -> diagnostics에 저장한 top_features를 그대로 사용하므로
         # Streamlit에서 중요도를 다시 계산하거나 추정하지 않는다.
         top_features = diag.get("top_features") or {}
-        st.markdown("**실제 학습 Feature Top 10** — 이름 · 의미 · 최종 모델 중요도")
+        st.markdown("<div class='diag-section-title'>실제 학습 Feature Top 10<span>이름 · 의미 · 최종 모델 중요도</span></div>", unsafe_allow_html=True)
         render_feature_importance(top_features, limit=10)
 
-        st.markdown("**Feature 전체 사전** — 선택된 항목과 미선택 후보를 모두 표시")
+        st.markdown("<div class='diag-section-title'>Feature 전체 사전<span>선택된 항목과 미선택 후보를 모두 표시</span></div>", unsafe_allow_html=True)
         render_all_feature_catalog(symbol, horizon, payload, diag, top_features)
 
         comps = p.get("confidence_components")
