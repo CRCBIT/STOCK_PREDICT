@@ -3091,7 +3091,7 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
         with d2:
             st.markdown("**선택된 모델** — 최종 앙상블 가중치")
             render_model_weights(
-                p.get("model_weights") or diag.get("weights"),
+                diag.get("weights"),
                 p.get("models"),
             )
 
