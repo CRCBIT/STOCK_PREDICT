@@ -2912,7 +2912,7 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
     st.plotly_chart(candle_chart(hist, p, lookback, show_volume),
                     use_container_width=True, key=f"candle_{uid}")
     st.caption(
-        "음영은 P10~P90 / P25~P75 **분포 범위**입니다. 위 수치 카드의 80% 예측구간은 "
+        "음영은 P10-P90 / P25-P75 **분포 범위**입니다. 위 수치 카드의 80% 예측구간은 "
         "OOF 잔차로 별도 보정된 값이라 바깥 음영과 약간 다를 수 있습니다. "
         "점선(P50)은 **목표가가 아니라 기준점**이며, "
         "이 시스템은 최근 추세를 미래로 연장하지 않습니다. "
