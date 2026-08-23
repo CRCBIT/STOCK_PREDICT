@@ -1410,201 +1410,545 @@ def render_dark_table(df: pd.DataFrame) -> None:
 
 def feature_meaning(feature_name: str) -> str:
     """
-    현재 프로젝트의 feature naming convention을 사람이 읽기 쉽게 설명한다.
-    모르는 이름은 억지로 추정하지 않고 일반 설명으로 남긴다.
+    모델 후보군 -> coverage/winsorize 정리 -> fold 내부 상위 max_features(기본 80개)
+    -> 최종 앙상블 importance 순서로 이어지는 현재 stock_forecast의 Feature 이름을
+    사람이 읽기 쉽게 설명한다.
+
+    우선순위:
+    1) 현재 프로젝트 소스에서 산식/이름이 확인된 Feature
+    2) 프로젝트 README에 명시된 Feature family + naming convention
+    3) 이름 토큰을 안전하게 해석한 설명
     """
     n = str(feature_name).strip()
     low = n.lower()
+    if not low:
+        return "빈 Feature 이름"
 
-    # ---- 자주 등장하는 핵심 Feature: 정확 이름 우선 매칭 ----
-    # 아래 항목은 일반 패턴보다 먼저 처리하여 대시보드에 구체적인 의미가 표시되게 한다.
-    if low == "roc_120":
-        return "120거래일 전 대비 현재 가격의 변화율(ROC). 약 6개월 중기 가격 추세와 모멘텀을 나타냄"
-    if low == "flow_inst_fin_inv_net_norm_20":
-        return "기관 중 금융투자의 순매수 흐름을 최근 20거래일 기준으로 정규화한 값. 평소 대비 매수·매도 강도를 나타냄"
-    if low == "flow_prog_arb_net_streak":
-        return "프로그램 차익거래 순매수·순매도 방향이 연속해서 이어지는 정도. 프로그램 수급 추세의 지속성을 나타냄"
-    if low == "mom_12_1":
-        return "12-1 모멘텀. 최근 1개월을 제외하고 약 12개월 전부터 1개월 전까지의 중장기 가격 모멘텀을 나타냄"
-    if low == "px_zscore60":
-        return "가격의 60거래일 Z-score. 현재 가격이 최근 60일 평균에서 표준편차 기준으로 얼마나 위·아래 벗어나 있는지 나타냄"
-    if low == "ma_alignment":
-        return "단기·중기·장기 이동평균선의 정렬 상태. 정배열·역배열 등 현재 추세 구조와 방향성을 나타냄"
+    def _last_window(default: str = "최근") -> str:
+        nums = re.findall(r"(?<![a-z])(\d+)(?:d)?(?:$|_)", low)
+        return nums[-1] if nums else default
 
-    # ---- 관세청 메모리 사이클 ----
+    def _bench_label(key: str) -> str:
+        return {
+            "kospi": "KOSPI",
+            "kosdaq": "KOSDAQ",
+            "usbm": "미국 벤치마크 ETF",
+        }.get(key, key.upper())
+
+    # ------------------------------------------------------------------
+    # 0. 실제 Top feature에서 확인된 이름 — 가장 구체적으로 설명
+    # ------------------------------------------------------------------
+    exact = {
+        "roc_120":
+            "120거래일 전 대비 현재 가격의 변화율(ROC). 약 6개월 중기 가격 추세와 모멘텀",
+        "mom_12_1":
+            "12-1 모멘텀. 최근 1개월을 제외하고 약 12개월 전부터 1개월 전까지의 중장기 가격 모멘텀",
+        "flow_inst_fin_inv_net_norm_20":
+            "기관 중 금융투자의 순매수 흐름을 최근 20거래일 기준으로 정규화한 값. 평소 대비 매수·매도 강도",
+        "flow_prog_arb_net_streak":
+            "프로그램 차익거래의 순매수/순매도 방향이 연속해서 이어지는 정도. 프로그램 수급 추세의 지속성",
+    }
+    if low in exact:
+        return exact[low]
+
+    # ------------------------------------------------------------------
+    # 1. 관세청 메모리 수출단가 — collect_kcs.py에서 이름/산식 확인
+    # ------------------------------------------------------------------
     if low.startswith("kcs_"):
         product = "메모리 품목"
         for key, label in {
-            "dram": "DRAM", "nand": "NAND", "mcp": "MCP(HBM 포함 가능)",
+            "dram": "DRAM",
+            "nand": "NAND Flash",
+            "mcp": "MCP(HBM 포함 가능)",
             "logic": "Logic IC",
         }.items():
             if f"kcs_{key}_" in low:
                 product = label
                 break
 
-        if low == "kcs_mcp_share":
-            return "MCP 수출금액이 MCP+DRAM 수출금액에서 차지하는 비중. HBM 전환 흐름의 대리지표"
-        if low == "kcs_mcp_share_chg6":
-            return "MCP 수출금액 비중의 6개월 변화. HBM/MCP 쪽 믹스 변화 속도를 보는 대리지표"
-        if "dram_nand_ratio_yoy" in low:
-            return "DRAM/NAND 수출단가 비율의 전년 대비 변화. 두 메모리 품목의 상대적 가격 강도"
-        if "dram_nand_ratio_z12" in low:
-            return "DRAM/NAND 단가 비율이 최근 12개월 평균에서 얼마나 벗어났는지 나타내는 Z-score"
-        if "dram_logic_ratio_yoy" in low:
-            return "DRAM/Logic 수출단가 비율의 전년 대비 변화. 메모리와 일반 로직 IC의 상대 가격 강도"
-        if "dram_logic_ratio_z12" in low:
-            return "DRAM/Logic 단가 비율의 최근 12개월 표준화 위치"
-        if "_price_mom" in low:
-            return f"{product} 수출단가의 전월 대비 변화율(MoM)"
-        if "_price_qoq" in low:
-            return f"{product} 수출단가의 3개월 전 대비 변화율(QoQ)"
-        if "_price_yoy" in low:
-            return f"{product} 수출단가의 12개월 전 대비 변화율(YoY)"
-        if "_price_z12" in low:
-            return f"{product} 수출단가가 최근 12개월 평균에서 얼마나 벗어났는지 나타내는 Z-score"
-        if "_value_yoy" in low:
-            return f"{product} 수출금액의 전년 대비 변화율. 가격뿐 아니라 수요·출하 규모 변화도 일부 반영"
-        if "_up_streak" in low:
-            return f"{product} 수출단가가 연속으로 상승한 개월 수. 업황 상승세의 지속성 지표"
-        return "관세청 월별 수출실적에서 만든 메모리/반도체 사이클 파생지표"
+        exact_kcs = {
+            "kcs_mcp_share":
+                "MCP 수출금액 ÷ (MCP 수출금액 + DRAM 수출금액). HBM/MCP 전환 진행도의 대리지표",
+            "kcs_mcp_share_chg6":
+                "MCP 수출금액 비중의 6개월 변화. HBM/MCP 쪽 제품 믹스 변화 속도의 대리지표",
+            "kcs_dram_nand_ratio_yoy":
+                "DRAM/NAND 수출단가 비율의 전년 대비 변화율. DRAM과 NAND의 상대 가격 강도",
+            "kcs_dram_nand_ratio_z12":
+                "DRAM/NAND 수출단가 비율의 12개월 Z-score. 최근 1년 사이 상대가격의 위치",
+            "kcs_dram_logic_ratio_yoy":
+                "DRAM/Logic IC 수출단가 비율의 전년 대비 변화율. 메모리와 로직 반도체의 상대 가격 강도",
+            "kcs_dram_logic_ratio_z12":
+                "DRAM/Logic IC 수출단가 비율의 12개월 Z-score. 최근 1년 상대가격의 위치",
+        }
+        if low in exact_kcs:
+            return exact_kcs[low]
+        if low.endswith("_price_mom"):
+            return f"{product} 월별 수출단가의 전월 대비 변화율(MoM)"
+        if low.endswith("_price_qoq"):
+            return f"{product} 월별 수출단가의 3개월 전 대비 변화율(QoQ)"
+        if low.endswith("_price_yoy"):
+            return f"{product} 월별 수출단가의 12개월 전 대비 변화율(YoY)"
+        if low.endswith("_price_z12"):
+            return f"{product} 수출단가의 12개월 Z-score. 최근 1년 평균 대비 현재 단가의 상대 위치"
+        if low.endswith("_value_yoy"):
+            return f"{product} 수출금액의 전년 대비 변화율. 가격뿐 아니라 수요·출하규모 변화도 일부 반영"
+        if low.endswith("_up_streak"):
+            return f"{product} 수출단가가 연속 상승한 개월 수. 메모리 가격 사이클 상승세의 지속성"
+        return "관세청 월별 반도체 수출실적을 공표 지연까지 반영해 만든 사이클 Feature"
 
-    # ---- 수익률 / 가격 위치 ----
-    m = re.search(r"(?:^|_)ret_(\d+)(?:d)?(?:$|_)", low)
+    # ------------------------------------------------------------------
+    # 2. 시장 / 벤치마크 / 상대강도 — features/market.py에서 산식 확인
+    #    generic ret 규칙보다 먼저 처리해야 KOSPI 수익률 등을 종목수익률로 오해하지 않는다.
+    # ------------------------------------------------------------------
+    m = re.fullmatch(r"(kospi|kosdaq|usbm)_ret_(1|5|20|60)d", low)
     if m:
-        return f"최근 {m.group(1)}거래일 가격 수익률. 단기·중기 가격 모멘텀을 나타냄"
-    if "log_ret" in low:
-        return "로그수익률. 기간별 가격 변화율을 시계열 모델이 다루기 쉬운 형태로 변환한 값"
+        return f"{_bench_label(m.group(1))}의 최근 {m.group(2)}거래일 로그수익률. 종목이 놓인 시장 방향성"
+    m = re.fullmatch(r"(kospi|kosdaq|usbm)_vol_(20|60)d", low)
+    if m:
+        return f"{_bench_label(m.group(1))} 일간수익률로 계산한 {m.group(2)}거래일 연율화 변동성"
+    m = re.fullmatch(r"(kospi|kosdaq|usbm)_vol_ratio", low)
+    if m:
+        return f"{_bench_label(m.group(1))}의 20일 변동성 ÷ 60일 변동성. 최근 변동성 확대·축소 정도"
+    m = re.fullmatch(r"(kospi|kosdaq|usbm)_px_over_ma(20|60|200)", low)
+    if m:
+        return f"{_bench_label(m.group(1))} 현재값 ÷ {m.group(2)}일 이동평균 - 1. 시장 추세선 대비 이격도"
+    m = re.fullmatch(r"(kospi|kosdaq|usbm)_drawdown", low)
+    if m:
+        return f"{_bench_label(m.group(1))}가 최근 120거래일 고점에서 얼마나 내려와 있는지 나타내는 낙폭"
+
+    m = re.fullmatch(r"rs_(kospi|kosdaq|usbm)_(5|20|60)d", low)
+    if m:
+        return (
+            f"종목의 {m.group(2)}일 로그수익률 - {_bench_label(m.group(1))}의 "
+            f"{m.group(2)}일 로그수익률. 시장 대비 상대강도"
+        )
+    m = re.fullmatch(r"beta_(kospi|kosdaq|usbm)_(60|120)", low)
+    if m:
+        return (
+            f"최근 {m.group(2)}거래일 종목 수익률과 {_bench_label(m.group(1))} 수익률로 계산한 rolling beta. "
+            "시장 움직임에 대한 민감도"
+        )
+    m = re.fullmatch(r"corr_(kospi|kosdaq|usbm)_(60|120)", low)
+    if m:
+        return (
+            f"최근 {m.group(2)}거래일 종목과 {_bench_label(m.group(1))} 일간수익률의 rolling correlation. "
+            "함께 움직이는 정도"
+        )
+    m = re.fullmatch(r"resid_ret_(kospi|kosdaq|usbm)_(1|5|20)d", low)
+    if m:
+        return (
+            f"종목수익률에서 60일 beta × {_bench_label(m.group(1))} 수익률을 제거한 잔차수익률의 "
+            f"{m.group(2)}일 값. 시장으로 설명되지 않는 종목 고유 움직임"
+        )
+    m = re.fullmatch(r"resid_vol_(kospi|kosdaq|usbm)_20d", low)
+    if m:
+        return (
+            f"종목수익률에서 60일 beta × {_bench_label(m.group(1))} 수익률을 제거한 잔차의 "
+            "20일 연율화 변동성. 종목 고유 위험"
+        )
+    m = re.fullmatch(r"beta_(kospi|kosdaq|usbm)_change_20", low)
+    if m:
+        return f"{_bench_label(m.group(1))} 대비 60일 beta가 최근 20거래일 동안 얼마나 변했는지"
+
+    # ------------------------------------------------------------------
+    # 3. 금리 / 수익률곡선 — features/market.py에서 이름/산식 확인
+    # ------------------------------------------------------------------
+    m = re.fullmatch(r"(us)?bond_([a-z0-9]+)_(level|chg5|chg20|z60)", low)
+    if m:
+        country = "미국 국채" if m.group(1) else "한국 국고채"
+        tenor = m.group(2).upper().replace("MO", "개월").replace("Y", "년")
+        kind = m.group(3)
+        if kind == "level":
+            return f"{country} {tenor} 금리 수준. 할인율·경기·통화정책 환경"
+        if kind == "chg5":
+            return f"{country} {tenor} 금리의 5거래일 변화폭"
+        if kind == "chg20":
+            return f"{country} {tenor} 금리의 20거래일 변화폭"
+        return f"{country} {tenor} 금리의 60거래일 rolling Z-score. 최근 평균 대비 금리 위치"
+
+    m = re.fullmatch(r"(us)?curve_(10y_2y|10y_3y|10y_3m|30y_10y|5y_2y)(?:_(chg20))?", low)
+    if m:
+        country = "미국" if m.group(1) else "한국"
+        pair = {
+            "10y_2y": "10년-2년",
+            "10y_3y": "10년-3년",
+            "10y_3m": "10년-3개월",
+            "30y_10y": "30년-10년",
+            "5y_2y": "5년-2년",
+        }[m.group(2)]
+        if m.group(3):
+            return f"{country} 국채 {pair} 금리차의 최근 20거래일 변화. 수익률곡선 변화 속도"
+        return f"{country} 국채 {pair} 금리차. 경기·통화정책 기대와 수익률곡선 기울기"
+
+    # ------------------------------------------------------------------
+    # 4. 시장 전체 투자자 수급 — features/market.py에서 산식 확인
+    # ------------------------------------------------------------------
+    m = re.fullmatch(
+        r"mkt_(individual|foreigner|institution|pension|fin_inv|other_corp)_"
+        r"(net_norm|net_norm_5|net_z20)", low
+    )
+    if m:
+        actor = {
+            "individual": "개인",
+            "foreigner": "외국인",
+            "institution": "기관 전체",
+            "pension": "연기금",
+            "fin_inv": "금융투자",
+            "other_corp": "기타법인",
+        }[m.group(1)]
+        kind = m.group(2)
+        if kind == "net_norm":
+            return f"{actor}의 KOSPI/KOSDAQ 시장 전체 순매매대금을 전체 매수대금 규모로 정규화한 당일 수급"
+        if kind == "net_norm_5":
+            return f"{actor} 시장 전체 정규화 순매매의 최근 5거래일 누적값. 단기 시장 수급 방향"
+        return f"{actor} 시장 전체 순매매대금의 20거래일 Z-score. 평소 대비 수급의 이례적 강도"
+
+    # ------------------------------------------------------------------
+    # 5. USD/KRW — features/market.py에서 산식 확인
+    # ------------------------------------------------------------------
+    if low == "fx_usdkrw":
+        return "USD/KRW 환율 수준. 원화 강약과 글로벌 위험선호·달러 환경"
+    m = re.fullmatch(r"fx_ret_(1|5|20)d", low)
+    if m:
+        return f"USD/KRW 환율의 최근 {m.group(1)}거래일 변화율"
+    if low == "fx_vol_20d":
+        return "USD/KRW 일간 변화율의 20거래일 연율화 변동성. 환율 불확실성"
+    m = re.fullmatch(r"fx_over_ma(20|60)", low)
+    if m:
+        return f"USD/KRW 현재값 ÷ {m.group(1)}일 이동평균 - 1. 달러/원 추세 대비 이격도"
+    if low == "fx_z60":
+        return "USD/KRW 환율의 60거래일 Z-score. 최근 평균 대비 달러/원 수준"
+
+    # ------------------------------------------------------------------
+    # 6. 한국 개별 종목 수급 — collect_kr_flow_data.py의 원천 필드 +
+    #    현재 학습 Feature naming(flow_*)을 함께 해석
+    # ------------------------------------------------------------------
+    if low.startswith("flow_"):
+        body = low[5:]
+
+        actors = [
+            ("foreigner_holding", "외국인 보유"),
+            ("foreigner_limit", "외국인 보유한도"),
+            ("inst_other_fin", "기관 중 기타금융"),
+            ("inst_fin_inv", "기관 중 금융투자"),
+            ("inst_insurance", "기관 중 보험"),
+            ("inst_pension", "기관 중 연기금"),
+            ("inst_trust", "기관 중 투신/신탁"),
+            ("inst_bank", "기관 중 은행"),
+            ("inst_pef", "기관 중 사모펀드"),
+            ("prog_nonarb", "프로그램 비차익거래"),
+            ("prog_arb", "프로그램 차익거래"),
+            ("institution", "기관 전체"),
+            ("foreigner", "외국인"),
+            ("individual", "개인"),
+            ("other_corp", "기타법인"),
+            ("margin_loan", "신용융자"),
+            ("stock_loan", "신용대주"),
+            ("lending", "주식 대차"),
+            ("cfd_buy", "CFD 매수잔고"),
+            ("cfd_sell", "CFD 매도잔고"),
+            ("short", "공매도"),
+        ]
+        actor = None
+        rest = body
+        for prefix, label in actors:
+            if body == prefix or body.startswith(prefix + "_"):
+                actor = label
+                rest = body[len(prefix):].lstrip("_")
+                break
+
+        # actor를 못 찾더라도 flow라는 사실은 확실하므로 아래 token 기반 설명을 계속 시도한다.
+        who = actor or "한국 개별 종목"
+
+        # 외국인 보유/CFD처럼 raw 레벨 자체가 중요한 항목
+        if "holding_rate" in rest or (actor == "외국인 보유" and "rate" in rest):
+            return f"{who} 비율에서 만든 수급 Feature. 외국인 포지션의 수준 또는 변화"
+        if "holding_qty" in rest:
+            return f"{who} 수량에서 만든 수급 Feature. 외국인 보유 규모의 수준 또는 변화"
+        if "limit_qty" in rest:
+            return f"{who} 수량에서 만든 Feature. 외국인 보유 가능 한도 규모"
+        if "balance_rate" in rest:
+            return f"{who} 잔고비율에서 만든 레버리지/포지셔닝 Feature"
+        if "balance_amount" in rest:
+            return f"{who} 잔고금액에서 만든 포지셔닝 규모 Feature"
+        if "balance_qty" in rest or rest == "balance":
+            return f"{who} 잔고수량에서 만든 포지셔닝 규모 Feature"
+        if "trading_rate" in rest:
+            return f"{who} 거래비율에서 만든 레버리지 수급 Feature"
+        if rest.startswith("new"):
+            return f"{who} 신규 수량에서 만든 Feature. 새로 증가한 레버리지/대차 포지션"
+        if rest.startswith("return"):
+            return f"{who} 상환 수량에서 만든 Feature. 기존 레버리지 포지션이 줄어드는 흐름"
+        if rest.startswith("execution"):
+            return f"{who} 신규 대차 체결 수량에서 만든 Feature. 대차 수요 증가 흐름"
+        if rest.startswith("repayment"):
+            return f"{who} 대차 상환 수량에서 만든 Feature. 대차잔고 감소 흐름"
+
+        # 공매도 원천 비율/금액/수량
+        if "volume_rate" in rest:
+            base = f"{who} 거래량 비율"
+        elif "amount_rate" in rest:
+            base = f"{who} 거래대금 비율"
+        elif rest.startswith("volume"):
+            base = f"{who} 거래량"
+        elif rest.startswith("amount"):
+            base = f"{who} 거래대금"
+        elif "_buy" in "_" + rest or rest.startswith("buy"):
+            base = f"{who} 매수 흐름"
+        elif "_sell" in "_" + rest or rest.startswith("sell"):
+            base = f"{who} 매도 흐름"
+        elif "net" in rest:
+            base = f"{who} 순매수(매수-매도) 흐름"
+        else:
+            base = f"{who} 수급 흐름"
+
+        # 파생 방식. exact 소스가 없는 kr_flow.py 항목은 이름 convention에 맞춰 보수적으로 표현.
+        m = re.search(r"(?:^|_)norm_(\d+)(?:$|_)", rest)
+        if m:
+            return f"{base}을 최근 {m.group(1)}거래일 기준으로 정규화한 값. 종목/시점별 규모 차이를 줄인 상대 수급 강도"
+        if "_norm" in "_" + rest or rest.endswith("norm"):
+            return f"{base}을 거래 규모 차이가 덜 나도록 정규화한 값. 상대적인 수급 강도"
+        m = re.search(r"(?:^|_)z(?:score)?_?(\d+)(?:$|_)", rest)
+        if m:
+            return f"{base}의 최근 {m.group(1)}거래일 Z-score. 평소 수준 대비 얼마나 이례적인 수급인지"
+        m = re.search(r"(?:^|_)(?:chg|change|diff)_?(\d+)(?:$|_)", rest)
+        if m:
+            return f"{base}의 최근 {m.group(1)}거래일 변화량/변화율. 수급 변화 방향과 속도"
+        m = re.search(r"(?:^|_)(?:ma|mean|avg)_?(\d+)(?:$|_)", rest)
+        if m:
+            return f"{base}의 최근 {m.group(1)}거래일 이동평균. 일시적 노이즈를 줄인 수급 추세"
+        m = re.search(r"(?:^|_)(?:sum|roll|rolling)_?(\d+)(?:$|_)", rest)
+        if m:
+            return f"{base}의 최근 {m.group(1)}거래일 누적/rolling 값. 지속적인 수급 방향"
+        if "streak" in rest:
+            return f"{base}의 순매수/순매도 방향이 연속된 기간. 수급 추세의 지속성"
+        if "ratio" in rest or "rate" in rest:
+            return f"{base}을 비율로 표현한 값. 절대규모가 아닌 상대적인 매수·매도 압력"
+        return f"{base}에서 만든 한국 종목 전용 수급 Feature"
+
+    # ------------------------------------------------------------------
+    # 7. 종목 자체 수익률 / Momentum
+    # ------------------------------------------------------------------
+    m = re.fullmatch(r"(?:log_)?ret_(\d+)(?:d)?", low)
+    if m:
+        return f"종목의 최근 {m.group(1)}거래일 수익률(로그수익률 계열). 가격 방향과 모멘텀"
+    if low in {"log_ret", "log_return"}:
+        return "종목의 1거래일 로그수익률. 가격 변화의 기본 시계열 입력"
+    m = re.fullmatch(r"roc_?(\d+)", low)
+    if m:
+        return f"{m.group(1)}거래일 전 대비 현재 가격의 ROC(Rate of Change). 해당 기간 가격 모멘텀"
+    m = re.fullmatch(r"mom_(\d+)", low)
+    if m:
+        return f"최근 {m.group(1)}거래일 가격 모멘텀. 과거 대비 현재 가격의 추세 강도"
+    m = re.fullmatch(r"mom_(\d+)_(\d+)", low)
+    if m:
+        return (
+            f"{m.group(1)}-{m.group(2)} 모멘텀. 최근 {m.group(2)}개월을 제외하고 "
+            f"약 {m.group(1)}개월 구간의 중장기 추세를 보는 모멘텀"
+        )
     if "overnight" in low:
-        return "전일 종가에서 당일 시가까지의 야간(갭) 수익률"
+        return "전일 종가에서 당일 시가까지의 overnight(갭) 수익률"
     if "intraday" in low:
         return "당일 시가에서 종가까지의 장중 수익률"
-    if low in {"gap", "gap1"} or "gap_ret" in low:
-        return "전일 종가 대비 당일 시가의 갭 변화율"
-    if "52w" in low or "range_pos252" in low:
-        return "최근 약 52주 가격 범위에서 현재 가격이 어느 위치에 있는지 나타냄"
-    if "range_pos" in low:
-        nums = re.findall(r"\d+", low)
-        return f"최근 {nums[-1]}일 가격 범위에서 현재 가격의 상대적 위치" if nums else "최근 가격 범위 내 현재 위치"
+    if low in {"gap", "gap1"} or low.startswith("gap_"):
+        return "전일 종가 대비 당일 시가의 갭 변화율. 장외 시간대 정보가 반영된 가격 움직임"
 
-    # ---- 추세 / 기술적 지표 ----
-    if "dist_sma" in low or "price_sma" in low or "over_sma" in low:
-        nums = re.findall(r"\d+", low)
-        d = nums[-1] if nums else "해당"
-        return f"현재 가격이 {d}일 단순이동평균(SMA)에서 얼마나 위/아래 떨어져 있는지"
-    if "dist_ema" in low or "over_ema" in low:
-        nums = re.findall(r"\d+", low)
-        d = nums[-1] if nums else "해당"
-        return f"현재 가격이 {d}일 지수이동평균(EMA)에서 얼마나 이격돼 있는지"
-    if "sma_slope" in low or "ma_slope" in low:
-        return "이동평균선의 기울기. 추세의 방향과 속도를 수치화한 값"
-    if "macd_hist" in low or "macd_diff" in low:
-        return "MACD와 시그널선의 차이. 추세 모멘텀이 강화·약화되는 정도"
+    # 52주/가격 범위 위치
+    if "52w" in low or "252" in low and ("pos" in low or "position" in low or "range" in low):
+        return "최근 약 252거래일(52주) 가격 범위에서 현재 가격의 상대적 위치. 장기 추세 강도"
+    m = re.search(r"(?:range|price)_pos(?:ition)?_?(\d+)", low)
+    if m:
+        return f"최근 {m.group(1)}거래일 고가·저가 범위에서 현재 가격의 상대적 위치"
+
+    # ------------------------------------------------------------------
+    # 8. Trend / Moving Average / MACD
+    # ------------------------------------------------------------------
+    m = re.search(r"(?:dist_|price_|px_)?(?:over_)?sma_?(\d+)", low)
+    if m and ("slope" not in low):
+        return f"현재 종가가 {m.group(1)}일 단순이동평균(SMA)에서 얼마나 위/아래 떨어져 있는지 나타내는 이격도"
+    m = re.search(r"(?:dist_|price_|px_)?(?:over_)?ema_?(\d+)", low)
+    if m and ("slope" not in low):
+        return f"현재 종가가 {m.group(1)}일 지수이동평균(EMA)에서 얼마나 위/아래 떨어져 있는지 나타내는 이격도"
+    m = re.search(r"(sma|ema|ma).*?slope_?(\d+)|(?:sma|ema|ma)_?(\d+).*?slope", low)
+    if m:
+        days = next((x for x in m.groups()[1:] if x), "해당")
+        return f"{days}일 이동평균선의 기울기. 추세 방향과 속도를 수치화한 값"
+
+    if "macd_hist" in low or "macd_diff" in low or "macd_histogram" in low:
+        return "MACD와 Signal의 차이(Histogram). 추세 모멘텀이 강화되는지 약화되는지"
     if "macd_signal" in low:
-        return "MACD의 시그널선. MACD 추세 신호를 부드럽게 만든 기준선"
-    if "macd" in low:
-        return "단기·장기 지수이동평균 차이로 만든 MACD 추세 모멘텀"
+        return "MACD의 Signal 선. MACD 변화를 평활화해 추세 전환을 확인하는 기준선"
+    if low.startswith("macd") or "_macd" in low:
+        return "단기 EMA와 장기 EMA의 차이로 만든 MACD. 중단기 추세와 모멘텀"
+
+    # ------------------------------------------------------------------
+    # 9. Mean Reversion / Oscillator
+    # ------------------------------------------------------------------
     if "stoch" in low and "rsi" in low:
-        return "RSI가 최근 범위에서 어느 위치인지 보는 Stochastic RSI. 단기 과열·침체 정도"
+        w = _last_window()
+        return f"Stochastic RSI({w}). RSI가 최근 범위 안에서 어디에 있는지 나타내는 단기 과열·침체 지표"
     if "rsi" in low:
-        return "RSI. 최근 상승폭과 하락폭을 비교해 과열·침체 및 모멘텀을 나타내는 지표"
+        w = _last_window()
+        return f"RSI({w}). 최근 상승폭과 하락폭을 비교한 과열·침체 및 가격 모멘텀 지표"
     if "cci" in low:
-        return "CCI. 가격이 최근 평균 수준에서 얼마나 이탈했는지 보는 모멘텀/평균회귀 지표"
-    if "williams" in low:
-        return "Williams %R. 최근 고가·저가 범위 안에서 종가 위치를 이용한 과열·침체 지표"
+        w = _last_window()
+        return f"CCI({w}). 가격이 최근 평균 수준에서 얼마나 벗어났는지 보는 모멘텀·평균회귀 지표"
+    if "williams" in low or "willr" in low:
+        w = _last_window()
+        return f"Williams %R({w}). 최근 고가·저가 범위 내 종가 위치를 이용한 과열·침체 지표"
     if "bb_" in low or "bollinger" in low:
+        w = _last_window("20")
         if "width" in low:
-            return "볼린저밴드 폭. 최근 가격 변동성이 커졌는지 작아졌는지 나타냄"
-        return "볼린저밴드 안에서 현재 가격의 상대적 위치. 과열·평균회귀 상태를 나타냄"
+            return f"{w}일 볼린저밴드 폭. 최근 가격 변동성이 확대·축소되는 정도"
+        if "pos" in low or "pctb" in low or "%b" in low:
+            return f"{w}일 볼린저밴드 안에서 현재 가격의 상대적 위치. 과열·평균회귀 상태"
+        return f"{w}일 볼린저밴드 기반 가격 위치/변동성 Feature"
 
-    # ---- 변동성 / 위험 ----
+    # ------------------------------------------------------------------
+    # 10. Volatility / Tail Risk
+    # ------------------------------------------------------------------
     if "parkinson" in low:
-        return "고가와 저가 범위를 이용한 Parkinson 변동성. 종가만 쓴 변동성보다 일중 정보를 더 반영"
-    if "garman" in low or "gk_vol" in low:
-        return "시가·고가·저가·종가를 함께 이용한 Garman–Klass 변동성 추정치"
+        w = _last_window()
+        return f"최근 {w}거래일 고가·저가 범위를 이용한 Parkinson 변동성. 일중 가격범위를 활용한 변동성 추정"
+    if "garman" in low or "gk_vol" in low or low.startswith("gk_"):
+        w = _last_window()
+        return f"최근 {w}거래일 시가·고가·저가·종가를 이용한 Garman–Klass 변동성 추정치"
     if "atr" in low:
-        return "ATR 기반 변동폭을 가격 대비 비율로 본 값. 최근 실제 가격 움직임의 크기"
-    if "down_vol" in low or "downvol" in low:
-        return "하락 수익률에 초점을 둔 하방 변동성. 손실 쪽 위험의 크기"
+        w = _last_window("14")
+        if "pct" in low or "norm" in low:
+            return f"ATR({w})를 현재 가격으로 나눈 상대 변동폭. 종목 가격수준과 무관한 최근 변동성"
+        return f"ATR({w}). 갭까지 포함한 최근 실제 가격 변동폭"
+    if "down_vol" in low or "downvol" in low or "downside_vol" in low:
+        w = _last_window()
+        return f"최근 {w}거래일 하락 수익률에 초점을 둔 하방 변동성. 손실 쪽 위험"
+    if "up_vol" in low or "upvol" in low or "upside_vol" in low:
+        w = _last_window()
+        return f"최근 {w}거래일 상승 수익률에 초점을 둔 상방 변동성"
     if "drawdown" in low:
-        return "최근 고점 대비 현재/최근 가격의 낙폭. 하락 위험과 회복 정도를 나타냄"
+        w = _last_window()
+        return f"최근 {w}거래일 또는 해당 rolling 고점 대비 낙폭. 하락 위험과 회복 정도"
     if "skew" in low:
-        return "수익률 분포의 왜도. 상승·하락 꼬리가 어느 쪽으로 더 치우쳤는지"
+        w = _last_window()
+        return f"최근 {w}거래일 수익률 분포의 왜도. 상승/하락 꼬리의 비대칭성"
     if "kurt" in low:
-        return "수익률 분포의 첨도. 극단적 가격변동이 얼마나 자주 나타나는지"
+        w = _last_window()
+        return f"최근 {w}거래일 수익률 분포의 첨도. 극단적 변동이 나타나는 정도"
     if "tail_loss" in low:
-        return "최근 구간에서 나타난 큰 하락 꼬리의 크기"
+        w = _last_window()
+        return f"최근 {w}거래일 수익률 분포의 큰 하락 꼬리. 극단적 손실 위험"
     if "tail_gain" in low:
-        return "최근 구간에서 나타난 큰 상승 꼬리의 크기"
-    if "realized_vol" in low or re.search(r"(?:^|_)vol_\d+", low) or re.search(r"(?:^|_)vol\d+", low):
-        nums = re.findall(r"\d+", low)
-        d = nums[-1] if nums else "최근"
-        return f"{d}일 수익률로 계산한 실현 변동성. 가격 움직임의 불확실성 크기"
+        w = _last_window()
+        return f"최근 {w}거래일 수익률 분포의 큰 상승 꼬리. 극단적 상승 움직임"
     if "vol_ratio" in low:
-        return "단기 변동성과 중기 변동성의 비율. 변동성이 최근 급격히 확대·축소됐는지"
+        return "단기 변동성 ÷ 중기/장기 변동성. 최근 변동성이 평소보다 확대됐는지 나타내는 비율"
+    m = re.search(r"(?:realized_)?vol_?(\d+)(?:d)?", low)
+    if m:
+        return f"최근 {m.group(1)}거래일 수익률로 계산한 실현 변동성. 가격 움직임의 불확실성 크기"
+    m = re.fullmatch(r"rv_?(\d+)", low)
+    if m:
+        return f"최근 {m.group(1)}거래일 realized volatility. 수익률의 rolling 변동성"
 
-    # ---- 거래량 / 유동성 ----
+    # ------------------------------------------------------------------
+    # 11. Volume / Liquidity
+    # ------------------------------------------------------------------
     if "amihud" in low:
-        return "Amihud 비유동성. 적은 거래대금으로 가격이 크게 움직일수록 값이 커지는 유동성 위험 지표"
+        w = _last_window("20")
+        return f"Amihud 비유동성({w}일). 거래대금 대비 가격변화가 클수록 커지는 유동성 위험 지표"
     if "obv" in low:
-        return "OBV(On-Balance Volume) 기반 지표. 가격 방향에 따라 누적한 거래량으로 매수·매도 압력을 추정"
+        w = _last_window()
+        return f"OBV(On-Balance Volume) 기반 {w}거래일 모멘텀/변화. 가격 방향에 따라 누적한 거래량으로 매수·매도 압력 추정"
     if "mfi" in low:
-        return "MFI(Money Flow Index). 가격과 거래량을 함께 이용해 자금 유입·유출 강도를 측정"
+        w = _last_window("14")
+        return f"MFI({w}). 가격과 거래량을 함께 이용해 자금 유입·유출 강도를 측정"
     if "cmf" in low:
-        return "CMF(Chaikin Money Flow). 종가 위치와 거래량을 이용한 매집·분산 압력"
-    if "volume" in low or "volu_" in low or "dollar_vol" in low:
+        w = _last_window("20")
+        return f"CMF({w}). 종가 위치와 거래량을 이용해 매집·분산 압력을 측정"
+    if "price_volume_corr" in low or "price_vol_corr" in low:
+        w = _last_window()
+        return f"최근 {w}거래일 가격수익률과 거래량 변화의 상관. 가격 움직임에 거래량이 동반되는지"
+    if "dollar_vol" in low or "turnover" in low:
+        w = _last_window()
+        if "chg" in low or "change" in low:
+            return f"가격×거래량으로 계산한 거래대금의 최근 {w}거래일 변화. 시장 참여와 유동성 변화"
+        return "가격×거래량으로 계산한 거래대금/회전 규모. 종목의 거래 유동성"
+    if "volume" in low or "volu_" in low:
+        w = _last_window()
         if "z" in low:
-            return "현재 거래량이 최근 평균보다 얼마나 이례적으로 많은지/적은지 나타내는 Z-score"
-        if "dollar" in low:
-            return "가격×거래량 기준 거래대금의 변화. 시장 참여와 유동성 규모를 나타냄"
-        return "최근 거래량의 수준·변화·추세를 나타내는 시장 참여도 지표"
+            return f"거래량의 최근 {w}거래일 Z-score. 평소보다 거래가 얼마나 이례적으로 많은지/적은지"
+        if "chg" in low or "change" in low or "ret" in low:
+            return f"거래량의 최근 {w}거래일 변화율. 시장 참여가 증가·감소하는 정도"
+        if "ma" in low or "mean" in low or "avg" in low:
+            return f"거래량의 최근 {w}거래일 이동평균/평활값. 거래 활동의 추세"
+        return "거래량 수준·변화·추세에서 만든 시장 참여도 Feature"
 
-    # ---- 시장 / 상대강도 / 금리 / 환율 ----
-    if low.startswith("fx_") or "usdkrw" in low or "krw" in low and ("chg" in low or "ret" in low):
-        return "달러/원 환율의 수준·변화·모멘텀/변동성. 원화와 글로벌 위험선호 변화의 영향을 반영"
-    if "kospi" in low or "kosdaq" in low:
-        return "한국 주가지수의 수익률·추세·변동성. 개별 종목이 놓인 국내 시장 환경을 반영"
-    if "sox" in low:
-        return "필라델피아 반도체지수(SOX)의 수익률·추세·변동성. 글로벌 반도체 업황/주가 환경을 반영"
-    if "nasdaq" in low:
-        return "NASDAQ 시장의 수익률·추세·변동성. 성장주·기술주 위험선호 환경을 반영"
-    if "benchmark" in low or "relative" in low or "rel_" in low:
-        return "종목을 기준 시장/지수와 비교한 상대강도 또는 초과수익 성격의 지표"
-    if "beta" in low:
-        return "종목 수익률이 시장 움직임에 얼마나 민감하게 반응하는지 나타내는 베타"
-    if "corr" in low:
-        return "종목과 시장/기준자산 수익률이 함께 움직이는 정도를 나타내는 상관계수"
-    if "residual" in low or "market_adjust" in low:
-        return "시장 움직임으로 설명되는 부분을 제거한 종목 고유의 초과수익 성분"
-    if "bond" in low or "yield" in low or "dgs" in low or "fred" in low:
-        if "slope" in low or "curve" in low or "spread" in low:
-            return "장·단기 금리 차이 또는 수익률곡선 기울기. 경기·통화정책 기대를 반영"
-        return "국채금리 수준 또는 변화. 할인율·경기·통화정책 환경을 반영"
+    # ------------------------------------------------------------------
+    # 12. Regime / clustering / calendar
+    # ------------------------------------------------------------------
+    if "gmm" in low or "cluster" in low:
+        return "수익률·추세·변동성 등의 상태를 Gaussian Mixture/클러스터링으로 구분한 시장 국면 Feature"
+    if "regime" in low:
+        if "trend" in low:
+            return "이동평균/가격 방향 등을 이용해 구분한 상승·하락 추세 국면"
+        if "vol" in low:
+            return "rolling 변동성을 이용해 구분한 고변동·저변동 시장 국면"
+        if "risk" in low:
+            return "시장 흐름을 위험선호/위험회피 관점으로 구분한 regime"
+        if "volume" in low:
+            return "거래량 확대/감소 상태를 나타내는 시장 참여 regime"
+        return "추세·변동성·시장 상태를 구분한 regime Feature. 국면에 따라 모델 신호가 달라지도록 사용"
+    if low.startswith("dow_"):
+        return "요일(day of week)을 sin/cos 주기형 변수로 변환한 계절성 Feature"
+    if low.startswith("month_"):
+        return "월(month)을 sin/cos 주기형 변수로 변환한 계절성 Feature"
 
-    # ---- 한국 수급 ----
-    if "foreign" in low:
-        return "외국인 투자자의 순매수·보유·거래 흐름에서 만든 수급 지표"
-    if "institution" in low or "pension" in low or "fund" in low or "insurance" in low:
-        return "기관/연기금/투신/보험 등의 매매 흐름에서 만든 수급 지표"
-    if "program" in low:
-        return "프로그램 매매의 차익·비차익 또는 순매수 흐름을 나타내는 지표"
-    if "short" in low:
-        return "공매도 거래량·비율·변화에서 만든 매도 압력/포지셔닝 지표"
-    if "credit" in low:
-        return "신용융자·신용대주 신규/상환/잔고 등 레버리지 수급을 나타내는 지표"
-    if "lending" in low or "loan" in low or "borrow" in low:
-        return "주식 대차 체결·상환·잔고에서 만든 공매도 잠재수요/포지셔닝 지표"
-    if "cfd" in low:
-        return "CFD 잔고·거래 흐름을 이용한 레버리지 포지셔닝 지표"
+    # ------------------------------------------------------------------
+    # 13. 원천 수급 이름이 flow_ prefix 없이 남은 경우까지 방어
+    # ------------------------------------------------------------------
+    if "foreigner" in low:
+        return "외국인 순매수·보유량·보유비율 등에서 만든 한국 종목 수급 Feature"
+    if "institution" in low or low.startswith("inst_") or "pension" in low or "insurance" in low:
+        return "기관/금융투자/연기금/보험 등 기관 세부 투자자의 매매 흐름에서 만든 한국 종목 수급 Feature"
+    if "prog_" in low or "program" in low:
+        return "프로그램 차익·비차익 매매의 매수/매도/순매수 흐름에서 만든 수급 Feature"
+    if "short_" in low:
+        return "공매도 거래량·거래대금·비율에서 만든 매도 압력/포지셔닝 Feature"
+    if "margin_loan" in low:
+        return "신용융자 신규·상환·잔고·비율에서 만든 레버리지 수급 Feature"
+    if "stock_loan" in low:
+        return "신용대주 신규·상환·잔고·비율에서 만든 레버리지/공매도 수급 Feature"
+    if "lending_" in low:
+        return "주식 대차 체결·상환·잔고에서 만든 공매도 잠재수요/포지셔닝 Feature"
+    if "cfd_" in low:
+        return "CFD 매수·매도 잔고와 잔고비율에서 만든 레버리지 포지셔닝 Feature"
 
-    # ---- Regime / 달력 ----
-    if "regime" in low or "gmm" in low or "cluster" in low:
-        return "추세·변동성 등으로 분류한 시장 국면(regime). 같은 신호도 국면에 따라 다르게 해석하도록 사용"
-    if "dow_" in low:
-        return "요일을 주기형(sin/cos) 변수로 바꾼 계절성 Feature"
-    if "month_" in low:
-        return "월(month)을 주기형(sin/cos) 변수로 바꾼 계절성 Feature"
+    # ------------------------------------------------------------------
+    # 14. 마지막 안전 해석
+    #     완전히 모르는 것으로 표시하지 않고, 이름에서 확실히 읽을 수 있는 변환을 설명한다.
+    # ------------------------------------------------------------------
+    pieces = []
+    if "z" in low and re.search(r"z_?\d+", low):
+        pieces.append("rolling Z-score")
+    if "chg" in low or "change" in low:
+        pieces.append("기간 변화")
+    if "ratio" in low or "rate" in low:
+        pieces.append("비율")
+    if "norm" in low:
+        pieces.append("정규화")
+    if "streak" in low:
+        pieces.append("연속 방향 지속성")
+    if "slope" in low:
+        pieces.append("추세 기울기")
+    if "spread" in low:
+        pieces.append("두 지표 간 스프레드")
+    if "level" in low:
+        pieces.append("수준값")
+    if pieces:
+        return " / ".join(pieces) + " 형태로 변환한 학습 후보 Feature. 이름의 변환 규칙까지는 식별 가능"
 
-    return "모델에 실제 입력된 파생 Feature. 이름만으로 정의를 확정하기 어려워 원본 Feature명을 그대로 표시"
+    return (
+        f"학습 전 후보군에서 생성된 파생 Feature({n}). "
+        "현재 게시 스냅샷에는 생성 모듈의 산식 자체가 포함되지 않아 원본 이름을 보존해 표시"
+    )
 
 
 def render_feature_importance(top_features: Dict, limit: int = 10) -> None:
