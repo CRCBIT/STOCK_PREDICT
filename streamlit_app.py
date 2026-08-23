@@ -1188,24 +1188,66 @@ st.markdown("""
     .status-pill {
       font-size: 0.70rem;
     }
+
+    /* Top 10: 모바일에서는 가로 4열을 강제하지 않고 2단 카드로 배치.
+       iPhone에서 중요도 열이 화면 밖으로 잘리던 문제를 없앤다. */
     .feature-head {
       display: none;
     }
+    .feature-list {
+      width: 100%;
+      min-width: 0;
+      overflow-x: hidden;
+    }
     .feature-row {
-      grid-template-columns: 22px minmax(112px, 0.8fr) minmax(155px, 1.25fr) 62px;
-      gap: 7px;
-      padding-left: 6px;
-      padding-right: 6px;
+      width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+      display: grid;
+      grid-template-columns: 24px minmax(0, 1fr) auto;
+      grid-template-areas:
+        "rank name score"
+        "rank meaning meaning";
+      column-gap: 8px;
+      row-gap: 4px;
+      align-items: start;
+      padding: 9px 8px;
+    }
+    .feature-rank {
+      grid-area: rank;
+      align-self: center;
+      text-align: right;
+      padding-top: 1px;
     }
     .feature-name {
+      grid-area: name;
+      min-width: 0;
       font-size: 0.70rem;
+      line-height: 1.38;
+      overflow-wrap: anywhere;
+      word-break: break-word;
     }
     .feature-meaning {
+      grid-area: meaning;
+      min-width: 0;
       font-size: 0.69rem;
+      line-height: 1.48;
+      overflow-wrap: anywhere;
+      word-break: keep-all;
     }
     .feature-score {
-      font-size: 0.68rem;
+      grid-area: score;
+      align-self: start;
+      text-align: right;
+      white-space: nowrap;
+      font-size: 0.64rem;
+      line-height: 1.38;
+      padding-left: 4px;
     }
+    .feature-track {
+      display: none !important;
+    }
+
     div[data-testid="stMetric"] {
       min-height: 88px;
     }
@@ -1314,9 +1356,10 @@ st.markdown("""
   /* 휴대폰: 가로 표를 세로 카드로 전환해 좌우 잘림을 없앤다. */
   @media (max-width: 600px) {
     .feature-catalog-wrap {
-      max-height: 680px;
-      overflow-y: auto;
-      overflow-x: hidden;
+      /* iOS Safari에서 중첩 스크롤 영역이 먹지 않는 경우가 있어
+         모바일에서는 내부 스크롤을 없애고 페이지 자체가 자연스럽게 스크롤되게 한다. */
+      max-height: none;
+      overflow: visible;
       padding: 6px;
     }
     table.feature-catalog,
