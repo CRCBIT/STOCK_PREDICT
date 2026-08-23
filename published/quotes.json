@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-08-23T14:05:01+09:00",
+  "fetched_at": "2026-08-23T14:10:02+09:00",
   "quotes": {
     "000660": {
       "price": 1761000.0,
@@ -46,6 +46,11 @@
       "currency": "USD",
       "timestamp": "2026-08-22T08:51:00.000+09:00"
     },
+    "CAT": {
+      "price": 827.2,
+      "currency": "USD",
+      "timestamp": "2026-08-22T08:57:15.000+09:00"
+    },
     "GOOGL": {
       "price": 345.1,
       "currency": "USD",
@@ -76,11 +81,6 @@
       "currency": "USD",
       "timestamp": "2026-08-22T08:59:52.000+09:00"
     },
-    "SMR": {
-      "price": 9.4,
-      "currency": "USD",
-      "timestamp": "2026-08-22T08:59:25.000+09:00"
-    },
     "SNDK": {
       "price": 1593.2,
       "currency": "USD",
@@ -101,10 +101,10 @@
       "currency": "USD",
       "timestamp": "2026-08-22T08:59:33.000+09:00"
     },
-    "CAT": {
-      "price": 827.2,
+    "SMR": {
+      "price": 9.4,
       "currency": "USD",
-      "timestamp": "2026-08-22T08:57:15.000+09:00"
+      "timestamp": "2026-08-22T08:59:25.000+09:00"
     }
   }
 }
