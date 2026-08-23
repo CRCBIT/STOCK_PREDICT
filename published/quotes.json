@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-08-23T16:20:01+09:00",
+  "fetched_at": "2026-08-23T16:25:02+09:00",
   "quotes": {
     "000660": {
       "price": 1761000.0,
@@ -30,6 +30,11 @@
       "price": 309.65,
       "currency": "USD",
       "timestamp": "2026-08-22T08:59:45.000+09:00"
+    },
+    "AMAT": {
+      "price": 492.1,
+      "currency": "USD",
+      "timestamp": "2026-08-22T08:58:20.000+09:00"
     },
     "AMD": {
       "price": 472.361,
@@ -76,11 +81,6 @@
       "currency": "USD",
       "timestamp": "2026-08-22T08:59:52.000+09:00"
     },
-    "SMR": {
-      "price": 9.4,
-      "currency": "USD",
-      "timestamp": "2026-08-22T08:59:25.000+09:00"
-    },
     "SNDK": {
       "price": 1593.2,
       "currency": "USD",
@@ -101,10 +101,10 @@
       "currency": "USD",
       "timestamp": "2026-08-22T08:59:33.000+09:00"
     },
-    "AMAT": {
-      "price": 492.1,
+    "SMR": {
+      "price": 9.4,
       "currency": "USD",
-      "timestamp": "2026-08-22T08:58:20.000+09:00"
+      "timestamp": "2026-08-22T08:59:25.000+09:00"
     }
   }
 }
