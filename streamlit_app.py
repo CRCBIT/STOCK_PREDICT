@@ -2504,6 +2504,15 @@ def _diag_performance_html(p: Dict) -> str:
 
     rmse = num(p.get("oos_rmse"))
     base_rmse = num(p.get("baseline_rmse"))
+    raw_rmse = num(p.get("raw_oos_rmse"))
+    raw_da = num(p.get("raw_oos_directional_accuracy"))
+    raw_ic = num(p.get("raw_oos_ic"))
+    final_da = num(p.get("oos_directional_accuracy"))
+    final_ic = num(p.get("oos_ic"))
+    baseline_da = num(p.get("baseline_directional_accuracy"))
+    majority_da = num(p.get("majority_directional_accuracy"))
+    direction_ref = num(p.get("direction_reference_accuracy"))
+    direction_edge = num(p.get("directional_edge"))
     skill = num(p.get("baseline_improvement"))
     if skill is None and rmse is not None and base_rmse is not None and base_rmse > 0:
         skill = 1.0 - rmse / base_rmse
@@ -2533,6 +2542,12 @@ def _diag_performance_html(p: Dict) -> str:
         if eval_eff is not None:
             raw_cov_value += f"(실효≈{eval_eff:.1f})"
 
+    da_value = pct(final_da, signed=False)
+    if direction_ref is not None:
+        da_value += f" / 기준 {pct(direction_ref, signed=False)}"
+    if direction_edge is not None:
+        da_value += f" · edge {direction_edge * 100:+.1f}%p"
+
     metrics = [
         (
             "OOS 표본", sample_value,
@@ -2540,22 +2555,41 @@ def _diag_performance_html(p: Dict) -> str:
             "실효 표본은 보수적으로 OOS행/h로 표시합니다.",
         ),
         (
-            "IC (Spearman)", fnum(p.get("oos_ic"), 3),
-            "예측 순위와 실제 수익률 순위의 상관. 0이면 순위 정보가 없고, 양수일수록 좋습니다.",
+            "IC (MZ 후)", fnum(final_ic, 3),
+            "MZ까지 반영한 최종 OOS 예측의 Spearman IC입니다.",
         ),
         (
-            "방향 정확도", pct(p.get("oos_directional_accuracy"), signed=False),
-            "상승·하락 방향을 맞힌 비율. 50% 부근이면 방향 정보가 약합니다.",
+            "방향 정확도 / 기준", da_value,
+            "최종 MZ OOS 방향정확도입니다. 기준은 50%, 단순 다수방향, baseline 모델 중 "
+            "가장 높은 값이며 신뢰도는 이 기준을 넘은 edge만 인정합니다.",
         ),
         (
             "RMSE / baseline", rmse_value,
             "Walk-Forward OOS RMSE와 기준모델 RMSE. 마지막 %는 baseline 대비 개선율이며 양수여야 개선입니다.",
         ),
-        (
-            "80% 구간 · 보정 전", raw_cov_value,
-            "구간 폭을 다시 넓히기 전에 별도 holdout에서 측정한 honest coverage. 신뢰도 계산은 이 값을 사용합니다.",
-        ),
     ]
+
+    if raw_rmse is not None and rmse is not None:
+        metrics.append((
+            "MZ 효과 · RMSE", f"{raw_rmse:.4f} → {rmse:.4f}",
+            "MZ 적용 전 ML/DL 앙상블과 cross-fitted MZ 적용 후 최종 모델의 OOS RMSE 비교입니다. "
+            "오른쪽 값이 작아져야 MZ가 점오차를 개선한 것입니다.",
+        ))
+    if raw_da is not None and final_da is not None:
+        metrics.append((
+            "MZ 효과 · 방향", f"{raw_da * 100:.1f}% → {final_da * 100:.1f}%",
+            "MZ 적용 전후 OOS 방향정확도 비교입니다. 최종 신뢰도에는 MZ 후 값의 기준 대비 edge를 사용합니다.",
+        ))
+    if raw_ic is not None and final_ic is not None:
+        metrics.append((
+            "MZ 효과 · IC", f"{raw_ic:+.3f} → {final_ic:+.3f}",
+            "MZ 적용 전후 OOS Spearman IC 비교입니다.",
+        ))
+
+    metrics.append((
+        "80% 구간 · 보정 전", raw_cov_value,
+        "구간 폭을 다시 넓히기 전에 별도 holdout에서 측정한 honest coverage. 신뢰도 계산은 이 값을 사용합니다.",
+    ))
 
     if (adj_cov is not None and raw_cov is not None and abs(adj_cov - raw_cov) > 1e-6):
         adj_value = pct(adj_cov, signed=False)
@@ -3940,31 +3974,40 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
             ("학습 시각", trained_display,
              "현재 게시 모델의 재학습 시각"),
         ]
+        # MZ 값은 보정이 identity(alpha=0, beta=1)인 경우에도 항상 표시한다.
+        # 즉 대시보드만 보고도 "보정됨 / 원예측 유지" 여부를 바로 알 수 있게 한다.
         sh = num(p.get("shrinkage"))
         mz_alpha = num(p.get("mz_intercept"))
         mz_raw_beta = num(p.get("mz_raw_slope"))
         mz_beta_se = num(p.get("mz_slope_se"))
-        if sh is not None and (abs(sh - 1.0) > 1e-3 or (mz_alpha is not None and abs(mz_alpha) > 1e-12)):
-            if sh < -0.05:
-                mz_desc = "통계적으로 확인된 역방향 관계를 반영"
-            elif abs(sh) < 0.05:
-                mz_desc = "ML 변동신호는 거의 제거되고 절편 중심으로 보정"
-            else:
-                mz_desc = "최종 점예측 = MZ 절편 + β × ML/DL 예측"
-            info.insert(1, (
-                "MZ 보정 β", f"{sh:+.2f}", mz_desc
+
+        # 최신 Prediction에는 항상 들어오는 값이지만, 과거 published 스냅샷과의
+        # 호환성을 위해 필드가 없으면 identity MZ 값으로 표시한다.
+        sh_display = 1.0 if sh is None else sh
+        mz_alpha_display = 0.0 if mz_alpha is None else mz_alpha
+
+        if sh_display < -0.05:
+            mz_desc = "통계적으로 확인된 역방향 관계를 반영"
+        elif abs(sh_display) < 0.05:
+            mz_desc = "ML 변동신호는 거의 제거됨"
+        elif abs(sh_display - 1.0) <= 1e-3 and abs(mz_alpha_display) <= 1e-12:
+            mz_desc = "MZ가 원예측을 그대로 유지 (α=0, β=1)"
+        else:
+            mz_desc = "최종 점예측 = MZ 절편 + β × ML/DL 예측"
+
+        info.insert(1, (
+            "MZ 보정 β", f"{sh_display:+.2f}", mz_desc
+        ))
+        info.insert(2, (
+            "MZ 절편 α", f"{mz_alpha_display:+.2%}",
+            "0이면 별도 절편 보정을 적용하지 않음"
+        ))
+        if mz_raw_beta is not None:
+            se_txt = f" ± {mz_beta_se:.3f}" if mz_beta_se is not None else ""
+            info.insert(3, (
+                "MZ 원기울기", f"{mz_raw_beta:+.3f}{se_txt}",
+                "전체 OOS에서 추정한 raw β와 HAC 표준오차"
             ))
-            if mz_alpha is not None:
-                info.insert(2, (
-                    "MZ 절편 α", f"{mz_alpha:+.2%}",
-                    "예측의 평균적 상·하방 편향을 보정"
-                ))
-            if mz_raw_beta is not None:
-                se_txt = f" ± {mz_beta_se:.3f}" if mz_beta_se is not None else ""
-                info.insert(3, (
-                    "MZ 원기울기", f"{mz_raw_beta:+.3f}{se_txt}",
-                    "전체 OOS에서 추정한 raw β와 HAC 표준오차"
-                ))
         if p.get("missing_data"):
             info.append((
                 "누락 데이터", str(p.get("missing_data")),
@@ -4002,7 +4045,7 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
             label = {
                 "baseline_improvement": "baseline 대비 RMSE 개선",
                 "information_coefficient": "IC (순위 상관)",
-                "directional_accuracy": "방향 정확도",
+                "directional_accuracy": "방향 edge (기준 대비)",
                 "probability_calibration": "원확률 calibration",
                 "interval_coverage": "보정 전 구간 커버리지",
                 "fold_stability": "fold 간 안정성",
@@ -4046,12 +4089,13 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
             elif comps.get("_no_predictive_edge_cap"):
                 st.caption(
                     "예측 edge가 확인되지 않았습니다: baseline RMSE 비개선 + IC<0.02 + "
-                    "방향정확도<52% → 신뢰도는 LOW 범위(최대 44)로 제한됩니다."
+                    "방향정확도가 기준선(50%/다수방향/baseline)을 넘지 못함 → "
+                    "신뢰도는 LOW 범위(최대 44)로 제한됩니다."
                 )
             elif comps.get("_weak_predictive_edge_cap"):
                 st.caption(
                     "예측 edge가 아직 약합니다: RMSE 개선<0.5% + IC<0.03 + "
-                    "방향정확도<53% → HIGH는 보류하고 최대 69점까지 허용합니다."
+                    "방향 기준선 대비 edge<+2%p → HIGH는 보류하고 최대 69점까지 허용합니다."
                 )
 
         if p.get("regime"):
