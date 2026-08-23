@@ -18,6 +18,7 @@ Streamlit Cloud 용 **읽기 전용** 예측 대시보드 (다크).
 """
 from __future__ import annotations
 
+import html
 import json
 from datetime import datetime, timezone
 from pathlib import Path
@@ -441,6 +442,88 @@ st.markdown("""
     background: rgba(13,17,23,0.58);
   }
 
+  /* 스냅샷/현재가/진단 가용성 — 상단에서 한눈에 확인 */
+  .status-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin: 2px 0 14px 0;
+  }
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: rgba(13,17,23,0.64);
+    color: var(--text-soft);
+    padding: 6px 10px;
+    font-size: 0.74rem;
+    line-height: 1;
+  }
+  .status-pill b {
+    color: var(--text);
+    font-weight: 700;
+  }
+  .status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 0 3px rgba(63,185,80,0.08);
+  }
+  .status-dot.warn {
+    background: var(--accent);
+    box-shadow: 0 0 0 3px rgba(240,185,11,0.08);
+  }
+
+  /* 실제 학습 feature importance Top 10 */
+  .feature-list {
+    display: grid;
+    gap: 6px;
+    margin: 7px 0 6px 0;
+  }
+  .feature-row {
+    display: grid;
+    grid-template-columns: 28px minmax(180px, 1.45fr) minmax(120px, 1fr) 78px;
+    align-items: center;
+    gap: 9px;
+    min-height: 34px;
+    padding: 5px 8px;
+    border: 1px solid rgba(120,132,148,0.12);
+    border-radius: 8px;
+    background: rgba(13,17,23,0.76);
+  }
+  .feature-rank {
+    color: var(--muted-2);
+    font-size: 0.72rem;
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+  }
+  .feature-name {
+    color: #dde4ec;
+    font-size: 0.77rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    overflow-wrap: anywhere;
+  }
+  .feature-track {
+    height: 6px;
+    border-radius: 999px;
+    background: rgba(120,132,148,0.13);
+    overflow: hidden;
+  }
+  .feature-fill {
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, rgba(240,185,11,0.52), rgba(240,185,11,0.95));
+  }
+  .feature-score {
+    color: var(--text-soft);
+    font-size: 0.72rem;
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+  }
+
   hr { border-color: var(--line) !important; }
 
   /* -----------------------------------------------------------------
@@ -531,6 +614,10 @@ st.markdown("""
     .dash-hero {align-items: flex-start; flex-direction: column;}
     .dash-meta {text-align: left; white-space: normal;}
     .block-container {padding-left: 0.9rem; padding-right: 0.9rem;}
+    .feature-row {
+      grid-template-columns: 24px minmax(150px, 1fr) 64px;
+    }
+    .feature-track {display: none;}
   }
 
   /* ===============================================================
@@ -1006,6 +1093,52 @@ def render_dark_table(df: pd.DataFrame) -> None:
     )
 
 
+
+def render_feature_importance(top_features: Dict, limit: int = 10) -> None:
+    """
+    최종 앙상블이 기록한 feature importance를 시각화한다.
+    막대는 절대 중요도 자체가 아니라 'Top 1 = 100' 상대 강도다.
+    """
+    if not isinstance(top_features, dict) or not top_features:
+        st.caption("실제 학습 Feature 중요도 정보가 이 스냅샷에는 없습니다.")
+        return
+
+    items = []
+    for name, raw in list(top_features.items())[:limit]:
+        score = num(raw)
+        if score is None:
+            continue
+        items.append((str(name), float(score)))
+
+    if not items:
+        st.caption("실제 학습 Feature 중요도 정보가 이 스냅샷에는 없습니다.")
+        return
+
+    peak = max(abs(v) for _, v in items) or 1.0
+    rows = []
+    for rank, (name, score) in enumerate(items, start=1):
+        rel = max(0.0, min(100.0, abs(score) / peak * 100.0))
+        rows.append(
+            "<div class='feature-row'>"
+            f"<div class='feature-rank'>{rank}</div>"
+            f"<div class='feature-name'>{html.escape(name)}</div>"
+            "<div class='feature-track'>"
+            f"<div class='feature-fill' style='width:{rel:.1f}%'></div>"
+            "</div>"
+            f"<div class='feature-score'>{score:.6f}</div>"
+            "</div>"
+        )
+
+    st.markdown(
+        "<div class='feature-list'>" + "".join(rows) + "</div>",
+        unsafe_allow_html=True,
+    )
+    st.caption(
+        "막대는 이 조합의 1위 Feature를 100으로 둔 상대 강도입니다. "
+        "중요도는 최종 모델의 예측 기여도를 나타내며 인과관계를 뜻하지 않습니다."
+    )
+
+
 def grade_of(p: Dict) -> str:
     return str(p.get("confidence_grade") or "LOW").upper()
 
@@ -1271,7 +1404,7 @@ def render_kcs_memory(df: Optional[pd.DataFrame]) -> None:
         "메모리 반도체 수출단가",
         f"최근 통계 {latest_period} · USD/kg",
     )
-    with st.expander("관세청 월별 단가 · 상세 보기", expanded=True):
+    with st.expander("관세청 월별 단가 · 상세 보기", expanded=False):
         cols = st.columns(3)
         for col, (code, label) in zip(cols, KCS_MEMORY_SERIES.items()):
             g = focus[focus["hs_code"] == code].sort_values("date")
@@ -1500,7 +1633,9 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
     st.plotly_chart(candle_chart(hist, p, lookback, show_volume),
                     use_container_width=True, key=f"candle_{uid}")
     st.caption(
-        "음영이 예측 분포입니다. 점선(P50)은 **목표가가 아니라 기준점**이며, "
+        "음영은 P10~P90 / P25~P75 **분포 범위**입니다. 위 수치 카드의 80% 예측구간은 "
+        "OOF 잔차로 별도 보정된 값이라 바깥 음영과 약간 다를 수 있습니다. "
+        "점선(P50)은 **목표가가 아니라 기준점**이며, "
         "이 시스템은 최근 추세를 미래로 연장하지 않습니다. "
         "상승 국면에서는 실제 가격이 점선 위에 놓이는 편이 정상이므로, "
         "읽어야 할 것은 점선의 위치가 아니라 **음영의 폭**입니다. "
@@ -1525,10 +1660,18 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
                      "설계되어 있어, P50 은 '추세를 연장하지 않았을 때의 기준점' 에 가깝습니다. "
                      "상승 국면에서는 실제 가격이 P50 위에 놓이는 경우가 더 많은 것이 정상입니다. "
                      "방향 근거가 아니라 구간 폭을 보는 용도로 쓰십시오.")
-    m[2].metric("P10 ~ P90",
-                f"{price(p.get('p10'), currency, False)} ~ {price(p.get('p90'), currency, False)}",
-                help="80% 예측구간. 과거 검증 기준으로 실제 가격이 이 범위에 들어올 확률이 80%. "
-                     "폭이 넓을수록 불확실성이 큽니다.")
+    i80_low = p.get("interval_80_low")
+    i80_high = p.get("interval_80_high")
+    if num(i80_low) is None or num(i80_high) is None:
+        i80_low, i80_high = p.get("p10"), p.get("p90")
+        i80_help = ("보정 80% 구간이 없어 P10~P90 분포 범위를 대신 표시합니다. "
+                    "확률 보장을 뜻하지 않으며 폭이 넓을수록 불확실성이 큽니다.")
+    else:
+        i80_help = ("OOF 잔차를 이용해 보정한 80% 예측구간입니다. "
+                    "과거 커버리지는 모델 진단의 '80% 구간 실측 커버리지'에서 확인하십시오.")
+    m[2].metric("80% 예측구간",
+                f"{price(i80_low, currency, False)} ~ {price(i80_high, currency, False)}",
+                help=i80_help)
     m[3].metric("상승 확률", pct(p.get("prob_up"), signed=False),
                 help="현재가보다 높을 확률. OOF 잔차 분포에서 계산한 뒤 isotonic 보정을 거칩니다. "
                      "50% 근처면 방향성 정보가 없다는 뜻입니다.")
@@ -1587,20 +1730,8 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
         # Streamlit에서 중요도를 다시 계산하거나 추정하지 않는다.
         diag = (((payload.get("diagnostics") or {}).get(symbol) or {}).get(str(horizon)) or {})
         top_features = diag.get("top_features") or {}
-        if isinstance(top_features, dict) and top_features:
-            top10_rows = []
-            for rank, (feature_name, importance) in enumerate(list(top_features.items())[:10], start=1):
-                importance_num = num(importance)
-                top10_rows.append({
-                    "순위": rank,
-                    "Feature": str(feature_name),
-                    "중요도": f"{importance_num:.6f}" if importance_num is not None else str(importance),
-                })
-
-            st.markdown("**실제 학습 Feature Top 10** — 선택된 Feature 중 중요도 상위 10개")
-            render_dark_table(pd.DataFrame(top10_rows))
-        else:
-            st.caption("실제 학습 Feature 중요도 정보가 이 스냅샷에는 없습니다.")
+        st.markdown("**실제 학습 Feature Top 10** — 최종 모델 중요도 상위 10개")
+        render_feature_importance(top_features, limit=10)
 
         comps = p.get("confidence_components")
         if isinstance(comps, dict) and comps:
@@ -1723,6 +1854,7 @@ def main() -> None:
     df["symbol"] = df["symbol"].astype(str)
     symbols = sorted(df["symbol"].unique())
     label, stale = snapshot_label(manifest)
+    quotes = load_quotes()
 
     st.markdown(
         f"""
@@ -1741,26 +1873,31 @@ def main() -> None:
         unsafe_allow_html=True,
     )
 
+    source_label = "JSON · 진단 포함" if (payload.get("diagnostics") or {}) else "CSV fallback"
+    quote_label = quote_age_label(quotes.get("fetched_at")) if quotes.get("fetched_at") else "스냅샷 가격"
+    status_class = "warn" if stale else ""
+    st.markdown(
+        "<div class='status-strip'>"
+        f"<span class='status-pill'><span class='status-dot {status_class}'></span>"
+        f"모델 스냅샷 <b>{'지연' if stale else '최신'}</b></span>"
+        f"<span class='status-pill'>현재가 <b>{html.escape(quote_label)}</b></span>"
+        f"<span class='status-pill'>출력 <b>{html.escape(source_label)}</b></span>"
+        "</div>",
+        unsafe_allow_html=True,
+    )
+
     if stale:
         st.error(f"이 스냅샷은 {label} 결과입니다. 로컬에서 다시 실행 후 게시하세요.")
     if payload.get("source") == "predictions.csv":
         st.info("CSV 만으로 구동 중 · 백테스트와 진단은 publish.py 게시 시 표시됩니다.")
 
-    quotes = load_quotes()
     if quotes.get("fetched_at"):
-        st.markdown(
-            f"<span class='micro-status'>💹 현재가 {quote_age_label(quotes['fetched_at'])} 갱신 · "
-            "예측 분포 재조정</span>",
-            unsafe_allow_html=True,
+        st.caption(
+            f"💹 현재가 {quote_age_label(quotes['fetched_at'])} 갱신 · "
+            "예측 가격대만 현재가에 맞춰 재조정하며 모델 입력은 마지막 확정 봉 기준입니다."
         )
-        st.caption("모델 입력은 마지막 확정 봉 기준입니다.")
 
-    # 관세청 메모리 단가는 로컬 publish 단계에서 정적 CSV로 함께 올라온다.
-    # Streamlit Cloud가 관세청 API나 로컬 절대경로를 직접 호출하지 않는다.
-    render_kcs_memory(load_kcs_memory())
-
-    # 종목은 드롭다운으로 선택한다. 탭으로 늘어놓으면 종목이 늘어날수록 폭이 부족하고,
-    # 선택하지 않은 종목까지 전부 렌더링되어 느려진다.
+    # 핵심 작업을 먼저 배치한다: 종목 선택 → Forecast → 산업 컨텍스트.
     section_head("ASSET", "분석 종목 선택", "종목을 바꾸면 아래 예측 화면만 갱신됩니다.")
     name_of = {sym: str(df[df["symbol"] == sym]["name"].iloc[0]) for sym in symbols}
     symbol = st.selectbox(
@@ -1768,6 +1905,10 @@ def main() -> None:
         format_func=lambda sym: f"{name_of.get(sym, sym)}  ·  {sym}",
     )
     render_symbol(symbol, df[df["symbol"] == symbol], payload, quotes)
+
+    # 관세청 메모리 단가는 보조 산업 컨텍스트이므로 Forecast 뒤에서 기본 접힘으로 제공한다.
+    # Streamlit Cloud가 관세청 API나 로컬 절대경로를 직접 호출하지 않는다.
+    render_kcs_memory(load_kcs_memory())
 
     st.divider()
     st.caption(DISCLAIMER)
