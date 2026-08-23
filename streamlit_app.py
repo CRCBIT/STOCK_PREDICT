@@ -1416,6 +1416,17 @@ def feature_meaning(feature_name: str) -> str:
     n = str(feature_name).strip()
     low = n.lower()
 
+    # ---- 자주 등장하는 핵심 Feature: 정확 이름 우선 매칭 ----
+    # 아래 항목은 일반 패턴보다 먼저 처리하여 대시보드에 구체적인 의미가 표시되게 한다.
+    if low == "roc_120":
+        return "120거래일 전 대비 현재 가격의 변화율(ROC). 약 6개월 중기 가격 추세와 모멘텀을 나타냄"
+    if low == "flow_inst_fin_inv_net_norm_20":
+        return "기관 중 금융투자의 순매수 흐름을 최근 20거래일 기준으로 정규화한 값. 평소 대비 매수·매도 강도를 나타냄"
+    if low == "flow_prog_arb_net_streak":
+        return "프로그램 차익거래 순매수·순매도 방향이 연속해서 이어지는 정도. 프로그램 수급 추세의 지속성을 나타냄"
+    if low == "mom_12_1":
+        return "12-1 모멘텀. 최근 1개월을 제외하고 약 12개월 전부터 1개월 전까지의 중장기 가격 모멘텀을 나타냄"
+
     # ---- 관세청 메모리 사이클 ----
     if low.startswith("kcs_"):
         product = "메모리 품목"
