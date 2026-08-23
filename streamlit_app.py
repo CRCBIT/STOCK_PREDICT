@@ -18,6 +18,7 @@ Streamlit Cloud 용 **읽기 전용** 예측 대시보드 (다크).
 """
 from __future__ import annotations
 
+from zoneinfo import ZoneInfo
 import html
 import json
 import re
