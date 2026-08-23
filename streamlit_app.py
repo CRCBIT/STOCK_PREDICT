@@ -1218,6 +1218,14 @@ st.markdown("""
       align-self: center;
       text-align: right;
       padding-top: 1px;
+      font-weight: 750;
+      color: #d9a90d;
+    }
+    .feature-rank::before {
+      content: "#";
+      margin-right: 1px;
+      color: #8d98a6;
+      font-weight: 600;
     }
     .feature-name {
       grid-area: name;
@@ -1242,7 +1250,17 @@ st.markdown("""
       white-space: nowrap;
       font-size: 0.64rem;
       line-height: 1.38;
-      padding-left: 4px;
+      padding: 2px 6px;
+      border: 1px solid rgba(120,132,148,0.18);
+      border-radius: 999px;
+      background: rgba(18,23,31,0.72);
+      color: #cbd5e1;
+    }
+    .feature-score::before {
+      content: "중요도 ";
+      color: #8d98a6;
+      font-size: 0.60rem;
+      font-weight: 650;
     }
     .feature-track {
       display: none !important;
