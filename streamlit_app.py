@@ -31,6 +31,7 @@ import streamlit as st
 from plotly.subplots import make_subplots
 
 ROOT = Path(__file__).resolve().parent
+KST = ZoneInfo("Asia/Seoul")
 PUBLISHED = ROOT / "published"
 STALE_HOURS = 36
 
@@ -1757,8 +1758,9 @@ def snapshot_label(manifest: Dict) -> Tuple[str, bool]:
             ts = ts.replace(tzinfo=timezone.utc)
     except (TypeError, ValueError):
         return str(gen), False
-    age = (datetime.now(timezone.utc) - ts).total_seconds() / 3600.0
-    return f"{ts.astimezone():%Y-%m-%d %H:%M} · {age:.0f}시간 전", age > STALE_HOURS
+    age = (datetime.now(timezone.utc) - ts.astimezone(timezone.utc)).total_seconds() / 3600.0
+    ts_kst = ts.astimezone(KST)
+    return f"{ts_kst:%Y-%m-%d %H:%M} KST · {age:.0f}시간 전", age > STALE_HOURS
 
 
 def verdict(p: Dict) -> str:
