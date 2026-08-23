@@ -1528,6 +1528,388 @@ st.markdown("""
     }
   }
 
+
+  /* ===============================================================
+     RESPONSIVE DASHBOARD v14
+     데이터/모델 로직은 건드리지 않고 PC·태블릿·스마트폰의
+     밀도, 가독성, 표/카드 배치, 터치 영역만 정리한다.
+     =============================================================== */
+  html, body, [data-testid="stAppViewContainer"], [data-testid="stMain"] {
+    overflow-x: hidden !important;
+  }
+
+  .block-container {
+    width: min(100%, 1440px) !important;
+    max-width: 1440px !important;
+    padding-top: 0.95rem !important;
+    padding-left: clamp(0.85rem, 2.1vw, 2.15rem) !important;
+    padding-right: clamp(0.85rem, 2.1vw, 2.15rem) !important;
+    padding-bottom: 2.4rem !important;
+  }
+
+  .dash-hero {
+    align-items: center;
+    padding: 15px 17px 16px 17px;
+    margin: 0 0 11px 0;
+    border: 1px solid rgba(120,132,148,0.15);
+    border-radius: 15px;
+    background:
+      linear-gradient(110deg, rgba(240,185,11,0.045), transparent 34%),
+      linear-gradient(180deg, rgba(18,23,31,0.72), rgba(13,17,23,0.54));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.018), 0 9px 28px rgba(0,0,0,0.08);
+  }
+  .dash-title { font-size: clamp(1.48rem, 2vw, 2rem); }
+  .dash-subtitle { max-width: 760px; line-height: 1.5; }
+  .dash-meta { color: #9eabba; }
+
+  .status-strip {
+    margin: 0 0 13px 0;
+    gap: 6px;
+  }
+  .status-pill {
+    min-height: 29px;
+    box-sizing: border-box;
+  }
+
+  .section-head {
+    margin-top: 21px;
+    margin-bottom: 9px;
+  }
+  .section-title { font-size: 1.03rem; }
+  .section-note { max-width: 680px; text-align: right; }
+
+  /* Streamlit 기본 column 간격을 조금 줄여 정보 밀도를 안정화 */
+  div[data-testid="stHorizontalBlock"] {
+    gap: 0.78rem !important;
+  }
+  div[data-testid="stColumn"] {
+    min-width: 0 !important;
+  }
+
+  /* 핵심 metric: 한 줄 높이/폰트 균형 */
+  div[data-testid="stMetric"] {
+    min-height: 88px !important;
+    padding: 11px 12px 10px 12px !important;
+    border-radius: 11px !important;
+  }
+  [data-testid="stMetricLabel"] {
+    font-size: 0.72rem !important;
+    line-height: 1.28 !important;
+  }
+  [data-testid="stMetricValue"] {
+    font-size: clamp(1.02rem, 1.45vw, 1.22rem) !important;
+    line-height: 1.18 !important;
+  }
+  [data-testid="stMetricDelta"] {
+    font-size: 0.74rem !important;
+  }
+
+  /* 차트는 브라우저 폭을 넘지 않게 */
+  div[data-testid="stPlotlyChart"],
+  div[data-testid="stPlotlyChart"] > div {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 공통 진단표: 데스크톱에서는 설명 열이 충분한 폭을 확보 */
+  .dash-table-wrap {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  table.dash-table {
+    width: 100%;
+    table-layout: auto;
+    font-size: 0.76rem;
+  }
+  table.dash-table th,
+  table.dash-table td {
+    overflow-wrap: anywhere;
+    word-break: keep-all;
+  }
+  .dash-table-wrap.cols-3 table.dash-table th:nth-child(1),
+  .dash-table-wrap.cols-3 table.dash-table td:nth-child(1) { width: 23%; }
+  .dash-table-wrap.cols-3 table.dash-table th:nth-child(2),
+  .dash-table-wrap.cols-3 table.dash-table td:nth-child(2) { width: 16%; white-space: nowrap; }
+  .dash-table-wrap.cols-3 table.dash-table th:nth-child(3),
+  .dash-table-wrap.cols-3 table.dash-table td:nth-child(3) { width: 61%; }
+  .dash-table-wrap.cols-2 table.dash-table th:first-child,
+  .dash-table-wrap.cols-2 table.dash-table td:first-child { width: 42%; }
+
+  /* 모델 가중치: 좌측 이름과 우측 수치를 고정하고 bar에 남은 폭을 할당 */
+  .model-weight-list { gap: 6px; }
+  .model-weight-row {
+    grid-template-columns: minmax(115px, 0.82fr) minmax(150px, 1.7fr) 58px;
+    min-height: 32px;
+    padding: 5px 7px;
+  }
+  .model-weight-track { min-width: 60px; }
+
+  /* Feature Top 10은 폭이 넓을 때 의미 열을 우선 확보 */
+  .feature-head,
+  .feature-row {
+    grid-template-columns: 26px minmax(150px, 0.95fr) minmax(270px, 1.75fr) minmax(90px, 0.65fr) 72px;
+  }
+
+  /* Expander 내부를 살짝 압축 */
+  div[data-testid="stExpander"] { margin-top: 7px; }
+  div[data-testid="stExpander"] details summary { min-height: 41px; }
+  div[data-testid="stExpander"] details > div { padding-top: 2px; }
+
+  /* 라디오 선택지는 작은 화면에서 자연스럽게 다음 줄로 흐른다. */
+  div[role="radiogroup"] {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 5px !important;
+  }
+
+  @media (max-width: 1000px) {
+    .block-container {
+      padding-left: 1rem !important;
+      padding-right: 1rem !important;
+    }
+    .dash-hero { align-items: flex-start; }
+    .section-note { max-width: 50%; }
+    .feature-head,
+    .feature-row {
+      grid-template-columns: 25px minmax(130px, 0.9fr) minmax(190px, 1.5fr) 68px;
+    }
+    .feature-head > div:nth-child(4),
+    .feature-track { display: none; }
+  }
+
+  @media (max-width: 760px) {
+    .block-container {
+      padding-top: 0.55rem !important;
+      padding-left: 0.68rem !important;
+      padding-right: 0.68rem !important;
+      padding-bottom: 1.8rem !important;
+    }
+
+    .dash-hero {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+      padding: 12px 12px 13px 12px;
+      border-radius: 12px;
+    }
+    .dash-eyebrow { font-size: 0.62rem; }
+    .dash-title { font-size: 1.42rem; }
+    .dash-subtitle {
+      margin-top: 5px;
+      font-size: 0.75rem;
+      line-height: 1.42;
+    }
+    .dash-meta {
+      width: 100%;
+      padding-top: 7px;
+      border-top: 1px solid rgba(120,132,148,0.11);
+      font-size: 0.69rem;
+      text-align: left;
+      line-height: 1.45;
+    }
+
+    .status-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 5px;
+    }
+    .status-pill {
+      justify-content: center;
+      min-width: 0;
+      padding: 6px 5px;
+      font-size: 0.64rem;
+      white-space: normal;
+      text-align: center;
+      line-height: 1.25;
+    }
+    .status-dot { flex: 0 0 7px; }
+
+    .section-head {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 3px;
+      margin-top: 18px;
+      margin-bottom: 7px;
+      padding-left: 9px;
+    }
+    .section-kicker { font-size: 0.61rem; }
+    .section-title { font-size: 0.98rem; }
+    .section-note {
+      max-width: 100%;
+      text-align: left;
+      font-size: 0.68rem;
+      line-height: 1.4;
+    }
+
+    /* 예측기간/차트기간/거래량 컨트롤은 휴대폰에서 세로로 */
+    div[data-testid="stHorizontalBlock"]:has(> div[data-testid="stColumn"] div[data-testid="stRadio"]) {
+      display: grid !important;
+      grid-template-columns: 1fr !important;
+      gap: 0.35rem !important;
+    }
+    div[data-testid="stHorizontalBlock"]:has(> div[data-testid="stColumn"] div[data-testid="stRadio"]) > div[data-testid="stColumn"] {
+      width: 100% !important;
+      flex: 1 1 auto !important;
+    }
+
+    /* metric 묶음은 1열로 길게 늘어뜨리지 않고 2열 카드 그리드 */
+    div[data-testid="stHorizontalBlock"]:has(div[data-testid="stMetric"]) {
+      display: grid !important;
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      gap: 0.48rem !important;
+      width: 100% !important;
+    }
+    div[data-testid="stHorizontalBlock"]:has(div[data-testid="stMetric"]) > div[data-testid="stColumn"] {
+      width: 100% !important;
+      min-width: 0 !important;
+      flex: none !important;
+    }
+    div[data-testid="stHorizontalBlock"]:has(div[data-testid="stMetric"]) > div[data-testid="stColumn"]:last-child:nth-child(odd) {
+      grid-column: 1 / -1;
+    }
+    div[data-testid="stMetric"] {
+      min-height: 76px !important;
+      padding: 9px 9px 8px 9px !important;
+      border-radius: 9px !important;
+    }
+    [data-testid="stMetricLabel"] { font-size: 0.66rem !important; }
+    [data-testid="stMetricValue"] {
+      font-size: 0.98rem !important;
+      overflow-wrap: anywhere;
+    }
+    [data-testid="stMetricDelta"] { font-size: 0.67rem !important; }
+
+    .verdict {
+      margin: 6px 0 9px 0;
+      padding: 9px 10px;
+      border-radius: 9px;
+      font-size: 0.78rem;
+      line-height: 1.48;
+    }
+
+    /* 일반 진단표는 스마트폰에서 행별 카드로 변환 */
+    .dash-table-wrap {
+      overflow: visible;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+    table.dash-table,
+    table.dash-table tbody,
+    table.dash-table tr,
+    table.dash-table td {
+      display: block;
+      width: 100% !important;
+      box-sizing: border-box;
+    }
+    table.dash-table thead { display: none; }
+    table.dash-table tbody tr {
+      margin: 0 0 7px 0;
+      padding: 7px 8px;
+      border: 1px solid rgba(120,132,148,0.14);
+      border-radius: 9px;
+      background: rgba(13,17,23,0.76);
+    }
+    table.dash-table tbody td {
+      display: grid;
+      grid-template-columns: minmax(72px, 0.34fr) minmax(0, 1fr);
+      gap: 8px;
+      align-items: start;
+      padding: 3px 0;
+      border: 0;
+      white-space: normal !important;
+      font-size: 0.70rem;
+      line-height: 1.45;
+    }
+    table.dash-table tbody td::before {
+      content: attr(data-label);
+      color: #8794a4;
+      font-size: 0.64rem;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+
+    /* 모델 가중치: 휴대폰에서도 이름/bar/%를 한 줄 유지 */
+    .model-weight-row {
+      grid-template-columns: minmax(86px, 0.9fr) minmax(76px, 1.55fr) 49px;
+      gap: 6px;
+      min-height: 31px;
+      padding: 5px 6px;
+    }
+    .model-weight-name { font-size: 0.65rem; }
+    .model-weight-score { font-size: 0.63rem; }
+    .model-weight-track { height: 7px; }
+
+    /* Feature Top10: 모바일 카드 구조를 더 읽기 쉽게 */
+    .feature-list { gap: 7px; }
+    .feature-row {
+      border-radius: 9px;
+      padding: 9px 8px;
+      background: rgba(13,17,23,0.78);
+    }
+    .feature-name { font-size: 0.69rem; }
+    .feature-meaning { font-size: 0.68rem; line-height: 1.45; }
+    .feature-score { font-size: 0.61rem; }
+
+    .feature-catalog-summary {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 5px;
+    }
+    .feature-catalog-chip {
+      justify-content: space-between;
+      width: 100%;
+      box-sizing: border-box;
+      font-size: 0.65rem;
+      padding: 5px 7px;
+    }
+
+    /* Expander 터치 영역과 내부 여백 */
+    div[data-testid="stExpander"] { border-radius: 10px; }
+    div[data-testid="stExpander"] details summary {
+      min-height: 43px;
+      padding-left: 9px !important;
+      padding-right: 9px !important;
+    }
+    div[data-testid="stExpander"] details summary p { font-size: 0.75rem; }
+
+    [data-testid="stCaptionContainer"] p,
+    .stCaption p {
+      font-size: 0.67rem !important;
+      line-height: 1.5 !important;
+    }
+
+    hr {
+      margin-top: 1.2rem !important;
+      margin-bottom: 0.9rem !important;
+    }
+  }
+
+  @media (max-width: 430px) {
+    .block-container {
+      padding-left: 0.55rem !important;
+      padding-right: 0.55rem !important;
+    }
+    .status-pill { font-size: 0.60rem; }
+    .model-weight-row {
+      grid-template-columns: minmax(78px, 0.9fr) minmax(58px, 1.35fr) 45px;
+      gap: 5px;
+    }
+    table.dash-table tbody td {
+      grid-template-columns: 67px minmax(0, 1fr);
+      gap: 6px;
+    }
+    div[role="radiogroup"] label {
+      padding: 5px 8px !important;
+      font-size: 0.72rem !important;
+    }
+  }
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -1708,19 +2090,31 @@ def section_head(kicker: str, title: str, note: str = "") -> None:
 
 
 def render_dark_table(df: pd.DataFrame) -> None:
-    """작은 진단/레벨 표를 대시보드 다크 톤으로 렌더링한다."""
+    """작은 진단/레벨 표를 PC 표 + 모바일 카드 형태로 반응형 렌더링한다."""
     if df is None or df.empty:
         return
-    html = df.to_html(
-        index=False,
-        escape=True,
-        border=0,
-        classes="dash-table",
+
+    cols = [str(c) for c in df.columns]
+    head = "".join(f"<th>{html.escape(c)}</th>" for c in cols)
+    rows = []
+    for _, row in df.iterrows():
+        cells = []
+        for col in cols:
+            raw = row[col]
+            text = "—" if is_missing(raw) else str(raw)
+            cells.append(
+                f"<td data-label='{html.escape(col, quote=True)}'>{html.escape(text)}</td>"
+            )
+        rows.append("<tr>" + "".join(cells) + "</tr>")
+
+    table_html = (
+        f"<div class='dash-table-wrap cols-{len(cols)}'>"
+        "<table class='dash-table'>"
+        f"<thead><tr>{head}</tr></thead>"
+        f"<tbody>{''.join(rows)}</tbody>"
+        "</table></div>"
     )
-    st.markdown(
-        f'<div class="dash-table-wrap">{html}</div>',
-        unsafe_allow_html=True,
-    )
+    st.markdown(table_html, unsafe_allow_html=True)
 
 
 def render_model_weights(model_weights, models=None) -> None:
@@ -2804,6 +3198,7 @@ def render_kcs_memory(df: Optional[pd.DataFrame]) -> None:
         st.plotly_chart(
             kcs_memory_chart(df, years, include_logic),
             use_container_width=True, key="kcs_memory_chart",
+            config={"displayModeBar": False, "responsive": True},
         )
         st.caption(
             "관세청 월별 **수출단가(USD/kg)** 입니다. DRAM/NAND 현물 칩 가격이 아니라 "
@@ -2874,15 +3269,18 @@ def candle_chart(hist: Optional[pd.DataFrame], p: Dict,
                     x=fx, y=c50, mode="lines", name="P50 (기준값)",
                     line=dict(color=FCOL, width=1.8, dash="dot"),
                     hovertemplate="%{x|%m/%d} · %{y:,.0f}<extra></extra>"), row=1, col=1)
-                fig.add_annotation(x=fx[-1], y=c50[-1], text=f" {price(c50[-1], currency, False)}",
-                                   showarrow=False, xanchor="left",
-                                   font=dict(color=FCOL, size=12), row=1, col=1)
+                fig.add_annotation(
+                    x=fx[-1], y=c50[-1], text=f"{price(c50[-1], currency, False)} ",
+                    showarrow=False, xanchor="right",
+                    bgcolor="rgba(8,11,16,0.72)", borderpad=2,
+                    font=dict(color=FCOL, size=11), row=1, col=1,
+                )
             fig.add_vline(x=last_date,
                           line=dict(color="rgba(255,255,255,0.22)", width=1, dash="dot"))
 
     fig.update_layout(
         template="plotly_dark", height=510 if show_volume else 445,
-        margin=dict(l=12, r=72, t=18, b=12), paper_bgcolor=BG, plot_bgcolor=BG,
+        margin=dict(l=8, r=18, t=16, b=10), paper_bgcolor=BG, plot_bgcolor=BG,
         font=dict(color=TEXT, size=12), hovermode="x unified",
         xaxis_rangeslider_visible=False, showlegend=False, bargap=0.1,
         hoverlabel=dict(bgcolor="#161b22", bordercolor="#30363d"),
@@ -2994,8 +3392,11 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
 
     # ---- 차트 ----
     hist = load_history(symbol)
-    st.plotly_chart(candle_chart(hist, p, lookback, show_volume),
-                    use_container_width=True, key=f"candle_{uid}")
+    st.plotly_chart(
+        candle_chart(hist, p, lookback, show_volume),
+        use_container_width=True, key=f"candle_{uid}",
+        config={"displayModeBar": False, "responsive": True},
+    )
     st.caption(
         "음영은 P10-P90 / P25-P75 **분포 범위**입니다. 위 수치 카드의 80% 예측구간은 "
         "OOF 잔차로 별도 보정된 값이라 바깥 음영과 약간 다를 수 있습니다. "
@@ -3216,7 +3617,10 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
             if bt_df is not None:
                 fig = equity_chart(bt_df)
                 if fig is not None:
-                    st.plotly_chart(fig, use_container_width=True, key=f"equity_{uid}")
+                    st.plotly_chart(
+                        fig, use_container_width=True, key=f"equity_{uid}",
+                        config={"displayModeBar": False, "responsive": True},
+                    )
             st.caption(
                 "⚠️ 모델 채택·가중치가 이 OOS 구간 전체 성능으로 정해졌으므로 "
                 "**selection bias** 가 있습니다. 실제 운용 성과는 이보다 낮을 가능성이 큽니다. "
