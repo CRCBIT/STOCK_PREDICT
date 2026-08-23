@@ -3474,10 +3474,15 @@ def verdict(p: Dict) -> str:
         cov = num(p.get("coverage_80"))
     parts: List[str] = []
 
-    if shrink is not None and shrink < 0.05:
+    if shrink is not None and abs(shrink) < 0.05:
         parts.append(
-            "모델이 예측에 쓸 방향성 정보를 찾지 못해 **점 예측을 0으로 축소**했습니다. "
-            "아래 분포는 사실상 과거 변동 범위이며, 방향 판단 근거가 아닙니다."
+            "MZ 재보정이 ML/DL의 변동 신호를 거의 제거했습니다. "
+            "최종 점예측은 MZ 절편(평균 편향 보정)의 영향이 커졌으므로 방향 신호를 강하게 해석하지 마세요."
+        )
+    elif shrink is not None and shrink < -0.05:
+        parts.append(
+            "MZ 재보정에서 **역방향 관계가 통계적으로 확인되어 예측 부호를 반대로 보정**했습니다. "
+            "OOS 방향정확도와 신뢰도를 함께 확인하세요."
         )
     elif g == "LOW":
         parts.append(
@@ -3936,11 +3941,30 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
              "현재 게시 모델의 재학습 시각"),
         ]
         sh = num(p.get("shrinkage"))
-        if sh is not None and sh < 0.999:
+        mz_alpha = num(p.get("mz_intercept"))
+        mz_raw_beta = num(p.get("mz_raw_slope"))
+        mz_beta_se = num(p.get("mz_slope_se"))
+        if sh is not None and (abs(sh - 1.0) > 1e-3 or (mz_alpha is not None and abs(mz_alpha) > 1e-12)):
+            if sh < -0.05:
+                mz_desc = "통계적으로 확인된 역방향 관계를 반영"
+            elif abs(sh) < 0.05:
+                mz_desc = "ML 변동신호는 거의 제거되고 절편 중심으로 보정"
+            else:
+                mz_desc = "최종 점예측 = MZ 절편 + β × ML/DL 예측"
             info.insert(1, (
-                "과대외삽 보정", f"x{sh:.2f}",
-                "예측을 0수익률 방향으로 축소"
+                "MZ 보정 β", f"{sh:+.2f}", mz_desc
             ))
+            if mz_alpha is not None:
+                info.insert(2, (
+                    "MZ 절편 α", f"{mz_alpha:+.2%}",
+                    "예측의 평균적 상·하방 편향을 보정"
+                ))
+            if mz_raw_beta is not None:
+                se_txt = f" ± {mz_beta_se:.3f}" if mz_beta_se is not None else ""
+                info.insert(3, (
+                    "MZ 원기울기", f"{mz_raw_beta:+.3f}{se_txt}",
+                    "전체 OOS에서 추정한 raw β와 HAC 표준오차"
+                ))
         if p.get("missing_data"):
             info.append((
                 "누락 데이터", str(p.get("missing_data")),
