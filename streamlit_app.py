@@ -2496,29 +2496,83 @@ def render_model_weights(model_weights, models=None) -> None:
 
 
 def _diag_performance_html(p: Dict) -> str:
-    """검증 성능을 3열 표 대신 짧은 행 카드로 만든다."""
+    """Walk-Forward OOS 검증 성능을 과장 없이 읽을 수 있게 요약한다."""
+    oos_n = num(p.get("oos_samples"))
+    eff_n = num(p.get("effective_oos_samples"))
+    eval_n = num(p.get("interval_eval_n"))
+    eval_eff = num(p.get("interval_eval_effective"))
+
+    rmse = num(p.get("oos_rmse"))
+    base_rmse = num(p.get("baseline_rmse"))
+    skill = num(p.get("baseline_improvement"))
+    if skill is None and rmse is not None and base_rmse is not None and base_rmse > 0:
+        skill = 1.0 - rmse / base_rmse
+
+    raw_cov = num(p.get("raw_coverage_80"))
+    adj_cov = num(p.get("coverage_80"))
+    if raw_cov is None:
+        raw_cov = adj_cov
+    inflation = num(p.get("interval_inflation"))
+    ece = num(p.get("probability_calibration_error"))
+
+    sample_value = "—"
+    if oos_n is not None:
+        sample_value = f"{oos_n:.0f}행"
+        if eff_n is not None:
+            sample_value += f" · 실효≈{eff_n:.1f}"
+
+    rmse_value = fnum(rmse, 4)
+    if base_rmse is not None:
+        rmse_value += f" / base {base_rmse:.4f}"
+    if skill is not None:
+        rmse_value += f" · {skill * 100:+.1f}%"
+
+    raw_cov_value = pct(raw_cov, signed=False)
+    if eval_n is not None:
+        raw_cov_value += f" · n={eval_n:.0f}"
+        if eval_eff is not None:
+            raw_cov_value += f"(실효≈{eval_eff:.1f})"
+
     metrics = [
         (
+            "OOS 표본", sample_value,
+            "h일 forward return은 날짜가 겹치므로 raw 행 수보다 독립 정보량이 작습니다. "
+            "실효 표본은 보수적으로 OOS행/h로 표시합니다.",
+        ),
+        (
             "IC (Spearman)", fnum(p.get("oos_ic"), 3),
-            "예측 순위와 실제 수익률 순위의 상관. +1에 가까울수록 좋음",
+            "예측 순위와 실제 수익률 순위의 상관. 0이면 순위 정보가 없고, 양수일수록 좋습니다.",
         ),
         (
             "방향 정확도", pct(p.get("oos_directional_accuracy"), signed=False),
-            "상승·하락 방향을 맞힌 비율. 50% 부근이면 방향 정보가 약함",
+            "상승·하락 방향을 맞힌 비율. 50% 부근이면 방향 정보가 약합니다.",
         ),
         (
-            "RMSE", fnum(p.get("oos_rmse"), 4),
-            "실제값과 예측값의 평균 오차 크기. 낮을수록 좋음",
+            "RMSE / baseline", rmse_value,
+            "Walk-Forward OOS RMSE와 기준모델 RMSE. 마지막 %는 baseline 대비 개선율이며 양수여야 개선입니다.",
         ),
         (
-            "baseline RMSE", fnum(p.get("baseline_rmse"), 4),
-            "단순 기준모델의 RMSE. 위 RMSE가 이것보다 낮아야 개선",
-        ),
-        (
-            "80% 구간 커버리지", pct(p.get("coverage_80"), signed=False),
-            "실제 결과가 80% 예측구간 안에 들어온 비율. 80% 부근이 이상적",
+            "80% 구간 · 보정 전", raw_cov_value,
+            "구간 폭을 다시 넓히기 전에 별도 holdout에서 측정한 honest coverage. 신뢰도 계산은 이 값을 사용합니다.",
         ),
     ]
+
+    if (adj_cov is not None and raw_cov is not None and abs(adj_cov - raw_cov) > 1e-6):
+        adj_value = pct(adj_cov, signed=False)
+        if inflation is not None and inflation > 1.001:
+            adj_value += f" · 폭×{inflation:.2f}"
+        metrics.append((
+            "80% 구간 · 보정 후", adj_value,
+            "같은 holdout에서 관측된 꼬리 이탈을 보고 폭을 확대한 뒤의 값입니다. "
+            "실제 운용 구간 진단용이며 독립 검증 성적으로 보지 않습니다.",
+        ))
+
+    if ece is not None:
+        metrics.append((
+            "원확률 ECE", fnum(ece, 3),
+            "최종 isotonic 보정 전 원확률의 calibration error. 0에 가까울수록 확률과 실제 빈도가 잘 맞습니다.",
+        ))
+
     rows = []
     for label, value, desc in metrics:
         rows.append(
@@ -2543,7 +2597,7 @@ def render_diag_overview(p: Dict, diag: Dict) -> None:
     st.markdown(
         "<div class='diag-overview-grid'>"
         "<section class='diag-panel'>"
-        "<div class='diag-subhead'>검증 성능</div>"
+        "<div class='diag-subhead'>검증 성능 <span>Walk-Forward OOS</span></div>"
         f"{perf}"
         "</section>"
         "<section class='diag-panel'>"
@@ -3413,7 +3467,11 @@ def verdict(p: Dict) -> str:
     """
     g = grade_of(p)
     shrink = num(p.get("shrinkage"))
-    cov = num(p.get("coverage_80"))
+    # 위험 과소/과대평가 경고는 같은 데이터로 폭을 재조정한 coverage가 아니라
+    # 보정 전 honest coverage를 우선 사용한다.
+    cov = num(p.get("raw_coverage_80"))
+    if cov is None:
+        cov = num(p.get("coverage_80"))
     parts: List[str] = []
 
     if shrink is not None and shrink < 0.05:
@@ -3921,19 +3979,56 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
                 "baseline_improvement": "baseline 대비 RMSE 개선",
                 "information_coefficient": "IC (순위 상관)",
                 "directional_accuracy": "방향 정확도",
-                "probability_calibration": "확률 보정 정확도",
-                "interval_coverage": "구간 커버리지",
+                "probability_calibration": "원확률 calibration",
+                "interval_coverage": "보정 전 구간 커버리지",
                 "fold_stability": "fold 간 안정성",
                 "recent_regime": "최근 구간 성능",
-                "data_quantity": "데이터 양",
+                "oos_evidence": "OOS 표본 근거",
+                "data_quantity": "학습 데이터 양",
                 "data_freshness": "데이터 최신성",
                 "feature_completeness": "feature 완결성",
             }
-            rows = [{"항목": label.get(k, k), "달성도": f"{float(v) * 100:.0f}%"}
-                    for k, v in comps.items() if not k.startswith("_")]
-            render_dark_table(pd.DataFrame(rows))
+            rows = []
+            for k, v in comps.items():
+                if k.startswith("_") or k == "effective_oos_samples":
+                    continue
+                try:
+                    fv = float(v)
+                except (TypeError, ValueError):
+                    continue
+                # 구성요소는 0~1 점수만 %로 표시한다. 과거 버전의 실효표본수 같은
+                # 메타값이 1250%처럼 보이는 것을 막는다.
+                if 0.0 <= fv <= 1.0:
+                    rows.append({"항목": label.get(k, k), "달성도": f"{fv * 100:.0f}%"})
+            if rows:
+                render_dark_table(pd.DataFrame(rows))
+
+            eff = num(p.get("effective_oos_samples"))
+            if eff is None:
+                eff = num(comps.get("_effective_oos_samples")) or num(comps.get("effective_oos_samples"))
+            cap = num(comps.get("_sample_confidence_cap"))
+            eval_eff = num(p.get("interval_eval_effective"))
+            meta_bits = []
+            if eff is not None:
+                meta_bits.append(f"실효 OOS 표본≈{eff:.1f}")
+            if eval_eff is not None:
+                meta_bits.append(f"구간검증 실효표본≈{eval_eff:.1f}")
+            if cap is not None and cap < 99.95:
+                meta_bits.append(f"표본수 기반 신뢰도 상한 {cap:.0f}/100")
+            if meta_bits:
+                st.caption(" · ".join(meta_bits))
             if comps.get("_baseline_only_cap"):
-                st.caption("ML 모델이 baseline 을 이기지 못해 신뢰도 상한 25 가 적용되었습니다.")
+                st.caption("ML 모델이 baseline 을 이기지 못해 신뢰도 상한 25가 적용되었습니다.")
+            elif comps.get("_no_predictive_edge_cap"):
+                st.caption(
+                    "예측 edge가 확인되지 않았습니다: baseline RMSE 비개선 + IC<0.02 + "
+                    "방향정확도<52% → 신뢰도는 LOW 범위(최대 44)로 제한됩니다."
+                )
+            elif comps.get("_weak_predictive_edge_cap"):
+                st.caption(
+                    "예측 edge가 아직 약합니다: RMSE 개선<0.5% + IC<0.03 + "
+                    "방향정확도<53% → HIGH는 보류하고 최대 69점까지 허용합니다."
+                )
 
         if p.get("regime"):
             st.caption(f"시장 regime · {p.get('regime')}")
