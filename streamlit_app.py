@@ -610,6 +610,55 @@ st.markdown("""
     color: var(--muted) !important;
   }
 
+
+  /* Streamlit help / tooltip 아이콘 — 다크 테마에 맞는 은은한 골드 */
+  [data-testid="stTooltipIcon"] {
+    opacity: 1 !important;
+  }
+
+  [data-testid="stTooltipIcon"] svg {
+    color: #d9a90d !important;
+    fill: #d9a90d !important;
+    width: 0.92rem !important;
+    height: 0.92rem !important;
+    transition: color 0.16s ease, fill 0.16s ease, filter 0.16s ease,
+                transform 0.16s ease;
+  }
+
+  [data-testid="stTooltipIcon"]:hover svg {
+    color: #ffd54a !important;
+    fill: #ffd54a !important;
+    filter: drop-shadow(0 0 4px rgba(240,185,11,0.38));
+    transform: translateY(-1px);
+  }
+
+  /* Streamlit 버전에 따라 help 아이콘이 button 안에 렌더링되는 경우까지 대응 */
+  button[aria-label*="help" i] svg,
+  button[aria-label*="tooltip" i] svg,
+  button[aria-label*="도움" i] svg {
+    color: #d9a90d !important;
+    fill: #d9a90d !important;
+    transition: color 0.16s ease, fill 0.16s ease, filter 0.16s ease;
+  }
+
+  button[aria-label*="help" i]:hover svg,
+  button[aria-label*="tooltip" i]:hover svg,
+  button[aria-label*="도움" i]:hover svg {
+    color: #ffd54a !important;
+    fill: #ffd54a !important;
+    filter: drop-shadow(0 0 4px rgba(240,185,11,0.38));
+  }
+
+  /* 도움말 팝오버도 배경/테두리를 대시보드 톤에 맞춤 */
+  [data-baseweb="popover"] > div,
+  [role="tooltip"] {
+    background: #11161d !important;
+    color: #e8edf3 !important;
+    border: 1px solid rgba(240,185,11,0.28) !important;
+    border-radius: 9px !important;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.34) !important;
+  }
+
   @media (max-width: 850px) {
     .dash-hero {align-items: flex-start; flex-direction: column;}
     .dash-meta {text-align: left; white-space: normal;}
