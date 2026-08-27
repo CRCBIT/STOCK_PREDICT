@@ -1,60 +1,55 @@
 {
-  "fetched_at": "2026-08-27T09:00:02+09:00",
+  "fetched_at": "2026-08-27T09:05:02+09:00",
   "quotes": {
     "000660": {
-      "price": 1769000.0,
+      "price": 1780000.0,
       "currency": "KRW",
-      "timestamp": "2026-08-27T09:00:02.000+09:00"
+      "timestamp": "2026-08-27T09:05:01.000+09:00"
     },
     "005930": {
-      "price": 270000.0,
+      "price": 270500.0,
       "currency": "KRW",
-      "timestamp": "2026-08-27T08:49:59.000+09:00"
+      "timestamp": "2026-08-27T09:05:01.000+09:00"
     },
     "034020": {
-      "price": 83600.0,
+      "price": 84100.0,
       "currency": "KRW",
-      "timestamp": "2026-08-27T08:49:59.000+09:00"
+      "timestamp": "2026-08-27T09:05:01.000+09:00"
     },
     "042700": {
-      "price": 229000.0,
+      "price": 224500.0,
       "currency": "KRW",
-      "timestamp": "2026-08-27T08:49:59.000+09:00"
+      "timestamp": "2026-08-27T09:05:01.000+09:00"
     },
     "403870": {
-      "price": 49450.0,
+      "price": 49150.0,
       "currency": "KRW",
-      "timestamp": "2026-08-27T09:00:02.000+09:00"
+      "timestamp": "2026-08-27T09:05:01.000+09:00"
     },
     "AAPL": {
-      "price": 312.2,
+      "price": 311.82,
       "currency": "USD",
-      "timestamp": "2026-08-27T09:00:01.000+09:00"
+      "timestamp": "2026-08-27T09:05:00.000+09:00"
     },
     "AMAT": {
-      "price": 479.76,
+      "price": 488.5,
       "currency": "USD",
-      "timestamp": null
+      "timestamp": "2026-08-27T09:04:26.000+09:00"
     },
     "AMD": {
-      "price": 486.93,
+      "price": 484.55,
       "currency": "USD",
-      "timestamp": "2026-08-27T09:00:00.000+09:00"
+      "timestamp": "2026-08-27T09:05:00.000+09:00"
     },
     "ASML": {
-      "price": 1745.64,
+      "price": 1770.01,
       "currency": "USD",
-      "timestamp": null
-    },
-    "CAT": {
-      "price": 821.93,
-      "currency": "USD",
-      "timestamp": null
+      "timestamp": "2026-08-27T09:04:55.000+09:00"
     },
     "GOOGL": {
-      "price": 342.0,
+      "price": 342.92,
       "currency": "USD",
-      "timestamp": null
+      "timestamp": "2026-08-27T09:04:58.000+09:00"
     },
     "KLAC": {
       "price": 183.83,
@@ -62,49 +57,54 @@
       "timestamp": null
     },
     "MU": {
-      "price": 973.09,
+      "price": 973.31,
       "currency": "USD",
-      "timestamp": "2026-08-27T09:00:01.000+09:00"
+      "timestamp": "2026-08-27T09:05:01.000+09:00"
     },
     "NVDA": {
-      "price": 219.41,
+      "price": 219.4,
       "currency": "USD",
-      "timestamp": "2026-08-27T09:00:01.000+09:00"
+      "timestamp": "2026-08-27T09:05:01.000+09:00"
     },
     "OKLO": {
-      "price": 42.43,
+      "price": 42.29,
       "currency": "USD",
-      "timestamp": "2026-08-27T09:00:00.000+09:00"
+      "timestamp": "2026-08-27T09:04:33.000+09:00"
     },
     "PLTR": {
-      "price": 177.5,
+      "price": 177.84,
       "currency": "USD",
-      "timestamp": null
+      "timestamp": "2026-08-27T09:05:00.000+09:00"
     },
     "SMR": {
-      "price": 9.41,
+      "price": 9.37,
       "currency": "USD",
-      "timestamp": "2026-08-27T09:00:01.000+09:00"
+      "timestamp": "2026-08-27T09:04:59.000+09:00"
     },
     "SNDK": {
-      "price": 1550.69,
+      "price": 1552.1,
       "currency": "USD",
-      "timestamp": "2026-08-27T09:00:01.000+09:00"
+      "timestamp": "2026-08-27T09:05:01.000+09:00"
     },
     "SPCX": {
-      "price": 140.6,
+      "price": 140.58,
       "currency": "USD",
-      "timestamp": "2026-08-27T09:00:01.000+09:00"
+      "timestamp": "2026-08-27T09:05:00.000+09:00"
     },
     "TSM": {
-      "price": 424.0,
+      "price": 424.81,
       "currency": "USD",
-      "timestamp": "2026-08-27T09:00:00.000+09:00"
+      "timestamp": "2026-08-27T09:04:55.000+09:00"
     },
     "VST": {
-      "price": 142.6,
+      "price": 142.52,
       "currency": "USD",
-      "timestamp": "2026-08-27T09:00:02.000+09:00"
+      "timestamp": "2026-08-27T09:04:31.000+09:00"
+    },
+    "CAT": {
+      "price": 821.93,
+      "currency": "USD",
+      "timestamp": null
     }
   }
 }
