@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-08-27T16:48:44+09:00",
-  "n_total": 999,
-  "n_pending": 315,
-  "n_resolved": 684,
+  "generated_at": "2026-08-28T16:48:57+09:00",
+  "n_total": 1062,
+  "n_pending": 357,
+  "n_resolved": 705,
   "groups": [
     {
       "source": "BACKFILL",
@@ -1200,6 +1200,447 @@
       "mae_p50": 0.15500386981641492,
       "first_anchor": "2024-09-30",
       "last_target": "2025-10-03"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "000660",
+      "name": "SK하이닉스",
+      "horizon": 5,
+      "n_resolved": 1,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.20654329147389294,
+        1.0
+      ],
+      "coverage_50": 1.0,
+      "direction_hit": 0.0,
+      "direction_hit_ci": [
+        0.0,
+        0.7934567085261071
+      ],
+      "mae_p50": 0.1090609333386988,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-08-28"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "005930",
+      "name": "삼성전자",
+      "horizon": 5,
+      "n_resolved": 1,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.20654329147389294,
+        1.0
+      ],
+      "coverage_50": 1.0,
+      "direction_hit": 0.0,
+      "direction_hit_ci": [
+        0.0,
+        0.7934567085261071
+      ],
+      "mae_p50": 0.0700737305814342,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-08-28"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "034020",
+      "name": "두산에너빌리티",
+      "horizon": 5,
+      "n_resolved": 1,
+      "coverage_80": 0.0,
+      "coverage_80_ci": [
+        0.0,
+        0.7934567085261071
+      ],
+      "coverage_50": 0.0,
+      "direction_hit": 1.0,
+      "direction_hit_ci": [
+        0.20654329147389294,
+        1.0
+      ],
+      "mae_p50": 0.1860125728886205,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-08-28"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "042700",
+      "name": "한미반도체",
+      "horizon": 5,
+      "n_resolved": 1,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.20654329147389294,
+        1.0
+      ],
+      "coverage_50": 1.0,
+      "direction_hit": 1.0,
+      "direction_hit_ci": [
+        0.20654329147389294,
+        1.0
+      ],
+      "mae_p50": 0.0118902888349851,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-08-28"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "403870",
+      "name": "HPSP",
+      "horizon": 5,
+      "n_resolved": 1,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.20654329147389294,
+        1.0
+      ],
+      "coverage_50": 0.0,
+      "direction_hit": 1.0,
+      "direction_hit_ci": [
+        0.20654329147389294,
+        1.0
+      ],
+      "mae_p50": 0.1293073148068156,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-08-28"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "AAPL",
+      "name": "애플",
+      "horizon": 5,
+      "n_resolved": 1,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.20654329147389294,
+        1.0
+      ],
+      "coverage_50": 1.0,
+      "direction_hit": 1.0,
+      "direction_hit_ci": [
+        0.20654329147389294,
+        1.0
+      ],
+      "mae_p50": 0.0119596721040883,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-08-28"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "AMAT",
+      "name": "어플라이드 머티리얼즈",
+      "horizon": 5,
+      "n_resolved": 1,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.20654329147389294,
+        1.0
+      ],
+      "coverage_50": 1.0,
+      "direction_hit": 0.0,
+      "direction_hit_ci": [
+        0.0,
+        0.7934567085261071
+      ],
+      "mae_p50": 0.0397541137035474,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-08-28"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "AMD",
+      "name": "AMD",
+      "horizon": 5,
+      "n_resolved": 1,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.20654329147389294,
+        1.0
+      ],
+      "coverage_50": 1.0,
+      "direction_hit": 1.0,
+      "direction_hit_ci": [
+        0.20654329147389294,
+        1.0
+      ],
+      "mae_p50": 0.0041342169797701,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-08-28"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "ASML",
+      "name": "ASML 홀딩(ADR)",
+      "horizon": 5,
+      "n_resolved": 1,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.20654329147389294,
+        1.0
+      ],
+      "coverage_50": 1.0,
+      "direction_hit": 0.0,
+      "direction_hit_ci": [
+        0.0,
+        0.7934567085261071
+      ],
+      "mae_p50": 0.0273498315107973,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-08-28"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "CAT",
+      "name": "캐터필러",
+      "horizon": 5,
+      "n_resolved": 1,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.20654329147389294,
+        1.0
+      ],
+      "coverage_50": 1.0,
+      "direction_hit": 0.0,
+      "direction_hit_ci": [
+        0.0,
+        0.7934567085261071
+      ],
+      "mae_p50": 0.0219873568606769,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-08-28"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "GOOGL",
+      "name": "알파벳 A",
+      "horizon": 5,
+      "n_resolved": 1,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.20654329147389294,
+        1.0
+      ],
+      "coverage_50": 1.0,
+      "direction_hit": 0.0,
+      "direction_hit_ci": [
+        0.0,
+        0.7934567085261071
+      ],
+      "mae_p50": 0.021088883159847,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-08-28"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "KLAC",
+      "name": "KLA",
+      "horizon": 5,
+      "n_resolved": 1,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.20654329147389294,
+        1.0
+      ],
+      "coverage_50": 1.0,
+      "direction_hit": 0.0,
+      "direction_hit_ci": [
+        0.0,
+        0.7934567085261071
+      ],
+      "mae_p50": 0.0268500985384451,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-08-28"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "MU",
+      "name": "마이크론 테크놀로지",
+      "horizon": 5,
+      "n_resolved": 1,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.20654329147389294,
+        1.0
+      ],
+      "coverage_50": 0.0,
+      "direction_hit": 0.0,
+      "direction_hit_ci": [
+        0.0,
+        0.7934567085261071
+      ],
+      "mae_p50": 0.111964546315535,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-08-28"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "NVDA",
+      "name": "엔비디아",
+      "horizon": 5,
+      "n_resolved": 1,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.20654329147389294,
+        1.0
+      ],
+      "coverage_50": 0.0,
+      "direction_hit": 1.0,
+      "direction_hit_ci": [
+        0.20654329147389294,
+        1.0
+      ],
+      "mae_p50": 0.0491235610448805,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-08-28"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "OKLO",
+      "name": "오클로",
+      "horizon": 5,
+      "n_resolved": 1,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.20654329147389294,
+        1.0
+      ],
+      "coverage_50": 1.0,
+      "direction_hit": 0.0,
+      "direction_hit_ci": [
+        0.0,
+        0.7934567085261071
+      ],
+      "mae_p50": 0.0349308307927661,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-08-28"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "PLTR",
+      "name": "팔란티어",
+      "horizon": 5,
+      "n_resolved": 1,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.20654329147389294,
+        1.0
+      ],
+      "coverage_50": 1.0,
+      "direction_hit": 1.0,
+      "direction_hit_ci": [
+        0.20654329147389294,
+        1.0
+      ],
+      "mae_p50": 0.0255867030433109,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-08-28"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "SMR",
+      "name": "뉴스케일파워",
+      "horizon": 5,
+      "n_resolved": 1,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.20654329147389294,
+        1.0
+      ],
+      "coverage_50": 1.0,
+      "direction_hit": 0.0,
+      "direction_hit_ci": [
+        0.0,
+        0.7934567085261071
+      ],
+      "mae_p50": 0.0493269936379536,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-08-28"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "SNDK",
+      "name": "샌디스크",
+      "horizon": 5,
+      "n_resolved": 1,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.20654329147389294,
+        1.0
+      ],
+      "coverage_50": 1.0,
+      "direction_hit": 1.0,
+      "direction_hit_ci": [
+        0.20654329147389294,
+        1.0
+      ],
+      "mae_p50": 0.0711300158202001,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-08-28"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "SPCX",
+      "name": "스페이스X",
+      "horizon": 5,
+      "n_resolved": 1,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.20654329147389294,
+        1.0
+      ],
+      "coverage_50": 1.0,
+      "direction_hit": 0.0,
+      "direction_hit_ci": [
+        0.0,
+        0.7934567085261071
+      ],
+      "mae_p50": 0.0510315329825201,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-08-28"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "TSM",
+      "name": "TSMC(ADR)",
+      "horizon": 5,
+      "n_resolved": 1,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.20654329147389294,
+        1.0
+      ],
+      "coverage_50": 1.0,
+      "direction_hit": 1.0,
+      "direction_hit_ci": [
+        0.20654329147389294,
+        1.0
+      ],
+      "mae_p50": 0.0059827484625176,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-08-28"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "VST",
+      "name": "비스트라 에너지",
+      "horizon": 5,
+      "n_resolved": 1,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.20654329147389294,
+        1.0
+      ],
+      "coverage_50": 1.0,
+      "direction_hit": 0.0,
+      "direction_hit_ci": [
+        0.0,
+        0.7934567085261071
+      ],
+      "mae_p50": 0.0316755538372303,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-08-28"
     }
   ],
   "note": "예측을 먼저 기록하고 나중에 결과를 채운 라이브 검증입니다. 백테스트와 달리 사후 조정이 불가능하지만, 표본이 쌓이기 전에는 신뢰구간이 매우 넓다는 점을 감안하십시오."
