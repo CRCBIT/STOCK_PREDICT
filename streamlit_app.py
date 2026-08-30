@@ -4258,12 +4258,20 @@ def main() -> None:
     render_kcs_memory(load_kcs_memory())
 
     # 개발자 노트 (변경 이력). published/devnotes.json 이 없으면 아무것도 그리지 않는다.
+    # 실패는 조용히 넘기지 않는다. 예전에 devnotes_view.py 가 저장소에 올라가지
+    # 않아 import 가 실패했는데, except 가 이를 완전히 삼켜서 화면에도 로그에도
+    # 아무 흔적이 남지 않았다. 원인을 볼 수 있어야 고칠 수 있다.
     try:
         from devnotes_view import render_devnotes
 
         render_devnotes(PUBLISHED, section_head=section_head)
-    except Exception:
-        pass
+    except ImportError:
+        st.caption(
+            "개발자 노트를 표시할 수 없습니다 — devnotes_view.py 가 저장소에 "
+            "없습니다. publish.py 의 app_files 에 포함되어 있는지 확인하십시오."
+        )
+    except Exception as exc:
+        st.caption(f"개발자 노트 표시 실패: {type(exc).__name__}: {exc}")
 
     st.divider()
     st.caption(DISCLAIMER)
