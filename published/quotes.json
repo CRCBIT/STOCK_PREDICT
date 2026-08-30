@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-08-30T13:25:01+09:00",
+  "fetched_at": "2026-08-30T13:30:02+09:00",
   "quotes": {
     "000660": {
       "price": 1658000.0,
@@ -46,11 +46,6 @@
       "currency": "USD",
       "timestamp": "2026-08-29T08:59:38.000+09:00"
     },
-    "CAT": {
-      "price": 800.0,
-      "currency": "USD",
-      "timestamp": "2026-08-29T08:59:30.000+09:00"
-    },
     "GOOGL": {
       "price": 346.2,
       "currency": "USD",
@@ -96,15 +91,20 @@
       "currency": "USD",
       "timestamp": "2026-08-29T08:59:40.000+09:00"
     },
+    "VST": {
+      "price": 138.0,
+      "currency": "USD",
+      "timestamp": "2026-08-29T08:59:06.000+09:00"
+    },
     "OKLO": {
       "price": 40.35,
       "currency": "USD",
       "timestamp": "2026-08-29T08:59:49.000+09:00"
     },
-    "VST": {
-      "price": 138.0,
+    "CAT": {
+      "price": 800.0,
       "currency": "USD",
-      "timestamp": "2026-08-29T08:59:06.000+09:00"
+      "timestamp": "2026-08-29T08:59:30.000+09:00"
     }
   }
 }
