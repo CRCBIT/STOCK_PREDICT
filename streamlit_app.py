@@ -4257,6 +4257,14 @@ def main() -> None:
     # Streamlit Cloud가 관세청 API나 로컬 절대경로를 직접 호출하지 않는다.
     render_kcs_memory(load_kcs_memory())
 
+    # 개발자 노트 (변경 이력). published/devnotes.json 이 없으면 아무것도 그리지 않는다.
+    try:
+        from devnotes_view import render_devnotes
+
+        render_devnotes(PUBLISHED, section_head=section_head)
+    except Exception:
+        pass
+
     st.divider()
     st.caption(DISCLAIMER)
 

@@ -1,7 +1,7 @@
 {
   "schema_version": "1.2",
-  "generated_at": "2026-08-30T08:55:03+09:00",
-  "published_at": "2026-08-30T00:01:11+00:00",
+  "generated_at": "2026-08-30T10:45:24+09:00",
+  "published_at": "2026-08-30T01:45:25+00:00",
   "symbols": [
     "000660",
     "005930",
@@ -119,7 +119,9 @@
       "backtest_VST_h10.csv",
       "backtest_VST_h30.csv"
     ],
-    "kcs_memory_prices": "kcs_memory_prices.csv"
+    "kcs_memory_prices": "kcs_memory_prices.csv",
+    "devnotes": "devnotes.json",
+    "panel_diagnostics": "panel_diagnostics.json"
   },
   "notice": "로컬에서 계산된 결과의 스냅샷입니다. 이 대시보드는 읽기 전용이며 실시간 시세를 조회하지 않습니다."
 }

@@ -1,0 +1,116 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-08-30T10:45:25+09:00",
+  "n_versions": 4,
+  "latest_version": "0.9.0",
+  "latest_date": "2026-08-30",
+  "notes": [
+    {
+      "version": "0.9.0",
+      "date": "2026-08-30",
+      "sections": {
+        "Added": [
+          "종목 횡단 패널 학습 (`models/panel.py`). 21개 종목의 공통 feature 를 종목별 causal z-score 로 정규화해 한 판에 쌓고 단일 모델을 학습합니다. h=30 기준 실효 독립 관측이 종목당 40개 수준이던 것을 섹터 상관 보정 후에도 수백 개로 늘립니다.",
+          "패널 Walk-Forward 는 행 index 가 아니라 **날짜** 를 자릅니다. 같은 날짜의 다른 종목이 train/test 에 동시에 들어가는 횡단면 누수를 차단합니다.",
+          "NNLS 스태킹 (`models/stacking.py`). 기존 softmax(-RMSE) 가중치는 모델 간 상관을 보지 않아 중복 모델에 이중 가중치를 주었습니다. 비음수 최소자승은 공선성을 직접 다뤄 중복 모델에 0 을 줍니다. 겹치는 라벨 때문에 블록 부트스트랩(블록 길이=horizon)으로 안정화합니다.",
+          "GJR-GARCH(1,1) + skew-t 조건부 변동성 (`models/vol.py`). 레버리지 효과(하락 충격이 이후 변동성을 더 키움)를 반영합니다. `arch` 미설치나 수렴 실패 시 기존 EWMA 로 조용히 fallback 하며, EWMA 대비 [0.5x, 2.0x] 로 클리핑합니다.",
+          "모델 zoo 확장 (`models/zoo_extra.py`): NGBoost(분포 직접 예측), Quantile GBM(비대칭 분위수), PLS(다중공선성 축소), LightGBM `linear_tree`(잎에서 선형 외삽). ExtraTrees·Huber 도 구현되어 있으나 **기본 off** 입니다 — 기존 zoo 의 `random_forest`·`ridge`/`elasticnet` 과 OOF 상관이 각각 0.87/0.90 이고 NNLS 채택률이 0% 였습니다 (`test_redundancy.py`, 진단 표본 2회로 근거는 얇음). `config.extra_models_enabled` 에서 켤 수 있습니다.",
+          "개발자 노트 시스템 (`devnotes.py` + `DEVNOTES.md`). Streamlit 대시보드에 변경 이력 섹션이 추가됩니다."
+        ],
+        "Changed": [
+          "앙상블 가중치 기본값이 NNLS 로 전환됩니다 (`use_nnls_stacking=True`). 표본이 부족하면 기존 softmax 방식으로 자동 fallback 합니다.",
+          "`sigma_h` 계산이 `daily_sigma() * sqrt(h)` 에서 GARCH 다기간 분산의 해석해로 바뀝니다. 평균회귀 때문에 sqrt(h) 스케일링은 장기 horizon 에서 변동성을 과대추정합니다."
+        ],
+        "Notes": [
+          "패널은 기존 종목별 모델을 **대체하지 않습니다**. 공통 feature 만 쓰므로 KR 수급 297개 같은 종목 고유 정보가 빠집니다. 앙상블 멤버로 추가되고, OOF 성능이 나쁘면 NNLS 가 알아서 가중치 0 을 줍니다.",
+          "`PanelForecaster` 는 임의의 X 에 재예측하지 않습니다. 학습 시점에 계산한 해당 종목의 최신 예측을 상수로 돌려줍니다. `predict_future()` 가 마지막 1행에만 호출하므로 결과는 정확하지만, 이 어댑터를 다른 용도로 재사용하면 안 됩니다.",
+          "패널 실효표본은 종목 간 잔차 상관 0.6 을 가정해 보수적으로 깎아 보고합니다. 반도체 종목은 같은 날 함께 움직이므로 (종목수 × 기간) 을 그대로 믿으면 안 됩니다.",
+          "선택적 의존성: `pip install ngboost lightgbm arch`. 없으면 해당 모델만 조용히 빠지고 나머지는 그대로 동작합니다.",
+          "**미완**: `QuantileGBMForecaster.predict_interval()` 과 `NGBoostForecaster.predict_scale()` 은 구현·검증되었으나 아직 conformal 경로에 연결되지 않았습니다. 현재 두 모델은 **점 예측(중앙값)만** 앙상블에 기여합니다. 비대칭 구간을 실제로 쓰려면 `models/calibration.py` 의 잔차 정규화를 관측별 스케일로 바꿔야 하며, 이는 다음 버전 작업입니다."
+        ]
+      },
+      "tags": [
+        "model",
+        "panel",
+        "ensemble",
+        "volatility"
+      ],
+      "impact": "high",
+      "author": ""
+    },
+    {
+      "version": "0.8.0",
+      "date": "2026-08-10",
+      "sections": {
+        "Fixed": [
+          "비대칭 꼬리 확대 추가. 백필 진단에서 상단 exceedance 15.4% 가 하단 10.7% 를 초과하는 것이 확인되어, 상·하단 확대 배수를 분리했습니다."
+        ],
+        "Changed": [
+          "모델 채택 RMSE 개선 임계치를 10% 에서 2% 로 정정했습니다. 수익률 예측에서 10% 는 도달 불가능한 기준이었고, 이 때문에 모든 종목이 baseline 으로 떨어졌습니다."
+        ]
+      },
+      "tags": [
+        "conformal",
+        "calibration"
+      ],
+      "impact": "high",
+      "author": ""
+    },
+    {
+      "version": "0.7.0",
+      "date": "2026-07-20",
+      "sections": {
+        "Fixed": [
+          "conformal 예측구간이 중심을 **이동**시키던 버그. 구간은 중심에서 **확장**되어야 합니다. 이 시점 이전 스냅샷의 구간은 신뢰할 수 없습니다.",
+          "겹치는 라벨의 실효표본(n/h)에 비례해 경험 drift 를 축소하는 `drift_keep` 을 추가했습니다."
+        ]
+      },
+      "tags": [
+        "conformal",
+        "bugfix"
+      ],
+      "impact": "high",
+      "author": ""
+    },
+    {
+      "version": "0.6.0",
+      "date": "2026-07-01",
+      "sections": {
+        "Notes": [
+          "feature 추가 실험 3종(관세청 수출단가, FRED 국채금리, max_features 축소)이 모두 OOS 성능을 떨어뜨렸습니다. 병목이 feature 부족이 아니라 단일 종목 시계열의 구조적 SNR 문제라는 결론에 도달했고, 이것이 0.9.0 패널 학습의 직접적 동기입니다."
+        ]
+      },
+      "tags": [
+        "features",
+        "experiment"
+      ],
+      "impact": "low",
+      "author": ""
+    }
+  ],
+  "environment": {
+    "optional_models": {
+      "extra_trees": true,
+      "huber": true,
+      "pls": true,
+      "quantile_gbm": true,
+      "lgbm_linear": true,
+      "ng_boost": false,
+      "garch": false
+    },
+    "config": {
+      "horizons": [
+        5,
+        10,
+        30
+      ],
+      "max_features": 80,
+      "wf_n_splits": 10,
+      "wf_test_size": 63,
+      "use_panel": true,
+      "use_nnls_stacking": true,
+      "use_garch_sigma": true,
+      "n_symbols": 21
+    }
+  }
+}
