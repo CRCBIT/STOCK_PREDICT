@@ -1,10 +1,53 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-30T19:03:14+09:00",
-  "n_versions": 4,
-  "latest_version": "0.9.0",
+  "generated_at": "2026-08-30T21:13:38+09:00",
+  "n_versions": 6,
+  "latest_version": "0.9.2",
   "latest_date": "2026-08-30",
   "notes": [
+    {
+      "version": "0.9.2",
+      "date": "2026-08-30",
+      "sections": {
+        "Changed": [
+          "MZ 재보정 비활성화(apply_mz_shrinkage=False). 4종목 A/B 에서 IC 가 일관되게 개선: MU +0.099->+0.269, 하이닉스 +0.047->+0.192, 삼성 -0.005->+0.073. RMSE 도 전부 개선. 신뢰도는 MU 39->55, 하이닉스 37->46 으로 처음 MEDIUM 진입. cross-fitted 로 fold 마다 다른 alpha/beta 를 적용해 전체 구간에서 단조변환이 아니게 되는 것이 IC 손실의 원인으로 보임.",
+          "조건부 sigma 비활성화(use_conditional_sigma=False). 점 예측을 고정한 A/B 에서 honest 80% 커버리지가 3종목 모두 목표에서 멀어짐: MU 84.1%->91.0%, 하이닉스 87.8%->88.9%, 삼성 88.4%->88.9%. dispersion 0.21~0.24 로 sigma 는 관측별로 변했으나 그 방향이 실제 잔차 크기와 맞지 않았음. 정규화 계수 x2.3~2.5 는 NGBoost/QuantileGBM 이 변동성 수준 자체를 과소평가했음을 시사. 합성 데이터(10.7%->3.7% 개선)와 정반대 결과이며, 구현은 남겨두고 플래그만 끔."
+        ]
+      },
+      "tags": [
+        "calibration",
+        "mz"
+      ],
+      "impact": "high",
+      "author": ""
+    },
+    {
+      "version": "0.9.1",
+      "date": "2026-08-30",
+      "sections": {
+        "Fixed": [
+          "**PLS 모델이 포함된 종목의 joblib 저장이 통째로 실패하던 버그.** `_PLS` 를 `build_extra_models()` 안에서 지역 클래스로 정의해 joblib 이 직렬화하지 못했습니다 (`Can't pickle ... <locals>._PLS`). 모듈 최상위 `PLSForecaster` 로 옮겼습니다. 첫 실행에서 MU·SNDK 모델이 저장되지 않았습니다.",
+          "**조건부 sigma 가 실환경에서 한 번도 작동하지 않던 문제.** `blend_scales` 가 앙상블 가중치 > 0 인 모델의 스케일만 썼는데, NNLS 는 **점 예측** 기준으로만 모델을 고르므로 `ng_boost`·`quantile_gbm` 이 전 종목에서 제외됐습니다. 평균을 못 맞추는 것과 분산을 못 맞추는 것은 다른 문제입니다. 이제 가중치가 있는 scale 모델을 우선 쓰고, 하나도 없으면 scale 제공 모델을 균등 가중으로 씁니다(`scale_only` 모드).",
+          "위 수정에 맞춰 `train.py` 가 가중치 0 인 scale 모델도 최종 학습시켜 `result.scale_models` 에 보관합니다. `EnsemblePredictor` 는 `weights` 에 없는 모델을 스스로 걸러내므로 **점 예측에는 영향이 없습니다.** `predict.py` 도 같은 규칙을 씁니다.",
+          "NGBoost 기저 트리의 `criterion=\"friedman_mse\"` deprecation 경고 제거 (`squared_error` 로 동일)."
+        ],
+        "Notes": [
+          "첫 실환경 실행에서 **패널이 가장 크게 채택됐습니다**: MU 0.91, SK하이닉스 0.53, SNDK 0.28, 삼성전자 0.24. 패널 자체 성능은 IC 0.128 / DA 0.593 / 실효표본 72.",
+          "NNLS 가 중복 모델을 실제로 걸러냈습니다. 탐지된 중복쌍 예: `catboost~lightgbm=0.99`, `lightgbm~xgboost=0.99`, `extra_trees~random_forest=0.96`. 제외된 모델: elasticnet, random_forest, extra_trees, ridge, quantile_gbm."
+        ],
+        "Known Issues": [
+          "**MZ 재보정이 전 종목에서 모든 지표를 악화시키고 있습니다.** 삼성전자 IC +0.073→-0.005 / RMSE 0.0907→0.0930, SK하이닉스 IC +0.192→+0.047 / RMSE 0.1383→0.1407, MU IC +0.269→+0.099 / RMSE 0.1340→0.1362. cross-fitted MZ 는 fold 마다 다른 alpha·beta 를 적용하므로 전체 구간에서 단조변환이 아니게 되고, 그 결과 순위상관(IC)까지 무너집니다. `apply_mz_shrinkage=False` 로 두고 재측정하는 것을 권합니다. 이 옵션은 이번 변경 이전부터 있던 것입니다.",
+          "4종목 모두 baseline 대비 RMSE 가 나쁩니다(-4.3% ~ -7.2%). 방향정확도도 기준 대비 edge 가 음수입니다. `always_use_ml` 로 ML 앙상블을 쓰고 있으나 신뢰도는 전부 LOW(33~41)로 정확히 표시되고 있습니다."
+        ]
+      },
+      "tags": [
+        "bugfix",
+        "volatility",
+        "models"
+      ],
+      "impact": "high",
+      "author": ""
+    },
     {
       "version": "0.9.0",
       "date": "2026-08-30",
@@ -26,7 +69,18 @@
           "`PanelForecaster` 는 임의의 X 에 재예측하지 않습니다. 학습 시점에 계산한 해당 종목의 최신 예측을 상수로 돌려줍니다. `predict_future()` 가 마지막 1행에만 호출하므로 결과는 정확하지만, 이 어댑터를 다른 용도로 재사용하면 안 됩니다.",
           "패널 실효표본은 종목 간 잔차 상관 0.6 을 가정해 보수적으로 깎아 보고합니다. 반도체 종목은 같은 날 함께 움직이므로 (종목수 × 기간) 을 그대로 믿으면 안 됩니다.",
           "선택적 의존성: `pip install ngboost lightgbm arch`. 없으면 해당 모델만 조용히 빠지고 나머지는 그대로 동작합니다.",
-          "**미완**: `QuantileGBMForecaster.predict_interval()` 과 `NGBoostForecaster.predict_scale()` 은 구현·검증되었으나 아직 conformal 경로에 연결되지 않았습니다. 현재 두 모델은 **점 예측(중앙값)만** 앙상블에 기여합니다. 비대칭 구간을 실제로 쓰려면 `models/calibration.py` 의 잔차 정규화를 관측별 스케일로 바꿔야 하며, 이는 다음 버전 작업입니다."
+          "조건부 sigma (`models/cond_sigma.py`) 로 NGBoost·QuantileGBM 의 관측별 스케일을 conformal 에 연결했습니다. `ConformalIntervalEstimator(vol_scaled=True)` 가 이미 잔차를 sigma 로 표준화하므로, sigma 벡터만 모델 조건부로 교체했습니다.",
+          "**폭이 아니라 형태만 바꿉니다.** 모델 스케일의 중앙값을 기존 sigma 에 맞춰 정규화하므로 평균 구간 폭은 유지되고, 관측 간 상대적 넓고 좁음만 모델이 정합니다. 실패해도 손해가 크지 않도록 한 설계이며, 기존 sigma 대비 [0.4x, 2.5x] 로 클리핑합니다.",
+          "이분산 합성 데이터 실측: 보정 전(honest) 80% 커버리지 오차가 **10.7% → 3.7%** 로 줄었고, 사후 꼬리 보정 계수도 상단 x1.85 → x1.65 로 완화됐습니다. 점 예측 RMSE 는 변하지 않습니다 (sigma 만 바꾸는 변경).",
+          "CQR (Conformalized Quantile Regression, `models/cqr.py`) 추가. QuantileGBM 이 관측별로 내놓는 조건부 분위수를 그대로 쓰고, 그 위에 conformal 보정만 얹어 유한표본 커버리지를 복원합니다. 모델의 **조건부 모양**은 보존하고 **주변 커버리지**만 바로잡는 구조입니다.",
+          "`QuantileGBMForecaster` 가 설정된 `quantiles` 전체(0.10/0.25/0.50/0.75/0.90)를 적합하고 `predict_quantiles()` 로 노출합니다. 분위수 교차는 정렬로 정리합니다."
+        ],
+        "Known Issues": [
+          "**주변(marginal) 비대칭 지표로는 개선이 보이지 않습니다.** split conformal 은 주변 커버리지를 구조적으로 맞추므로 상·하단 이탈 비대칭이 이미 0.5% 수준입니다. CQR 도 0.5% 로 같습니다. 실제 차이는 **조건부(레짐별) 커버리지** 에서 납니다 — 합성 데이터 실측에서 레짐 3분위 최대오차가 13.1% → 7.6% 로 줄었습니다 (저위험 93.1%/고위험 67.3% 로 벌어져 있던 것이 81.1%/72.4% 로 좁혀짐).",
+          "**조건부 sigma 가 이 지표에서는 CQR 보다 낫습니다** (4.9% vs 7.6%). 이 합성 데이터는 이분산이 왜도보다 강해서입니다. 둘은 경쟁 관계가 아니라 서로 다른 실패를 잡으므로, 실데이터에서 어느 쪽이 유효한지 직접 측정해 선택해야 합니다.",
+          "백필에서 관측된 상단 15.4% / 하단 10.7% 는 **주변** 비대칭입니다. 위 결과대로라면 CQR 로 해결되지 않을 가능성이 높습니다. 그 비대칭의 원인은 왜도가 아니라 vol 스케일링과 `tail_inflation` 사후 계수의 상호작용일 수 있습니다. 실데이터 백필로 먼저 원인을 분리하십시오.",
+          "CQR 은 아직 **train.py 파이프라인에 배선되지 않았습니다.** `models/cqr.py` 와 `predict_quantiles()` 는 구현·검증되었으나, 기본 경로는 여전히 기존 conformal 입니다. 위 불확실성 때문에 기본값을 바꾸지 않았습니다. `test_cqr.py` 로 두 방식을 비교한 뒤 배선하십시오.",
+          "위 수치는 이분산을 인위적으로 심은 **합성 데이터** 기준입니다. 실데이터에서 모델이 이분산을 잡아내지 못하면 `cond_sigma_dispersion` 이 0 에 가깝게 나오고 효과도 사라집니다. 이 값은 진단(`confidence_components`)에 기록되니 실행 후 확인하십시오."
         ]
       },
       "tags": [
