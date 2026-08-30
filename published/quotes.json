@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-08-30T20:25:01+09:00",
+  "fetched_at": "2026-08-30T20:30:02+09:00",
   "quotes": {
     "000660": {
       "price": 1658000.0,
@@ -41,15 +41,15 @@
       "currency": "USD",
       "timestamp": "2026-08-29T08:59:57.000+09:00"
     },
-    "ASML": {
-      "price": 1698.05,
-      "currency": "USD",
-      "timestamp": "2026-08-29T08:59:38.000+09:00"
-    },
     "CAT": {
       "price": 800.0,
       "currency": "USD",
       "timestamp": "2026-08-29T08:59:30.000+09:00"
+    },
+    "GOOGL": {
+      "price": 346.2,
+      "currency": "USD",
+      "timestamp": "2026-08-29T08:59:54.000+09:00"
     },
     "KLAC": {
       "price": 176.01,
@@ -58,11 +58,6 @@
     },
     "MU": {
       "price": 930.9,
-      "currency": "USD",
-      "timestamp": "2026-08-29T08:59:59.000+09:00"
-    },
-    "NVDA": {
-      "price": 217.88,
       "currency": "USD",
       "timestamp": "2026-08-29T08:59:59.000+09:00"
     },
@@ -96,15 +91,20 @@
       "currency": "USD",
       "timestamp": "2026-08-29T08:59:40.000+09:00"
     },
-    "GOOGL": {
-      "price": 346.2,
-      "currency": "USD",
-      "timestamp": "2026-08-29T08:59:54.000+09:00"
-    },
     "VST": {
       "price": 138.0,
       "currency": "USD",
       "timestamp": "2026-08-29T08:59:06.000+09:00"
+    },
+    "NVDA": {
+      "price": 217.88,
+      "currency": "USD",
+      "timestamp": "2026-08-29T08:59:59.000+09:00"
+    },
+    "ASML": {
+      "price": 1698.05,
+      "currency": "USD",
+      "timestamp": "2026-08-29T08:59:38.000+09:00"
     }
   }
 }
