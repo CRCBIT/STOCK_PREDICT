@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-08-31T00:40:02+09:00",
+  "fetched_at": "2026-08-31T00:45:01+09:00",
   "quotes": {
     "000660": {
       "price": 1658000.0,
@@ -26,16 +26,6 @@
       "currency": "KRW",
       "timestamp": "2026-08-28T18:00:12.000+09:00"
     },
-    "AAPL": {
-      "price": 320.06,
-      "currency": "USD",
-      "timestamp": "2026-08-29T08:59:51.000+09:00"
-    },
-    "AMAT": {
-      "price": 462.2,
-      "currency": "USD",
-      "timestamp": "2026-08-29T08:59:34.000+09:00"
-    },
     "AMD": {
       "price": 466.0441,
       "currency": "USD",
@@ -56,6 +46,11 @@
       "currency": "USD",
       "timestamp": "2026-08-29T08:59:54.000+09:00"
     },
+    "KLAC": {
+      "price": 176.01,
+      "currency": "USD",
+      "timestamp": "2026-08-29T08:57:42.000+09:00"
+    },
     "MU": {
       "price": 930.9,
       "currency": "USD",
@@ -65,6 +60,16 @@
       "price": 217.88,
       "currency": "USD",
       "timestamp": "2026-08-29T08:59:59.000+09:00"
+    },
+    "OKLO": {
+      "price": 40.35,
+      "currency": "USD",
+      "timestamp": "2026-08-29T08:59:49.000+09:00"
+    },
+    "PLTR": {
+      "price": 185.42,
+      "currency": "USD",
+      "timestamp": "2026-08-29T08:59:57.000+09:00"
     },
     "SMR": {
       "price": 9.2786,
@@ -86,25 +91,20 @@
       "currency": "USD",
       "timestamp": "2026-08-29T08:59:40.000+09:00"
     },
-    "OKLO": {
-      "price": 40.35,
-      "currency": "USD",
-      "timestamp": "2026-08-29T08:59:49.000+09:00"
-    },
     "VST": {
       "price": 138.0,
       "currency": "USD",
       "timestamp": "2026-08-29T08:59:06.000+09:00"
     },
-    "PLTR": {
-      "price": 185.42,
+    "AAPL": {
+      "price": 320.06,
       "currency": "USD",
-      "timestamp": "2026-08-29T08:59:57.000+09:00"
+      "timestamp": "2026-08-29T08:59:51.000+09:00"
     },
-    "KLAC": {
-      "price": 176.01,
+    "AMAT": {
+      "price": 462.2,
       "currency": "USD",
-      "timestamp": "2026-08-29T08:57:42.000+09:00"
+      "timestamp": "2026-08-29T08:59:34.000+09:00"
     }
   }
 }
