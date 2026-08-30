@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-08-30T20:15:02+09:00",
+  "fetched_at": "2026-08-30T20:20:01+09:00",
   "quotes": {
     "000660": {
       "price": 1658000.0,
@@ -41,11 +41,6 @@
       "currency": "USD",
       "timestamp": "2026-08-29T08:59:38.000+09:00"
     },
-    "CAT": {
-      "price": 800.0,
-      "currency": "USD",
-      "timestamp": "2026-08-29T08:59:30.000+09:00"
-    },
     "GOOGL": {
       "price": 346.2,
       "currency": "USD",
@@ -65,11 +60,6 @@
       "price": 217.88,
       "currency": "USD",
       "timestamp": "2026-08-29T08:59:59.000+09:00"
-    },
-    "OKLO": {
-      "price": 40.35,
-      "currency": "USD",
-      "timestamp": "2026-08-29T08:59:49.000+09:00"
     },
     "PLTR": {
       "price": 185.42,
@@ -100,6 +90,16 @@
       "price": 138.0,
       "currency": "USD",
       "timestamp": "2026-08-29T08:59:06.000+09:00"
+    },
+    "OKLO": {
+      "price": 40.35,
+      "currency": "USD",
+      "timestamp": "2026-08-29T08:59:49.000+09:00"
+    },
+    "CAT": {
+      "price": 800.0,
+      "currency": "USD",
+      "timestamp": "2026-08-29T08:59:30.000+09:00"
     },
     "AMAT": {
       "price": 462.2,
