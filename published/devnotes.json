@@ -1,22 +1,23 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-08-30T21:13:38+09:00",
+  "generated_at": "2026-08-30T23:44:36+09:00",
   "n_versions": 6,
-  "latest_version": "0.9.2",
+  "latest_version": "0.9.3",
   "latest_date": "2026-08-30",
   "notes": [
     {
-      "version": "0.9.2",
+      "version": "0.9.3",
       "date": "2026-08-30",
       "sections": {
-        "Changed": [
-          "MZ 재보정 비활성화(apply_mz_shrinkage=False). 4종목 A/B 에서 IC 가 일관되게 개선: MU +0.099->+0.269, 하이닉스 +0.047->+0.192, 삼성 -0.005->+0.073. RMSE 도 전부 개선. 신뢰도는 MU 39->55, 하이닉스 37->46 으로 처음 MEDIUM 진입. cross-fitted 로 fold 마다 다른 alpha/beta 를 적용해 전체 구간에서 단조변환이 아니게 되는 것이 IC 손실의 원인으로 보임.",
-          "조건부 sigma 비활성화(use_conditional_sigma=False). 점 예측을 고정한 A/B 에서 honest 80% 커버리지가 3종목 모두 목표에서 멀어짐: MU 84.1%->91.0%, 하이닉스 87.8%->88.9%, 삼성 88.4%->88.9%. dispersion 0.21~0.24 로 sigma 는 관측별로 변했으나 그 방향이 실제 잔차 크기와 맞지 않았음. 정규화 계수 x2.3~2.5 는 NGBoost/QuantileGBM 이 변동성 수준 자체를 과소평가했음을 시사. 합성 데이터(10.7%->3.7% 개선)와 정반대 결과이며, 구현은 남겨두고 플래그만 끔."
+        "Added": [
+          "패널 학습 대상을 cfg.PANEL_SYMBOLS(반도체 10종목)로 제한하는 옵션 추가(panel_restrict_symbols, 기본 True). 21종목 실측에서 패널 IC 가 군별로 갈렸기 때문: 반도체 +0.220, 전력/원전 +0.087, 연산/플랫폼 +0.062. 제외된 종목은 패널 없이 종목별 앙상블만 사용하며, panel_oof_for_symbol 이 None 을 돌려주므로 train.py 가 자동으로 주입을 건너뛴다. 허용목록과 겹치는 종목이 panel_min_symbols 미만이면 제한을 무시하고 전 종목으로 fallback."
+        ],
+        "Notes": [
+          "합성 데이터 검증에서 제한 ON 이 IC +0.168 -> +0.234 로 개선(실효표본 49 -> 47 로 거의 감소 없음). 다만 실데이터에서는 표본 감소(4628행 -> 약 2300행)가 신호 밀도 향상을 상쇄할 수 있으므로, panel_restrict_symbols 를 껐다 켜며 A/B 로 확인할 것."
         ]
       },
       "tags": [
-        "calibration",
-        "mz"
+        "panel"
       ],
       "impact": "high",
       "author": ""
