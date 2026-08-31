@@ -36,6 +36,7 @@ import os
 import tempfile
 import threading
 import uuid
+import secrets
 
 from collections import Counter, OrderedDict
 from datetime import date, datetime, timedelta, timezone
@@ -94,6 +95,47 @@ def _log(event: str, **fields) -> None:
     except Exception:
         pass
 
+def _is_operator() -> bool:
+    """
+    운영자 접속 여부.
+
+    Streamlit Secrets:
+        analytics_owner_token = "충분히_긴_랜덤_문자열"
+
+    운영자 접속:
+        https://앱주소.streamlit.app/?owner=비밀문자열
+
+    운영자는 방문/종목조회/Discord 통계에서 제외한다.
+    """
+
+    # 같은 Streamlit 세션에서는 한 번 판정한 값을 계속 사용
+    if "dashview_is_operator" in st.session_state:
+        return bool(st.session_state["dashview_is_operator"])
+
+    try:
+        expected = str(
+            st.secrets.get("analytics_owner_token", "")
+        ).strip()
+
+        supplied = str(
+            st.query_params.get("owner", "")
+        ).strip()
+
+        is_operator = bool(
+            expected
+            and supplied
+            and secrets.compare_digest(expected, supplied)
+        )
+
+    except Exception:
+        is_operator = False
+
+    st.session_state["dashview_is_operator"] = is_operator
+
+    if is_operator:
+        _log("operator_session_excluded")
+
+    return is_operator
 
 # ======================================================================================
 # Secrets
@@ -1030,26 +1072,26 @@ def _memory_record_symbol(
 def track_session(
     app_version: str = "",
 ) -> str:
-    """
-    세션 시작을 한 번만 기록.
 
-    단 날짜 변경 및 일일 그래프 확인은 Streamlit rerun마다 실행된다.
-    """
+    # 운영자는 모든 방문 통계에서 제외
+    if _is_operator():
+        if "dashview_sid" not in st.session_state:
+            st.session_state["dashview_sid"] = "OPERATOR"
+            st.session_state["dashview_symbols"] = []
+            st.session_state["dashview_symbol_history"] = []
+            st.session_state["dashview_last_symbol"] = None
 
-    # ------------------------------------------------------------------
-    # 날짜 변경 확인 + 전날 그래프
-    # ------------------------------------------------------------------
+        return "OPERATOR"
 
+    # 기존 코드
     _daily_maintenance()
-
-    # ------------------------------------------------------------------
-    # 이미 같은 Streamlit 세션이면 새 방문으로 기록하지 않음
-    # ------------------------------------------------------------------
 
     if "dashview_sid" in st.session_state:
         return str(
             st.session_state["dashview_sid"]
         )
+
+    # 이하 기존 track_session 코드 그대로...
 
     # ------------------------------------------------------------------
     # 새로운 세션
@@ -1110,32 +1152,16 @@ def track_session(
 # 공개 API - Symbol
 # ======================================================================================
 
-def track_symbol(
-    symbol: str,
-) -> None:
-    """
-    실제 종목 전환만 기록.
+def track_symbol(symbol: str) -> None:
 
-    예:
+    # 운영자의 종목 조회는 집계하지 않음
+    if _is_operator():
+        return
 
-        000660 → MU → 000660
-
-    결과:
-
-        000660 1회
-        MU     1회
-        000660 2회
-
-    반면 같은 종목 화면에서 Streamlit rerun이 발생하는 것은
-    새로운 조회로 세지 않는다.
-    """
     if not symbol:
         return
 
-    symbol = str(symbol).strip()
-
-    if not symbol:
-        return
+    # 이하 기존 코드 그대로...
 
     # ------------------------------------------------------------------
     # 직전 종목
@@ -1321,19 +1347,19 @@ def send_current_chart_now() -> bool:
 def render_session_footer(
     show: bool = False,
 ) -> None:
-    """
-    URL:
 
-        ?debug=1
+    # 운영자는 통계에서 제외됐다는 것만 표시
+    if _is_operator():
+        st.caption(
+            "🛠️ 운영자 모드 · 방문/종목 조회 통계에서 제외됨"
+        )
+        return
 
-    일 때만 표시.
-    """
     try:
         want = (
             show
             or st.query_params.get("debug") == "1"
         )
-
     except Exception:
         want = show
 
@@ -1344,6 +1370,8 @@ def render_session_footer(
         "dashview_sid",
         "-",
     )
+
+    
 
     unique_symbols = st.session_state.get(
         "dashview_symbols",
