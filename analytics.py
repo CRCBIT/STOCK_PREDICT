@@ -124,41 +124,105 @@ def _firestore_write(collection: str, doc: dict) -> None:
 
 def _webhook_url() -> Optional[str]:
     try:
-        url = st.secrets.get("webhook_url")  # type: ignore[attr-defined]
-    except Exception:
+        # 1순위: 최상위
+        url = st.secrets.get("webhook_url")
+
+        # 2순위: [discord] 섹션 안에 넣은 경우도 지원
+        if not url:
+            discord = st.secrets.get("discord")
+            if discord:
+                url = discord.get("webhook_url") or discord.get("url")
+
+        # 3순위: 실수로 [firestore] 아래 들어간 경우도 진단용 지원
+        if not url:
+            firestore_cfg = st.secrets.get("firestore")
+            if firestore_cfg:
+                url = firestore_cfg.get("webhook_url")
+
+        if not url:
+            _log(
+                "webhook_secret_missing",
+                secret_keys=list(st.secrets.keys()),
+            )
+            return None
+
+        url = str(url).strip()
+
+        if not url.startswith(
+            ("https://discord.com/api/webhooks/",
+             "https://discordapp.com/api/webhooks/")
+        ):
+            _log("webhook_url_invalid")
+            return None
+
+        return url
+
+    except Exception as exc:
+        _log(
+            "webhook_secret_error",
+            error=f"{type(exc).__name__}: {str(exc)[:120]}",
+        )
         return None
-    return str(url) if url else None
 
 
 def _webhook_verbose() -> bool:
     try:
-        return bool(st.secrets.get("webhook_verbose", False))  # type: ignore[attr-defined]
-    except Exception:
+        value = st.secrets.get("webhook_verbose")
+
+        if value is None:
+            discord = st.secrets.get("discord")
+            if discord:
+                value = discord.get("webhook_verbose", False)
+
+        if isinstance(value, str):
+            return value.strip().lower() in ("true", "1", "yes", "on")
+
+        return bool(value)
+
+    except Exception as exc:
+        _log(
+            "webhook_verbose_error",
+            error=f"{type(exc).__name__}: {str(exc)[:120]}",
+        )
         return False
 
 
+
+
 def _webhook_send(text: str) -> None:
-    """
-    실패해도 조용히 넘어간다. 방문 추적 때문에 대시보드가 느려지거나
-    죽으면 안 된다. timeout 을 짧게 둔다.
-    """
     url = _webhook_url()
+
     if not url:
+        _log("webhook_skipped", reason="no_webhook_url")
         return
+
     try:
         import urllib.request
 
-        # Discord 는 {"content": ...}, Slack 은 {"text": ...} 를 받는다.
-        # 둘 다 보내면 각자 아는 키만 읽으므로 한 번에 처리된다.
-        body = json.dumps({"content": text, "text": text}).encode("utf-8")
-        req = urllib.request.Request(
-            url, data=body,
-            headers={"Content-Type": "application/json"},
-        )
-        urllib.request.urlopen(req, timeout=3).close()
-    except Exception as exc:
-        _log("webhook_failed", error=str(exc)[:120])
+        body = json.dumps({
+            "content": text,
+        }).encode("utf-8")
 
+        req = urllib.request.Request(
+            url,
+            data=body,
+            headers={
+                "Content-Type": "application/json",
+                "User-Agent": "StreamlitDashboard/1.0",
+            },
+            method="POST",
+        )
+
+        with urllib.request.urlopen(req, timeout=5) as response:
+            status = response.status
+
+        _log("webhook_sent", status=status)
+
+    except Exception as exc:
+        _log(
+            "webhook_failed",
+            error=f"{type(exc).__name__}: {str(exc)[:200]}",
+        )
 
 # --------------------------------------------------------------------------------------
 # 공개 API
