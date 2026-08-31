@@ -1,7 +1,7 @@
 {
   "schema_version": "1.2",
-  "generated_at": "2026-08-31T16:54:28+09:00",
-  "published_at": "2026-08-31T16:13:36+00:00",
+  "generated_at": "2026-09-01T01:19:56+09:00",
+  "published_at": "2026-08-31T16:19:57+00:00",
   "symbols": [
     "000660",
     "005930",
@@ -122,7 +122,7 @@
     "kcs_memory_prices": "kcs_memory_prices.csv",
     "devnotes": "devnotes.json",
     "panel_diagnostics": "panel_diagnostics.json",
-    "portfolio_backtest": null
+    "portfolio_backtest": "portfolio_backtest.json"
   },
   "notice": "로컬에서 계산된 결과의 스냅샷입니다. 이 대시보드는 읽기 전용이며 실시간 시세를 조회하지 않습니다."
 }
