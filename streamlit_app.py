@@ -2306,6 +2306,97 @@ def load_quotes() -> Dict:
 
 @st.cache_data(ttl=300, show_spinner=False)
 @st.cache_data(ttl=300, show_spinner=False)
+def load_portfolio_backtest() -> Optional[Dict]:
+    """publish.py 가 올린 횡단면 포트폴리오 백테스트 결과."""
+    path = PUBLISHED / "portfolio_backtest.json"
+    if not path.exists():
+        return None
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+    except (OSError, ValueError):
+        return None
+    return data if isinstance(data, dict) and data else None
+
+
+def render_portfolio_backtest(data: Optional[Dict]) -> None:
+    """
+    횡단면 포트폴리오 성과.
+
+    종목별 백테스트(각 종목 화면 안)와 다르다. 여기서는 매일 전 종목을
+    예측 순위로 정렬해 상위를 사고 하위를 판다. 패널이 학습하는 것이
+    횡단면 신호이므로 IC 가 실제로 돈이 되는지는 이쪽으로 봐야 한다.
+    """
+    if not data:
+        return
+
+    section_head(
+        "PORTFOLIO", "횡단면 포트폴리오",
+        "매일 전 종목을 예측 순위로 정렬해 상위를 매수합니다. "
+        "종목 하나씩 보는 백테스트와 다릅니다.",
+    )
+    with st.expander("포트폴리오 백테스트 (Out-of-Sample)", expanded=False):
+        horizons = sorted(data, key=lambda x: int(x) if str(x).isdigit() else 0)
+        tabs = st.tabs([f"{h}일" for h in horizons])
+        for tab, h in zip(tabs, horizons):
+            d = data.get(h) or {}
+            with tab:
+                rows = []
+                for name, m in (d.get("metrics") or {}).items():
+                    rows.append({
+                        "전략": name,
+                        "연수익": pct(m.get("annual_return")),
+                        "Sharpe": fnum(m.get("sharpe")),
+                        "MDD": pct(m.get("max_drawdown")),
+                        "적중률": pct(m.get("hit_rate"), signed=False),
+                        "일회전": fnum(m.get("turnover_daily")),
+                    })
+                if rows:
+                    render_dark_table(pd.DataFrame(rows))
+
+                # 분위별 수익 — IC 보다 중요하다. 단조성이 무너지면 실전에서
+                # 상위 분위만 골라 담아도 기대만큼 나오지 않는다.
+                q = d.get("quantile_returns") or {}
+                if q:
+                    mono = d.get("monotonicity")
+                    st.markdown(
+                        f"<div class='diag-subhead'>분위별 {h}일 수익 "
+                        f"<span>단조성 {fnum(mono)} · 1.0이면 완전단조</span></div>",
+                        unsafe_allow_html=True,
+                    )
+                    render_dark_table(pd.DataFrame([
+                        {"분위": k, "평균 수익": pct(v),
+                         "표본": f"{(d.get('quantile_counts') or {}).get(k, 0):,}일"}
+                        for k, v in q.items()
+                    ]))
+                    if mono is not None and mono < 0.5:
+                        st.warning(
+                            "분위별 수익이 단조롭지 않습니다. 예측 순위가 실제 "
+                            "수익 순위와 어긋난다는 뜻이므로, 평균 IC 가 양수여도 "
+                            "상위 분위만 골라 담는 전략은 기대만큼 나오지 않습니다.",
+                            icon="⚠️",
+                        )
+
+                ic, ic_sd = d.get("mean_ic"), d.get("ic_std")
+                bits = []
+                if ic is not None:
+                    bits.append(f"평균 횡단면 IC {ic:+.3f}")
+                if ic_sd:
+                    bits.append(f"표준편차 {ic_sd:.3f}")
+                if d.get("n_names_avg"):
+                    bits.append(f"평균 {d['n_names_avg']:.1f}종목")
+                if d.get("n_effective"):
+                    bits.append(f"실효표본 {d['n_effective']:.0f}")
+                if d.get("cost_bps"):
+                    bits.append(f"비용 {d['cost_bps']:.1f}bp/회전")
+                if bits:
+                    st.caption(" · ".join(bits))
+
+                for n in (d.get("notes") or []):
+                    st.caption(f"· {n}")
+
+
+@st.cache_data(ttl=300, show_spinner=False)
 def load_panel_diagnostics() -> Optional[Dict]:
     """
     publish.py 가 올린 패널(종목 횡단) 학습 진단을 읽는다.
@@ -4303,6 +4394,17 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
 # 본문
 # ======================================================================================
 def main() -> None:
+    # 방문 추적. Streamlit Cloud 내장 Analytics 가 총 조회수를 주므로,
+    # 여기서는 그것이 주지 않는 것(어떤 종목을 보는가)만 남긴다.
+    # 실패해도 대시보드는 그대로 동작해야 한다.
+    try:
+        from analytics import render_session_footer, track_session, track_symbol
+
+        track_session()
+    except Exception:
+        track_symbol = None          # type: ignore[assignment]
+        render_session_footer = None  # type: ignore[assignment]
+
     manifest = load_manifest()
     payload = load_predictions()
     if manifest is None or payload is None:
@@ -4363,6 +4465,12 @@ def main() -> None:
         "종목 선택", symbols, key="symbol_select",
         format_func=lambda sym: f"{name_of.get(sym, sym)}  ·  {sym}",
     )
+    if track_symbol is not None:
+        try:
+            track_symbol(symbol)
+        except Exception:
+            pass
+
     render_symbol(symbol, df[df["symbol"] == symbol], payload, quotes)
 
     # 관세청 메모리 단가는 보조 산업 컨텍스트이므로 Forecast 뒤에서 기본 접힘으로 제공한다.
@@ -4372,6 +4480,9 @@ def main() -> None:
     # 패널은 종목별 화면에 자리가 없지만 앙상블 가중치를 크게 가져가므로
     # 근거를 볼 수 있어야 한다. 파일이 없으면 아무것도 그리지 않는다.
     render_panel_diagnostics(load_panel_diagnostics(), symbol)
+
+    # 횡단면 포트폴리오는 특정 종목이 아니라 전략 전체의 성과다.
+    render_portfolio_backtest(load_portfolio_backtest())
 
     # 개발자 노트 (변경 이력). published/devnotes.json 이 없으면 아무것도 그리지 않는다.
     # 실패는 조용히 넘기지 않는다. 예전에 devnotes_view.py 가 저장소에 올라가지
@@ -4390,6 +4501,11 @@ def main() -> None:
         st.caption(f"개발자 노트 표시 실패: {type(exc).__name__}: {exc}")
 
     st.divider()
+    if render_session_footer is not None:
+        try:
+            render_session_footer()
+        except Exception:
+            pass
     st.caption(DISCLAIMER)
 
 
