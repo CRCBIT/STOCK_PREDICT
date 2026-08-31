@@ -1,37 +1,32 @@
 """
 analytics.py
 ============
-대시보드 방문 추적.
+Streamlit 대시보드 방문 추적 + Discord 알림 + 일일 통계 그래프.
 
-Streamlit Community Cloud 의 내장 Analytics 와 무엇이 다른가
------------------------------------------------------------
-내장 기능(share.streamlit.io → 앱 → Analytics)은 총 조회수와 최근 고유
-방문자 20명을 보여준다. 그것이 조회수의 공식 수치이며 이 모듈이
-대체하지 않는다.
+동작
+----
+1. 새 Streamlit 세션 → Discord 방문 알림
+2. 종목 전환 → Discord 종목 조회 알림 (webhook_verbose=true)
+3. 같은 종목 단순 rerun → 조회로 세지 않음
+4. A → B → A → A는 두 번째 A까지 재조회로 기록
+5. 하루 동안 서버 메모리에 통계를 누적
+6. 날짜가 바뀐 뒤 첫 앱 실행 시 전날 통계 그래프를 Discord에 1회 전송
 
-여기서 얻는 것은 내장 기능이 주지 않는 정보다.
-  - 어떤 종목을 많이 보는가
-  - 어떤 시간대에 들어오는가
-  - 한 세션에서 종목을 몇 개나 바꿔 보는가
-  - 같은 종목을 다시 보는가
+중요
+----
+Firestore/DB를 사용하지 않는다.
 
-왜 파일에 못 쓰는가
--------------------
-Streamlit Cloud 의 파일시스템은 휘발성이라 앱이 재시작하면 사라진다.
-게다가 publish.py 는 게시할 때마다 published/ 를 통째로 교체하므로
-저장소에 카운터 파일을 두어도 다음 게시에서 덮어써진다.
+따라서 Streamlit Cloud 프로세스가 재시작되면 메모리 통계는 초기화된다.
+Discord Webhook은 과거 메시지를 읽을 수 없으므로 재시작 이전 데이터를
+복구할 수는 없다.
 
-그래서 다음 경로를 쓴다.
-  1. stdout 로그
-  2. Firestore (선택)
-  3. Discord Webhook (선택)
-  4. Discord 누적 통계 그래프 (Firestore 사용 시)
+또한 백그라운드 스케줄러가 없으므로 정확히 00:00에 보내는 것이 아니라,
+날짜가 바뀐 뒤 첫 방문 또는 첫 rerun 시 전날 그래프가 전송된다.
 
 개인정보
 --------
-공개 앱이므로 방문자를 식별하지 않는다.
-세션 ID 는 무작위이다.
-IP·이메일·User-Agent 를 수집하지 않는다.
+IP, 이메일, User-Agent 등 방문자를 식별하는 정보는 수집하지 않는다.
+세션 ID는 무작위 UUID 일부만 사용한다.
 """
 
 from __future__ import annotations
@@ -39,10 +34,11 @@ from __future__ import annotations
 import json
 import os
 import tempfile
+import threading
 import uuid
 
-from collections import Counter
-from datetime import datetime, timedelta, timezone
+from collections import Counter, OrderedDict
+from datetime import date, datetime, timedelta, timezone
 from typing import Optional
 
 import streamlit as st
@@ -55,19 +51,24 @@ import streamlit as st
 KST = timezone(timedelta(hours=9))
 
 
+def _utc_now() -> datetime:
+    return datetime.now(timezone.utc)
+
+
+def _kst_datetime() -> datetime:
+    return _utc_now().astimezone(KST)
+
+
 def _now() -> str:
-    """UTC ISO timestamp."""
-    return datetime.now(timezone.utc).isoformat(timespec="seconds")
+    return _utc_now().isoformat(timespec="seconds")
 
 
 def _kst_now() -> str:
-    """Discord 메시지용 현재 KST."""
-    return datetime.now(timezone.utc).astimezone(KST).strftime("%m/%d %H:%M KST")
+    return _kst_datetime().strftime("%m/%d %H:%M KST")
 
 
-def _kst_today() -> str:
-    """YYYY-MM-DD KST."""
-    return datetime.now(timezone.utc).astimezone(KST).strftime("%Y-%m-%d")
+def _kst_day() -> str:
+    return _kst_datetime().strftime("%Y-%m-%d")
 
 
 # ======================================================================================
@@ -76,9 +77,8 @@ def _kst_today() -> str:
 
 def _log(event: str, **fields) -> None:
     """
-    Streamlit Cloud 로그.
-
-    Manage app → Logs → DASHVIEW 검색
+    Streamlit Cloud:
+        Manage app → Logs → DASHVIEW 검색
     """
     payload = {
         "ts": _now(),
@@ -96,147 +96,20 @@ def _log(event: str, **fields) -> None:
 
 
 # ======================================================================================
-# Firestore
+# Secrets
 # ======================================================================================
-
-def _firestore_client():
-    """
-    st.secrets["firestore"] 설정이 있으면 Firestore 연결.
-    없으면 None.
-    """
-    try:
-        creds = st.secrets.get("firestore")
-    except Exception:
-        return None
-
-    if not creds:
-        return None
-
-    try:
-        from google.cloud import firestore
-        from google.oauth2 import service_account
-
-        info = (
-            dict(creds)
-            if not isinstance(creds, str)
-            else json.loads(creds)
-        )
-
-        cred = service_account.Credentials.from_service_account_info(info)
-
-        return firestore.Client(
-            credentials=cred,
-            project=info.get("project_id"),
-        )
-
-    except Exception as exc:
-        _log(
-            "firestore_init_failed",
-            error=f"{type(exc).__name__}: {str(exc)[:180]}",
-        )
-        return None
-
-
-@st.cache_resource(show_spinner=False)
-def _client_cached():
-    return _firestore_client()
-
-
-def _firestore_write(collection: str, doc: dict) -> None:
-    """Firestore 기록. 실패해도 대시보드에는 영향 없음."""
-    client = _client_cached()
-
-    if client is None:
-        return
-
-    try:
-        client.collection(collection).add(doc)
-
-    except Exception as exc:
-        _log(
-            "firestore_write_failed",
-            collection=collection,
-            error=f"{type(exc).__name__}: {str(exc)[:180]}",
-        )
-
-
-# ======================================================================================
-# Discord Webhook 설정
-# ======================================================================================
-
-def _webhook_url() -> Optional[str]:
-    """
-    Discord webhook URL.
-
-    지원:
-      webhook_url = "..."
-
-    또는
-
-      [discord]
-      webhook_url = "..."
-    """
-    try:
-        # 1순위: 최상위
-        url = st.secrets.get("webhook_url")
-
-        # 2순위: [discord]
-        if not url:
-            discord = st.secrets.get("discord")
-
-            if discord:
-                url = (
-                    discord.get("webhook_url")
-                    or discord.get("url")
-                )
-
-        # 3순위:
-        # 실수로 [firestore] 아래에 넣은 경우도 읽어줌.
-        if not url:
-            firestore_cfg = st.secrets.get("firestore")
-
-            if firestore_cfg:
-                url = firestore_cfg.get("webhook_url")
-
-        if not url:
-            _log(
-                "webhook_secret_missing",
-                secret_keys=list(st.secrets.keys()),
-            )
-            return None
-
-        url = str(url).strip()
-
-        if not url.startswith(
-            (
-                "https://discord.com/api/webhooks/",
-                "https://discordapp.com/api/webhooks/",
-            )
-        ):
-            _log("webhook_url_invalid")
-            return None
-
-        return url
-
-    except Exception as exc:
-        _log(
-            "webhook_secret_error",
-            error=f"{type(exc).__name__}: {str(exc)[:180]}",
-        )
-        return None
-
 
 def _secret_bool(name: str, default: bool = False) -> bool:
     try:
         value = st.secrets.get(name, default)
 
         if isinstance(value, str):
-            return value.strip().lower() in (
+            return value.strip().lower() in {
                 "true",
                 "1",
                 "yes",
                 "on",
-            )
+            }
 
         return bool(value)
 
@@ -250,20 +123,79 @@ def _secret_int(
     minimum: int,
     maximum: int,
 ) -> int:
-
     try:
         value = int(st.secrets.get(name, default))
     except Exception:
         value = default
 
-    return max(minimum, min(maximum, value))
+    return max(
+        minimum,
+        min(maximum, value),
+    )
+
+
+# ======================================================================================
+# Discord 설정
+# ======================================================================================
+
+def _webhook_url() -> Optional[str]:
+    """
+    지원 형식 1:
+
+        webhook_url = "https://discord.com/api/webhooks/..."
+
+    지원 형식 2:
+
+        [discord]
+        webhook_url = "https://discord.com/api/webhooks/..."
+    """
+    try:
+        url = st.secrets.get("webhook_url")
+
+        if not url:
+            discord = st.secrets.get("discord")
+
+            if discord:
+                url = (
+                    discord.get("webhook_url")
+                    or discord.get("url")
+                )
+
+        if not url:
+            _log(
+                "webhook_secret_missing",
+                secret_keys=list(st.secrets.keys()),
+            )
+            return None
+
+        url = str(url).strip()
+
+        valid_prefixes = (
+            "https://discord.com/api/webhooks/",
+            "https://discordapp.com/api/webhooks/",
+        )
+
+        if not url.startswith(valid_prefixes):
+            _log("webhook_url_invalid")
+            return None
+
+        return url
+
+    except Exception as exc:
+        _log(
+            "webhook_secret_error",
+            error=f"{type(exc).__name__}: {str(exc)[:180]}",
+        )
+        return None
 
 
 def _webhook_verbose() -> bool:
     """
-    종목 조회 알림 여부.
+    true:
+        종목 전환까지 Discord 알림
 
-    webhook_verbose = true
+    false:
+        세션 방문 알림만
     """
     try:
         value = st.secrets.get("webhook_verbose")
@@ -278,63 +210,47 @@ def _webhook_verbose() -> bool:
                 )
 
         if isinstance(value, str):
-            return value.strip().lower() in (
+            return value.strip().lower() in {
                 "true",
                 "1",
                 "yes",
                 "on",
-            )
+            }
 
         return bool(value)
 
-    except Exception as exc:
-        _log(
-            "webhook_verbose_error",
-            error=f"{type(exc).__name__}: {str(exc)[:180]}",
-        )
+    except Exception:
         return False
 
 
 def _daily_chart_enabled() -> bool:
-    """
-    하루 1회 Discord 누적 통계 그래프.
-
-    기본 True.
-
-    끄려면:
-        webhook_daily_chart = false
-    """
     return _secret_bool(
         "webhook_daily_chart",
         True,
     )
 
 
-def _chart_days() -> int:
-    """
-    그래프에 표시할 최근 일수.
-    기본 7일.
-    """
-    return _secret_int(
-        "webhook_chart_days",
-        default=7,
-        minimum=1,
-        maximum=30,
-    )
-
-
 def _chart_top_n() -> int:
     """
-    종목이 많아도 Discord 이미지가 난잡해지지 않도록
-    상위 N개만 표시한다.
-
-    기본 20.
+    종목이 많으므로 그래프에는 상위 종목만 표시.
     """
     return _secret_int(
         "webhook_chart_top_n",
         default=20,
         minimum=5,
         maximum=40,
+    )
+
+
+def _chart_history_days() -> int:
+    """
+    서버 프로세스가 살아 있는 동안 최근 N일 일별 방문 추세를 보관.
+    """
+    return _secret_int(
+        "webhook_chart_history_days",
+        default=7,
+        minimum=2,
+        maximum=30,
     )
 
 
@@ -388,7 +304,7 @@ def _webhook_send(text: str) -> bool:
     except Exception as exc:
         _log(
             "webhook_failed",
-            error=f"{type(exc).__name__}: {str(exc)[:200]}",
+            error=f"{type(exc).__name__}: {str(exc)[:220]}",
         )
         return False
 
@@ -399,7 +315,7 @@ def _webhook_send(text: str) -> bool:
 
 def _webhook_send_image(
     image_path: str,
-    message: str = "📊 대시보드 방문 통계",
+    message: str,
 ) -> bool:
 
     url = _webhook_url()
@@ -428,7 +344,10 @@ def _webhook_send_image(
 
         body = b""
 
-        # payload_json
+        # --------------------------------------------------------------
+        # Discord payload_json
+        # --------------------------------------------------------------
+
         body += f"--{boundary}\r\n".encode()
 
         body += (
@@ -440,7 +359,10 @@ def _webhook_send_image(
         body += payload_json
         body += b"\r\n"
 
-        # image
+        # --------------------------------------------------------------
+        # PNG 파일
+        # --------------------------------------------------------------
+
         body += f"--{boundary}\r\n".encode()
 
         body += (
@@ -488,273 +410,167 @@ def _webhook_send_image(
 
 
 # ======================================================================================
-# Firestore 통계 읽기
+# 서버 메모리 통계
 # ======================================================================================
 
-def _parse_ts(value) -> Optional[datetime]:
-    if value is None:
-        return None
-
-    # Firestore Timestamp 객체인 경우
-    if isinstance(value, datetime):
-        dt = value
-    else:
-        try:
-            text = str(value).strip()
-
-            if text.endswith("Z"):
-                text = text[:-1] + "+00:00"
-
-            dt = datetime.fromisoformat(text)
-
-        except Exception:
-            return None
-
-    if dt.tzinfo is None:
-        dt = dt.replace(tzinfo=timezone.utc)
-
-    return dt
-
-
-def _recent_firestore_docs(
-    collection_name: str,
-    start_iso: str,
-):
+class _AnalyticsMemory:
     """
-    최근 데이터만 조회한다.
+    Streamlit Python 프로세스 안에서 모든 방문 세션이 공유하는 통계.
 
-    가능한 경우 Firestore where 사용.
-    문제가 생기면 전체 읽기 후 Python 필터 fallback.
+    st.cache_resource 로 생성되므로 다른 브라우저 세션끼리도 공유된다.
+
+    단:
+        Streamlit Cloud 프로세스가 재시작되면 초기화된다.
     """
-    client = _client_cached()
 
-    if client is None:
-        return []
+    def __init__(self) -> None:
+        self.lock = threading.RLock()
 
-    collection = client.collection(collection_name)
+        # 현재 집계 날짜
+        self.current_day: str = _kst_day()
 
-    # 최신 Firestore API
-    try:
-        from google.cloud.firestore_v1.base_query import FieldFilter
+        # 현재 날짜 통계
+        self.session_count: int = 0
+        self.symbol_views: Counter[str] = Counter()
+        self.hourly_sessions: Counter[int] = Counter()
 
-        query = collection.where(
-            filter=FieldFilter(
-                "ts",
-                ">=",
-                start_iso,
+        # 완료된 날짜 통계
+        self.daily_sessions: OrderedDict[str, int] = OrderedDict()
+        self.daily_views: OrderedDict[str, int] = OrderedDict()
+
+        # 아직 Discord 전송되지 않은 날짜 snapshot
+        self.pending_snapshots: list[dict] = []
+
+
+@st.cache_resource(show_spinner=False)
+def _analytics_memory() -> _AnalyticsMemory:
+    return _AnalyticsMemory()
+
+
+# ======================================================================================
+# 날짜 변경 처리
+# ======================================================================================
+
+def _trim_history(
+    memory: _AnalyticsMemory,
+) -> None:
+    keep = _chart_history_days()
+
+    while len(memory.daily_sessions) > keep:
+        memory.daily_sessions.popitem(last=False)
+
+    while len(memory.daily_views) > keep:
+        memory.daily_views.popitem(last=False)
+
+
+def _rollover_day_if_needed() -> None:
+    """
+    날짜가 변경되면 이전 날짜 통계를 snapshot으로 보관하고
+    오늘 통계를 새로 시작한다.
+
+    이 함수 자체에서는 Discord HTTP 요청을 하지 않는다.
+    """
+    memory = _analytics_memory()
+    today = _kst_day()
+
+    with memory.lock:
+
+        if memory.current_day == today:
+            return
+
+        previous_day = memory.current_day
+
+        # --------------------------------------------------------------
+        # 이전 날짜 기록 완료
+        # --------------------------------------------------------------
+
+        memory.daily_sessions[
+            previous_day
+        ] = memory.session_count
+
+        memory.daily_views[
+            previous_day
+        ] = sum(
+            memory.symbol_views.values()
+        )
+
+        _trim_history(memory)
+
+        # --------------------------------------------------------------
+        # Discord 그래프용 snapshot
+        # --------------------------------------------------------------
+
+        snapshot = {
+            "date": previous_day,
+
+            "sessions":
+                memory.session_count,
+
+            "total_views":
+                sum(memory.symbol_views.values()),
+
+            "unique_symbols":
+                len(memory.symbol_views),
+
+            "symbol_views":
+                dict(memory.symbol_views),
+
+            "hourly_sessions":
+                dict(memory.hourly_sessions),
+
+            "daily_sessions":
+                list(memory.daily_sessions.items()),
+
+            "daily_views":
+                list(memory.daily_views.items()),
+        }
+
+        # 아무 사용 기록도 없는 날은 전송할 필요 없음
+        if (
+            snapshot["sessions"] > 0
+            or snapshot["total_views"] > 0
+        ):
+            memory.pending_snapshots.append(
+                snapshot
             )
-        )
 
-        return list(query.stream())
-
-    except Exception:
-        pass
-
-    # 이전 API
-    try:
-        query = collection.where(
-            "ts",
-            ">=",
-            start_iso,
-        )
-
-        return list(query.stream())
-
-    except Exception:
-        pass
-
-    # 최후 fallback
-    docs = []
-
-    try:
-        for doc in collection.stream():
-            data = doc.to_dict() or {}
-
-            ts = str(data.get("ts", ""))
-
-            if ts >= start_iso:
-                docs.append(doc)
-
-    except Exception as exc:
         _log(
-            "analytics_read_failed",
-            collection=collection_name,
-            error=f"{type(exc).__name__}: {str(exc)[:180]}",
+            "analytics_day_rollover",
+            previous_day=previous_day,
+            new_day=today,
+            sessions=snapshot["sessions"],
+            views=snapshot["total_views"],
         )
 
-    return docs
+        # --------------------------------------------------------------
+        # 오늘 통계 초기화
+        # --------------------------------------------------------------
 
-
-def _load_analytics_stats(
-    days: int = 7,
-) -> Optional[dict]:
-    """
-    Firestore 누적 방문 데이터 집계.
-    """
-    client = _client_cached()
-
-    if client is None:
-        return None
-
-    now_kst = datetime.now(timezone.utc).astimezone(KST)
-
-    first_date = (
-        now_kst.date()
-        - timedelta(days=days - 1)
-    )
-
-    start_kst = datetime(
-        first_date.year,
-        first_date.month,
-        first_date.day,
-        tzinfo=KST,
-    )
-
-    start_utc = start_kst.astimezone(timezone.utc)
-
-    start_iso = start_utc.isoformat(
-        timespec="seconds"
-    )
-
-    # ------------------------------------------------------------------
-    # 세션
-    # ------------------------------------------------------------------
-
-    session_docs = _recent_firestore_docs(
-        "dashboard_sessions",
-        start_iso,
-    )
-
-    # ------------------------------------------------------------------
-    # 종목 조회
-    # ------------------------------------------------------------------
-
-    view_docs = _recent_firestore_docs(
-        "dashboard_symbol_views",
-        start_iso,
-    )
-
-    daily_sessions = Counter()
-    hourly_sessions = Counter()
-    symbol_views = Counter()
-
-    session_ids = set()
-
-    # ------------------------------------------------------------------
-    # 세션 집계
-    # ------------------------------------------------------------------
-
-    for doc in session_docs:
-        try:
-            data = doc.to_dict() or {}
-        except Exception:
-            continue
-
-        ts = _parse_ts(data.get("ts"))
-
-        if ts is None:
-            continue
-
-        kst = ts.astimezone(KST)
-
-        if kst.date() < first_date:
-            continue
-
-        day_key = kst.strftime("%m/%d")
-        hour_key = kst.hour
-
-        daily_sessions[day_key] += 1
-        hourly_sessions[hour_key] += 1
-
-        sid = data.get("sid")
-
-        if sid:
-            session_ids.add(str(sid))
-
-    # ------------------------------------------------------------------
-    # 종목 조회 집계
-    # ------------------------------------------------------------------
-
-    for doc in view_docs:
-        try:
-            data = doc.to_dict() or {}
-        except Exception:
-            continue
-
-        ts = _parse_ts(data.get("ts"))
-
-        if ts is None:
-            continue
-
-        kst = ts.astimezone(KST)
-
-        if kst.date() < first_date:
-            continue
-
-        symbol = str(
-            data.get("symbol", "")
-        ).strip()
-
-        if symbol:
-            symbol_views[symbol] += 1
-
-    # ------------------------------------------------------------------
-    # 날짜 전체 생성
-    # 데이터 없는 날도 0으로 표시
-    # ------------------------------------------------------------------
-
-    date_labels = []
-
-    for offset in range(days):
-        d = first_date + timedelta(days=offset)
-
-        date_labels.append(
-            d.strftime("%m/%d")
-        )
-
-    return {
-        "days": days,
-        "date_labels": date_labels,
-        "daily_sessions": daily_sessions,
-        "hourly_sessions": hourly_sessions,
-        "symbol_views": symbol_views,
-        "total_sessions": len(session_docs),
-        "unique_sessions": len(session_ids),
-        "total_symbol_views": sum(symbol_views.values()),
-        "unique_symbols": len(symbol_views),
-    }
+        memory.current_day = today
+        memory.session_count = 0
+        memory.symbol_views = Counter()
+        memory.hourly_sessions = Counter()
 
 
 # ======================================================================================
-# 통계 그래프
+# 일일 그래프 생성
 # ======================================================================================
 
-def make_analytics_chart(
-    days: int = 7,
-    top_n: int = 20,
-) -> tuple[Optional[str], Optional[dict]]:
+def _make_daily_chart(
+    snapshot: dict,
+) -> Optional[str]:
     """
-    Discord 전송용 PNG.
+    한 장에 표시:
 
     1. 종목 조회 TOP N
-    2. 일별 방문 세션
-    3. 시간대별 방문
+    2. 시간대별 방문 세션
+    3. 최근 일별 방문 추세
 
-    종목이 많아도 TOP N만 표시한다.
+    종목이 수십/수백 개여도 TOP N만 표시.
     """
-    stats = _load_analytics_stats(days)
-
-    if stats is None:
-        _log(
-            "analytics_chart_skipped",
-            reason="firestore_unavailable",
-        )
-        return None, None
-
     try:
         import matplotlib
 
-        # 서버 환경용
         matplotlib.use("Agg")
 
         import matplotlib.pyplot as plt
@@ -765,28 +581,32 @@ def make_analytics_chart(
             reason="matplotlib_import",
             error=f"{type(exc).__name__}: {str(exc)[:180]}",
         )
-        return None, stats
-
-    symbol_views: Counter = stats["symbol_views"]
-
-    top_symbols = symbol_views.most_common(top_n)
-
-    # ------------------------------------------------------------------
-    # 그래프 크기
-    # TOP 20까지 가독성 확보
-    # ------------------------------------------------------------------
-
-    bar_count = max(
-        5,
-        len(top_symbols),
-    )
-
-    figure_height = max(
-        10,
-        7 + bar_count * 0.26,
-    )
+        return None
 
     try:
+        top_n = _chart_top_n()
+
+        symbol_counter = Counter(
+            snapshot.get(
+                "symbol_views",
+                {},
+            )
+        )
+
+        top_symbols = symbol_counter.most_common(
+            top_n
+        )
+
+        bar_count = max(
+            5,
+            len(top_symbols),
+        )
+
+        figure_height = max(
+            10,
+            7 + (bar_count * 0.25),
+        )
+
         fig = plt.figure(
             figsize=(12, figure_height)
         )
@@ -795,33 +615,39 @@ def make_analytics_chart(
             3,
             1,
             height_ratios=[
-                max(2.8, bar_count * 0.20),
+                max(
+                    2.8,
+                    bar_count * 0.20,
+                ),
                 1.5,
                 1.5,
             ],
-            hspace=0.42,
+            hspace=0.46,
         )
 
-        # ==================================================================
-        # 1. TOP 종목
-        # ==================================================================
+        # ==============================================================
+        # 1. 종목 조회 TOP N
+        # ==============================================================
 
-        ax1 = fig.add_subplot(grid[0])
+        ax1 = fig.add_subplot(
+            grid[0]
+        )
 
         if top_symbols:
-            # 높은 순위가 위로 오도록 뒤집음
-            top_symbols_rev = list(
+
+            # barh는 마지막 항목이 위에 오므로 reverse
+            rows = list(
                 reversed(top_symbols)
             )
 
             labels = [
-                x[0]
-                for x in top_symbols_rev
+                symbol
+                for symbol, _ in rows
             ]
 
             values = [
-                x[1]
-                for x in top_symbols_rev
+                count
+                for _, count in rows
             ]
 
             bars = ax1.barh(
@@ -830,14 +656,13 @@ def make_analytics_chart(
             )
 
             ax1.set_title(
-                f"Top {min(top_n, len(top_symbols))} symbols by views"
+                f"Most viewed symbols · Top {len(top_symbols)}"
             )
 
             ax1.set_xlabel(
                 "Views"
             )
 
-            # 숫자 표시
             for bar, count in zip(
                 bars,
                 values,
@@ -855,44 +680,63 @@ def make_analytics_chart(
             ax1.text(
                 0.5,
                 0.5,
-                "No symbol view data",
+                "No symbol views",
                 ha="center",
                 va="center",
                 transform=ax1.transAxes,
             )
 
             ax1.set_title(
-                "Symbol views"
+                "Most viewed symbols"
             )
 
-        # ==================================================================
-        # 2. 일별 세션
-        # ==================================================================
+        # ==============================================================
+        # 2. 시간대별 방문
+        # ==============================================================
 
-        ax2 = fig.add_subplot(grid[1])
+        ax2 = fig.add_subplot(
+            grid[1]
+        )
 
-        date_labels = stats["date_labels"]
+        hourly = snapshot.get(
+            "hourly_sessions",
+            {},
+        )
 
-        daily_values = [
-            stats["daily_sessions"].get(
-                day,
-                0,
+        hours = list(range(24))
+
+        hour_values = [
+            int(
+                hourly.get(
+                    hour,
+                    hourly.get(
+                        str(hour),
+                        0,
+                    ),
+                )
             )
-            for day in date_labels
+            for hour in hours
         ]
 
-        ax2.plot(
-            date_labels,
-            daily_values,
-            marker="o",
+        ax2.bar(
+            hours,
+            hour_values,
         )
 
         ax2.set_title(
-            f"Daily sessions · last {days} days"
+            "Sessions by hour · KST"
+        )
+
+        ax2.set_xlabel(
+            "Hour"
         )
 
         ax2.set_ylabel(
             "Sessions"
+        )
+
+        ax2.set_xticks(
+            list(range(0, 24, 2))
         )
 
         ax2.grid(
@@ -900,54 +744,80 @@ def make_analytics_chart(
             alpha=0.25,
         )
 
-        for x, value in zip(
-            range(len(date_labels)),
-            daily_values,
-        ):
-            ax2.annotate(
-                str(value),
-                (x, value),
-                textcoords="offset points",
-                xytext=(0, 6),
-                ha="center",
-                fontsize=8,
-            )
+        # ==============================================================
+        # 3. 최근 날짜별 방문 추세
+        # ==============================================================
 
-        # ==================================================================
-        # 3. 시간대별 방문
-        # ==================================================================
-
-        ax3 = fig.add_subplot(grid[2])
-
-        hours = list(range(24))
-
-        hour_values = [
-            stats["hourly_sessions"].get(
-                hour,
-                0,
-            )
-            for hour in hours
-        ]
-
-        ax3.bar(
-            hours,
-            hour_values,
+        ax3 = fig.add_subplot(
+            grid[2]
         )
+
+        daily = snapshot.get(
+            "daily_sessions",
+            [],
+        )
+
+        if daily:
+
+            dates = []
+            counts = []
+
+            for day_string, count in daily:
+                try:
+                    parsed = date.fromisoformat(
+                        day_string
+                    )
+
+                    dates.append(
+                        parsed.strftime("%m/%d")
+                    )
+
+                except Exception:
+                    dates.append(
+                        str(day_string)
+                    )
+
+                counts.append(
+                    int(count)
+                )
+
+            ax3.plot(
+                dates,
+                counts,
+                marker="o",
+            )
+
+            for index, count in enumerate(
+                counts
+            ):
+                ax3.annotate(
+                    str(count),
+                    (
+                        index,
+                        count,
+                    ),
+                    textcoords="offset points",
+                    xytext=(0, 6),
+                    ha="center",
+                    fontsize=8,
+                )
+
+        else:
+            ax3.text(
+                0.5,
+                0.5,
+                "No history yet",
+                ha="center",
+                va="center",
+                transform=ax3.transAxes,
+            )
 
         ax3.set_title(
-            "Sessions by hour · KST"
-        )
-
-        ax3.set_xlabel(
-            "Hour"
+            "Daily sessions · server-memory history"
         )
 
         ax3.set_ylabel(
             "Sessions"
-        )
-
-        ax3.set_xticks(
-            list(range(0, 24, 2))
         )
 
         ax3.grid(
@@ -955,19 +825,19 @@ def make_analytics_chart(
             alpha=0.25,
         )
 
-        # ==================================================================
-        # 전체 요약
-        # ==================================================================
+        # ==============================================================
+        # 상단 요약
+        # ==============================================================
 
-        summary = (
-            f"Dashboard Analytics · {_kst_today()} KST\n"
-            f"Sessions {stats['total_sessions']}    "
-            f"Symbol views {stats['total_symbol_views']}    "
-            f"Unique symbols {stats['unique_symbols']}"
+        title = (
+            f"Dashboard Analytics · {snapshot['date']} KST\n"
+            f"Sessions {snapshot['sessions']}    "
+            f"Symbol views {snapshot['total_views']}    "
+            f"Unique symbols {snapshot['unique_symbols']}"
         )
 
         fig.suptitle(
-            summary,
+            title,
             fontsize=15,
             fontweight="bold",
             y=0.995,
@@ -976,21 +846,21 @@ def make_analytics_chart(
         fig.subplots_adjust(
             top=0.94,
             bottom=0.06,
-            left=0.13,
+            left=0.14,
             right=0.96,
         )
 
-        # ------------------------------------------------------------------
+        # ==============================================================
         # 임시 PNG
-        # ------------------------------------------------------------------
+        # ==============================================================
 
-        tmp = tempfile.NamedTemporaryFile(
+        temp_file = tempfile.NamedTemporaryFile(
             suffix=".png",
             delete=False,
         )
 
-        path = tmp.name
-        tmp.close()
+        path = temp_file.name
+        temp_file.close()
 
         fig.savefig(
             path,
@@ -1002,17 +872,19 @@ def make_analytics_chart(
 
         _log(
             "analytics_chart_created",
-            path=os.path.basename(path),
-            days=days,
+            date=snapshot["date"],
+            sessions=snapshot["sessions"],
+            views=snapshot["total_views"],
+            unique_symbols=snapshot["unique_symbols"],
             top_n=top_n,
-            sessions=stats["total_sessions"],
-            views=stats["total_symbol_views"],
         )
 
-        return path, stats
+        return path
 
     except Exception as exc:
+
         try:
+            import matplotlib.pyplot as plt
             plt.close("all")
         except Exception:
             pass
@@ -1022,56 +894,90 @@ def make_analytics_chart(
             error=f"{type(exc).__name__}: {str(exc)[:220]}",
         )
 
-        return None, stats
+        return None
 
 
 # ======================================================================================
-# Discord 통계 그래프 즉시 전송
+# 전날 그래프 Discord 전송
 # ======================================================================================
 
-def send_analytics_chart_now(
-    days: Optional[int] = None,
-    top_n: Optional[int] = None,
-) -> bool:
+def _send_pending_daily_chart() -> None:
     """
-    현재 누적 Firestore 데이터로
-    Discord 통계 그래프 즉시 전송.
+    아직 전송되지 않은 일일 snapshot을 Discord로 전송.
 
-    필요하면 다른 코드에서 직접 호출 가능:
+    동시 방문이 여러 명 발생해도 같은 snapshot은 한 프로세스에서
+    한 번만 꺼내도록 lock 사용.
 
-        from analytics import send_analytics_chart_now
-        send_analytics_chart_now()
+    실패하면 다시 queue 맨 앞에 넣어 다음 실행 때 재시도.
     """
-    if days is None:
-        days = _chart_days()
+    if not _daily_chart_enabled():
+        return
 
-    if top_n is None:
-        top_n = _chart_top_n()
+    if not _webhook_url():
+        return
+
+    memory = _analytics_memory()
+
+    # --------------------------------------------------------------
+    # queue에서 먼저 제거
+    # --------------------------------------------------------------
+
+    with memory.lock:
+
+        if not memory.pending_snapshots:
+            return
+
+        snapshot = memory.pending_snapshots.pop(0)
 
     path = None
 
     try:
-        path, stats = make_analytics_chart(
-            days=days,
-            top_n=top_n,
+        path = _make_daily_chart(
+            snapshot
         )
 
-        if not path or not stats:
-            return False
+        if not path:
+            # 생성 실패 → 다음 실행에서 재시도
+            with memory.lock:
+                memory.pending_snapshots.insert(
+                    0,
+                    snapshot,
+                )
+            return
+
+        top_n = min(
+            _chart_top_n(),
+            snapshot["unique_symbols"],
+        )
 
         message = (
-            f"📊 **대시보드 방문 통계** · {_kst_now()}\n"
-            f"최근 **{days}일** · "
-            f"세션 **{stats['total_sessions']}회** · "
-            f"종목 조회 **{stats['total_symbol_views']}회** · "
-            f"고유 종목 **{stats['unique_symbols']}개**\n"
-            f"그래프에는 조회수 상위 **{min(top_n, stats['unique_symbols'])}개 종목**을 표시합니다."
+            f"📊 **대시보드 일일 방문 통계** · "
+            f"`{snapshot['date']}` KST\n"
+            f"방문 세션 **{snapshot['sessions']}회** · "
+            f"종목 조회 **{snapshot['total_views']}회** · "
+            f"고유 종목 **{snapshot['unique_symbols']}개**\n"
+            f"종목 그래프는 조회수 상위 **{top_n}개** 표시"
         )
 
-        return _webhook_send_image(
+        success = _webhook_send_image(
             path,
             message,
         )
+
+        if success:
+
+            _log(
+                "daily_chart_sent",
+                date=snapshot["date"],
+            )
+
+        else:
+            # Discord 실패 → 다음 이벤트 때 재시도
+            with memory.lock:
+                memory.pending_snapshots.insert(
+                    0,
+                    snapshot,
+                )
 
     finally:
         if path:
@@ -1081,174 +987,128 @@ def send_analytics_chart_now(
                 pass
 
 
-# ======================================================================================
-# 하루 한 번만 Discord 그래프
-# ======================================================================================
-
-def _maybe_send_daily_chart() -> None:
+def _daily_maintenance() -> None:
     """
-    그날 Discord 통계 이미지가 아직 전송되지 않았다면
-    첫 Streamlit 세션 시작 시 한 번 전송한다.
+    매 Streamlit rerun 때 매우 가볍게 호출.
 
-    Firestore dashboard_meta/discord_daily_chart 에
-    마지막 전송 날짜를 기록한다.
+    날짜가 그대로면 거의 아무 일도 하지 않는다.
     """
-    if not _daily_chart_enabled():
-        return
-
-    if not _webhook_url():
-        return
-
-    client = _client_cached()
-
-    if client is None:
-        _log(
-            "daily_chart_skipped",
-            reason="firestore_unavailable",
-        )
-        return
-
-    today = _kst_today()
-
-    try:
-        meta_ref = (
-            client
-            .collection("dashboard_meta")
-            .document("discord_daily_chart")
-        )
-
-        snapshot = meta_ref.get()
-
-        if snapshot.exists:
-            meta = snapshot.to_dict() or {}
-
-            if meta.get("last_sent_kst") == today:
-                return
-
-    except Exception as exc:
-        _log(
-            "daily_chart_meta_read_failed",
-            error=f"{type(exc).__name__}: {str(exc)[:180]}",
-        )
-
-        return
-
-    # ------------------------------------------------------------------
-    # 이미지 생성 + 전송
-    # ------------------------------------------------------------------
-
-    success = send_analytics_chart_now(
-        days=_chart_days(),
-        top_n=_chart_top_n(),
-    )
-
-    if not success:
-        return
-
-    # ------------------------------------------------------------------
-    # 오늘 이미 보냈다고 기록
-    # ------------------------------------------------------------------
-
-    try:
-        meta_ref.set(
-            {
-                "last_sent_kst": today,
-                "last_sent_at": _now(),
-            },
-            merge=True,
-        )
-
-        _log(
-            "daily_chart_marked",
-            date=today,
-        )
-
-    except Exception as exc:
-        _log(
-            "daily_chart_meta_write_failed",
-            error=f"{type(exc).__name__}: {str(exc)[:180]}",
-        )
+    _rollover_day_if_needed()
+    _send_pending_daily_chart()
 
 
 # ======================================================================================
-# 공개 API
+# 실시간 통계 기록
+# ======================================================================================
+
+def _memory_record_session() -> None:
+    memory = _analytics_memory()
+    now_kst = _kst_datetime()
+
+    with memory.lock:
+        memory.session_count += 1
+        memory.hourly_sessions[
+            now_kst.hour
+        ] += 1
+
+
+def _memory_record_symbol(
+    symbol: str,
+) -> None:
+    memory = _analytics_memory()
+
+    with memory.lock:
+        memory.symbol_views[
+            symbol
+        ] += 1
+
+
+# ======================================================================================
+# 공개 API - Session
 # ======================================================================================
 
 def track_session(
     app_version: str = "",
 ) -> str:
     """
-    Streamlit 세션 시작을 한 번만 기록.
+    세션 시작을 한 번만 기록.
 
-    script rerun은 새 세션으로 세지 않는다.
+    단 날짜 변경 및 일일 그래프 확인은 Streamlit rerun마다 실행된다.
     """
-    if "dashview_sid" not in st.session_state:
 
-        sid = uuid.uuid4().hex[:12]
+    # ------------------------------------------------------------------
+    # 날짜 변경 확인 + 전날 그래프
+    # ------------------------------------------------------------------
 
-        st.session_state[
-            "dashview_sid"
-        ] = sid
+    _daily_maintenance()
 
-        # 고유 종목
-        st.session_state[
-            "dashview_symbols"
-        ] = []
+    # ------------------------------------------------------------------
+    # 이미 같은 Streamlit 세션이면 새 방문으로 기록하지 않음
+    # ------------------------------------------------------------------
 
-        # 실제 조회 순서
-        # 중복 허용
-        st.session_state[
-            "dashview_symbol_history"
-        ] = []
-
-        # 직전 종목
-        st.session_state[
-            "dashview_last_symbol"
-        ] = None
-
-        # ------------------------------------------------------------------
-        # 로그
-        # ------------------------------------------------------------------
-
-        _log(
-            "session_start",
-            sid=sid,
-            version=app_version,
+    if "dashview_sid" in st.session_state:
+        return str(
+            st.session_state["dashview_sid"]
         )
 
-        # ------------------------------------------------------------------
-        # Firestore
-        # ------------------------------------------------------------------
+    # ------------------------------------------------------------------
+    # 새로운 세션
+    # ------------------------------------------------------------------
 
-        _firestore_write(
-            "dashboard_sessions",
-            {
-                "ts": _now(),
-                "sid": sid,
-                "version": app_version,
-            },
-        )
+    sid = uuid.uuid4().hex[:12]
 
-        # ------------------------------------------------------------------
-        # Discord 실시간 방문 알림
-        # ------------------------------------------------------------------
+    st.session_state[
+        "dashview_sid"
+    ] = sid
 
-        _webhook_send(
-            f"📈 대시보드 방문 · "
-            f"세션 `{sid}` · "
-            f"{_kst_now()}"
-        )
+    # 고유 종목
+    st.session_state[
+        "dashview_symbols"
+    ] = []
 
-        # ------------------------------------------------------------------
-        # Discord 하루 1회 통계 그래프
-        # ------------------------------------------------------------------
+    # 실제 전환 이력
+    # 중복 허용
+    st.session_state[
+        "dashview_symbol_history"
+    ] = []
 
-        _maybe_send_daily_chart()
+    # 직전에 보던 종목
+    st.session_state[
+        "dashview_last_symbol"
+    ] = None
 
-    return str(
-        st.session_state["dashview_sid"]
+    # ------------------------------------------------------------------
+    # 서버 전체 일일 통계
+    # ------------------------------------------------------------------
+
+    _memory_record_session()
+
+    # ------------------------------------------------------------------
+    # 로그
+    # ------------------------------------------------------------------
+
+    _log(
+        "session_start",
+        sid=sid,
+        version=app_version,
     )
 
+    # ------------------------------------------------------------------
+    # Discord 실시간 알림
+    # ------------------------------------------------------------------
+
+    _webhook_send(
+        f"📈 대시보드 방문 · "
+        f"세션 `{sid}` · "
+        f"{_kst_now()}"
+    )
+
+    return sid
+
+
+# ======================================================================================
+# 공개 API - Symbol
+# ======================================================================================
 
 def track_symbol(
     symbol: str,
@@ -1257,19 +1117,25 @@ def track_symbol(
     실제 종목 전환만 기록.
 
     예:
+
         000660 → MU → 000660
 
-    기록:
+    결과:
+
         000660 1회
-        MU 1회
+        MU     1회
         000660 2회
 
-    단순 Streamlit rerun은 조회로 세지 않는다.
+    반면 같은 종목 화면에서 Streamlit rerun이 발생하는 것은
+    새로운 조회로 세지 않는다.
     """
     if not symbol:
         return
 
-    symbol = str(symbol)
+    symbol = str(symbol).strip()
+
+    if not symbol:
+        return
 
     # ------------------------------------------------------------------
     # 직전 종목
@@ -1279,20 +1145,16 @@ def track_symbol(
         "dashview_last_symbol"
     )
 
-    # 동일 종목 화면 rerun
+    # 단순 rerun
     if last_symbol == symbol:
         return
-
-    # ------------------------------------------------------------------
-    # 현재 종목
-    # ------------------------------------------------------------------
 
     st.session_state[
         "dashview_last_symbol"
     ] = symbol
 
     # ------------------------------------------------------------------
-    # 실제 조회 이력
+    # 세션 전체 실제 조회 순서
     # ------------------------------------------------------------------
 
     history = st.session_state.setdefault(
@@ -1300,10 +1162,12 @@ def track_symbol(
         [],
     )
 
-    history.append(symbol)
+    history.append(
+        symbol
+    )
 
     # ------------------------------------------------------------------
-    # 고유 종목 목록
+    # 고유 종목
     # ------------------------------------------------------------------
 
     unique_symbols = st.session_state.setdefault(
@@ -1312,10 +1176,12 @@ def track_symbol(
     )
 
     if symbol not in unique_symbols:
-        unique_symbols.append(symbol)
+        unique_symbols.append(
+            symbol
+        )
 
     # ------------------------------------------------------------------
-    # 정보
+    # 해당 세션 정보
     # ------------------------------------------------------------------
 
     sid = st.session_state.get(
@@ -1323,9 +1189,19 @@ def track_symbol(
         "?",
     )
 
-    order = len(history)
+    order = len(
+        history
+    )
 
     symbol_view_count = history.count(
+        symbol
+    )
+
+    # ------------------------------------------------------------------
+    # 서버 전체 일일 통계
+    # ------------------------------------------------------------------
+
+    _memory_record_symbol(
         symbol
     )
 
@@ -1342,23 +1218,7 @@ def track_symbol(
     )
 
     # ------------------------------------------------------------------
-    # Firestore
-    # ------------------------------------------------------------------
-
-    _firestore_write(
-        "dashboard_symbol_views",
-        {
-            "ts": _now(),
-            "sid": sid,
-            "symbol": symbol,
-            "order": order,
-            "symbol_view_count":
-                symbol_view_count,
-        },
-    )
-
-    # ------------------------------------------------------------------
-    # Discord 상세 알림
+    # Discord
     # ------------------------------------------------------------------
 
     if _webhook_verbose():
@@ -1371,6 +1231,90 @@ def track_symbol(
 
 
 # ======================================================================================
+# 수동 테스트용 - 현재까지 오늘 통계 그래프 전송
+# ======================================================================================
+
+def send_current_chart_now() -> bool:
+    """
+    테스트용.
+
+    오늘 현재까지의 통계를 즉시 Discord로 보낸다.
+    자동 일일 그래프 기록에는 영향을 주지 않는다.
+
+    예:
+
+        from analytics import send_current_chart_now
+        send_current_chart_now()
+
+    Streamlit 앱에서 직접 호출하지 않으면 전혀 실행되지 않는다.
+    """
+    memory = _analytics_memory()
+
+    with memory.lock:
+
+        current_daily = OrderedDict(
+            memory.daily_sessions
+        )
+
+        current_daily[
+            memory.current_day
+        ] = memory.session_count
+
+        snapshot = {
+            "date":
+                memory.current_day,
+
+            "sessions":
+                memory.session_count,
+
+            "total_views":
+                sum(memory.symbol_views.values()),
+
+            "unique_symbols":
+                len(memory.symbol_views),
+
+            "symbol_views":
+                dict(memory.symbol_views),
+
+            "hourly_sessions":
+                dict(memory.hourly_sessions),
+
+            "daily_sessions":
+                list(current_daily.items()),
+
+            "daily_views":
+                list(memory.daily_views.items()),
+        }
+
+    path = _make_daily_chart(
+        snapshot
+    )
+
+    if not path:
+        return False
+
+    try:
+        message = (
+            f"🧪 **대시보드 통계 테스트** · "
+            f"`{snapshot['date']}` 현재까지\n"
+            f"방문 세션 **{snapshot['sessions']}회** · "
+            f"종목 조회 **{snapshot['total_views']}회** · "
+            f"고유 종목 **{snapshot['unique_symbols']}개**"
+        )
+
+        return _webhook_send_image(
+            path,
+            message,
+        )
+
+    finally:
+        try:
+            os.remove(path)
+        except Exception:
+            pass
+
+
+# ======================================================================================
 # 개발자 Footer
 # ======================================================================================
 
@@ -1379,6 +1323,7 @@ def render_session_footer(
 ) -> None:
     """
     URL:
+
         ?debug=1
 
     일 때만 표시.
@@ -1410,12 +1355,21 @@ def render_session_footer(
         [],
     )
 
-    routes = ["로그"]
+    memory = _analytics_memory()
 
-    if _client_cached() is not None:
-        routes.append(
-            "Firestore"
+    with memory.lock:
+        today_sessions = memory.session_count
+        today_views = sum(
+            memory.symbol_views.values()
         )
+        today_unique = len(
+            memory.symbol_views
+        )
+
+    routes = [
+        "로그",
+        "서버메모리",
+    ]
 
     if _webhook_url():
         routes.append(
@@ -1433,9 +1387,12 @@ def render_session_footer(
 
     st.caption(
         f"세션 {sid} · "
-        f"조회 {len(history)}회 · "
+        f"이번 세션 조회 {len(history)}회 · "
         f"고유 종목 {len(unique_symbols)}개 "
         f"({', '.join(unique_symbols[:8])}"
         f"{'…' if len(unique_symbols) > 8 else ''}) · "
+        f"오늘 전체 세션 {today_sessions} · "
+        f"오늘 전체 조회 {today_views} · "
+        f"오늘 고유 종목 {today_unique} · "
         f"저장 {persisted}"
     )
