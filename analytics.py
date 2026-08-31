@@ -235,7 +235,15 @@ def track_session(app_version: str = "") -> str:
     if "dashview_sid" not in st.session_state:
         sid = uuid.uuid4().hex[:12]
         st.session_state["dashview_sid"] = sid
+
+        # 고유 종목 목록
         st.session_state["dashview_symbols"] = []
+
+        # 실제 조회 순서 — 중복 허용
+        st.session_state["dashview_symbol_history"] = []
+
+        # 직전 조회 종목
+        st.session_state["dashview_last_symbol"] = None
         _log("session_start", sid=sid, version=app_version)
         _firestore_write("dashboard_sessions",
                          {"ts": _now(), "sid": sid, "version": app_version})
@@ -245,44 +253,109 @@ def track_session(app_version: str = "") -> str:
 
 def track_symbol(symbol: str) -> None:
     """
-    종목 조회를 기록한다. 같은 세션에서 같은 종목을 반복 선택해도 한 번만 남긴다.
-    이것이 내장 Analytics 가 주지 않는 정보다 — 어떤 종목이 실제로 읽히는가.
+    실제 종목 전환을 기록한다.
+
+    예:
+      000660 → MU → 000660
+    이 경우 000660은 2회 조회로 기록한다.
+
+    단, 같은 종목 화면에서 Streamlit rerun이 발생한 것은
+    새로운 조회로 세지 않는다.
     """
     if not symbol:
         return
-    seen = st.session_state.setdefault("dashview_symbols", [])
-    if symbol in seen:
+
+    symbol = str(symbol)
+
+    # 직전에 보고 있던 종목
+    last_symbol = st.session_state.get("dashview_last_symbol")
+
+    # Streamlit rerun 등으로 같은 종목이 다시 호출된 경우는 무시
+    if last_symbol == symbol:
         return
-    seen.append(symbol)
+
+    # 현재 선택 종목 갱신
+    st.session_state["dashview_last_symbol"] = symbol
+
+    # 전체 조회 이력 — 중복 허용
+    history = st.session_state.setdefault("dashview_symbol_history", [])
+    history.append(symbol)
+
+    # 고유 조회 종목 — 기존 footer 표시용
+    unique_symbols = st.session_state.setdefault("dashview_symbols", [])
+    if symbol not in unique_symbols:
+        unique_symbols.append(symbol)
+
     sid = st.session_state.get("dashview_sid", "?")
-    _log("symbol_view", sid=sid, symbol=str(symbol), order=len(seen))
-    _firestore_write("dashboard_symbol_views",
-                     {"ts": _now(), "sid": sid, "symbol": str(symbol),
-                      "order": len(seen)})
+    order = len(history)
+
+    # 해당 종목이 이번 세션에서 몇 번째 조회인지
+    symbol_view_count = history.count(symbol)
+
+    _log(
+        "symbol_view",
+        sid=sid,
+        symbol=symbol,
+        order=order,
+        symbol_view_count=symbol_view_count,
+    )
+
+    _firestore_write(
+        "dashboard_symbol_views",
+        {
+            "ts": _now(),
+            "sid": sid,
+            "symbol": symbol,
+            "order": order,
+            "symbol_view_count": symbol_view_count,
+        },
+    )
+
     if _webhook_verbose():
-        _webhook_send(f"　└ `{sid}` → **{symbol}** ({len(seen)}번째)")
+        _webhook_send(
+            f"　└ `{sid}` → **{symbol}** "
+            f"(전체 {order}번째 · 이 종목 {symbol_view_count}번째)"
+        )
 
 
 def render_session_footer(show: bool = False) -> None:
     """
-    개발자 확인용 각주. 기본은 숨김이다 — 방문자에게 보일 이유가 없다.
+    개발자 확인용 각주.
     URL 에 ?debug=1 을 붙이면 나타난다.
     """
     try:
         want = show or st.query_params.get("debug") == "1"
     except Exception:
         want = show
+
     if not want:
         return
+
     sid = st.session_state.get("dashview_sid", "-")
-    syms = st.session_state.get("dashview_symbols", [])
+
+    # 고유 종목
+    unique_symbols = st.session_state.get("dashview_symbols", [])
+
+    # 실제 종목 전환/조회 이력
+    history = st.session_state.get("dashview_symbol_history", [])
+
     routes = ["로그"]
+
     if _client_cached() is not None:
         routes.append("Firestore")
+
     if _webhook_url():
-        routes.append("웹훅" + ("(상세)" if _webhook_verbose() else ""))
+        routes.append(
+            "웹훅" + ("(상세)" if _webhook_verbose() else "")
+        )
+
     persisted = "+".join(routes)
+
     st.caption(
-        f"세션 {sid} · 이번 세션 조회 종목 {len(syms)}개 "
-        f"({', '.join(syms[:8])}{'…' if len(syms) > 8 else ''}) · 저장 {persisted}"
+        f"세션 {sid} · "
+        f"조회 {len(history)}회 · "
+        f"고유 종목 {len(unique_symbols)}개 "
+        f"({', '.join(unique_symbols[:8])}"
+        f"{'…' if len(unique_symbols) > 8 else ''}) · "
+        f"저장 {persisted}"
     )
