@@ -126,6 +126,7 @@ st.markdown("""
     font-size: 0.82rem;
     margin-top: 7px;
   }
+  .dash-sep { opacity: .38; margin: 0 .35rem; }
   .dash-meta {
     color: var(--muted);
     font-size: 0.78rem;
@@ -2304,6 +2305,83 @@ def load_quotes() -> Dict:
 
 
 @st.cache_data(ttl=300, show_spinner=False)
+@st.cache_data(ttl=300, show_spinner=False)
+def load_panel_diagnostics() -> Optional[Dict]:
+    """
+    publish.py 가 올린 패널(종목 횡단) 학습 진단을 읽는다.
+
+    패널은 여러 종목을 한 판에 쌓아 학습한 모델이라 종목별 화면 어디에도
+    자연스럽게 들어갈 자리가 없는데, 실제로는 앙상블 가중치를 크게 가져간다
+    (MU 0.91, SK하이닉스 0.53). 어떤 근거로 그 가중치가 나왔는지 볼 수 있어야
+    한다. 파일이 없으면 None 을 돌려주고 섹션 자체를 그리지 않는다.
+    """
+    path = PUBLISHED / "panel_diagnostics.json"
+    if not path.exists():
+        return None
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+    except (OSError, ValueError):
+        return None
+    return data if isinstance(data, dict) and data else None
+
+
+def render_panel_diagnostics(data: Optional[Dict], symbol: str) -> None:
+    """패널 학습 요약. horizon 별로 IC·실효표본·구성 모델을 보여준다."""
+    if not data:
+        return
+
+    section_head(
+        "PANEL", "종목 횡단 패널",
+        "여러 종목을 한 판에 쌓아 학습한 공통 모델입니다. 종목별 모델을 "
+        "대체하지 않고 앙상블 멤버로 합류합니다.",
+    )
+    with st.expander("패널 학습 진단", expanded=False):
+        rows = []
+        included = False
+        for h in sorted(data, key=lambda x: int(x) if str(x).isdigit() else 0):
+            d = data.get(h) or {}
+            m = d.get("metrics") or {}
+            per = (d.get("per_symbol") or {}).get(symbol) or {}
+            if per:
+                included = True
+            weights = d.get("weights") or {}
+            w_txt = ", ".join(f"{k.replace('panel_', '')} {v:.2f}"
+                              for k, v in sorted(weights.items(),
+                                                 key=lambda kv: -kv[1]))
+            rows.append({
+                "기간": f"{h}일",
+                "IC": fnum(m.get("rank_ic"), 3),
+                "방향": (f"{m.get('directional_accuracy') * 100:.1f}%"
+                       if m.get("directional_accuracy") is not None else "-"),
+                "OOF": f"{int(m.get('n_oof', 0)):,}행",
+                "실효표본": f"{d.get('effective_n', float('nan')):.0f}",
+                "구성": w_txt or "-",
+                f"{symbol} IC": fnum(per.get("rank_ic"), 3) if per else "미포함",
+            })
+        if rows:
+            render_dark_table(pd.DataFrame(rows))
+
+        st.caption(
+            "실효표본은 종목 간 잔차 상관(가정 0.6)을 보정한 값입니다. "
+            "반도체 종목은 같은 날 함께 움직이므로 (종목 수 × 기간)을 그대로 "
+            "믿으면 안 됩니다. 기간이 길수록 실효표본이 급격히 줄어듭니다."
+        )
+        if not included:
+            st.caption(
+                f"{symbol} 은 패널 학습 대상이 아닙니다. 패널이 학습하는 것은 "
+                "반도체 사이클이라, 무관 종목을 섞으면 신호가 희석됩니다. "
+                "이 종목의 예측에는 패널이 들어가지 않습니다."
+            )
+        if any((data.get(h) or {}).get("nnls_rejected") for h in data):
+            st.warning(
+                "일부 기간에서 NNLS 스태킹이 패널 모델을 전부 기각했습니다. "
+                "그 기간의 패널은 재현 가능한 신호를 찾지 못했다는 뜻이므로 "
+                "신뢰하지 마십시오.",
+                icon="⚠️",
+            )
+
+
 def load_kcs_memory() -> Optional[pd.DataFrame]:
     """publish.py가 올린 관세청 메모리 월별 수출단가 스냅샷을 읽는다."""
     path = PUBLISHED / "kcs_memory_prices.csv"
@@ -2555,7 +2633,7 @@ def _diag_performance_html(p: Dict) -> str:
             "실효 표본은 보수적으로 OOS행/h로 표시합니다.",
         ),
         (
-            "IC (MZ 후)", fnum(final_ic, 3),
+            "Spearman IC", fnum(final_ic, 3),
             "MZ까지 반영한 최종 OOS 예측의 Spearman IC입니다.",
         ),
         (
@@ -2569,18 +2647,23 @@ def _diag_performance_html(p: Dict) -> str:
         ),
     ]
 
-    if raw_rmse is not None and rmse is not None:
+    # MZ 가 꺼져 있으면 (raw == final) "0.1340 -> 0.1340" 같은 값이 3줄 반복된다.
+    # 실제로 달라진 경우에만 비교를 보여준다.
+    def _differs(a, b, tol=1e-9):
+        return a is not None and b is not None and abs(a - b) > tol
+
+    if _differs(raw_rmse, rmse):
         metrics.append((
             "MZ 효과 · RMSE", f"{raw_rmse:.4f} → {rmse:.4f}",
             "MZ 적용 전 ML/DL 앙상블과 cross-fitted MZ 적용 후 최종 모델의 OOS RMSE 비교입니다. "
             "오른쪽 값이 작아져야 MZ가 점오차를 개선한 것입니다.",
         ))
-    if raw_da is not None and final_da is not None:
+    if _differs(raw_da, final_da):
         metrics.append((
             "MZ 효과 · 방향", f"{raw_da * 100:.1f}% → {final_da * 100:.1f}%",
             "MZ 적용 전후 OOS 방향정확도 비교입니다. 최종 신뢰도에는 MZ 후 값의 기준 대비 edge를 사용합니다.",
         ))
-    if raw_ic is not None and final_ic is not None:
+    if _differs(raw_ic, final_ic):
         metrics.append((
             "MZ 효과 · IC", f"{raw_ic:+.3f} → {final_ic:+.3f}",
             "MZ 적용 전후 OOS Spearman IC 비교입니다.",
@@ -2635,7 +2718,8 @@ def render_diag_overview(p: Dict, diag: Dict) -> None:
         f"{perf}"
         "</section>"
         "<section class='diag-panel'>"
-        "<div class='diag-subhead'>선택된 모델 <span>최종 앙상블 가중치</span></div>"
+        "<div class='diag-subhead'>선택된 모델 "
+        "<span>NNLS 스태킹 가중치</span></div>"
         f"{weights}"
         "</section>"
         "</div>",
@@ -3949,7 +4033,6 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
                 f"지지 {price(p.get('support_20d'), currency, False)} / "
                 f"저항 {price(p.get('resistance_20d'), currency, False)}"
             )
-        st.caption("참고용 레벨이며 투자 조언이 아닙니다.")
 
     # 모델 가중치/Feature 중요도는 predictions 행이 아니라 diagnostics에 저장된다.
     # main.py의 latest_predictions.json 구조를 그대로 사용한다.
@@ -3986,28 +4069,41 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
         sh_display = 1.0 if sh is None else sh
         mz_alpha_display = 0.0 if mz_alpha is None else mz_alpha
 
-        if sh_display < -0.05:
-            mz_desc = "통계적으로 확인된 역방향 관계를 반영"
-        elif abs(sh_display) < 0.05:
-            mz_desc = "ML 변동신호는 거의 제거됨"
-        elif abs(sh_display - 1.0) <= 1e-3 and abs(mz_alpha_display) <= 1e-12:
-            mz_desc = "MZ가 원예측을 그대로 유지 (α=0, β=1)"
-        else:
-            mz_desc = "최종 점예측 = MZ 절편 + β × ML/DL 예측"
+        # MZ 재보정은 2026-08-30 자로 기본 비활성화됐다(apply_mz_shrinkage=False).
+        # 4종목 A/B 에서 IC·RMSE·DA 를 일관되게 악화시켰기 때문이다
+        # (MU IC +0.099 -> +0.269). 자세한 근거는 DEVNOTES 0.9.2 참조.
+        #
+        # 꺼져 있을 때 α/β/원기울기 3줄을 계속 띄우면 "+0.00 / +1.00" 만 반복되어
+        # 자리만 차지한다. identity 이면 한 줄로 접고, 실제로 보정이 걸린
+        # 경우에만 상세를 펼친다. 옵션을 다시 켜면 자동으로 원래대로 보인다.
+        mz_identity = (abs(sh_display - 1.0) <= 1e-3
+                       and abs(mz_alpha_display) <= 1e-12)
 
-        info.insert(1, (
-            "MZ 보정 β", f"{sh_display:+.2f}", mz_desc
-        ))
-        info.insert(2, (
-            "MZ 절편 α", f"{mz_alpha_display:+.2%}",
-            "0이면 별도 절편 보정을 적용하지 않음"
-        ))
-        if mz_raw_beta is not None:
-            se_txt = f" ± {mz_beta_se:.3f}" if mz_beta_se is not None else ""
-            info.insert(3, (
-                "MZ 원기울기", f"{mz_raw_beta:+.3f}{se_txt}",
-                "전체 OOS에서 추정한 raw β와 HAC 표준오차"
+        if mz_identity:
+            info.insert(1, (
+                "MZ 재보정", "미적용",
+                "원예측을 그대로 사용합니다 (α=0, β=1). "
+                "MZ 는 OOS 성능을 악화시켜 2026-08-30 자로 껐습니다."
             ))
+        else:
+            if sh_display < -0.05:
+                mz_desc = "통계적으로 확인된 역방향 관계를 반영"
+            elif abs(sh_display) < 0.05:
+                mz_desc = "ML 변동신호는 거의 제거됨"
+            else:
+                mz_desc = "최종 점예측 = MZ 절편 + β × ML/DL 예측"
+
+            info.insert(1, ("MZ 보정 β", f"{sh_display:+.2f}", mz_desc))
+            info.insert(2, (
+                "MZ 절편 α", f"{mz_alpha_display:+.2%}",
+                "0이면 별도 절편 보정을 적용하지 않음"
+            ))
+            if mz_raw_beta is not None:
+                se_txt = f" ± {mz_beta_se:.3f}" if mz_beta_se is not None else ""
+                info.insert(3, (
+                    "MZ 원기울기", f"{mz_raw_beta:+.3f}{se_txt}",
+                    "전체 OOS에서 추정한 raw β와 HAC 표준오차"
+                ))
         if p.get("missing_data"):
             info.append((
                 "누락 데이터", str(p.get("missing_data")),
@@ -4101,9 +4197,34 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
         if p.get("regime"):
             st.caption(f"시장 regime · {p.get('regime')}")
         if p.get("notes"):
-            for n in str(p.get("notes")).split(" | "):
-                if n.strip():
-                    st.caption(f"· {n.strip()}")
+            notes_list = [n.strip() for n in str(p.get("notes")).split(" | ")
+                          if n.strip()]
+
+            # 파이프라인 구성은 문장 대신 배지로 먼저 보여준다. 어떤 기법이
+            # 실제로 걸려 있는지가 긴 설명보다 먼저 눈에 들어와야 한다.
+            joined = " ".join(notes_list)
+            flags = []
+            if "패널 OOF 합류" in joined:
+                flags.append(("패널", True))
+            if "NNLS" in joined:
+                flags.append(("NNLS 스태킹", True))
+            if "조건부 스케일" in joined:
+                flags.append(("조건부 sigma", True))
+            if "꼬리 이탈 보정" in joined:
+                flags.append(("꼬리 보정", True))
+            if "drift 축소" in joined:
+                flags.append(("drift 축소", True))
+            if flags:
+                st.markdown(
+                    "<div class='status-strip'>" + "".join(
+                        f"<span class='status-pill'>{html.escape(name)}</span>"
+                        for name, _ in flags
+                    ) + "</div>",
+                    unsafe_allow_html=True,
+                )
+
+            for n in notes_list:
+                st.caption(f"· {n}")
 
     # ---- 라이브 검증 성적 ----
     track = load_track()
@@ -4203,46 +4324,37 @@ def main() -> None:
     label, stale = snapshot_label(manifest)
     quotes = load_quotes()
 
+    # 상단은 한 줄로 압축한다. 제목·부제·상태알약·안내문이 각각 블록을 차지하면
+    # 노트북 화면에서 정작 예측이 접힌 아래로 밀린다. 매번 확인할 필요가 없는
+    # 정보(출력 형식 등)는 배지에서 빼고 이상이 있을 때만 경고를 띄운다.
+    quote_label = (quote_age_label(quotes.get("fetched_at"))
+                   if quotes.get("fetched_at") else "스냅샷 가격")
     st.markdown(
         f"""
         <div class="dash-hero">
           <div>
-            <div class="dash-eyebrow">QUANT FORECAST DASHBOARD</div>
             <div class="dash-title">📈 주가 예측</div>
-            <div class="dash-subtitle">확률분포 · 위험구간 · 라이브 검증을 한 화면에서 확인합니다.</div>
+            <div class="dash-subtitle">
+              스냅샷 {html.escape(label)}
+              <span class="dash-sep">·</span> 종목 {len(symbols)}
+              <span class="dash-sep">·</span> 예측 {len(preds)}건
+              <span class="dash-sep">·</span> 현재가 {html.escape(quote_label)}
+            </div>
           </div>
           <div class="dash-meta">
-            스냅샷 {label}<br>
-            종목 {len(symbols)} · 예측 {len(preds)}건
+            <span class="status-pill"><span class="status-dot {'warn' if stale else ''}"></span>
+            {'스냅샷 지연' if stale else '최신'}</span>
           </div>
         </div>
         """,
         unsafe_allow_html=True,
     )
 
-    source_label = "JSON · 진단 포함" if (payload.get("diagnostics") or {}) else "CSV fallback"
-    quote_label = quote_age_label(quotes.get("fetched_at")) if quotes.get("fetched_at") else "스냅샷 가격"
-    status_class = "warn" if stale else ""
-    st.markdown(
-        "<div class='status-strip'>"
-        f"<span class='status-pill'><span class='status-dot {status_class}'></span>"
-        f"모델 스냅샷 <b>{'지연' if stale else '최신'}</b></span>"
-        f"<span class='status-pill'>현재가 <b>{html.escape(quote_label)}</b></span>"
-        f"<span class='status-pill'>출력 <b>{html.escape(source_label)}</b></span>"
-        "</div>",
-        unsafe_allow_html=True,
-    )
-
+    # 정상일 때는 아무것도 띄우지 않는다. 이상이 있을 때만 눈에 띈다.
     if stale:
         st.error(f"이 스냅샷은 {label} 결과입니다. 로컬에서 다시 실행 후 게시하세요.")
     if payload.get("source") == "predictions.csv":
         st.info("CSV 만으로 구동 중 · 백테스트와 진단은 publish.py 게시 시 표시됩니다.")
-
-    if quotes.get("fetched_at"):
-        st.caption(
-            f"💹 현재가 {quote_age_label(quotes['fetched_at'])} 갱신 · "
-            "예측 가격대만 현재가에 맞춰 재조정하며 모델 입력은 마지막 확정 봉 기준입니다."
-        )
 
     # 핵심 작업을 먼저 배치한다: 종목 선택 → Forecast → 산업 컨텍스트.
     section_head("ASSET", "분석 종목 선택", "종목을 바꾸면 아래 예측 화면만 갱신됩니다.")
@@ -4256,6 +4368,10 @@ def main() -> None:
     # 관세청 메모리 단가는 보조 산업 컨텍스트이므로 Forecast 뒤에서 기본 접힘으로 제공한다.
     # Streamlit Cloud가 관세청 API나 로컬 절대경로를 직접 호출하지 않는다.
     render_kcs_memory(load_kcs_memory())
+
+    # 패널은 종목별 화면에 자리가 없지만 앙상블 가중치를 크게 가져가므로
+    # 근거를 볼 수 있어야 한다. 파일이 없으면 아무것도 그리지 않는다.
+    render_panel_diagnostics(load_panel_diagnostics(), symbol)
 
     # 개발자 노트 (변경 이력). published/devnotes.json 이 없으면 아무것도 그리지 않는다.
     # 실패는 조용히 넘기지 않는다. 예전에 devnotes_view.py 가 저장소에 올라가지
