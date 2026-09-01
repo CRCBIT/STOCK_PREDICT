@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-09-01T06:56:39+09:00",
-  "n_total": 1125,
-  "n_pending": 399,
-  "n_resolved": 726,
+  "generated_at": "2026-09-01T10:18:48+09:00",
+  "n_total": 1137,
+  "n_pending": 407,
+  "n_resolved": 730,
   "groups": [
     {
       "source": "BACKFILL",
@@ -1206,73 +1206,73 @@
       "symbol": "000660",
       "name": "SK하이닉스",
       "horizon": 5,
-      "n_resolved": 2,
+      "n_resolved": 3,
       "coverage_80": 1.0,
       "coverage_80_ci": [
-        0.34237195288961925,
+        0.43849391955098227,
         1.0
       ],
       "coverage_50": 1.0,
       "direction_hit": 0.0,
       "direction_hit_ci": [
         0.0,
-        0.6576280471103807
+        0.5615060804490177
       ],
-      "mae_p50": 0.0826140149481677,
+      "mae_p50": 0.07539357450935956,
       "first_anchor": "2026-08-21",
-      "last_target": "2026-08-31"
+      "last_target": "2026-09-01"
     },
     {
       "source": "LIVE",
       "symbol": "005930",
       "name": "삼성전자",
       "horizon": 5,
-      "n_resolved": 2,
+      "n_resolved": 3,
       "coverage_80": 1.0,
       "coverage_80_ci": [
-        0.34237195288961925,
+        0.43849391955098227,
         1.0
       ],
       "coverage_50": 1.0,
-      "direction_hit": 0.5,
+      "direction_hit": 0.6666666666666666,
       "direction_hit_ci": [
-        0.09452865480086614,
-        0.9054713451991339
+        0.2076549551264879,
+        0.9385096847238394
       ],
-      "mae_p50": 0.0427625281480055,
+      "mae_p50": 0.0319216286214465,
       "first_anchor": "2026-08-21",
-      "last_target": "2026-08-31"
+      "last_target": "2026-09-01"
     },
     {
       "source": "LIVE",
       "symbol": "034020",
       "name": "두산에너빌리티",
       "horizon": 5,
-      "n_resolved": 2,
-      "coverage_80": 0.5,
+      "n_resolved": 3,
+      "coverage_80": 0.6666666666666666,
       "coverage_80_ci": [
-        0.09452865480086614,
-        0.9054713451991339
+        0.2076549551264879,
+        0.9385096847238394
       ],
-      "coverage_50": 0.0,
+      "coverage_50": 0.3333333333333333,
       "direction_hit": 1.0,
       "direction_hit_ci": [
-        0.34237195288961925,
+        0.43849391955098227,
         1.0
       ],
-      "mae_p50": 0.15620295066674378,
+      "mae_p50": 0.11315744800880911,
       "first_anchor": "2026-08-21",
-      "last_target": "2026-08-31"
+      "last_target": "2026-09-01"
     },
     {
       "source": "LIVE",
       "symbol": "042700",
       "name": "한미반도체",
       "horizon": 5,
-      "n_resolved": 2,
+      "n_resolved": 3,
       "coverage_80": 1.0,
       "coverage_80_ci": [
-        0.34237195288961925,
+        0.43849391955098227,
         1.0
       ],
       "coverage_50": 1.0,
@@ -1281,9 +1281,9 @@
         0.34237195288961925,
         1.0
       ],
-      "mae_p50": 0.03067488949965335,
+      "mae_p50": 0.026489867388164366,
       "first_anchor": "2026-08-21",
-      "last_target": "2026-08-31"
+      "last_target": "2026-09-01"
     },
     {
       "source": "LIVE",
