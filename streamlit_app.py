@@ -3970,47 +3970,34 @@ st.markdown("""
 
   .snapshot-route-line {
     position: absolute;
-    left: 6px;
-    right: 7px;
+    left: 4px;
+    right: 12px;
     top: 50%;
-    height: 1px;
+    height: 2px;
+    border-radius: 999px;
     background: linear-gradient(90deg,
-      rgba(117,130,145,0.26) 0%,
-      rgba(138,151,165,0.56) 48%,
-      rgba(154,166,180,0.72) 100%);
-  }
-
-  /* 화살표는 상승/하락이 아니라 현재 → 미래라는 시간 흐름만 표현한다. */
-  .snapshot-route-line::after {
-    content: "";
-    position: absolute;
-    right: 8px;
-    top: 50%;
-    width: 6px;
-    height: 6px;
-    border-top: 1.4px solid rgba(167,178,190,0.82);
-    border-right: 1.4px solid rgba(167,178,190,0.82);
-    transform: translateY(-50%) rotate(45deg);
-  }
-
-  .snapshot-route-dot {
-    position: absolute;
-    z-index: 1;
-    top: 50%;
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: #7f8b98;
-    box-shadow: 0 0 0 3px rgba(127,139,152,0.08);
+      rgba(117,130,145,0.34) 0%,
+      rgba(145,158,172,0.68) 58%,
+      rgba(174,185,197,0.88) 100%);
     transform: translateY(-50%);
   }
 
-  .snapshot-route-dot.start { left: 4px; }
-  .snapshot-route-dot.end {
-    right: 2px;
-    background: #9aa7b5;
-    box-shadow: 0 0 0 3px rgba(154,167,181,0.08);
+  /* 현재 → 미래를 한 개의 '진짜 화살표'로 표현한다.
+     끝점 도트/분리된 쐐기는 쓰지 않고, 선 끝에 삼각형 화살촉을 바로 연결한다. */
+  .snapshot-route-line::after {
+    content: "";
+    position: absolute;
+    right: -9px;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 9px solid rgba(174,185,197,0.92);
+    transform: translateY(-50%);
   }
+
+  .snapshot-route-dot { display: none !important; }
 
   .snapshot-return-pill {
     position: relative;
@@ -4144,21 +4131,16 @@ st.markdown("""
       height: 40px;
     }
     .snapshot-route-line {
-      left: 2px;
-      right: 3px;
+      left: 1px;
+      right: 9px;
+      height: 1.5px;
     }
     .snapshot-route-line::after {
-      right: 7px;
-      width: 5px;
-      height: 5px;
+      right: -7px;
+      border-top-width: 4px;
+      border-bottom-width: 4px;
+      border-left-width: 7px;
     }
-    .snapshot-route-dot {
-      width: 4px;
-      height: 4px;
-      box-shadow: 0 0 0 2px rgba(127,139,152,0.08);
-    }
-    .snapshot-route-dot.start { left: 0; }
-    .snapshot-route-dot.end { right: 0; }
     .snapshot-return-pill {
       min-width: 0;
       padding: 3px 5px;
@@ -6487,10 +6469,8 @@ def render_forecast_summary(p: Dict, hist: Optional[pd.DataFrame],
         "</div>"
 
         "<div class='snapshot-connector'>"
-        "<span class='snapshot-route-dot start'></span>"
         f"<div class='snapshot-return-pill {expected_tone}'>{html.escape(pct(expected))}</div>"
         "<div class='snapshot-route-line'></div>"
-        "<span class='snapshot-route-dot end'></span>"
         "</div>"
 
         "<div class='snapshot-price snapshot-forecast'>"
