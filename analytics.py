@@ -7,7 +7,7 @@ Streamlit 대시보드 방문 추적 + Discord 알림 + 일일 통계 그래프.
 ----
 1. 새 Streamlit 세션 → 일반 / 재연결 의심 / 자동접속 의심으로 분류해 Discord 알림
 2. 같은 클라이언트가 짧은 간격으로 새 세션을 만들고 이전 세션에 상호작용이 없으면 재연결 의심
-3. 종목 전환 → Discord 종목 조회 알림 (webhook_verbose=true)
+3. 첫 화면의 자동 선택 종목은 알림 생략, 사용자가 실제로 종목을 전환할 때만 Discord 알림 (webhook_verbose=true)
 4. 같은 종목 단순 rerun → 조회로 세지 않음
 5. A → B → A → A는 두 번째 A까지 재조회로 기록
 6. 하루 동안 전체 연결/일반/재연결 의심/자동접속 의심/활동 세션을 따로 누적
@@ -536,8 +536,46 @@ class _AnalyticsMemory:
 
 
 @st.cache_resource(show_spinner=False)
-def _analytics_memory() -> _AnalyticsMemory:
+def _analytics_memory_v2() -> _AnalyticsMemory:
+    # v2 이름을 사용해 이전 배포에서 남아 있던 cache_resource 객체와 분리한다.
+    # Streamlit hot-reload에서는 오래된 _AnalyticsMemory 인스턴스가 살아남을 수 있다.
     return _AnalyticsMemory()
+
+
+def _ensure_memory_schema(memory: _AnalyticsMemory) -> _AnalyticsMemory:
+    """
+    hot-reload 뒤에도 구버전 cache_resource가 남아 있을 수 있으므로
+    새 필드를 지연 초기화한다. 앱 재부팅 없이도 안전하게 마이그레이션한다.
+    """
+    # 구버전에도 lock은 있었지만, 혹시 없는 경우까지 방어한다.
+    if not hasattr(memory, "lock"):
+        memory.lock = threading.RLock()
+
+    with memory.lock:
+        defaults = {
+            "normal_session_count": 0,
+            "reconnect_session_count": 0,
+            "bot_session_count": 0,
+            "engaged_session_count": 0,
+            "hourly_normal_sessions": Counter(),
+            "daily_normal_sessions": OrderedDict(),
+            "recent_clients": {},
+            "session_records": {},
+            "engaged_sids": set(),
+        }
+
+        for name, value in defaults.items():
+            if not hasattr(memory, name):
+                setattr(memory, name, value)
+
+        if not hasattr(memory, "fingerprint_salt"):
+            memory.fingerprint_salt = secrets.token_bytes(24)
+
+    return memory
+
+
+def _analytics_memory() -> _AnalyticsMemory:
+    return _ensure_memory_schema(_analytics_memory_v2())
 
 
 def _safe_context_value(name: str, default=""):
@@ -1608,9 +1646,10 @@ def track_symbol(symbol: str) -> None:
     # ------------------------------------------------------------------
     # Discord
     # ------------------------------------------------------------------
-
-    if _webhook_verbose():
-
+    # 첫 번째 종목은 앱이 처음 렌더링될 때 자동으로 선택되는 값이므로
+    # 방문 알림과 동시에 한 번 더 울리지 않게 한다.
+    # 사용자가 실제로 다른 종목으로 전환한 두 번째 이벤트부터 알린다.
+    if _webhook_verbose() and order >= 2:
         _webhook_send(
             f"　└ `{sid}` → **{symbol}** "
             f"(전체 {order}번째 · "
