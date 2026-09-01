@@ -5,7 +5,7 @@ Streamlit 대시보드 방문 추적 + Discord 알림 + 일일 통계 그래프.
 
 동작
 ----
-1. 새 Streamlit 세션 → 일반 / 재연결 의심 / 자동접속 의심으로 분류해 Discord 알림
+1. 새 Streamlit 세션 → 일반 / 재연결 의심 / 자동접속 의심으로 분류하고 첫 종목과 합쳐 Discord 1회 알림
 2. 같은 클라이언트가 짧은 간격으로 새 세션을 만들고 이전 세션에 상호작용이 없으면 재연결 의심
 3. 첫 화면의 자동 선택 종목은 알림 생략, 사용자가 실제로 종목을 전환할 때만 Discord 알림 (webhook_verbose=true)
 4. 같은 종목 단순 rerun → 조회로 세지 않음
@@ -26,7 +26,9 @@ Discord Webhook은 과거 메시지를 읽을 수 없으므로 재시작 이전 
 
 개인정보
 --------
-원본 IP 주소와 전체 User-Agent 문자열은 저장하거나 Discord로 전송하지 않는다.
+원본 IP 주소는 Discord 세션 알림에 표시하고, 현재 Streamlit 서버 메모리의 세션 기록에도 보관한다.
+IP 기반 추정 위치/통신사 조회는 백그라운드에서 수행해 화면 로딩을 막지 않는다.
+전체 User-Agent 문자열은 저장하지 않고 클라이언트 종류만 표시한다.
 세션 재연결 판별에는 st.context의 IP/User-Agent/시간대/locale을 즉시 조합한 뒤
 프로세스마다 새로 생성되는 salt로 해시한 짧은 임시 클라이언트 지문만 사용한다.
 서버 프로세스가 재시작되면 salt와 지문 이력도 함께 사라진다.
@@ -42,6 +44,7 @@ analytics_reconnect_max_minutes = 25
 from __future__ import annotations
 
 import hashlib
+import ipaddress
 import json
 import os
 import tempfile
@@ -647,15 +650,248 @@ def _looks_like_bot(user_agent: str) -> bool:
     ))
 
 
+def _mask_ip(ip_address: str) -> str:
+    """Discord에는 원본 IP 대신 일부만 남긴 마스킹 주소를 표시한다."""
+    value = str(ip_address or "").strip()
+    if not value:
+        return "-"
+
+    # IPv4: 211.234.56.78 -> 211.234.xxx.xxx
+    parts = value.split(".")
+    if len(parts) == 4 and all(part.isdigit() for part in parts):
+        return f"{parts[0]}.{parts[1]}.xxx.xxx"
+
+    # IPv6: 앞 두 블록만 남기고 나머지는 숨긴다.
+    if ":" in value:
+        blocks = [block for block in value.split(":") if block]
+        if len(blocks) >= 2:
+            return f"{blocks[0]}:{blocks[1]}:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx"
+        if blocks:
+            return f"{blocks[0]}:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx"
+        return "IPv6(masked)"
+
+    return "masked"
+
+
+
+# ======================================================================================
+# GeoIP - 비동기 조회
+# ======================================================================================
+
+_GEO_CACHE_LOCK = threading.RLock()
+_GEO_CACHE: dict[str, tuple[datetime, dict]] = {}
+
+
+def _normalize_public_ip(ip_address: str) -> str:
+    """GeoIP 조회에 사용할 공개 IP만 정규화한다."""
+    value = str(ip_address or "").strip()
+    if not value or value == "-":
+        return ""
+
+    try:
+        parsed = ipaddress.ip_address(value)
+        if isinstance(parsed, ipaddress.IPv6Address) and parsed.ipv4_mapped:
+            parsed = parsed.ipv4_mapped
+        if not parsed.is_global:
+            return ""
+        return str(parsed)
+    except ValueError:
+        return ""
+
+
+def _empty_geo() -> dict:
+    return {
+        "geo_ok": False,
+        "country": "-",
+        "country_code": "-",
+        "region": "-",
+        "city": "-",
+        "location": "조회 불가",
+        "isp": "-",
+        "org": "-",
+        "asn": "-",
+        "flag": "",
+    }
+
+
+def _lookup_geoip(ip_address: str) -> dict:
+    """
+    IP 기반 국가/지역/도시/ISP 추정.
+
+    이 함수는 Streamlit 렌더링 스레드가 아니라 daemon thread에서 호출한다.
+    외부 GeoIP 서비스가 느리거나 장애가 나도 대시보드 화면 로딩을 막지 않는다.
+    """
+    public_ip = _normalize_public_ip(ip_address)
+    if not public_ip:
+        return _empty_geo()
+
+    now = _utc_now()
+    with _GEO_CACHE_LOCK:
+        cached = _GEO_CACHE.get(public_ip)
+        if cached and (now - cached[0]) < timedelta(hours=6):
+            return dict(cached[1])
+
+    result = _empty_geo()
+    try:
+        import urllib.parse
+        import urllib.request
+
+        encoded_ip = urllib.parse.quote(public_ip, safe=":")
+        req = urllib.request.Request(
+            f"https://ipwho.is/{encoded_ip}",
+            headers={"User-Agent": "StockForecastDashboard/1.0"},
+            method="GET",
+        )
+        with urllib.request.urlopen(req, timeout=2.5) as response:
+            payload = json.loads(response.read().decode("utf-8", errors="replace"))
+
+        if isinstance(payload, dict) and payload.get("success", False):
+            country = str(payload.get("country") or "-").strip()
+            country_code = str(payload.get("country_code") or "-").strip().upper()
+            region = str(payload.get("region") or "-").strip()
+            city = str(payload.get("city") or "-").strip()
+            display_country = "대한민국" if country_code == "KR" else country
+
+            parts = []
+            for part in (display_country, region, city):
+                if part and part != "-" and part not in parts:
+                    parts.append(part)
+
+            connection = payload.get("connection") or {}
+            if not isinstance(connection, dict):
+                connection = {}
+            isp = str(connection.get("isp") or "-").strip()
+            org = str(connection.get("org") or "-").strip()
+            asn_value = connection.get("asn")
+            asn = f"AS{asn_value}" if asn_value not in (None, "", "-") else "-"
+
+            flag_data = payload.get("flag") or {}
+            flag = (
+                str(flag_data.get("emoji") or "").strip()
+                if isinstance(flag_data, dict)
+                else ""
+            )
+
+            result = {
+                "geo_ok": True,
+                "country": display_country or "-",
+                "country_code": country_code or "-",
+                "region": region or "-",
+                "city": city or "-",
+                "location": " · ".join(parts) if parts else "조회 불가",
+                "isp": isp or "-",
+                "org": org or "-",
+                "asn": asn,
+                "flag": flag,
+            }
+        else:
+            _log(
+                "geoip_lookup_failed",
+                ip=public_ip,
+                reason=(
+                    str(payload.get("message") or "lookup_unsuccessful")[:160]
+                    if isinstance(payload, dict)
+                    else "invalid_payload"
+                ),
+            )
+    except Exception as exc:
+        _log(
+            "geoip_lookup_failed",
+            ip=public_ip,
+            error=f"{type(exc).__name__}: {str(exc)[:180]}",
+        )
+
+    with _GEO_CACHE_LOCK:
+        _GEO_CACHE[public_ip] = (now, dict(result))
+    return result
+
+
+def _webhook_send_to_url(url: str, text: str) -> bool:
+    """백그라운드 스레드용 Discord 전송. st.secrets/st.context에 접근하지 않는다."""
+    if not url:
+        return False
+    try:
+        import urllib.request
+
+        body = json.dumps({"content": text}, ensure_ascii=False).encode("utf-8")
+        req = urllib.request.Request(
+            url,
+            data=body,
+            headers={
+                "Content-Type": "application/json",
+                "User-Agent": "StreamlitDashboard/1.0",
+            },
+            method="POST",
+        )
+        with urllib.request.urlopen(req, timeout=5) as response:
+            status = response.status
+        _log("webhook_sent", status=status)
+        return 200 <= status < 300
+    except Exception as exc:
+        _log(
+            "webhook_failed",
+            error=f"{type(exc).__name__}: {str(exc)[:220]}",
+        )
+        return False
+
+
+def _send_first_session_notification_async(
+    webhook_url: str,
+    payload: dict,
+    first_symbol: str,
+) -> None:
+    """GeoIP 조회 후 첫 종목까지 합친 세션 메시지를 백그라운드에서 1회 전송한다."""
+    try:
+        raw_ip = str(payload.get("raw_ip") or "-")
+        geo = _lookup_geoip(raw_ip)
+
+        location_prefix = f"{geo.get('flag', '')} " if geo.get("flag") else ""
+        lines = [
+            f"{payload.get('icon', '📈')} **{payload.get('label', '새 세션')}** · "
+            f"세션 `{payload.get('sid', '?')}` · {payload.get('kst_time', '-')}",
+            f"　IP `{raw_ip}`",
+            f"　추정 위치 **{location_prefix}{geo.get('location', '조회 불가')}**",
+            f"　통신사 **{geo.get('isp', '-')}** · ASN `{geo.get('asn', '-')}`",
+            f"　클라이언트 **{payload.get('client', '-')}** · "
+            f"TZ `{payload.get('timezone', '-')}` · locale `{payload.get('locale', '-')}`",
+            f"　임시지문 `{payload.get('fingerprint') or '-'}`",
+        ]
+
+        gap = payload.get("gap_minutes")
+        if gap is not None:
+            previous_state = "활동 있음" if payload.get("previous_engaged") else "활동 없음"
+            lines.append(
+                f"　이전 동일 클라이언트 **{float(gap):.1f}분 전** · 이전 세션 {previous_state}"
+            )
+
+        if payload.get("classification") != "normal":
+            lines.append(f"　판정 근거: {payload.get('reason', '-')}")
+
+        lines.append(f"　첫 종목 **{first_symbol}**")
+        success = _webhook_send_to_url(webhook_url, "\n".join(lines))
+        _log(
+            "session_notification_sent" if success else "session_notification_failed",
+            sid=payload.get("sid", "?"),
+            first_symbol=first_symbol,
+            geo_ok=bool(geo.get("geo_ok")),
+            city=geo.get("city", "-"),
+        )
+    except Exception as exc:
+        _log(
+            "session_notification_thread_failed",
+            sid=payload.get("sid", "?"),
+            error=f"{type(exc).__name__}: {str(exc)[:220]}",
+        )
+
 def _client_snapshot(memory: _AnalyticsMemory) -> dict:
-    """원본 식별정보를 남기지 않고 현재 연결의 임시 클라이언트 특성을 만든다."""
+    """현재 연결의 원본 IP, 마스킹 IP, 클라이언트 정보와 임시 지문을 만든다."""
     headers = _context_headers()
     user_agent = headers.get("user-agent", "")
     ip_address = str(_safe_context_value("ip_address", "") or "").strip()
     timezone_name = str(_safe_context_value("timezone", "") or "").strip()
     locale = str(_safe_context_value("locale", "") or "").strip()
 
-    # 원본 값은 함수 밖으로 내보내지 않는다. 프로세스별 salt를 섞어 재시작 후 추적도 불가능하게 한다.
+    # 재연결 판별용 지문에는 프로세스별 salt를 섞는다.
     raw = "|".join((ip_address, user_agent, timezone_name, locale)).strip("|")
     fingerprint = ""
     if raw:
@@ -667,6 +903,8 @@ def _client_snapshot(memory: _AnalyticsMemory) -> dict:
 
     return {
         "fingerprint": fingerprint,
+        "raw_ip": ip_address or "-",
+        "masked_ip": _mask_ip(ip_address),
         "client": _client_family(user_agent),
         "timezone": timezone_name or "-",
         "locale": locale or "-",
@@ -757,6 +995,8 @@ def _memory_record_session(sid: str) -> dict:
             "classification": classification,
             "reason": reason,
             "fingerprint": fingerprint,
+            "raw_ip": client.get("raw_ip", "-"),
+            "masked_ip": client.get("masked_ip", "-"),
             "client": client["client"],
             "timezone": client["timezone"],
             "locale": client["locale"],
@@ -1499,6 +1739,8 @@ def track_session(
         version=app_version,
         classification=classification,
         client=diagnostics.get("client", "-"),
+        raw_ip=diagnostics.get("raw_ip", "-"),
+        masked_ip=diagnostics.get("masked_ip", "-"),
         client_fp=diagnostics.get("fingerprint", ""),
         gap_minutes=diagnostics.get("gap_minutes"),
         previous_engaged=diagnostics.get("previous_engaged"),
@@ -1512,32 +1754,25 @@ def track_session(
     }
     icon, label = labels.get(classification, ("📈", "새 세션"))
 
-    if _session_diagnostics_enabled():
-        lines = [
-            f"{icon} **{label}** · 세션 `{sid}` · {_kst_now()}",
-            f"　클라이언트 **{diagnostics.get('client', '-')}** · "
-            f"임시지문 `{diagnostics.get('fingerprint') or '-'}` · "
-            f"TZ `{diagnostics.get('timezone', '-')}` · "
-            f"locale `{diagnostics.get('locale', '-')}`",
-        ]
-
-        gap = diagnostics.get("gap_minutes")
-        if gap is not None:
-            previous_state = (
-                "활동 있음" if diagnostics.get("previous_engaged") else "활동 없음"
-            )
-            lines.append(
-                f"　이전 동일 클라이언트 **{gap:.1f}분 전** · 이전 세션 {previous_state}"
-            )
-
-        if classification != "normal":
-            lines.append(f"　판정 근거: {diagnostics.get('reason', '-')}")
-
-        _webhook_send("\n".join(lines))
-    else:
-        _webhook_send(
-            f"{icon} {label} · 세션 `{sid}` · {_kst_now()}"
-        )
+    # 첫 화면은 절대 외부 GeoIP HTTP 요청을 기다리지 않는다.
+    # 필요한 값만 보관하고 첫 종목이 정해진 뒤 daemon thread에서 GeoIP + Discord 전송을 처리한다.
+    st.session_state["dashview_pending_session_payload"] = {
+        "icon": icon,
+        "label": label,
+        "sid": sid,
+        "kst_time": _kst_now(),
+        "raw_ip": diagnostics.get("raw_ip") or "-",
+        "client": diagnostics.get("client", "-"),
+        "fingerprint": diagnostics.get("fingerprint", ""),
+        "timezone": diagnostics.get("timezone", "-"),
+        "locale": diagnostics.get("locale", "-"),
+        "gap_minutes": diagnostics.get("gap_minutes"),
+        "previous_engaged": diagnostics.get("previous_engaged"),
+        "classification": classification,
+        "reason": diagnostics.get("reason", ""),
+        "diagnostics_enabled": _session_diagnostics_enabled(),
+    }
+    _log("session_notification_pending", sid=sid)
 
     return sid
 
@@ -1646,10 +1881,45 @@ def track_symbol(symbol: str) -> None:
     # ------------------------------------------------------------------
     # Discord
     # ------------------------------------------------------------------
-    # 첫 번째 종목은 앱이 처음 렌더링될 때 자동으로 선택되는 값이므로
-    # 방문 알림과 동시에 한 번 더 울리지 않게 한다.
-    # 사용자가 실제로 다른 종목으로 전환한 두 번째 이벤트부터 알린다.
-    if _webhook_verbose() and order >= 2:
+    # 첫 종목은 세션 진단 메시지와 합쳐서 딱 1개의 Discord 메시지로 보낸다.
+    # 이후 실제 종목 전환은 webhook_verbose=true일 때 별도 알림한다.
+    if order == 1:
+        pending_payload = st.session_state.pop(
+            "dashview_pending_session_payload",
+            None,
+        )
+
+        if pending_payload:
+            # webhook URL은 Streamlit 실행 스레드에서 미리 읽고,
+            # 백그라운드 스레드는 st.secrets/st.context에 접근하지 않는다.
+            webhook_url = _webhook_url() or ""
+            if webhook_url:
+                worker = threading.Thread(
+                    target=_send_first_session_notification_async,
+                    args=(webhook_url, dict(pending_payload), str(symbol)),
+                    daemon=True,
+                    name=f"dashview-geo-{sid}",
+                )
+                worker.start()
+                _log(
+                    "session_notification_thread_started",
+                    sid=sid,
+                    first_symbol=symbol,
+                )
+            else:
+                _log(
+                    "session_notification_skipped",
+                    sid=sid,
+                    reason="no_webhook_url",
+                )
+        elif _webhook_verbose():
+            # Hot reload 등으로 pending 상태가 사라진 예외 상황에서도
+            # 첫 종목 자체는 놓치지 않는다.
+            _webhook_send(
+                f"　└ `{sid}` → **{symbol}** (첫 종목)"
+            )
+
+    elif _webhook_verbose():
         _webhook_send(
             f"　└ `{sid}` → **{symbol}** "
             f"(전체 {order}번째 · "
