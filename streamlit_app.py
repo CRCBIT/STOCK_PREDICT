@@ -7448,20 +7448,16 @@ def _browser_network_info() -> Optional[Dict]:
     Streamlit Community Cloud의 Python 프로세스는 실제 방문자 대신 내부 프록시
     (127.0.0.1)를 볼 수 있으므로 서버 IP는 방문자 IP로 사용하지 않는다.
 
-    중요:
-    - 성공한 브라우저 결과만 session_state에 캐시한다.
-    - 첫 component 렌더의 None/미완료 값을 실패로 캐시하지 않는다.
-    - PyPI의 streamlit-javascript 0.1.5가 비동기 fetch 결과를 component value로
-      돌려주면 Streamlit rerun에서 그 값을 사용한다.
-    - 실제 공인 IP를 얻기 전에는 analytics 세션 자체를 시작하지 않으므로
-      Discord에 127.0.0.1이 방문자 IP처럼 찍히지 않는다.
+    이번 버전은 ``streamlit-js-eval``을 사용한다. 이 컴포넌트는 Promise 결과를
+    Python으로 돌려줄 수 있어 비동기 fetch 결과를 받을 수 있다.
+    실제 공인 IP가 오기 전에는 analytics 세션을 시작하지 않는다.
     """
     cached = st.session_state.get("dashview_browser_network_info")
     if isinstance(cached, dict) and str(cached.get("ip") or "").strip():
         return cached
 
     try:
-        from streamlit_javascript import st_javascript
+        from streamlit_js_eval import streamlit_js_eval
     except Exception as exc:
         print(
             "DASHVIEW_BROWSER_IP_COMPONENT_ERROR "
@@ -7481,7 +7477,7 @@ def _browser_network_info() -> Optional[Dict]:
 
         async function lookup(url, label) {
             const controller = new AbortController();
-            const timer = setTimeout(function(){ controller.abort(); }, 3000);
+            const timer = setTimeout(function(){ controller.abort(); }, 3500);
             try {
                 const response = await fetch(url, {
                     method: "GET",
@@ -7532,11 +7528,10 @@ def _browser_network_info() -> Optional[Dict]:
     """
 
     try:
-        # PyPI에 실제 배포된 streamlit-javascript 0.1.5 API를 사용한다.
-        # 0.1.5도 await/fetch 결과를 component value로 Python에 돌려준다.
-        # 첫 렌더에서는 0/None 같은 초기값이 올 수 있으므로 아래에서 무시하고,
-        # 실제 dict 결과가 도착한 rerun에서만 analytics 세션을 시작한다.
-        value = st_javascript(javascript)
+        value = streamlit_js_eval(
+            js_expressions=javascript,
+            key="DASHVIEW_BROWSER_PUBLIC_IP",
+        )
     except Exception as exc:
         print(
             "DASHVIEW_BROWSER_IP_EXEC_ERROR "
@@ -7545,8 +7540,9 @@ def _browser_network_info() -> Optional[Dict]:
         )
         return None
 
-    # Streamlit component는 첫 렌더에서 아직 결과가 없을 수 있다.
+    # 컴포넌트 첫 렌더에서는 None일 수 있다.
     if value is None:
+        print("DASHVIEW_BROWSER_IP_PENDING value=None", flush=True)
         return None
 
     if not isinstance(value, dict):
@@ -7573,7 +7569,6 @@ def _browser_network_info() -> Optional[Dict]:
             f"source={info['source']} error={info['error']}",
             flush=True,
         )
-        # 실패 결과는 캐시하지 않는다. 다음 component 주기에 재시도한다.
         return None
 
     st.session_state["dashview_browser_network_info"] = info
