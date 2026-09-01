@@ -4814,6 +4814,49 @@ st.markdown("""
       padding-bottom: 13px !important;
     }
   }
+
+  /* ===============================================================
+     V23 · EXPECTED RETURN EMPHASIS
+     현재가 → P50 사이의 예상 변화율은 핵심 비교값이므로
+     보조 라벨보다 확실히 크게 보이도록 최종 cascade에서 강조한다.
+     =============================================================== */
+  .snapshot-return-pill {
+    min-width: 76px !important;
+    padding: 6px 12px !important;
+    font-size: 0.84rem !important;
+    font-weight: 850 !important;
+    letter-spacing: -0.018em !important;
+    border-width: 1px !important;
+    box-shadow: 0 0 0 7px #11161d !important;
+  }
+
+  /* 수익률이 커져도 연결선/가격과 부딪히지 않도록 중앙 폭을 조금 확보 */
+  .snapshot-route {
+    grid-template-columns: minmax(0,1fr) 170px minmax(0,1fr) !important;
+  }
+
+  @media (max-width: 760px) {
+    .snapshot-route {
+      grid-template-columns: minmax(0,1fr) 76px minmax(0,1fr) !important;
+    }
+    .snapshot-return-pill {
+      min-width: 60px !important;
+      padding: 5px 7px !important;
+      font-size: 0.70rem !important;
+      box-shadow: 0 0 0 5px #11161d !important;
+    }
+  }
+
+  @media (max-width: 390px) {
+    .snapshot-route {
+      grid-template-columns: minmax(0,1fr) 70px minmax(0,1fr) !important;
+    }
+    .snapshot-return-pill {
+      min-width: 56px !important;
+      padding: 4px 6px !important;
+      font-size: 0.66rem !important;
+    }
+  }
 </style>
 """, unsafe_allow_html=True)
 
