@@ -3894,18 +3894,26 @@ st.markdown("""
 
   .snapshot-route {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(112px, 0.42fr) minmax(0, 1fr);
-    gap: 20px;
+    grid-template-columns: minmax(0, 1fr) minmax(132px, 0.46fr) minmax(0, 1fr);
+    gap: 18px;
     align-items: center;
+    width: min(100%, 760px);
+    margin: 0 auto;
     padding: 17px 20px 16px 20px;
+    box-sizing: border-box;
   }
 
   .snapshot-route .snapshot-price {
     min-width: 0;
   }
 
-  .snapshot-route .snapshot-forecast {
+  /* PC에서는 두 가격을 연결선 쪽으로 당겨 하나의 비교 요소처럼 보이게 한다. */
+  .snapshot-route .snapshot-current {
     text-align: right;
+  }
+
+  .snapshot-route .snapshot-forecast {
+    text-align: left;
   }
 
   .snapshot-route .snapshot-label {
@@ -3933,9 +3941,14 @@ st.markdown("""
   }
 
   .snapshot-route .snapshot-forecast .snapshot-value {
-    color: #f5f7fa;
+    color: #f7f9fb;
     font-size: clamp(1.30rem, 1.85vw, 1.56rem);
-    font-weight: 820;
+    font-weight: 830;
+    text-shadow: 0 0 18px rgba(49,130,246,0.08);
+  }
+
+  .snapshot-route .snapshot-forecast .snapshot-label {
+    color: #9aa7b5;
   }
 
   .snapshot-route .snapshot-sub {
@@ -3962,39 +3975,59 @@ st.markdown("""
     top: 50%;
     height: 1px;
     background: linear-gradient(90deg,
-      rgba(117,130,145,0.18) 0%,
-      rgba(117,130,145,0.55) 58%,
-      rgba(117,130,145,0.70) 100%);
+      rgba(117,130,145,0.26) 0%,
+      rgba(138,151,165,0.56) 48%,
+      rgba(154,166,180,0.72) 100%);
   }
 
+  /* 화살표는 상승/하락이 아니라 현재 → 미래라는 시간 흐름만 표현한다. */
   .snapshot-route-line::after {
     content: "";
     position: absolute;
-    right: -1px;
+    right: 8px;
     top: 50%;
-    width: 7px;
-    height: 7px;
-    border-top: 1.5px solid rgba(154,166,180,0.78);
-    border-right: 1.5px solid rgba(154,166,180,0.78);
+    width: 6px;
+    height: 6px;
+    border-top: 1.4px solid rgba(167,178,190,0.82);
+    border-right: 1.4px solid rgba(167,178,190,0.82);
     transform: translateY(-50%) rotate(45deg);
+  }
+
+  .snapshot-route-dot {
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #7f8b98;
+    box-shadow: 0 0 0 3px rgba(127,139,152,0.08);
+    transform: translateY(-50%);
+  }
+
+  .snapshot-route-dot.start { left: 4px; }
+  .snapshot-route-dot.end {
+    right: 2px;
+    background: #9aa7b5;
+    box-shadow: 0 0 0 3px rgba(154,167,181,0.08);
   }
 
   .snapshot-return-pill {
     position: relative;
     z-index: 2;
-    min-width: 58px;
-    padding: 4px 8px;
+    min-width: 62px;
+    padding: 4px 9px;
     border-radius: 999px;
     background: #11161d;
-    border: 1px solid rgba(255,255,255,0.075);
+    border: 1px solid rgba(255,255,255,0.085);
     color: #919ca8;
-    font-size: 0.63rem;
-    font-weight: 780;
+    font-size: 0.65rem;
+    font-weight: 800;
     line-height: 1;
     text-align: center;
     font-variant-numeric: tabular-nums;
     white-space: nowrap;
-    box-shadow: 0 0 0 5px #11161d;
+    box-shadow: 0 0 0 6px #11161d;
   }
   .snapshot-return-pill.up {
     color: #ff7b82;
@@ -4077,9 +4110,13 @@ st.markdown("""
       border-radius: 12px !important;
     }
     .snapshot-route {
-      grid-template-columns: minmax(0, 1fr) 58px minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1fr) 64px minmax(0, 1fr);
       gap: 7px;
+      width: 100%;
       padding: 11px 11px 10px 11px;
+    }
+    .snapshot-route .snapshot-current {
+      text-align: left;
     }
     .snapshot-route .snapshot-forecast {
       text-align: right;
@@ -4107,9 +4144,21 @@ st.markdown("""
       height: 40px;
     }
     .snapshot-route-line {
-      left: 1px;
+      left: 2px;
       right: 3px;
     }
+    .snapshot-route-line::after {
+      right: 7px;
+      width: 5px;
+      height: 5px;
+    }
+    .snapshot-route-dot {
+      width: 4px;
+      height: 4px;
+      box-shadow: 0 0 0 2px rgba(127,139,152,0.08);
+    }
+    .snapshot-route-dot.start { left: 0; }
+    .snapshot-route-dot.end { right: 0; }
     .snapshot-return-pill {
       min-width: 0;
       padding: 3px 5px;
@@ -5720,8 +5769,10 @@ def render_forecast_summary(p: Dict, hist: Optional[pd.DataFrame],
         "</div>"
 
         "<div class='snapshot-connector'>"
+        "<span class='snapshot-route-dot start'></span>"
         f"<div class='snapshot-return-pill {expected_tone}'>{html.escape(pct(expected))}</div>"
         "<div class='snapshot-route-line'></div>"
+        "<span class='snapshot-route-dot end'></span>"
         "</div>"
 
         "<div class='snapshot-price snapshot-forecast'>"
