@@ -3610,39 +3610,14 @@ st.markdown("""
     background: #10141a;
     overflow: hidden;
   }
-  .forecast-snapshot-head {
-    display: flex;
-    align-items: end;
-    justify-content: space-between;
-    gap: 14px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid rgba(255,255,255,0.055);
-  }
-  .forecast-snapshot-kicker {
-    color: #7f8995;
-    font-size: 0.62rem;
-    font-weight: 700;
-    letter-spacing: 0.035em;
-  }
-  .forecast-snapshot-title {
-    margin-top: 2px;
-    color: #eef2f6;
-    font-size: 0.88rem;
-    font-weight: 760;
-    letter-spacing: -0.02em;
-  }
-  .forecast-snapshot-note {
-    color: #697480;
-    font-size: 0.62rem;
-    line-height: 1.35;
-    text-align: right;
-  }
+  /* 기간은 바로 위 예측기간 컨트롤에서 이미 선택하므로
+     가격 패널 내부에서는 같은 정보를 반복하지 않는다. */
   .forecast-snapshot-body {
     display: grid;
     grid-template-columns: minmax(390px, 1.45fr) minmax(280px, 1.0fr) minmax(190px, 0.58fr);
     gap: 0;
     align-items: stretch;
-    padding-top: 12px;
+    padding-top: 0;
   }
   .snapshot-price-block,
   .snapshot-range-block,
@@ -3809,23 +3784,10 @@ st.markdown("""
       padding: 10px 10px 9px 10px;
       border-radius: 11px;
     }
-    .forecast-snapshot-head {
-      align-items: center;
-      padding-bottom: 7px;
-    }
-    .forecast-snapshot-kicker { display: none; }
-    .forecast-snapshot-title {
-      margin-top: 0;
-      font-size: 0.75rem;
-    }
-    .forecast-snapshot-note {
-      font-size: 0.55rem;
-      max-width: 52%;
-    }
     .forecast-snapshot-body {
       grid-template-columns: 1fr;
       gap: 0;
-      padding-top: 8px;
+      padding-top: 0;
     }
     .snapshot-price-block,
     .snapshot-range-block,
@@ -3906,7 +3868,6 @@ st.markdown("""
   }
 
   @media (max-width: 390px) {
-    .forecast-snapshot-note { display: none; }
     .snapshot-price-compare {
       grid-template-columns: minmax(0, 1fr) 34px minmax(0, 1fr);
       gap: 4px;
@@ -5468,13 +5429,6 @@ def render_forecast_summary(p: Dict, hist: Optional[pd.DataFrame],
 
     st.markdown(
         "<div class='forecast-snapshot'>"
-        "<div class='forecast-snapshot-head'>"
-        "<div>"
-        "<div class='forecast-snapshot-kicker'>가격 전망</div>"
-        f"<div class='forecast-snapshot-title'>{horizon}거래일 뒤</div>"
-        "</div>"
-        "<div class='forecast-snapshot-note'>현재가와 예측 분포를 같은 기준으로 비교</div>"
-        "</div>"
         "<div class='forecast-snapshot-body'>"
 
         "<div class='snapshot-price-block'>"
