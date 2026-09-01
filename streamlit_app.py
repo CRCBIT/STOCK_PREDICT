@@ -4331,12 +4331,12 @@ def candle_chart(hist: Optional[pd.DataFrame], p: Dict,
             c10, c25, c50, c75, c90 = (cone(k) for k in ("p10", "p25", "p50", "p75", "p90"))
             if c10 and c90:
                 fig.add_trace(go.Scatter(
-                    x=fx + fx[::-1], y=c90 + c10[::-1], fill="toself",
+                    x=fx + fx[::-1], y=c90 + c10[::-1], mode="lines", fill="toself",
                     fillcolor="rgba(240,185,11,0.10)", line=dict(width=0),
                     name="80%", hoverinfo="skip"), row=1, col=1)
             if c25 and c75:
                 fig.add_trace(go.Scatter(
-                    x=fx + fx[::-1], y=c75 + c25[::-1], fill="toself",
+                    x=fx + fx[::-1], y=c75 + c25[::-1], mode="lines", fill="toself",
                     fillcolor="rgba(240,185,11,0.22)", line=dict(width=0),
                     name="50%", hoverinfo="skip"), row=1, col=1)
             if c50:
