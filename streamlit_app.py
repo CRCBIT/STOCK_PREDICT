@@ -56,7 +56,7 @@ KCS_MEMORY_SERIES = {
 KCS_LOGIC_CODE = "8542311000"
 
 st.set_page_config(
-    page_title="주가 전망 대시보드",
+    page_title="주가 예측",
     page_icon="📈",
     layout="wide",
     initial_sidebar_state="collapsed",
@@ -2247,274 +2247,6 @@ st.markdown("""
     .feature-row { padding: 9px !important; }
     .feature-score { max-width: 92px !important; }
   }
-
-  /* ===============================================================
-     FRIENDLY LAYOUT
-     첫 화면은 결론 -> 핵심 숫자 -> 차트 순서로 읽히게 한다.
-     고급 정보는 탭과 expander 안으로 분리한다.
-     =============================================================== */
-  .dash-hero {
-    align-items: center;
-    padding: 14px 16px 17px 16px;
-    border: 1px solid rgba(120,132,148,0.16);
-    border-radius: 16px;
-    background:
-      linear-gradient(135deg, rgba(240,185,11,0.055), transparent 38%),
-      linear-gradient(180deg, rgba(18,23,31,0.82), rgba(13,17,23,0.64));
-    box-shadow: 0 12px 36px rgba(0,0,0,0.14);
-  }
-  .dash-eyebrow {
-    color: #d7a90c;
-    margin-bottom: 7px;
-  }
-  .dash-subtitle {
-    max-width: 760px;
-    font-size: 0.86rem;
-    line-height: 1.55;
-    color: #b9c4d1;
-  }
-  .dash-meta {
-    display: grid;
-    justify-items: end;
-    gap: 7px;
-  }
-  .dash-updated {
-    color: var(--muted);
-    font-size: 0.72rem;
-  }
-
-  .dashboard-facts {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 7px;
-    margin: 10px 2px 2px 2px;
-  }
-  .dashboard-fact {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    padding: 5px 9px;
-    border-radius: 999px;
-    border: 1px solid rgba(120,132,148,0.13);
-    background: rgba(13,17,23,0.46);
-    color: #9eabb9;
-    font-size: 0.71rem;
-    line-height: 1.2;
-  }
-  .dashboard-fact b {
-    color: #d6dee8;
-    font-weight: 650;
-  }
-
-  .asset-picker-note {
-    color: #aab5c2;
-    font-size: 0.79rem;
-    line-height: 1.5;
-    margin: -3px 0 6px 1px;
-  }
-
-  .forecast-controls {
-    color: #b8c2cf;
-    font-size: 0.74rem;
-    font-weight: 650;
-    margin: 2px 0 3px 1px;
-  }
-
-  .verdict {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    gap: 10px;
-    align-items: start;
-    padding: 14px 15px;
-    margin: 7px 0 12px 0;
-    border-radius: 13px;
-  }
-  .verdict-icon {
-    display: grid;
-    place-items: center;
-    width: 29px;
-    height: 29px;
-    border-radius: 9px;
-    background: rgba(255,255,255,0.035);
-    font-size: 0.83rem;
-  }
-  .verdict-title {
-    color: #eef3f8;
-    font-size: 0.91rem;
-    font-weight: 760;
-    line-height: 1.35;
-  }
-  .verdict-copy {
-    color: #b8c3d0;
-    font-size: 0.80rem;
-    line-height: 1.52;
-    margin-top: 3px;
-  }
-
-  .forecast-metric-grid {
-    display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 9px;
-    margin: 3px 0 13px 0;
-  }
-  .forecast-metric {
-    min-width: 0;
-    min-height: 104px;
-    box-sizing: border-box;
-    padding: 12px 13px 11px 13px;
-    border: 1px solid rgba(120,132,148,0.16);
-    border-radius: 13px;
-    background: linear-gradient(180deg, rgba(22,27,35,0.88), rgba(13,17,23,0.76));
-    box-shadow: 0 7px 20px rgba(0,0,0,0.10);
-  }
-  .forecast-metric-label {
-    color: #9eabb9;
-    font-size: 0.70rem;
-    font-weight: 650;
-    line-height: 1.28;
-  }
-  .forecast-metric-value {
-    color: #edf2f7;
-    font-size: clamp(0.96rem, 1.35vw, 1.18rem);
-    font-weight: 760;
-    line-height: 1.25;
-    letter-spacing: -0.025em;
-    font-variant-numeric: tabular-nums;
-    overflow-wrap: anywhere;
-    margin-top: 7px;
-  }
-  .forecast-metric-sub {
-    color: #8f9caa;
-    font-size: 0.67rem;
-    line-height: 1.34;
-    margin-top: 5px;
-  }
-  .forecast-metric-sub.up { color: #ff858d; }
-  .forecast-metric-sub.down { color: #72b7ff; }
-  .forecast-metric-sub.neutral { color: #aab5c2; }
-
-  .reading-guide {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    gap: 10px;
-    align-items: start;
-    padding: 11px 13px;
-    margin: 0 0 13px 0;
-    border: 1px solid rgba(88,166,255,0.16);
-    border-radius: 12px;
-    background: rgba(88,166,255,0.045);
-  }
-  .reading-guide-label {
-    color: #8fc5ff;
-    font-size: 0.70rem;
-    font-weight: 760;
-    white-space: nowrap;
-    padding-top: 1px;
-  }
-  .reading-guide-copy {
-    color: #b9c5d2;
-    font-size: 0.77rem;
-    line-height: 1.55;
-  }
-  .reading-guide-copy b { color: #e1e8f0; }
-
-  .chart-caption {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 7px 13px;
-    margin: 7px 2px 3px 2px;
-    color: #909dab;
-    font-size: 0.71rem;
-    line-height: 1.45;
-  }
-  .chart-caption span::before {
-    content: "";
-    display: inline-block;
-    width: 6px;
-    height: 6px;
-    margin-right: 6px;
-    border-radius: 50%;
-    background: #f0b90b;
-    vertical-align: 1px;
-    opacity: 0.85;
-  }
-  .chart-caption span:nth-child(2)::before { background: #9c7f27; }
-  .chart-caption span:nth-child(3)::before { background: #6e7681; }
-
-  .help-list {
-    display: grid;
-    gap: 9px;
-    margin: 4px 0 3px 0;
-  }
-  .help-item {
-    display: grid;
-    grid-template-columns: minmax(105px, 0.28fr) minmax(0, 1fr);
-    gap: 12px;
-    padding: 9px 10px;
-    border-bottom: 1px solid rgba(120,132,148,0.10);
-  }
-  .help-item:last-child { border-bottom: 0; }
-  .help-term {
-    color: #d5dde7;
-    font-size: 0.75rem;
-    font-weight: 700;
-  }
-  .help-desc {
-    color: #aab6c3;
-    font-size: 0.74rem;
-    line-height: 1.52;
-  }
-
-  .main-tabs {
-    margin-top: 12px;
-  }
-  .stTabs [data-baseweb="tab-list"] {
-    backdrop-filter: blur(12px);
-    box-shadow: 0 7px 24px rgba(0,0,0,0.12);
-  }
-  .stTabs button[data-baseweb="tab"] {
-    min-height: 40px;
-    font-size: 0.78rem;
-    font-weight: 650;
-  }
-
-  .section-note {
-    max-width: 640px;
-    text-align: right;
-    line-height: 1.45;
-  }
-
-  @media (max-width: 1180px) {
-    .forecast-metric-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  }
-  @media (max-width: 760px) {
-    .dash-hero {
-      padding: 13px;
-      border-radius: 14px;
-    }
-    .dash-meta { justify-items: start; }
-    .dashboard-facts { margin-top: 8px; }
-    .forecast-metric-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .forecast-metric { min-height: 96px; padding: 11px; }
-    .reading-guide { grid-template-columns: 1fr; gap: 4px; }
-    .help-item { grid-template-columns: 1fr; gap: 3px; padding: 9px 5px; }
-    .section-note { text-align: left; }
-    .stTabs [data-baseweb="tab-list"] {
-      overflow-x: auto;
-      justify-content: flex-start;
-    }
-    .stTabs button[data-baseweb="tab"] {
-      flex: 0 0 auto;
-      white-space: nowrap;
-      padding-left: 10px;
-      padding-right: 10px;
-    }
-  }
-  @media (max-width: 440px) {
-    .forecast-metric-grid { grid-template-columns: 1fr 1fr; gap: 7px; }
-    .forecast-metric-value { font-size: 0.96rem; }
-    .forecast-metric-sub { font-size: 0.64rem; }
-  }
 </style>
 """, unsafe_allow_html=True)
 
@@ -2573,6 +2305,7 @@ def load_quotes() -> Dict:
 
 
 @st.cache_data(ttl=300, show_spinner=False)
+@st.cache_data(ttl=300, show_spinner=False)
 def load_portfolio_backtest() -> Optional[Dict]:
     """publish.py 가 올린 횡단면 포트폴리오 백테스트 결과."""
     path = PUBLISHED / "portfolio_backtest.json"
@@ -2598,10 +2331,11 @@ def render_portfolio_backtest(data: Optional[Dict]) -> None:
         return
 
     section_head(
-        "PORTFOLIO", "종목 선택 전략 성적",
-        "매일 예측 순위가 높은 종목을 골랐을 때의 과거 성적입니다.",
+        "PORTFOLIO", "횡단면 포트폴리오",
+        "매일 전 종목을 예측 순위로 정렬해 상위를 매수합니다. "
+        "종목 하나씩 보는 백테스트와 다릅니다.",
     )
-    with st.expander("종목 선택 전략의 과거 검증 결과 보기", expanded=False):
+    with st.expander("포트폴리오 백테스트 (Out-of-Sample)", expanded=False):
         horizons = sorted(data, key=lambda x: int(x) if str(x).isdigit() else 0)
         tabs = st.tabs([f"{h}일" for h in horizons])
         for tab, h in zip(tabs, horizons):
@@ -2689,10 +2423,11 @@ def render_panel_diagnostics(data: Optional[Dict], symbol: str) -> None:
         return
 
     section_head(
-        "PANEL", "여러 종목을 함께 학습한 공통 모델",
-        "반도체 종목의 공통 흐름을 학습해 개별 종목 예측을 보완합니다.",
+        "PANEL", "종목 횡단 패널",
+        "여러 종목을 한 판에 쌓아 학습한 공통 모델입니다. 종목별 모델을 "
+        "대체하지 않고 앙상블 멤버로 합류합니다.",
     )
-    with st.expander("공통 모델의 검증 결과 보기", expanded=True):
+    with st.expander("패널 학습 진단", expanded=False):
         rows = []
         included = False
         for h in sorted(data, key=lambda x: int(x) if str(x).isdigit() else 0):
@@ -3933,212 +3668,61 @@ def snapshot_label(manifest: Dict) -> Tuple[str, bool]:
 
 
 def verdict(p: Dict) -> str:
-    """첫 화면에 표시할 짧고 행동 가능한 해석 문장."""
+    """
+    숫자를 어떻게 읽어야 하는지 한 줄로 말해준다.
+
+    이 시스템은 대부분의 조합에서 신뢰도 LOW 로 떨어진다. 그 상태의 중앙값을
+    방향성 근거로 쓰는 것이 가장 위험하므로, 화면 최상단에서 먼저 경고한다.
+    """
     g = grade_of(p)
     shrink = num(p.get("shrinkage"))
+    # 위험 과소/과대평가 경고는 같은 데이터로 폭을 재조정한 coverage가 아니라
+    # 보정 전 honest coverage를 우선 사용한다.
     cov = num(p.get("raw_coverage_80"))
     if cov is None:
         cov = num(p.get("coverage_80"))
+    parts: List[str] = []
 
     if shrink is not None and abs(shrink) < 0.05:
-        main = (
-            "재보정 과정에서 방향 신호가 거의 제거됐습니다. "
-            "한 가격보다 예상 범위를 중심으로 보세요."
+        parts.append(
+            "MZ 재보정이 ML/DL의 변동 신호를 거의 제거했습니다. "
+            "최종 점예측은 MZ 절편(평균 편향 보정)의 영향이 커졌으므로 방향 신호를 강하게 해석하지 마세요."
         )
     elif shrink is not None and shrink < -0.05:
-        main = (
-            "과거 검증에서 반대 방향 관계가 확인되어 신호가 뒤집혀 보정됐습니다. "
-            "검증 성적을 함께 확인하세요."
+        parts.append(
+            "MZ 재보정에서 **역방향 관계가 통계적으로 확인되어 예측 부호를 반대로 보정**했습니다. "
+            "OOS 방향정확도와 신뢰도를 함께 확인하세요."
         )
     elif g == "LOW":
-        main = (
-            "아직 방향 판단에 쓰기 어렵습니다. 기준값(P50)보다 예상 범위의 폭을 "
-            "위험 참고용으로 보세요."
+        parts.append(
+            "신뢰도가 낮습니다. **중앙값(P50)을 방향 근거로 쓰지 마시고**, "
+            "구간의 폭만 위험 크기 참고용으로 보십시오."
         )
     elif g == "MEDIUM":
-        main = "참고 가능한 신호지만, 다른 지표와 함께 확인하는 편이 안전합니다."
+        parts.append("참고 가능한 수준입니다. 다만 단독 근거로 삼기에는 부족합니다.")
     else:
-        main = "과거 검증상 상대적으로 안정적인 구간이지만 확정적인 목표가는 아닙니다."
+        parts.append("상대적으로 신뢰도가 높은 구간입니다.")
 
+    # P50 의 성격을 항상 알려준다 — 이름 때문에 '목표가' 로 읽히기 쉽다.
+    parts.append(
+        "P50 은 목표가가 아니라 추세를 연장하지 않은 기준점입니다. "
+        "상승 국면에서는 실제 가격이 그 위에 놓이는 편이 정상입니다."
+    )
+
+    # 커버리지는 과소/과대를 구분해야 한다.
+    # 80% 미만 = 구간이 좁아 실제 변동을 놓침(위험 과소평가), 초과 = 과도하게 보수적.
     if cov is not None:
         if cov < 0.68:
-            main += f" 과거 80% 구간의 실제 적중은 {cov * 100:.0f}%로 낮았습니다."
+            parts.append(
+                f"과거 검증에서 80% 구간이 실제로 {cov * 100:.0f}% 만 포함했습니다 — "
+                "구간이 좁아 **위험을 과소평가**하고 있습니다."
+            )
         elif cov > 0.92:
-            main += f" 과거 실제 적중은 {cov * 100:.0f}%로, 범위가 다소 보수적입니다."
-    return main
-
-
-def grade_ko(grade: str) -> str:
-    """영문 신뢰도 등급을 첫 화면용 한국어로 바꾼다."""
-    return {"HIGH": "높음", "MEDIUM": "보통", "LOW": "낮음"}.get(grade, "낮음")
-
-
-def _change_tone(value: Optional[float]) -> str:
-    if value is None or abs(value) < 0.0005:
-        return "neutral"
-    return "up" if value > 0 else "down"
-
-
-def _metric_card(label: str, value: str, sub: str = "",
-                 tone: str = "neutral") -> str:
-    """Streamlit columns에 의존하지 않는 반응형 핵심 수치 카드."""
-    return (
-        "<div class='forecast-metric'>"
-        f"<div class='forecast-metric-label'>{html.escape(label)}</div>"
-        f"<div class='forecast-metric-value'>{html.escape(value)}</div>"
-        f"<div class='forecast-metric-sub {tone}'>{html.escape(sub)}</div>"
-        "</div>"
-    )
-
-
-def render_forecast_summary(p: Dict, hist: Optional[pd.DataFrame],
-                            quotes: Dict, horizon: int) -> None:
-    """핵심 숫자와 그 숫자를 읽는 방법을 한 묶음으로 표시한다."""
-    currency = str(p.get("currency") or "KRW")
-    now = num(p.get("current_price"))
-    expected = ret_of(p)
-    prob_up = num(p.get("prob_up"))
-    volatility = num(p.get("expected_volatility_annual"))
-
-    low = num(p.get("interval_80_low"))
-    high = num(p.get("interval_80_high"))
-    calibrated_interval = low is not None and high is not None
-    if not calibrated_interval:
-        low, high = num(p.get("p10")), num(p.get("p90"))
-
-    prev_close, prev_label = prev_close_ref(hist, str(p.get("country") or "KR"))
-    day_change = (now / prev_close - 1.0) if (prev_close and now) else None
-    if p.get("_reanchored"):
-        quote_age = quote_age_label(quotes.get("fetched_at")) or "최신 시세"
-        current_label = f"현재가 · {quote_age}"
-        current_sub = (
-            f"{prev_label} 대비 {pct(day_change)}" if day_change is not None
-            else "최신 가격으로 범위를 맞춰 표시"
-        )
-    else:
-        current_label = "예측 기준가"
-        current_sub = (
-            f"{prev_label} 대비 {pct(day_change)}" if day_change is not None
-            else "모델 계산 시점의 가격"
-        )
-
-    if low is not None and high is not None:
-        interval_value = (
-            f"{price(low, currency)} ~ {price(high, currency)}"
-        )
-        if now:
-            interval_sub = f"현재가 대비 {pct(low / now - 1)} ~ {pct(high / now - 1)}"
-        else:
-            interval_sub = "폭이 넓을수록 불확실성이 큼"
-    else:
-        interval_value = "N/A"
-        interval_sub = "예상 범위 정보 없음"
-
-    cards = [
-        _metric_card(
-            current_label,
-            price(now, currency),
-            current_sub,
-            _change_tone(day_change),
-        ),
-        _metric_card(
-            f"{horizon}거래일 뒤 기준값",
-            price(p.get("p50"), currency),
-            f"현재가 대비 {pct(expected)} · 목표가 아님",
-            _change_tone(expected),
-        ),
-        _metric_card(
-            "모델의 80% 예상 범위" if calibrated_interval else "P10~P90 예상 범위",
-            interval_value,
-            interval_sub,
-        ),
-        _metric_card(
-            "상승 가능성",
-            pct(prob_up, signed=False),
-            "50%에 가까우면 방향 우위가 약함",
-            _change_tone((prob_up - 0.5) if prob_up is not None else None),
-        ),
-        _metric_card(
-            "최근 변동성",
-            pct(volatility, signed=False),
-            "연율 환산 · 예측값이 아닌 현재 상태",
-        ),
-    ]
-    st.markdown(
-        "<div class='forecast-metric-grid'>" + "".join(cards) + "</div>",
-        unsafe_allow_html=True,
-    )
-
-    grade = grade_of(p)
-    if grade == "LOW":
-        first = "현재는 <b>방향보다 범위</b>를 보는 화면입니다."
-    elif grade == "MEDIUM":
-        first = "방향 신호는 참고하되 <b>예상 범위와 함께</b> 보세요."
-    else:
-        first = "검증상 비교적 안정적이지만 <b>범위 밖 움직임도 가능</b>합니다."
-
-    if low is not None and high is not None:
-        range_copy = (
-            f" {horizon}거래일 뒤 모델이 제시한 범위는 "
-            f"<b>{html.escape(price(low, currency))}~{html.escape(price(high, currency))}</b>입니다."
-        )
-    else:
-        range_copy = ""
-    st.markdown(
-        "<div class='reading-guide'>"
-        "<div class='reading-guide-label'>먼저 이렇게 보세요</div>"
-        f"<div class='reading-guide-copy'>{first}{range_copy} "
-        "P50은 매수·매도 목표가가 아니라 분포의 가운데 기준점입니다.</div>"
-        "</div>",
-        unsafe_allow_html=True,
-    )
-
-
-def render_forecast_help(p: Dict) -> None:
-    """초보자도 차트와 핵심 용어를 바로 이해할 수 있게 설명한다."""
-    raw_cov = num(p.get("raw_coverage_80"))
-    if raw_cov is None:
-        raw_cov = num(p.get("coverage_80"))
-    coverage_desc = (
-        f"과거 별도 검증에서 실제 포함률은 {raw_cov * 100:.0f}%였습니다."
-        if raw_cov is not None else
-        "과거 검증 포함률이 게시 데이터에 없어서 목표 수준만 표시합니다."
-    )
-    items = [
-        (
-            "P50 기준값",
-            "예상 분포의 한가운데입니다. 최근 상승·하락 추세를 그대로 늘여 만든 목표가가 아니므로 "
-            "P50 하나만 보고 방향을 판단하지 않습니다.",
-        ),
-        (
-            "80% 예상 범위",
-            "모델이 대부분의 경우를 담도록 제시한 가격 구간입니다. 범위가 넓을수록 불확실성이 큽니다. "
-            + coverage_desc,
-        ),
-        (
-            "상승 가능성",
-            "현재가보다 높아질 가능성입니다. 50% 부근은 뚜렷한 방향 우위가 없다는 뜻이며, "
-            "신뢰도가 낮을 때는 이 숫자도 강하게 해석하지 않습니다.",
-        ),
-        (
-            "차트 음영",
-            "진한 음영은 가운데 50%(P25~P75), 옅은 음영은 넓은 80%(P10~P90) 분포입니다. "
-            "세로 점선 오른쪽은 미래 구간이며 거래소 공휴일은 반영하지 않습니다.",
-        ),
-        (
-            "현재가 반영",
-            "최신 시세 파일이 있으면 모든 예상 가격을 같은 비율로 옮겨 현재가에 맞춥니다. "
-            "모델의 입력 특징은 마지막 확정 거래일 기준이라 장중 재학습을 뜻하지는 않습니다.",
-        ),
-    ]
-    rows = "".join(
-        "<div class='help-item'>"
-        f"<div class='help-term'>{html.escape(term)}</div>"
-        f"<div class='help-desc'>{html.escape(desc)}</div>"
-        "</div>"
-        for term, desc in items
-    )
-    st.markdown("<div class='help-list'>" + rows + "</div>", unsafe_allow_html=True)
+            parts.append(
+                f"과거 검증 커버리지가 {cov * 100:.0f}% 로 목표보다 높습니다 — "
+                "구간이 과도하게 넓어 보수적입니다."
+            )
+    return " ".join(parts)
 
 
 # ======================================================================================
@@ -4234,10 +3818,10 @@ def render_kcs_memory(df: Optional[pd.DataFrame]) -> None:
     latest_period = str(focus["period"].max())
     section_head(
         "MEMORY CYCLE",
-        "메모리 수출단가 흐름",
-        f"관세청 최근 통계 {latest_period} · 달러/kg",
+        "메모리 반도체 수출단가",
+        f"최근 통계 {latest_period} · USD/kg",
     )
-    with st.expander("DRAM·NAND·MCP 월별 흐름 보기", expanded=True):
+    with st.expander("관세청 월별 단가 · 상세 보기", expanded=False):
         cols = st.columns(3)
         for col, (code, label) in zip(cols, KCS_MEMORY_SERIES.items()):
             g = focus[focus["hs_code"] == code].sort_values("date")
@@ -4419,40 +4003,31 @@ def equity_chart(bt: pd.DataFrame) -> Optional[go.Figure]:
 # ======================================================================================
 def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
                   quotes: Optional[Dict] = None) -> None:
-    horizon_values = pd.to_numeric(sub["horizon"], errors="coerce")
-    horizons = sorted({int(h) for h in horizon_values.dropna()})
+    horizons = sorted(int(h) for h in sub["horizon"].unique())
     stock_name = str(sub["name"].iloc[0]) if "name" in sub.columns and len(sub) else symbol
-
-    if not horizons:
-        st.warning("이 종목에는 표시할 수 있는 예측 기간이 없습니다.")
-        return
 
     section_head(
         "FORECAST",
         f"{stock_name} · {symbol}",
-        "한 가격을 맞히기보다 가능한 범위와 불확실성을 함께 보여줍니다.",
+        "확정 데이터 기반 확률 예측",
     )
 
-    st.markdown(
-        "<div class='forecast-controls'>보고 싶은 예측 기간과 차트 범위를 선택하세요.</div>",
-        unsafe_allow_html=True,
-    )
     c_h, c_lb, c_vol = st.columns([3, 2, 1.2])
     with c_h:
         horizon = st.radio(
-            "얼마 뒤를 볼까요? (거래일 기준)", horizons, horizontal=True, key=f"h_{symbol}",
+            "예측 기간", horizons, horizontal=True, key=f"h_{symbol}",
             format_func=lambda h: f"{h}일",
         )
     with c_lb:
         lookback = st.select_slider(
-            "과거 차트 범위", options=[60, 120, 250, 400], value=120,
+            "차트 기간", options=[60, 120, 250, 400], value=120,
             key=f"lb_{symbol}", format_func=lambda v: f"{v}일",
         )
     with c_vol:
         st.markdown("<div style='height:2px'></div>", unsafe_allow_html=True)
-        show_volume = st.checkbox("거래량 함께 보기", value=True, key=f"v_{symbol}")
+        show_volume = st.checkbox("거래량 표시", value=True, key=f"v_{symbol}")
 
-    row = sub[horizon_values == horizon]
+    row = sub[sub["horizon"] == horizon]
     if row.empty:
         st.warning("해당 기간의 예측이 없습니다.")
         return
@@ -4465,49 +4040,70 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
     p = reanchor(p, live)
     currency = p.get("currency", "KRW")
     now = num(p.get("current_price"))
-    hist = load_history(symbol)
 
-    # ---- 결론 -> 핵심 숫자 -> 읽는 법 ----
+    # ---- 결론 한 줄 ----
     grade = grade_of(p)
-    grade_label = grade_ko(grade)
-    confidence = fnum(p.get("confidence"), 0)
-    verdict_title = {
-        "LOW": "방향 판단은 잠시 보류",
-        "MEDIUM": "참고 가능한 신호",
-        "HIGH": "상대적으로 안정적인 신호",
-    }.get(grade, "방향 판단은 잠시 보류")
     st.markdown(
-        f"<div class='verdict {grade.lower()}'>"
-        f"<div class='verdict-icon'>{DOT.get(grade, '⚪')}</div>"
-        "<div>"
-        f"<div class='verdict-title'>{html.escape(verdict_title)} · "
-        f"신뢰도 {html.escape(confidence)}/100 ({html.escape(grade_label)})</div>"
-        f"<div class='verdict-copy'>{html.escape(verdict(p))}</div>"
-        "</div></div>",
+        f"<div class='verdict {grade.lower()}'>{DOT.get(grade, '⚪')} "
+        f"<b>신뢰도 {fnum(p.get('confidence'), 0)}/100 · {grade}</b> — {verdict(p)}</div>",
         unsafe_allow_html=True,
     )
-    render_forecast_summary(p, hist, quotes, horizon)
 
     # ---- 차트 ----
+    hist = load_history(symbol)
     st.plotly_chart(
         candle_chart(hist, p, lookback, show_volume),
         use_container_width=True, key=f"candle_{uid}",
         config={"displayModeBar": False, "responsive": True},
     )
-    st.markdown(
-        "<div class='chart-caption'>"
-        "<span>노란 점선: P50 기준값</span>"
-        "<span>진한 음영 50% · 옅은 음영 80%</span>"
-        "<span>세로 점선 오른쪽: 미래 예상 구간</span>"
-        "</div>",
-        unsafe_allow_html=True,
+    st.caption(
+        "음영은 P10-P90 / P25-P75 **분포 범위**입니다. 위 수치 카드의 80% 예측구간은 "
+        "OOF 잔차로 별도 보정된 값이라 바깥 음영과 약간 다를 수 있습니다. "
+        "점선(P50)은 **목표가가 아니라 기준점**이며, "
+        "이 시스템은 최근 추세를 미래로 연장하지 않습니다. "
+        "상승 국면에서는 실제 가격이 점선 위에 놓이는 편이 정상이므로, "
+        "읽어야 할 것은 점선의 위치가 아니라 **음영의 폭**입니다. "
+        "콘의 폭은 √t 로 보간한 시각적 근사이고 미래 날짜는 공휴일 미반영입니다."
     )
 
-    with st.expander("차트와 숫자, 어떻게 읽나요?"):
-        render_forecast_help(p)
+    # ---- 핵심 수치 ----
+    m = st.columns(5)
+    prev_close, prev_label = prev_close_ref(hist, str(p.get("country") or "KR"))
+    delta = pct(now / prev_close - 1.0) if (prev_close and now) else None
+    if p.get("_reanchored"):
+        label = f"현재가 · {quote_age_label(quotes.get('fetched_at'))}"
+        tip = ("quotes.py 가 올린 최신 체결가입니다. "
+               f"변동률은 전일({prev_label or '?'}) 대비입니다.")
+    else:
+        label = "현재가"
+        tip = ("예측을 계산한 시점의 가격입니다. quotes.py 를 돌리면 최신가로 갱신됩니다. "
+               f"변동률은 전일({prev_label or '?'}) 대비입니다.")
+    m[0].metric(label, price(now, currency), delta, help=tip)
+    m[1].metric(f"{horizon}일 후 기준값 (P50)", price(p.get("p50"), currency), pct(ret_of(p)),
+                help="목표가가 아닙니다. 이 시스템은 최근 추세를 미래로 연장하지 않도록 "
+                     "설계되어 있어, P50 은 '추세를 연장하지 않았을 때의 기준점' 에 가깝습니다. "
+                     "상승 국면에서는 실제 가격이 P50 위에 놓이는 경우가 더 많은 것이 정상입니다. "
+                     "방향 근거가 아니라 구간 폭을 보는 용도로 쓰십시오.")
+    i80_low = p.get("interval_80_low")
+    i80_high = p.get("interval_80_high")
+    if num(i80_low) is None or num(i80_high) is None:
+        i80_low, i80_high = p.get("p10"), p.get("p90")
+        i80_help = ("보정 80% 구간이 없어 P10~P90 분포 범위를 대신 표시합니다. "
+                    "확률 보장을 뜻하지 않으며 폭이 넓을수록 불확실성이 큽니다.")
+    else:
+        i80_help = ("OOF 잔차를 이용해 보정한 80% 예측구간입니다. "
+                    "과거 커버리지는 모델 진단의 '80% 구간 실측 커버리지'에서 확인하십시오.")
+    m[2].metric("80% 예측구간",
+                f"{price(i80_low, currency, False)} ~ {price(i80_high, currency, False)}",
+                help=i80_help)
+    m[3].metric("상승 확률", pct(p.get("prob_up"), signed=False),
+                help="현재가보다 높을 확률. OOF 잔차 분포에서 계산한 뒤 isotonic 보정을 거칩니다. "
+                     "50% 근처면 방향성 정보가 없다는 뜻입니다.")
+    m[4].metric("변동성(연율)", pct(p.get("expected_volatility_annual"), signed=False),
+                help="최근 일간 수익률 표준편차를 연율화(×√252)한 값. 예측이 아니라 현재 상태 지표입니다.")
 
     # ---- 접힌 상세 ----
-    with st.expander("예상 가격과 참고선 자세히 보기"):
+    with st.expander("분위수 · 참고 레벨"):
         left, right = st.columns(2)
         with left:
             rows = []
@@ -4533,7 +4129,7 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
     # main.py의 latest_predictions.json 구조를 그대로 사용한다.
     diag = (((payload.get("diagnostics") or {}).get(symbol) or {}).get(str(horizon)) or {})
 
-    with st.expander("왜 이런 결과가 나왔나요? · 모델 진단"):
+    with st.expander("모델 진단"):
         # 검증 성능과 모델 가중치는 Streamlit columns 대신 자체 반응형 grid로 렌더링한다.
         # 모바일에서 반쪽 폭으로 찌그러지지 않고 확실히 1열로 쌓인다.
         render_diag_overview(p, diag)
@@ -4729,7 +4325,7 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
     tg = next((g for g in cands if str(g.get("source")) == "LIVE"),
               cands[0] if cands else None)
     if tg or track:
-        with st.expander("예측 기록과 실제 결과 비교"):
+        with st.expander("실적 추적 (예측 기록 vs 실제 결과)"):
             if tg and tg.get("n_resolved"):
                 if str(tg.get("source")) == "BACKFILL":
                     st.caption(
@@ -4770,7 +4366,7 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
     bt_meta = (payload.get("backtests") or {}).get(f"{symbol}_h{horizon}")
     bt_df = load_backtest(symbol, horizon)
     if bt_meta or bt_df is not None:
-        with st.expander("과거 데이터로 확인한 성적 · 백테스트"):
+        with st.expander("백테스트 (Out-of-Sample)"):
             if bt_meta:
                 mm = bt_meta.get("metrics") or {}
                 bb = bt_meta.get("buy_hold") or {}
@@ -4830,53 +4426,43 @@ def main() -> None:
     label, stale = snapshot_label(manifest)
     quotes = load_quotes()
 
-    # 첫 화면에는 목적과 최신성만 먼저 보이고, 운영 메타정보는 작은 칩으로 낮춘다.
+    # 상단은 한 줄로 압축한다. 제목·부제·상태알약·안내문이 각각 블록을 차지하면
+    # 노트북 화면에서 정작 예측이 접힌 아래로 밀린다. 매번 확인할 필요가 없는
+    # 정보(출력 형식 등)는 배지에서 빼고 이상이 있을 때만 경고를 띄운다.
     quote_label = (quote_age_label(quotes.get("fetched_at"))
                    if quotes.get("fetched_at") else "스냅샷 가격")
     st.markdown(
         f"""
         <div class="dash-hero">
           <div>
-            <div class="dash-eyebrow">STOCK FORECAST DASHBOARD</div>
-            <div class="dash-title">주가 전망 대시보드</div>
+            <div class="dash-title">📈 주가 예측</div>
             <div class="dash-subtitle">
-              미래 가격 하나를 단정하기보다, 가능한 범위와 불확실성을 함께 살펴봅니다.
+              스냅샷 {html.escape(label)}
+              <span class="dash-sep">·</span> 종목 {len(symbols)}
+              <span class="dash-sep">·</span> 예측 {len(preds)}건
+              <span class="dash-sep">·</span> 현재가 {html.escape(quote_label)}
             </div>
           </div>
           <div class="dash-meta">
             <span class="status-pill"><span class="status-dot {'warn' if stale else ''}"></span>
-            {'업데이트 필요' if stale else '데이터 최신'}</span>
-            <div class="dash-updated">예측 생성 · {html.escape(label)}</div>
+            {'스냅샷 지연' if stale else '최신'}</span>
           </div>
-        </div>
-        <div class="dashboard-facts">
-          <span class="dashboard-fact">분석 종목 <b>{len(symbols)}개</b></span>
-          <span class="dashboard-fact">예측 조합 <b>{len(preds)}건</b></span>
-          <span class="dashboard-fact">표시 현재가 <b>{html.escape(quote_label)}</b></span>
         </div>
         """,
         unsafe_allow_html=True,
     )
 
+    # 정상일 때는 아무것도 띄우지 않는다. 이상이 있을 때만 눈에 띈다.
     if stale:
-        st.error(
-            f"예측 데이터가 오래되었습니다. 마지막 결과는 {label}입니다. "
-            "로컬 학습과 게시 작업을 다시 실행해 주세요."
-        )
+        st.error(f"이 스냅샷은 {label} 결과입니다. 로컬에서 다시 실행 후 게시하세요.")
     if payload.get("source") == "predictions.csv":
-        st.info(
-            "현재는 간단한 CSV 결과만 표시 중입니다. publish.py로 전체 결과를 게시하면 "
-            "모델 진단과 백테스트도 함께 볼 수 있습니다."
-        )
+        st.info("CSV 만으로 구동 중 · 백테스트와 진단은 publish.py 게시 시 표시됩니다.")
 
-    section_head("ASSET", "어떤 종목을 볼까요?", "선택한 종목을 기준으로 모든 탭이 바뀝니다.")
-    st.markdown(
-        "<div class='asset-picker-note'>종목을 고른 뒤 먼저 ‘종목 전망’ 탭을 확인해 보세요.</div>",
-        unsafe_allow_html=True,
-    )
+    # 핵심 작업을 먼저 배치한다: 종목 선택 → Forecast → 산업 컨텍스트.
+    section_head("ASSET", "분석 종목 선택", "종목을 바꾸면 아래 예측 화면만 갱신됩니다.")
     name_of = {sym: str(df[df["symbol"] == sym]["name"].iloc[0]) for sym in symbols}
     symbol = st.selectbox(
-        "분석할 종목", symbols, key="symbol_select",
+        "종목 선택", symbols, key="symbol_select",
         format_func=lambda sym: f"{name_of.get(sym, sym)}  ·  {sym}",
     )
     if track_symbol is not None:
@@ -4885,55 +4471,34 @@ def main() -> None:
         except Exception:
             pass
 
-    forecast_tab, cycle_tab, validation_tab, notes_tab = st.tabs([
-        "📈 종목 전망",
-        "💾 메모리 업황",
-        "🧪 전략 검증",
-        "📝 업데이트",
-    ])
+    render_symbol(symbol, df[df["symbol"] == symbol], payload, quotes)
 
-    with forecast_tab:
-        render_symbol(symbol, df[df["symbol"] == symbol], payload, quotes)
+    # 관세청 메모리 단가는 보조 산업 컨텍스트이므로 Forecast 뒤에서 기본 접힘으로 제공한다.
+    # Streamlit Cloud가 관세청 API나 로컬 절대경로를 직접 호출하지 않는다.
+    render_kcs_memory(load_kcs_memory())
 
-    with cycle_tab:
-        # Streamlit Cloud에서는 외부 API를 직접 호출하지 않고 게시된 월별 스냅샷만 읽는다.
-        kcs_memory = load_kcs_memory()
-        if kcs_memory is None or kcs_memory.empty:
-            section_head("MEMORY CYCLE", "메모리 업황", "관세청 월별 수출단가")
-            st.info(
-                "게시된 메모리 수출단가가 아직 없습니다. "
-                "kcs_memory_prices.csv를 게시하면 이 탭에 월별 흐름이 표시됩니다."
-            )
-        else:
-            render_kcs_memory(kcs_memory)
+    # 패널은 종목별 화면에 자리가 없지만 앙상블 가중치를 크게 가져가므로
+    # 근거를 볼 수 있어야 한다. 파일이 없으면 아무것도 그리지 않는다.
+    render_panel_diagnostics(load_panel_diagnostics(), symbol)
 
-    with validation_tab:
-        panel_data = load_panel_diagnostics()
-        portfolio_data = load_portfolio_backtest()
-        if not panel_data and not portfolio_data:
-            section_head("VALIDATION", "전략 검증", "모델과 포트폴리오의 과거 성적")
-            st.info(
-                "게시된 전략 검증 결과가 아직 없습니다. 전체 publish 결과가 생기면 "
-                "패널 모델과 포트폴리오 백테스트를 여기서 확인할 수 있습니다."
-            )
-        else:
-            render_panel_diagnostics(panel_data, symbol)
-            render_portfolio_backtest(portfolio_data)
+    # 횡단면 포트폴리오는 특정 종목이 아니라 전략 전체의 성과다.
+    render_portfolio_backtest(load_portfolio_backtest())
 
-    with notes_tab:
-        # 개발자 노트가 없거나 보조 파일이 누락되면 이 탭 안에서 원인을 알려준다.
-        try:
-            from devnotes_view import render_devnotes
+    # 개발자 노트 (변경 이력). published/devnotes.json 이 없으면 아무것도 그리지 않는다.
+    # 실패는 조용히 넘기지 않는다. 예전에 devnotes_view.py 가 저장소에 올라가지
+    # 않아 import 가 실패했는데, except 가 이를 완전히 삼켜서 화면에도 로그에도
+    # 아무 흔적이 남지 않았다. 원인을 볼 수 있어야 고칠 수 있다.
+    try:
+        from devnotes_view import render_devnotes
 
-            render_devnotes(PUBLISHED, section_head=section_head)
-        except ImportError:
-            section_head("UPDATES", "업데이트 기록", "대시보드 변경 내역")
-            st.info(
-                "아직 표시할 업데이트 기록이 없습니다. devnotes_view.py와 "
-                "published/devnotes.json을 함께 게시하면 이 탭에 나타납니다."
-            )
-        except Exception as exc:
-            st.caption(f"업데이트 기록 표시 실패: {type(exc).__name__}: {exc}")
+        render_devnotes(PUBLISHED, section_head=section_head)
+    except ImportError:
+        st.caption(
+            "개발자 노트를 표시할 수 없습니다 — devnotes_view.py 가 저장소에 "
+            "없습니다. publish.py 의 app_files 에 포함되어 있는지 확인하십시오."
+        )
+    except Exception as exc:
+        st.caption(f"개발자 노트 표시 실패: {type(exc).__name__}: {exc}")
 
     st.divider()
     if render_session_footer is not None:
