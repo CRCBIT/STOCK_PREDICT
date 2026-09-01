@@ -26,7 +26,7 @@ Discord Webhook은 과거 메시지를 읽을 수 없으므로 재시작 이전 
 
 개인정보
 --------
-원본 IP 주소는 Discord 세션 알림에 표시하고, 현재 Streamlit 서버 메모리의 세션 기록에도 보관한다.
+원본 IP 주소와 IP 기반 추정 위치/통신사 정보를 Discord 세션 알림에 표시하고, 현재 Streamlit 서버 메모리의 세션 기록에도 보관한다.
 전체 User-Agent 문자열은 저장하지 않고 클라이언트 종류만 표시한다.
 세션 재연결 판별에는 st.context의 IP/User-Agent/시간대/locale을 즉시 조합한 뒤
 프로세스마다 새로 생성되는 salt로 해시한 짧은 임시 클라이언트 지문만 사용한다.
@@ -43,6 +43,7 @@ analytics_reconnect_max_minutes = 25
 from __future__ import annotations
 
 import hashlib
+import ipaddress
 import json
 import os
 import tempfile
@@ -669,6 +670,146 @@ def _mask_ip(ip_address: str) -> str:
         return "IPv6(masked)"
 
     return "masked"
+
+
+
+def _normalize_public_ip(ip_address: str) -> str:
+    """GeoIP 조회에 사용할 공개 IP만 정규화한다."""
+    value = str(ip_address or "").strip()
+    if not value or value == "-":
+        return ""
+
+    try:
+        parsed = ipaddress.ip_address(value)
+
+        # ::ffff:211.234.56.78 같은 IPv4-mapped IPv6는 IPv4로 정규화
+        if isinstance(parsed, ipaddress.IPv6Address) and parsed.ipv4_mapped:
+            parsed = parsed.ipv4_mapped
+
+        # localhost / 사설망 / link-local / reserved 등은 외부 GeoIP 조회하지 않음
+        if not parsed.is_global:
+            return ""
+
+        return str(parsed)
+    except ValueError:
+        return ""
+
+
+@st.cache_data(ttl=21600, show_spinner=False)
+def _lookup_geoip(ip_address: str) -> dict:
+    """
+    공개 IP를 ipwho.is로 조회해 대략적인 국가/지역/도시/통신사 정보를 얻는다.
+
+    - 위치는 IP 기반 추정치라 실제 GPS/주소와 다를 수 있다.
+    - LTE/5G, 회사망, VPN/프록시는 다른 도시로 표시될 수 있다.
+    - 정확한 집 주소/도로명 주소를 알아내는 기능은 아니다.
+    """
+    public_ip = _normalize_public_ip(ip_address)
+    empty = {
+        "geo_ok": False,
+        "country": "-",
+        "country_code": "-",
+        "region": "-",
+        "city": "-",
+        "location": "조회 불가",
+        "isp": "-",
+        "org": "-",
+        "asn": "-",
+        "flag": "",
+    }
+
+    if not public_ip:
+        return empty
+
+    try:
+        import urllib.parse
+        import urllib.request
+
+        encoded_ip = urllib.parse.quote(public_ip, safe=":")
+        url = f"https://ipwho.is/{encoded_ip}"
+        req = urllib.request.Request(
+            url,
+            headers={"User-Agent": "StockForecastDashboard/1.0"},
+            method="GET",
+        )
+
+        with urllib.request.urlopen(req, timeout=3.0) as response:
+            payload = json.loads(response.read().decode("utf-8", errors="replace"))
+
+        if not isinstance(payload, dict) or not payload.get("success", False):
+            _log(
+                "geoip_lookup_failed",
+                ip=public_ip,
+                reason=str(payload.get("message") or "lookup_unsuccessful")[:160]
+                if isinstance(payload, dict)
+                else "invalid_payload",
+            )
+            return empty
+
+        country = str(payload.get("country") or "-").strip()
+        country_code = str(payload.get("country_code") or "-").strip().upper()
+        region = str(payload.get("region") or "-").strip()
+        city = str(payload.get("city") or "-").strip()
+
+        # 한국 사용자가 보기 편하도록 국가명만 한국어로 표시
+        display_country = "대한민국" if country_code == "KR" else country
+
+        parts = []
+        for part in (display_country, region, city):
+            if part and part != "-" and part not in parts:
+                parts.append(part)
+        location = " · ".join(parts) if parts else "조회 불가"
+
+        connection = payload.get("connection") or {}
+        if not isinstance(connection, dict):
+            connection = {}
+        isp = str(connection.get("isp") or "-").strip()
+        org = str(connection.get("org") or "-").strip()
+        asn_value = connection.get("asn")
+        asn = f"AS{asn_value}" if asn_value not in (None, "", "-") else "-"
+
+        flag_data = payload.get("flag") or {}
+        flag = str(flag_data.get("emoji") or "").strip() if isinstance(flag_data, dict) else ""
+
+        return {
+            "geo_ok": True,
+            "country": display_country or "-",
+            "country_code": country_code or "-",
+            "region": region or "-",
+            "city": city or "-",
+            "location": location,
+            "isp": isp or "-",
+            "org": org or "-",
+            "asn": asn,
+            "flag": flag,
+        }
+
+    except Exception as exc:
+        _log(
+            "geoip_lookup_failed",
+            ip=public_ip,
+            error=f"{type(exc).__name__}: {str(exc)[:180]}",
+        )
+        return empty
+
+
+def _memory_attach_geo(sid: str, geo: dict) -> None:
+    """조회된 GeoIP 정보를 현재 세션 메모리 기록에도 붙인다."""
+    memory = _analytics_memory()
+    with memory.lock:
+        record = memory.session_records.get(str(sid))
+        if not record:
+            return
+        record["geo_ok"] = bool(geo.get("geo_ok"))
+        record["country"] = geo.get("country", "-")
+        record["country_code"] = geo.get("country_code", "-")
+        record["region"] = geo.get("region", "-")
+        record["city"] = geo.get("city", "-")
+        record["location"] = geo.get("location", "조회 불가")
+        record["isp"] = geo.get("isp", "-")
+        record["org"] = geo.get("org", "-")
+        record["asn"] = geo.get("asn", "-")
+        record["flag"] = geo.get("flag", "")
 
 
 def _client_snapshot(memory: _AnalyticsMemory) -> dict:
@@ -1517,6 +1658,13 @@ def track_session(
     st.session_state["dashview_last_symbol"] = None
 
     diagnostics = _memory_record_session(sid)
+
+    # 원본 IP로 대략적인 국가/지역/도시/ISP를 조회한다.
+    # GeoIP 서비스 장애가 나도 방문 추적 자체는 계속 동작한다.
+    geo = _lookup_geoip(str(diagnostics.get("raw_ip") or ""))
+    diagnostics.update(geo)
+    _memory_attach_geo(sid, geo)
+
     classification = diagnostics.get("classification", "normal")
     st.session_state["dashview_session_class"] = classification
     st.session_state["dashview_client_fp"] = diagnostics.get("fingerprint", "")
@@ -1529,6 +1677,12 @@ def track_session(
         client=diagnostics.get("client", "-"),
         raw_ip=diagnostics.get("raw_ip", "-"),
         masked_ip=diagnostics.get("masked_ip", "-"),
+        location=diagnostics.get("location", "조회 불가"),
+        country=diagnostics.get("country", "-"),
+        region=diagnostics.get("region", "-"),
+        city=diagnostics.get("city", "-"),
+        isp=diagnostics.get("isp", "-"),
+        asn=diagnostics.get("asn", "-"),
         client_fp=diagnostics.get("fingerprint", ""),
         gap_minutes=diagnostics.get("gap_minutes"),
         previous_engaged=diagnostics.get("previous_engaged"),
@@ -1546,13 +1700,17 @@ def track_session(
     # 세션 알림은 여기서 즉시 보내지 않고 track_symbol()의 첫 호출까지 잠시 보관한다.
     # 이렇게 하면 "세션 알림 + 첫 종목 알림"이 두 개로 나뉘지 않고 Discord 메시지 1개로 합쳐진다.
     if _session_diagnostics_enabled():
+        location_prefix = f"{diagnostics.get('flag', '')} " if diagnostics.get("flag") else ""
         lines = [
             f"{icon} **{label}** · 세션 `{sid}` · {_kst_now()}",
-            f"　IP `{diagnostics.get('raw_ip') or '-'}` · "
-            f"클라이언트 **{diagnostics.get('client', '-')}**",
-            f"　임시지문 `{diagnostics.get('fingerprint') or '-'}` · "
+            f"　IP `{diagnostics.get('raw_ip') or '-'}`",
+            f"　추정 위치 **{location_prefix}{diagnostics.get('location', '조회 불가')}**",
+            f"　통신사 **{diagnostics.get('isp', '-')}** · "
+            f"ASN `{diagnostics.get('asn', '-')}`",
+            f"　클라이언트 **{diagnostics.get('client', '-')}** · "
             f"TZ `{diagnostics.get('timezone', '-')}` · "
             f"locale `{diagnostics.get('locale', '-')}`",
+            f"　임시지문 `{diagnostics.get('fingerprint') or '-'}`",
         ]
 
         gap = diagnostics.get("gap_minutes")
