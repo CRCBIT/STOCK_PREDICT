@@ -3298,6 +3298,146 @@ st.markdown("""
     .forecast-glance-value { font-size: 0.75rem !important; }
   }
 
+  /* ===============================================================
+     V16 · CURRENT PRICE + CHART WINDOW
+     현재가는 별도 카드로 떼지 않고 예측 기준값과 같은 카드 안에서 직접 비교한다.
+     차트 범위는 숫자 슬라이더 대신 1개월/3개월/6개월/1년/2년 선택형으로 변경.
+     =============================================================== */
+  .forecast-glance {
+    grid-template-columns:
+      minmax(390px, 1.75fr)
+      minmax(260px, 1.18fr)
+      minmax(125px, 0.62fr)
+      minmax(125px, 0.62fr) !important;
+  }
+  .forecast-glance-main-bottom {
+    align-items: stretch !important;
+    gap: 14px !important;
+  }
+  .forecast-glance-forecast {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  .forecast-current-inline {
+    flex: 0 0 min(42%, 245px);
+    min-width: 170px;
+    padding-left: 14px;
+    border-left: 1px solid rgba(255,255,255,0.07);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  .forecast-current-inline-head {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #929ca8;
+    font-size: 0.63rem;
+    font-weight: 680;
+    line-height: 1.2;
+  }
+  .forecast-current-age {
+    color: #697480;
+    font-size: 0.58rem;
+    font-weight: 600;
+  }
+  .forecast-current-value {
+    margin-top: 5px;
+    color: #dfe5eb;
+    font-size: clamp(0.90rem, 1.25vw, 1.04rem);
+    font-weight: 740;
+    line-height: 1.18;
+    letter-spacing: -0.025em;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  .forecast-current-sub {
+    margin-top: 4px;
+    color: #77828f;
+    font-size: 0.60rem;
+    line-height: 1.25;
+    white-space: nowrap;
+  }
+  .forecast-current-sub.up { color: #ff747b; }
+  .forecast-current-sub.down { color: #65adff; }
+  .forecast-current-sub.neutral { color: #77828f; }
+
+  /* 차트 기간은 범주형 선택이므로 slider보다 compact select가 적합하다. */
+  div[data-testid="stHorizontalBlock"]:has(> div[data-testid="stColumn"] div[data-testid="stRadio"])
+    > div[data-testid="stColumn"]:nth-child(2) div[data-testid="stSelectbox"] [data-baseweb="select"] > div {
+    min-height: 40px !important;
+  }
+
+  @media (max-width: 1080px) {
+    .forecast-glance {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+    .forecast-glance-main,
+    .forecast-glance-stat.interval { grid-column: 1 / -1 !important; }
+  }
+
+  @media (max-width: 760px) {
+    .forecast-glance {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+    .forecast-glance-main {
+      grid-column: 1 / -1 !important;
+      min-height: 84px !important;
+      padding: 9px 10px !important;
+    }
+    .forecast-glance-main-bottom {
+      display: grid !important;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr) !important;
+      gap: 9px !important;
+      align-items: end !important;
+      margin-top: 7px !important;
+    }
+    .forecast-current-inline {
+      min-width: 0 !important;
+      padding-left: 9px !important;
+      border-left-color: rgba(255,255,255,0.065) !important;
+    }
+    .forecast-current-inline-head {
+      gap: 4px !important;
+      font-size: 0.57rem !important;
+    }
+    .forecast-current-age { font-size: 0.52rem !important; }
+    .forecast-current-value {
+      margin-top: 3px !important;
+      font-size: 0.83rem !important;
+      white-space: nowrap !important;
+    }
+    .forecast-current-sub {
+      margin-top: 2px !important;
+      font-size: 0.52rem !important;
+      white-space: normal !important;
+      line-height: 1.2 !important;
+    }
+    .forecast-glance-stat.interval { grid-column: 1 / -1 !important; }
+
+    /* 첫 행은 예측 기간, 둘째 행은 차트 기간 + 거래량. */
+    div[data-testid="stHorizontalBlock"]:has(> div[data-testid="stColumn"] div[data-testid="stRadio"]) {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 0.72fr) !important;
+    }
+    div[data-testid="stHorizontalBlock"]:has(> div[data-testid="stColumn"] div[data-testid="stRadio"]) > div[data-testid="stColumn"]:first-child {
+      grid-column: 1 / -1 !important;
+    }
+    div[data-testid="stSelectbox"] > label p { font-size: 0.64rem !important; }
+    div[data-testid="stSelectbox"] [data-baseweb="select"] > div,
+    div[data-testid="stSelectbox"] div[role="combobox"] {
+      min-height: 36px !important;
+      border-radius: 9px !important;
+    }
+  }
+
+  @media (max-width: 430px) {
+    .forecast-glance-main-value { font-size: 1.10rem !important; }
+    .forecast-current-value { font-size: 0.78rem !important; }
+    .forecast-current-age { display: none !important; }
+  }
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -4807,14 +4947,15 @@ def render_forecast_summary(p: Dict, hist: Optional[pd.DataFrame],
     prev_close, prev_label = prev_close_ref(hist, str(p.get("country") or "KR"))
     day_change = (now / prev_close - 1.0) if (prev_close and now) else None
     if p.get("_reanchored"):
-        quote_age = quote_age_label(quotes.get("fetched_at")) or "최신 시세"
-        current_label = f"현재가 · {quote_age}"
+        current_label = "현재가"
+        current_age = quote_age_label(quotes.get("fetched_at")) or "최신 시세"
         current_sub = (
             f"{prev_label} 대비 {pct(day_change)}" if day_change is not None
             else "최신 가격 기준"
         )
     else:
         current_label = "예측 기준가"
+        current_age = "모델 계산 시점"
         current_sub = (
             f"{prev_label} 대비 {pct(day_change)}" if day_change is not None
             else "모델 계산 시점"
@@ -4854,15 +4995,23 @@ def render_forecast_summary(p: Dict, hist: Optional[pd.DataFrame],
         f"신뢰도 {html.escape(confidence)}/100 · {html.escape(grade_label)}</div>"
         "</div>"
         "<div class='forecast-glance-main-bottom'>"
+        "<div class='forecast-glance-forecast'>"
         f"<div class='forecast-glance-main-value'>{html.escape(price(p.get('p50'), currency))}</div>"
         f"<div class='forecast-glance-main-change {expected_tone}'>현재가 대비 {html.escape(pct(expected))}</div>"
+        "</div>"
+        "<div class='forecast-current-inline'>"
+        "<div class='forecast-current-inline-head'>"
+        f"<span>{html.escape(current_label)}</span>"
+        f"<span class='forecast-current-age'>{html.escape(current_age)}</span>"
+        "</div>"
+        f"<div class='forecast-current-value'>{html.escape(price(now, currency))}</div>"
+        f"<div class='forecast-current-sub {_change_tone(day_change)}'>{html.escape(current_sub)}</div>"
+        "</div>"
         "</div>"
         "</div>"
     )
 
     cards = [
-        glance_stat(current_label, price(now, currency), current_sub,
-                    _change_tone(day_change), "current"),
         glance_stat(
             "모델 80% 예상 범위" if calibrated_interval else "P10~P90 예상 범위",
             interval_value, interval_sub, extra="interval"
@@ -5266,17 +5415,28 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
         "<div class='forecast-controls'>보고 싶은 예측 기간과 차트 범위를 선택하세요.</div>",
         unsafe_allow_html=True,
     )
-    c_h, c_lb, c_vol = st.columns([3, 2, 1.2])
+    c_h, c_lb, c_vol = st.columns([3, 1.65, 1.2])
     with c_h:
         horizon = st.radio(
             "얼마 뒤를 볼까요? (거래일 기준)", horizons, horizontal=True, key=f"h_{symbol}",
             format_func=lambda h: f"{h}일",
         )
     with c_lb:
-        lookback = st.select_slider(
-            "과거 차트 범위", options=[60, 120, 250, 400], value=120,
-            key=f"lb_{symbol}", format_func=lambda v: f"{v}일",
+        chart_windows = {
+            "1개월": 22,
+            "3개월": 66,
+            "6개월": 132,
+            "1년": 250,
+            "2년": 500,
+        }
+        chart_window = st.selectbox(
+            "차트 기간",
+            options=list(chart_windows),
+            index=2,
+            key=f"lb_{symbol}",
+            help="거래일 수를 직접 고르는 대신 실제 달력 기간에 가까운 구간으로 표시합니다.",
         )
+        lookback = chart_windows[chart_window]
     with c_vol:
         st.markdown("<div style='height:2px'></div>", unsafe_allow_html=True)
         show_volume = st.checkbox("거래량 함께 보기", value=True, key=f"v_{symbol}")
