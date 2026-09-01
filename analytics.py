@@ -26,7 +26,8 @@ Discord Webhook은 과거 메시지를 읽을 수 없으므로 재시작 이전 
 
 개인정보
 --------
-원본 IP 주소와 전체 User-Agent 문자열은 저장하거나 Discord로 전송하지 않는다.
+원본 IP 주소는 Discord 세션 알림에 표시하고, 현재 Streamlit 서버 메모리의 세션 기록에도 보관한다.
+전체 User-Agent 문자열은 저장하지 않고 클라이언트 종류만 표시한다.
 세션 재연결 판별에는 st.context의 IP/User-Agent/시간대/locale을 즉시 조합한 뒤
 프로세스마다 새로 생성되는 salt로 해시한 짧은 임시 클라이언트 지문만 사용한다.
 서버 프로세스가 재시작되면 salt와 지문 이력도 함께 사라진다.
@@ -647,15 +648,38 @@ def _looks_like_bot(user_agent: str) -> bool:
     ))
 
 
+def _mask_ip(ip_address: str) -> str:
+    """Discord에는 원본 IP 대신 일부만 남긴 마스킹 주소를 표시한다."""
+    value = str(ip_address or "").strip()
+    if not value:
+        return "-"
+
+    # IPv4: 211.234.56.78 -> 211.234.xxx.xxx
+    parts = value.split(".")
+    if len(parts) == 4 and all(part.isdigit() for part in parts):
+        return f"{parts[0]}.{parts[1]}.xxx.xxx"
+
+    # IPv6: 앞 두 블록만 남기고 나머지는 숨긴다.
+    if ":" in value:
+        blocks = [block for block in value.split(":") if block]
+        if len(blocks) >= 2:
+            return f"{blocks[0]}:{blocks[1]}:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx"
+        if blocks:
+            return f"{blocks[0]}:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx"
+        return "IPv6(masked)"
+
+    return "masked"
+
+
 def _client_snapshot(memory: _AnalyticsMemory) -> dict:
-    """원본 식별정보를 남기지 않고 현재 연결의 임시 클라이언트 특성을 만든다."""
+    """현재 연결의 원본 IP, 마스킹 IP, 클라이언트 정보와 임시 지문을 만든다."""
     headers = _context_headers()
     user_agent = headers.get("user-agent", "")
     ip_address = str(_safe_context_value("ip_address", "") or "").strip()
     timezone_name = str(_safe_context_value("timezone", "") or "").strip()
     locale = str(_safe_context_value("locale", "") or "").strip()
 
-    # 원본 값은 함수 밖으로 내보내지 않는다. 프로세스별 salt를 섞어 재시작 후 추적도 불가능하게 한다.
+    # 재연결 판별용 지문에는 프로세스별 salt를 섞는다.
     raw = "|".join((ip_address, user_agent, timezone_name, locale)).strip("|")
     fingerprint = ""
     if raw:
@@ -667,6 +691,8 @@ def _client_snapshot(memory: _AnalyticsMemory) -> dict:
 
     return {
         "fingerprint": fingerprint,
+        "raw_ip": ip_address or "-",
+        "masked_ip": _mask_ip(ip_address),
         "client": _client_family(user_agent),
         "timezone": timezone_name or "-",
         "locale": locale or "-",
@@ -757,6 +783,8 @@ def _memory_record_session(sid: str) -> dict:
             "classification": classification,
             "reason": reason,
             "fingerprint": fingerprint,
+            "raw_ip": client.get("raw_ip", "-"),
+            "masked_ip": client.get("masked_ip", "-"),
             "client": client["client"],
             "timezone": client["timezone"],
             "locale": client["locale"],
@@ -1499,6 +1527,8 @@ def track_session(
         version=app_version,
         classification=classification,
         client=diagnostics.get("client", "-"),
+        raw_ip=diagnostics.get("raw_ip", "-"),
+        masked_ip=diagnostics.get("masked_ip", "-"),
         client_fp=diagnostics.get("fingerprint", ""),
         gap_minutes=diagnostics.get("gap_minutes"),
         previous_engaged=diagnostics.get("previous_engaged"),
@@ -1518,8 +1548,9 @@ def track_session(
     if _session_diagnostics_enabled():
         lines = [
             f"{icon} **{label}** · 세션 `{sid}` · {_kst_now()}",
-            f"　클라이언트 **{diagnostics.get('client', '-')}** · "
-            f"임시지문 `{diagnostics.get('fingerprint') or '-'}` · "
+            f"　IP `{diagnostics.get('raw_ip') or '-'}` · "
+            f"클라이언트 **{diagnostics.get('client', '-')}**",
+            f"　임시지문 `{diagnostics.get('fingerprint') or '-'}` · "
             f"TZ `{diagnostics.get('timezone', '-')}` · "
             f"locale `{diagnostics.get('locale', '-')}`",
         ]
