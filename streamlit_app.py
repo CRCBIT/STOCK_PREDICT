@@ -7522,11 +7522,10 @@ def _browser_network_info() -> Optional[Dict]:
     """
 
     try:
-        value = st_javascript(
-            javascript,
-            None,
-            "DASHVIEW_BROWSER_NETWORK_V1",
-        )
+        # PyPI의 streamlit-javascript 0.1.5 API에 맞춰
+        # 단일 javascript 인자만 사용한다. 이 앱에서는 호출 지점이 하나뿐이라
+        # 별도 key가 필요하지 않다.
+        value = st_javascript(javascript)
     except Exception as exc:
         fallback = {
             "ip": "",
