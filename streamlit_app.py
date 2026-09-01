@@ -4552,6 +4552,217 @@ st.markdown("""
     }
 
   }
+
+  /* ===============================================================
+     V21 · TYPOGRAPHY SCALE
+     큰 숫자와 제목은 확실히 키우고, 보조문구는 최소한만 키워
+     PC/모바일 모두 시원하지만 정보 밀도는 유지한다.
+     =============================================================== */
+  .section-title {
+    font-size: 1.22rem !important;
+  }
+  .section-kicker {
+    font-size: 0.65rem !important;
+  }
+  .section-note {
+    font-size: 0.76rem !important;
+    line-height: 1.45 !important;
+  }
+  .subsection-title {
+    font-size: 0.98rem !important;
+  }
+  .subsection-note {
+    font-size: 0.72rem !important;
+  }
+
+  .stTabs button[data-baseweb="tab"] {
+    font-size: 0.89rem !important;
+  }
+
+  .verdict-title {
+    font-size: 0.96rem !important;
+  }
+  .verdict-copy {
+    font-size: 0.84rem !important;
+  }
+  .verdict-confidence {
+    font-size: 0.69rem !important;
+  }
+
+  /* 전망 탭 핵심 가격 */
+  .snapshot-route .snapshot-label {
+    font-size: 0.73rem !important;
+  }
+  .snapshot-route .snapshot-value {
+    font-size: clamp(1.46rem, 1.95vw, 1.72rem) !important;
+  }
+  .snapshot-route .snapshot-forecast .snapshot-value {
+    font-size: clamp(1.58rem, 2.12vw, 1.88rem) !important;
+  }
+  .snapshot-route .snapshot-sub {
+    font-size: 0.64rem !important;
+  }
+  .snapshot-return-pill {
+    font-size: 0.71rem !important;
+  }
+  .snapshot-detail-label {
+    font-size: 0.68rem !important;
+  }
+  .snapshot-detail-value,
+  .snapshot-detail-value.range {
+    font-size: 1.03rem !important;
+  }
+  .snapshot-detail-sub {
+    font-size: 0.61rem !important;
+  }
+
+  /* 메모리 업황 / 전략 검증 탭도 같은 계층으로 확대 */
+  .overview-label,
+  .validation-period,
+  .strategy-name {
+    font-size: 0.70rem !important;
+  }
+  .overview-value {
+    font-size: 1.28rem !important;
+  }
+  .overview-sub {
+    font-size: 0.67rem !important;
+  }
+  .validation-main {
+    font-size: 1.14rem !important;
+  }
+  .validation-pairs span,
+  .strategy-grid span {
+    font-size: 0.59rem !important;
+  }
+  .validation-pairs b,
+  .strategy-grid b {
+    font-size: 0.72rem !important;
+  }
+  .strategy-return {
+    font-size: 1.23rem !important;
+  }
+  .validation-context span {
+    font-size: 0.64rem !important;
+  }
+  .tab-callout {
+    font-size: 0.74rem !important;
+  }
+  .reading-guide-label {
+    font-size: 0.67rem !important;
+  }
+  .reading-guide-copy {
+    font-size: 0.72rem !important;
+  }
+
+  @media (max-width: 760px) {
+    .section-title {
+      font-size: 1.12rem !important;
+    }
+    .section-kicker {
+      font-size: 0.62rem !important;
+    }
+    .section-note {
+      font-size: 0.68rem !important;
+    }
+    .subsection-title {
+      font-size: 0.94rem !important;
+    }
+    .subsection-note {
+      font-size: 0.66rem !important;
+    }
+
+    .stTabs button[data-baseweb="tab"] {
+      font-size: 0.82rem !important;
+    }
+
+    /* 입력부는 너무 작게 보이지 않도록 한 단계만 확대 */
+    div[data-testid="stRadio"] > label p,
+    div[data-testid="stSelectbox"] > label p,
+    div[data-testid="stSelectSlider"] > label p,
+    div[data-testid="stCheckbox"] label p {
+      font-size: 0.69rem !important;
+    }
+    div[role="radiogroup"] label {
+      font-size: 0.75rem !important;
+    }
+
+    .verdict-title {
+      font-size: 0.82rem !important;
+    }
+    .verdict-copy {
+      font-size: 0.73rem !important;
+    }
+    .verdict-confidence {
+      font-size: 0.61rem !important;
+    }
+
+    .snapshot-route .snapshot-label {
+      font-size: 0.62rem !important;
+    }
+    .snapshot-route .snapshot-value {
+      font-size: 1.10rem !important;
+    }
+    .snapshot-route .snapshot-forecast .snapshot-value {
+      font-size: 1.18rem !important;
+    }
+    .snapshot-route .snapshot-sub {
+      font-size: 0.53rem !important;
+    }
+    .snapshot-return-pill {
+      font-size: 0.57rem !important;
+    }
+    .snapshot-detail-label {
+      font-size: 0.59rem !important;
+    }
+    .snapshot-detail-value,
+    .snapshot-detail-value.range {
+      font-size: 0.89rem !important;
+    }
+    .snapshot-detail-sub {
+      font-size: 0.52rem !important;
+    }
+
+    .overview-label,
+    .validation-period,
+    .strategy-name {
+      font-size: 0.67rem !important;
+    }
+    .overview-value {
+      font-size: 1.13rem !important;
+    }
+    .overview-sub {
+      font-size: 0.63rem !important;
+    }
+    .validation-main {
+      font-size: 1.08rem !important;
+    }
+    .strategy-return {
+      font-size: 1.12rem !important;
+    }
+    .validation-pairs span,
+    .strategy-grid span {
+      font-size: 0.58rem !important;
+    }
+    .validation-pairs b,
+    .strategy-grid b {
+      font-size: 0.70rem !important;
+    }
+    .tab-callout {
+      font-size: 0.70rem !important;
+    }
+    .reading-guide-label {
+      font-size: 0.65rem !important;
+    }
+    .reading-guide-copy {
+      font-size: 0.69rem !important;
+      line-height: 1.46 !important;
+    }
+    .chart-caption {
+      font-size: 0.64rem !important;
+    }
+  }
+
 </style>
 """, unsafe_allow_html=True)
 
