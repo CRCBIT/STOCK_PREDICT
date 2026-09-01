@@ -5,12 +5,13 @@ Streamlit 대시보드 방문 추적 + Discord 알림 + 일일 통계 그래프.
 
 동작
 ----
-1. 새 Streamlit 세션 → Discord 방문 알림
-2. 종목 전환 → Discord 종목 조회 알림 (webhook_verbose=true)
-3. 같은 종목 단순 rerun → 조회로 세지 않음
-4. A → B → A → A는 두 번째 A까지 재조회로 기록
-5. 하루 동안 서버 메모리에 통계를 누적
-6. 날짜가 바뀐 뒤 첫 앱 실행 시 전날 통계 그래프를 Discord에 1회 전송
+1. 새 Streamlit 세션 → 일반 / 재연결 의심 / 자동접속 의심으로 분류해 Discord 알림
+2. 같은 클라이언트가 짧은 간격으로 새 세션을 만들고 이전 세션에 상호작용이 없으면 재연결 의심
+3. 종목 전환 → Discord 종목 조회 알림 (webhook_verbose=true)
+4. 같은 종목 단순 rerun → 조회로 세지 않음
+5. A → B → A → A는 두 번째 A까지 재조회로 기록
+6. 하루 동안 전체 연결/일반/재연결 의심/자동접속 의심/활동 세션을 따로 누적
+7. 날짜가 바뀐 뒤 첫 앱 실행 시 전날 통계 그래프를 Discord에 1회 전송
 
 중요
 ----
@@ -25,12 +26,22 @@ Discord Webhook은 과거 메시지를 읽을 수 없으므로 재시작 이전 
 
 개인정보
 --------
-IP, 이메일, User-Agent 등 방문자를 식별하는 정보는 수집하지 않는다.
+원본 IP 주소와 전체 User-Agent 문자열은 저장하거나 Discord로 전송하지 않는다.
+세션 재연결 판별에는 st.context의 IP/User-Agent/시간대/locale을 즉시 조합한 뒤
+프로세스마다 새로 생성되는 salt로 해시한 짧은 임시 클라이언트 지문만 사용한다.
+서버 프로세스가 재시작되면 salt와 지문 이력도 함께 사라진다.
 세션 ID는 무작위 UUID 일부만 사용한다.
+
+선택 설정 (Streamlit secrets)
+------------------------------
+webhook_session_diagnostics = true
+analytics_reconnect_min_minutes = 10
+analytics_reconnect_max_minutes = 25
 """
 
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 import tempfile
@@ -173,6 +184,35 @@ def _secret_int(
     return max(
         minimum,
         min(maximum, value),
+    )
+
+
+def _session_diagnostics_enabled() -> bool:
+    """Discord 세션 알림에 재연결/클라이언트 진단을 함께 표시한다."""
+    return _secret_bool(
+        "webhook_session_diagnostics",
+        True,
+    )
+
+
+def _reconnect_min_minutes() -> int:
+    """재연결 의심 구간의 시작. 기본 10분."""
+    return _secret_int(
+        "analytics_reconnect_min_minutes",
+        default=10,
+        minimum=1,
+        maximum=120,
+    )
+
+
+def _reconnect_max_minutes() -> int:
+    """재연결 의심 구간의 끝. 기본 25분."""
+    lower = _reconnect_min_minutes()
+    return _secret_int(
+        "analytics_reconnect_max_minutes",
+        default=max(25, lower),
+        minimum=lower,
+        maximum=240,
     )
 
 
@@ -457,12 +497,10 @@ def _webhook_send_image(
 
 class _AnalyticsMemory:
     """
-    Streamlit Python 프로세스 안에서 모든 방문 세션이 공유하는 통계.
+    Streamlit Python 프로세스 안에서 모든 브라우저 세션이 공유하는 통계.
 
     st.cache_resource 로 생성되므로 다른 브라우저 세션끼리도 공유된다.
-
-    단:
-        Streamlit Cloud 프로세스가 재시작되면 초기화된다.
+    Streamlit Cloud 프로세스가 재시작되면 통계/임시 클라이언트 지문 이력이 초기화된다.
     """
 
     def __init__(self) -> None:
@@ -471,22 +509,295 @@ class _AnalyticsMemory:
         # 현재 집계 날짜
         self.current_day: str = _kst_day()
 
-        # 현재 날짜 통계
+        # 현재 날짜 통계: session_count는 모든 새 Streamlit 연결(legacy 의미)을 센다.
         self.session_count: int = 0
+        self.normal_session_count: int = 0
+        self.reconnect_session_count: int = 0
+        self.bot_session_count: int = 0
+        self.engaged_session_count: int = 0
+
         self.symbol_views: Counter[str] = Counter()
         self.hourly_sessions: Counter[int] = Counter()
+        self.hourly_normal_sessions: Counter[int] = Counter()
 
         # 완료된 날짜 통계
         self.daily_sessions: OrderedDict[str, int] = OrderedDict()
+        self.daily_normal_sessions: OrderedDict[str, int] = OrderedDict()
         self.daily_views: OrderedDict[str, int] = OrderedDict()
 
         # 아직 Discord 전송되지 않은 날짜 snapshot
         self.pending_snapshots: list[dict] = []
 
+        # 재연결 판별용. 원본 IP/UA는 저장하지 않는다.
+        self.fingerprint_salt: bytes = secrets.token_bytes(24)
+        self.recent_clients: dict[str, dict] = {}
+        self.session_records: dict[str, dict] = {}
+        self.engaged_sids: set[str] = set()
+
 
 @st.cache_resource(show_spinner=False)
 def _analytics_memory() -> _AnalyticsMemory:
     return _AnalyticsMemory()
+
+
+def _safe_context_value(name: str, default=""):
+    """Streamlit 버전 차이를 견디도록 st.context 값을 안전하게 읽는다."""
+    try:
+        context = getattr(st, "context", None)
+        if context is None:
+            return default
+        value = getattr(context, name, default)
+        return default if value is None else value
+    except Exception:
+        return default
+
+
+def _context_headers() -> dict[str, str]:
+    try:
+        headers = _safe_context_value("headers", {})
+        return {str(k).lower(): str(v) for k, v in dict(headers).items()}
+    except Exception:
+        return {}
+
+
+def _client_family(user_agent: str) -> str:
+    """전체 UA를 보관하지 않고 Discord에 보여줄 거친 클라이언트 이름만 만든다."""
+    ua = (user_agent or "").lower()
+
+    if not ua:
+        return "알 수 없음"
+    if any(token in ua for token in (
+        "bot", "crawler", "spider", "headless", "python-requests",
+        "curl/", "wget/", "uptime", "monitor", "healthcheck", "probe",
+    )):
+        return "자동화/봇 계열"
+
+    device = ""
+    if "iphone" in ua:
+        device = "iPhone"
+    elif "ipad" in ua:
+        device = "iPad"
+    elif "android" in ua:
+        device = "Android"
+    elif "windows" in ua:
+        device = "Windows"
+    elif "macintosh" in ua or "mac os x" in ua:
+        device = "macOS"
+    elif "linux" in ua:
+        device = "Linux"
+
+    browser = "Browser"
+    if "edg/" in ua:
+        browser = "Edge"
+    elif "crios/" in ua or "chrome/" in ua:
+        browser = "Chrome"
+    elif "fxios/" in ua or "firefox/" in ua:
+        browser = "Firefox"
+    elif "safari/" in ua and "chrome/" not in ua and "crios/" not in ua:
+        browser = "Safari"
+
+    return f"{device} {browser}".strip()
+
+
+def _looks_like_bot(user_agent: str) -> bool:
+    ua = (user_agent or "").lower()
+    if not ua:
+        return False
+    return any(token in ua for token in (
+        "bot", "crawler", "spider", "headless", "python-requests",
+        "curl/", "wget/", "uptime", "monitor", "healthcheck", "probe",
+    ))
+
+
+def _client_snapshot(memory: _AnalyticsMemory) -> dict:
+    """원본 식별정보를 남기지 않고 현재 연결의 임시 클라이언트 특성을 만든다."""
+    headers = _context_headers()
+    user_agent = headers.get("user-agent", "")
+    ip_address = str(_safe_context_value("ip_address", "") or "").strip()
+    timezone_name = str(_safe_context_value("timezone", "") or "").strip()
+    locale = str(_safe_context_value("locale", "") or "").strip()
+
+    # 원본 값은 함수 밖으로 내보내지 않는다. 프로세스별 salt를 섞어 재시작 후 추적도 불가능하게 한다.
+    raw = "|".join((ip_address, user_agent, timezone_name, locale)).strip("|")
+    fingerprint = ""
+    if raw:
+        fingerprint = hashlib.sha256(
+            memory.fingerprint_salt + raw.encode("utf-8", errors="ignore")
+        ).hexdigest()[:10]
+
+    quality = sum(bool(x) for x in (ip_address, user_agent, timezone_name, locale))
+
+    return {
+        "fingerprint": fingerprint,
+        "client": _client_family(user_agent),
+        "timezone": timezone_name or "-",
+        "locale": locale or "-",
+        "fingerprint_quality": quality,
+        "fingerprint_strong": bool(ip_address and user_agent),
+        "bot_hint": _looks_like_bot(user_agent),
+    }
+
+
+def _prune_session_records(memory: _AnalyticsMemory, now_utc: datetime) -> None:
+    """세션 판별용 메모리가 무한히 커지지 않게 오래된 기록을 제거한다."""
+    keep_minutes = max(180, _reconnect_max_minutes() * 4)
+    cutoff = now_utc - timedelta(minutes=keep_minutes)
+
+    stale_sids = [
+        sid for sid, record in memory.session_records.items()
+        if record.get("started_at", now_utc) < cutoff
+    ]
+    for sid in stale_sids:
+        memory.session_records.pop(sid, None)
+        memory.engaged_sids.discard(sid)
+
+    stale_clients = [
+        fp for fp, record in memory.recent_clients.items()
+        if record.get("started_at", now_utc) < cutoff
+    ]
+    for fp in stale_clients:
+        memory.recent_clients.pop(fp, None)
+
+
+def _memory_record_session(sid: str) -> dict:
+    """새 연결을 분류하고 서버 메모리 통계에 기록한다."""
+    memory = _analytics_memory()
+    now_utc = _utc_now()
+    now_kst = now_utc.astimezone(KST)
+
+    with memory.lock:
+        _prune_session_records(memory, now_utc)
+        client = _client_snapshot(memory)
+        fingerprint = client["fingerprint"]
+        previous = memory.recent_clients.get(fingerprint) if fingerprint else None
+
+        gap_minutes = None
+        previous_engaged = None
+        classification = "normal"
+        reason = "새 연결 패턴"
+
+        if client["bot_hint"]:
+            classification = "bot_suspect"
+            reason = "User-Agent가 자동화/봇 패턴과 유사"
+        elif previous is not None:
+            previous_engaged = bool(previous.get("engaged", False))
+            gap_minutes = max(
+                0.0,
+                (now_utc - previous.get("started_at", now_utc)).total_seconds() / 60.0,
+            )
+
+            reconnect_window = (
+                gap_minutes <= 2.0
+                or _reconnect_min_minutes() <= gap_minutes <= _reconnect_max_minutes()
+            )
+
+            # 초기 화면만 보고 아무 상호작용도 없던 동일 클라이언트가
+            # 10~25분(기본값) 뒤 새 세션을 만들면 WebSocket/탭 재연결 의심으로 본다.
+            if (
+                reconnect_window
+                and not previous_engaged
+                and client.get("fingerprint_strong", False)
+            ):
+                classification = "reconnect_suspect"
+                reason = "동일 클라이언트 + 이전 세션 상호작용 없음"
+
+        memory.session_count += 1
+        memory.hourly_sessions[now_kst.hour] += 1
+
+        if classification == "normal":
+            memory.normal_session_count += 1
+            memory.hourly_normal_sessions[now_kst.hour] += 1
+        elif classification == "reconnect_suspect":
+            memory.reconnect_session_count += 1
+        else:
+            memory.bot_session_count += 1
+
+        record = {
+            "sid": sid,
+            "started_at": now_utc,
+            "last_seen_at": now_utc,
+            "classification": classification,
+            "reason": reason,
+            "fingerprint": fingerprint,
+            "client": client["client"],
+            "timezone": client["timezone"],
+            "locale": client["locale"],
+            "fingerprint_quality": client["fingerprint_quality"],
+            "fingerprint_strong": client.get("fingerprint_strong", False),
+            "previous_sid": previous.get("sid") if previous else None,
+            "previous_engaged": previous_engaged,
+            "gap_minutes": gap_minutes,
+            "engaged": False,
+            "engagement_actions": [],
+            "symbol_events": 0,
+            "first_symbol": None,
+        }
+
+        memory.session_records[sid] = record
+        if fingerprint:
+            memory.recent_clients[fingerprint] = record
+
+        # 바깥 코드가 내부 dict를 수정하지 못하도록 필요한 값만 복사
+        return {k: v for k, v in record.items() if k != "started_at" and k != "last_seen_at"}
+
+
+def _memory_note_symbol(sid: str, symbol: str, order: int) -> None:
+    memory = _analytics_memory()
+    with memory.lock:
+        record = memory.session_records.get(str(sid))
+        if not record:
+            return
+
+        record["last_seen_at"] = _utc_now()
+        record["symbol_events"] = int(record.get("symbol_events", 0)) + 1
+        if not record.get("first_symbol"):
+            record["first_symbol"] = symbol
+
+        # 첫 종목은 앱 초기 렌더링만으로도 기록될 수 있다.
+        # 두 번째 실제 종목 전환부터는 명확한 상호작용으로 본다.
+        if order >= 2:
+            _memory_mark_engaged_locked(memory, str(sid), f"symbol:{symbol}")
+
+
+def _memory_mark_engaged_locked(memory: _AnalyticsMemory, sid: str, action: str) -> bool:
+    record = memory.session_records.get(sid)
+    if not record:
+        return False
+
+    record["last_seen_at"] = _utc_now()
+    actions = record.setdefault("engagement_actions", [])
+    if action and action not in actions:
+        actions.append(action[:80])
+
+    if record.get("engaged"):
+        return False
+
+    record["engaged"] = True
+    memory.engaged_sids.add(sid)
+    memory.engaged_session_count += 1
+    return True
+
+
+def mark_engagement(action: str = "interaction") -> None:
+    """
+    선택적으로 앱의 버튼/탭/슬라이더 callback에서 호출하면 실제 활동 세션 판별이 더 정확해진다.
+
+    예:
+        st.button("새로고침", on_click=lambda: mark_engagement("refresh_button"))
+
+    analytics.py만 교체해도 종목을 두 번째로 전환하는 순간은 자동으로 활동 세션으로 표시된다.
+    """
+    if _is_operator():
+        return
+    sid = str(st.session_state.get("dashview_sid", ""))
+    if not sid:
+        return
+    memory = _analytics_memory()
+    with memory.lock:
+        newly_engaged = _memory_mark_engaged_locked(memory, sid, str(action or "interaction"))
+
+    if newly_engaged:
+        _log("session_engaged", sid=sid, action=str(action or "interaction")[:80])
 
 
 # ======================================================================================
@@ -500,6 +811,9 @@ def _trim_history(
 
     while len(memory.daily_sessions) > keep:
         memory.daily_sessions.popitem(last=False)
+
+    while len(memory.daily_normal_sessions) > keep:
+        memory.daily_normal_sessions.popitem(last=False)
 
     while len(memory.daily_views) > keep:
         memory.daily_views.popitem(last=False)
@@ -530,6 +844,10 @@ def _rollover_day_if_needed() -> None:
             previous_day
         ] = memory.session_count
 
+        memory.daily_normal_sessions[
+            previous_day
+        ] = memory.normal_session_count
+
         memory.daily_views[
             previous_day
         ] = sum(
@@ -548,6 +866,18 @@ def _rollover_day_if_needed() -> None:
             "sessions":
                 memory.session_count,
 
+            "normal_sessions":
+                memory.normal_session_count,
+
+            "reconnect_suspects":
+                memory.reconnect_session_count,
+
+            "bot_suspects":
+                memory.bot_session_count,
+
+            "engaged_sessions":
+                memory.engaged_session_count,
+
             "total_views":
                 sum(memory.symbol_views.values()),
 
@@ -560,8 +890,14 @@ def _rollover_day_if_needed() -> None:
             "hourly_sessions":
                 dict(memory.hourly_sessions),
 
+            "hourly_normal_sessions":
+                dict(memory.hourly_normal_sessions),
+
             "daily_sessions":
                 list(memory.daily_sessions.items()),
+
+            "daily_normal_sessions":
+                list(memory.daily_normal_sessions.items()),
 
             "daily_views":
                 list(memory.daily_views.items()),
@@ -581,6 +917,10 @@ def _rollover_day_if_needed() -> None:
             previous_day=previous_day,
             new_day=today,
             sessions=snapshot["sessions"],
+            normal_sessions=snapshot.get("normal_sessions", 0),
+            reconnect_suspects=snapshot.get("reconnect_suspects", 0),
+            bot_suspects=snapshot.get("bot_suspects", 0),
+            engaged_sessions=snapshot.get("engaged_sessions", 0),
             views=snapshot["total_views"],
         )
 
@@ -590,8 +930,14 @@ def _rollover_day_if_needed() -> None:
 
         memory.current_day = today
         memory.session_count = 0
+        memory.normal_session_count = 0
+        memory.reconnect_session_count = 0
+        memory.bot_session_count = 0
+        memory.engaged_session_count = 0
+        memory.engaged_sids = set()
         memory.symbol_views = Counter()
         memory.hourly_sessions = Counter()
+        memory.hourly_normal_sessions = Counter()
 
 
 # ======================================================================================
@@ -744,30 +1090,40 @@ def _make_daily_chart(
             "hourly_sessions",
             {},
         )
+        hourly_normal = snapshot.get(
+            "hourly_normal_sessions",
+            {},
+        )
 
         hours = list(range(24))
 
         hour_values = [
-            int(
-                hourly.get(
-                    hour,
-                    hourly.get(
-                        str(hour),
-                        0,
-                    ),
-                )
-            )
+            int(hourly.get(hour, hourly.get(str(hour), 0)))
+            for hour in hours
+        ]
+        normal_hour_values = [
+            int(hourly_normal.get(hour, hourly_normal.get(str(hour), 0)))
             for hour in hours
         ]
 
         ax2.bar(
             hours,
             hour_values,
+            alpha=0.35,
+            label="All connections",
+        )
+        ax2.plot(
+            hours,
+            normal_hour_values,
+            marker="o",
+            linewidth=1.5,
+            label="Normal sessions",
         )
 
         ax2.set_title(
-            "Sessions by hour · KST"
+            "Connections by hour · KST"
         )
+        ax2.legend(fontsize=8)
 
         ax2.set_xlabel(
             "Hour"
@@ -798,46 +1154,46 @@ def _make_daily_chart(
             "daily_sessions",
             [],
         )
+        daily_normal_map = dict(snapshot.get(
+            "daily_normal_sessions",
+            [],
+        ))
 
         if daily:
 
             dates = []
             counts = []
+            normal_counts = []
 
             for day_string, count in daily:
                 try:
-                    parsed = date.fromisoformat(
-                        day_string
-                    )
-
-                    dates.append(
-                        parsed.strftime("%m/%d")
-                    )
-
+                    parsed = date.fromisoformat(day_string)
+                    dates.append(parsed.strftime("%m/%d"))
                 except Exception:
-                    dates.append(
-                        str(day_string)
-                    )
+                    dates.append(str(day_string))
 
-                counts.append(
-                    int(count)
-                )
+                counts.append(int(count))
+                normal_counts.append(int(daily_normal_map.get(day_string, 0)))
 
             ax3.plot(
                 dates,
                 counts,
                 marker="o",
+                label="All connections",
             )
+            ax3.plot(
+                dates,
+                normal_counts,
+                marker="o",
+                linestyle="--",
+                label="Normal sessions",
+            )
+            ax3.legend(fontsize=8)
 
-            for index, count in enumerate(
-                counts
-            ):
+            for index, count in enumerate(counts):
                 ax3.annotate(
                     str(count),
-                    (
-                        index,
-                        count,
-                    ),
+                    (index, count),
                     textcoords="offset points",
                     xytext=(0, 6),
                     ha="center",
@@ -855,7 +1211,7 @@ def _make_daily_chart(
             )
 
         ax3.set_title(
-            "Daily sessions · server-memory history"
+            "Daily connections · server-memory history"
         )
 
         ax3.set_ylabel(
@@ -873,7 +1229,11 @@ def _make_daily_chart(
 
         title = (
             f"Dashboard Analytics · {snapshot['date']} KST\n"
-            f"Sessions {snapshot['sessions']}    "
+            f"Connections {snapshot['sessions']}    "
+            f"Normal {snapshot.get('normal_sessions', snapshot['sessions'])}    "
+            f"Reconnect? {snapshot.get('reconnect_suspects', 0)}    "
+            f"Bot? {snapshot.get('bot_suspects', 0)}    "
+            f"Engaged {snapshot.get('engaged_sessions', 0)}\n"
             f"Symbol views {snapshot['total_views']}    "
             f"Unique symbols {snapshot['unique_symbols']}"
         )
@@ -993,9 +1353,12 @@ def _send_pending_daily_chart() -> None:
         )
 
         message = (
-            f"📊 **대시보드 일일 방문 통계** · "
-            f"`{snapshot['date']}` KST\n"
-            f"방문 세션 **{snapshot['sessions']}회** · "
+            f"📊 **대시보드 일일 방문 통계** · `{snapshot['date']}` KST\n"
+            f"전체 연결 **{snapshot['sessions']}회** · "
+            f"일반 **{snapshot.get('normal_sessions', snapshot['sessions'])}회** · "
+            f"재연결 의심 **{snapshot.get('reconnect_suspects', 0)}회** · "
+            f"자동접속 의심 **{snapshot.get('bot_suspects', 0)}회** · "
+            f"활동 확인 **{snapshot.get('engaged_sessions', 0)}회**\n"
             f"종목 조회 **{snapshot['total_views']}회** · "
             f"고유 종목 **{snapshot['unique_symbols']}개**\n"
             f"종목 그래프는 조회수 상위 **{top_n}개** 표시"
@@ -1043,17 +1406,6 @@ def _daily_maintenance() -> None:
 # 실시간 통계 기록
 # ======================================================================================
 
-def _memory_record_session() -> None:
-    memory = _analytics_memory()
-    now_kst = _kst_datetime()
-
-    with memory.lock:
-        memory.session_count += 1
-        memory.hourly_sessions[
-            now_kst.hour
-        ] += 1
-
-
 def _memory_record_symbol(
     symbol: str,
 ) -> None:
@@ -1083,67 +1435,71 @@ def track_session(
 
         return "OPERATOR"
 
-    # 기존 코드
     _daily_maintenance()
 
     if "dashview_sid" in st.session_state:
-        return str(
-            st.session_state["dashview_sid"]
-        )
-
-    # 이하 기존 track_session 코드 그대로...
+        return str(st.session_state["dashview_sid"])
 
     # ------------------------------------------------------------------
-    # 새로운 세션
+    # 새로운 Streamlit 연결
     # ------------------------------------------------------------------
-
     sid = uuid.uuid4().hex[:12]
 
-    st.session_state[
-        "dashview_sid"
-    ] = sid
+    st.session_state["dashview_sid"] = sid
+    st.session_state["dashview_symbols"] = []
+    st.session_state["dashview_symbol_history"] = []
+    st.session_state["dashview_last_symbol"] = None
 
-    # 고유 종목
-    st.session_state[
-        "dashview_symbols"
-    ] = []
-
-    # 실제 전환 이력
-    # 중복 허용
-    st.session_state[
-        "dashview_symbol_history"
-    ] = []
-
-    # 직전에 보던 종목
-    st.session_state[
-        "dashview_last_symbol"
-    ] = None
-
-    # ------------------------------------------------------------------
-    # 서버 전체 일일 통계
-    # ------------------------------------------------------------------
-
-    _memory_record_session()
-
-    # ------------------------------------------------------------------
-    # 로그
-    # ------------------------------------------------------------------
+    diagnostics = _memory_record_session(sid)
+    classification = diagnostics.get("classification", "normal")
+    st.session_state["dashview_session_class"] = classification
+    st.session_state["dashview_client_fp"] = diagnostics.get("fingerprint", "")
 
     _log(
         "session_start",
         sid=sid,
         version=app_version,
+        classification=classification,
+        client=diagnostics.get("client", "-"),
+        client_fp=diagnostics.get("fingerprint", ""),
+        gap_minutes=diagnostics.get("gap_minutes"),
+        previous_engaged=diagnostics.get("previous_engaged"),
+        reason=diagnostics.get("reason", ""),
     )
 
-    # ------------------------------------------------------------------
-    # Discord 실시간 알림
-    # ------------------------------------------------------------------
+    labels = {
+        "normal": ("👤", "일반 세션"),
+        "reconnect_suspect": ("🔁", "재연결 의심"),
+        "bot_suspect": ("🤖", "자동접속 의심"),
+    }
+    icon, label = labels.get(classification, ("📈", "새 세션"))
 
-    _webhook_send(
-        f"📈 대시보드 방문 · "
-        f"세션 `{sid}` · "
-        f"{_kst_now()}"
-    )
+    if _session_diagnostics_enabled():
+        lines = [
+            f"{icon} **{label}** · 세션 `{sid}` · {_kst_now()}",
+            f"　클라이언트 **{diagnostics.get('client', '-')}** · "
+            f"임시지문 `{diagnostics.get('fingerprint') or '-'}` · "
+            f"TZ `{diagnostics.get('timezone', '-')}` · "
+            f"locale `{diagnostics.get('locale', '-')}`",
+        ]
+
+        gap = diagnostics.get("gap_minutes")
+        if gap is not None:
+            previous_state = (
+                "활동 있음" if diagnostics.get("previous_engaged") else "활동 없음"
+            )
+            lines.append(
+                f"　이전 동일 클라이언트 **{gap:.1f}분 전** · 이전 세션 {previous_state}"
+            )
+
+        if classification != "normal":
+            lines.append(f"　판정 근거: {diagnostics.get('reason', '-')}")
+
+        _webhook_send("\n".join(lines))
+    else:
+        _webhook_send(
+            f"{icon} {label} · 세션 `{sid}` · {_kst_now()}"
+        )
 
     return sid
 
@@ -1231,6 +1587,12 @@ def track_symbol(symbol: str) -> None:
         symbol
     )
 
+    _memory_note_symbol(
+        str(sid),
+        symbol,
+        order,
+    )
+
     # ------------------------------------------------------------------
     # stdout
     # ------------------------------------------------------------------
@@ -1286,12 +1648,31 @@ def send_current_chart_now() -> bool:
             memory.current_day
         ] = memory.session_count
 
+        current_daily_normal = OrderedDict(
+            memory.daily_normal_sessions
+        )
+        current_daily_normal[
+            memory.current_day
+        ] = memory.normal_session_count
+
         snapshot = {
             "date":
                 memory.current_day,
 
             "sessions":
                 memory.session_count,
+
+            "normal_sessions":
+                memory.normal_session_count,
+
+            "reconnect_suspects":
+                memory.reconnect_session_count,
+
+            "bot_suspects":
+                memory.bot_session_count,
+
+            "engaged_sessions":
+                memory.engaged_session_count,
 
             "total_views":
                 sum(memory.symbol_views.values()),
@@ -1305,8 +1686,14 @@ def send_current_chart_now() -> bool:
             "hourly_sessions":
                 dict(memory.hourly_sessions),
 
+            "hourly_normal_sessions":
+                dict(memory.hourly_normal_sessions),
+
             "daily_sessions":
                 list(current_daily.items()),
+
+            "daily_normal_sessions":
+                list(current_daily_normal.items()),
 
             "daily_views":
                 list(memory.daily_views.items()),
@@ -1323,7 +1710,11 @@ def send_current_chart_now() -> bool:
         message = (
             f"🧪 **대시보드 통계 테스트** · "
             f"`{snapshot['date']}` 현재까지\n"
-            f"방문 세션 **{snapshot['sessions']}회** · "
+            f"전체 연결 **{snapshot['sessions']}회** · "
+            f"일반 **{snapshot.get('normal_sessions', 0)}회** · "
+            f"재연결 의심 **{snapshot.get('reconnect_suspects', 0)}회** · "
+            f"자동접속 의심 **{snapshot.get('bot_suspects', 0)}회** · "
+            f"활동 확인 **{snapshot.get('engaged_sessions', 0)}회**\n"
             f"종목 조회 **{snapshot['total_views']}회** · "
             f"고유 종목 **{snapshot['unique_symbols']}개**"
         )
@@ -1387,6 +1778,10 @@ def render_session_footer(
 
     with memory.lock:
         today_sessions = memory.session_count
+        today_normal = memory.normal_session_count
+        today_reconnect = memory.reconnect_session_count
+        today_bot = memory.bot_session_count
+        today_engaged = memory.engaged_session_count
         today_views = sum(
             memory.symbol_views.values()
         )
@@ -1419,7 +1814,9 @@ def render_session_footer(
         f"고유 종목 {len(unique_symbols)}개 "
         f"({', '.join(unique_symbols[:8])}"
         f"{'…' if len(unique_symbols) > 8 else ''}) · "
-        f"오늘 전체 세션 {today_sessions} · "
+        f"오늘 연결 {today_sessions} · "
+        f"일반 {today_normal} · 재연결의심 {today_reconnect} · "
+        f"자동접속의심 {today_bot} · 활동확인 {today_engaged} · "
         f"오늘 전체 조회 {today_views} · "
         f"오늘 고유 종목 {today_unique} · "
         f"저장 {persisted}"
