@@ -5,7 +5,7 @@ Streamlit 대시보드 방문 추적 + Discord 알림 + 일일 통계 그래프.
 
 동작
 ----
-1. 새 Streamlit 세션 → 일반 / 재연결 의심 / 자동접속 의심으로 분류해 Discord 알림
+1. 새 Streamlit 세션 → 일반 / 재연결 의심 / 자동접속 의심으로 분류하고 첫 종목과 합쳐 Discord 1회 알림
 2. 같은 클라이언트가 짧은 간격으로 새 세션을 만들고 이전 세션에 상호작용이 없으면 재연결 의심
 3. 첫 화면의 자동 선택 종목은 알림 생략, 사용자가 실제로 종목을 전환할 때만 Discord 알림 (webhook_verbose=true)
 4. 같은 종목 단순 rerun → 조회로 세지 않음
@@ -1512,6 +1512,9 @@ def track_session(
     }
     icon, label = labels.get(classification, ("📈", "새 세션"))
 
+    # 첫 화면에서 자동 선택되는 첫 종목까지 한 번에 보여주기 위해
+    # 세션 알림은 여기서 즉시 보내지 않고 track_symbol()의 첫 호출까지 잠시 보관한다.
+    # 이렇게 하면 "세션 알림 + 첫 종목 알림"이 두 개로 나뉘지 않고 Discord 메시지 1개로 합쳐진다.
     if _session_diagnostics_enabled():
         lines = [
             f"{icon} **{label}** · 세션 `{sid}` · {_kst_now()}",
@@ -1532,12 +1535,11 @@ def track_session(
 
         if classification != "normal":
             lines.append(f"　판정 근거: {diagnostics.get('reason', '-')}")
-
-        _webhook_send("\n".join(lines))
     else:
-        _webhook_send(
-            f"{icon} {label} · 세션 `{sid}` · {_kst_now()}"
-        )
+        lines = [f"{icon} {label} · 세션 `{sid}` · {_kst_now()}"]
+
+    st.session_state["dashview_pending_session_lines"] = lines
+    _log("session_notification_pending", sid=sid)
 
     return sid
 
@@ -1646,10 +1648,33 @@ def track_symbol(symbol: str) -> None:
     # ------------------------------------------------------------------
     # Discord
     # ------------------------------------------------------------------
-    # 첫 번째 종목은 앱이 처음 렌더링될 때 자동으로 선택되는 값이므로
-    # 방문 알림과 동시에 한 번 더 울리지 않게 한다.
-    # 사용자가 실제로 다른 종목으로 전환한 두 번째 이벤트부터 알린다.
-    if _webhook_verbose() and order >= 2:
+    # 첫 종목은 세션 진단 메시지와 합쳐서 딱 1개의 Discord 메시지로 보낸다.
+    # 이후 실제 종목 전환은 webhook_verbose=true일 때 별도 알림한다.
+    if order == 1:
+        pending_lines = st.session_state.pop(
+            "dashview_pending_session_lines",
+            None,
+        )
+
+        if pending_lines:
+            pending_lines = list(pending_lines)
+            pending_lines.append(
+                f"　첫 종목 **{symbol}**"
+            )
+            _webhook_send("\n".join(pending_lines))
+            _log(
+                "session_notification_sent",
+                sid=sid,
+                first_symbol=symbol,
+            )
+        elif _webhook_verbose():
+            # Hot reload 등으로 pending 상태가 사라진 예외 상황에서도
+            # 첫 종목 자체는 놓치지 않는다.
+            _webhook_send(
+                f"　└ `{sid}` → **{symbol}** (첫 종목)"
+            )
+
+    elif _webhook_verbose():
         _webhook_send(
             f"　└ `{sid}` → **{symbol}** "
             f"(전체 {order}번째 · "
