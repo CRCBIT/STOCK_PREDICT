@@ -3877,6 +3877,287 @@ st.markdown("""
     .snapshot-forecast .snapshot-value { font-size: 0.96rem; }
   }
 
+
+
+  /* ===============================================================
+     V19 · PRICE ROUTE
+     현재가 → P50의 흐름을 중심에 두고 예상 변화율을 연결선 위 배지로 표현한다.
+     범위/확률/변동성은 하단 스트립으로 분리해 카드가 흩어져 보이지 않게 한다.
+     =============================================================== */
+  .forecast-snapshot {
+    padding: 0 !important;
+    border-radius: 16px !important;
+    background: linear-gradient(180deg, #11161d 0%, #0d1218 100%) !important;
+    border: 1px solid rgba(255,255,255,0.07) !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.018) !important;
+  }
+
+  .snapshot-route {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(112px, 0.42fr) minmax(0, 1fr);
+    gap: 20px;
+    align-items: center;
+    padding: 17px 20px 16px 20px;
+  }
+
+  .snapshot-route .snapshot-price {
+    min-width: 0;
+  }
+
+  .snapshot-route .snapshot-forecast {
+    text-align: right;
+  }
+
+  .snapshot-route .snapshot-label {
+    color: #8995a2;
+    font-size: 0.66rem;
+    font-weight: 690;
+    line-height: 1.25;
+  }
+
+  .snapshot-route .snapshot-age {
+    color: #66717d;
+    font-size: 0.56rem;
+    font-weight: 600;
+  }
+
+  .snapshot-route .snapshot-value {
+    margin-top: 6px;
+    color: #e5eaf0;
+    font-size: clamp(1.18rem, 1.65vw, 1.42rem);
+    font-weight: 780;
+    line-height: 1.08;
+    letter-spacing: -0.035em;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .snapshot-route .snapshot-forecast .snapshot-value {
+    color: #f5f7fa;
+    font-size: clamp(1.30rem, 1.85vw, 1.56rem);
+    font-weight: 820;
+  }
+
+  .snapshot-route .snapshot-sub {
+    margin-top: 5px;
+    color: #6f7b87;
+    font-size: 0.59rem;
+    line-height: 1.25;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .snapshot-connector {
+    position: relative;
+    min-width: 0;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .snapshot-route-line {
+    position: absolute;
+    left: 6px;
+    right: 7px;
+    top: 50%;
+    height: 1px;
+    background: linear-gradient(90deg,
+      rgba(117,130,145,0.18) 0%,
+      rgba(117,130,145,0.55) 58%,
+      rgba(117,130,145,0.70) 100%);
+  }
+
+  .snapshot-route-line::after {
+    content: "";
+    position: absolute;
+    right: -1px;
+    top: 50%;
+    width: 7px;
+    height: 7px;
+    border-top: 1.5px solid rgba(154,166,180,0.78);
+    border-right: 1.5px solid rgba(154,166,180,0.78);
+    transform: translateY(-50%) rotate(45deg);
+  }
+
+  .snapshot-return-pill {
+    position: relative;
+    z-index: 2;
+    min-width: 58px;
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: #11161d;
+    border: 1px solid rgba(255,255,255,0.075);
+    color: #919ca8;
+    font-size: 0.63rem;
+    font-weight: 780;
+    line-height: 1;
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    box-shadow: 0 0 0 5px #11161d;
+  }
+  .snapshot-return-pill.up {
+    color: #ff7b82;
+    border-color: rgba(255,116,123,0.20);
+    background: #151619;
+  }
+  .snapshot-return-pill.down {
+    color: #6fb2ff;
+    border-color: rgba(101,173,255,0.20);
+    background: #11171e;
+  }
+  .snapshot-return-pill.neutral {
+    color: #929ca8;
+  }
+
+  .snapshot-detail-strip {
+    display: grid;
+    grid-template-columns: minmax(300px, 1.55fr) minmax(150px, 0.62fr) minmax(150px, 0.62fr);
+    border-top: 1px solid rgba(255,255,255,0.055);
+    background: rgba(7,10,14,0.18);
+  }
+
+  .snapshot-detail {
+    min-width: 0;
+    padding: 11px 16px 12px 16px;
+  }
+
+  .snapshot-detail + .snapshot-detail {
+    border-left: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .snapshot-detail-label {
+    color: #7f8b98;
+    font-size: 0.60rem;
+    font-weight: 680;
+    line-height: 1.25;
+  }
+
+  .snapshot-detail-value {
+    margin-top: 4px;
+    color: #e8edf2;
+    font-size: 0.90rem;
+    font-weight: 780;
+    line-height: 1.18;
+    letter-spacing: -0.022em;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .snapshot-detail-value.range {
+    font-size: 0.94rem;
+  }
+
+  .snapshot-detail-value.up { color: #ff747b; }
+  .snapshot-detail-value.down { color: #65adff; }
+  .snapshot-detail-value.neutral { color: #a0a9b3; }
+
+  .snapshot-detail-sub {
+    margin-top: 3px;
+    color: #626e7a;
+    font-size: 0.54rem;
+    line-height: 1.28;
+  }
+
+  @media (max-width: 980px) {
+    .snapshot-route {
+      grid-template-columns: minmax(0, 1fr) minmax(92px, 0.34fr) minmax(0, 1fr);
+      gap: 14px;
+      padding-left: 17px;
+      padding-right: 17px;
+    }
+    .snapshot-detail-strip {
+      grid-template-columns: minmax(270px, 1.35fr) minmax(135px, 0.6fr) minmax(135px, 0.6fr);
+    }
+  }
+
+  @media (max-width: 760px) {
+    .forecast-snapshot {
+      margin-bottom: 7px !important;
+      border-radius: 12px !important;
+    }
+    .snapshot-route {
+      grid-template-columns: minmax(0, 1fr) 58px minmax(0, 1fr);
+      gap: 7px;
+      padding: 11px 11px 10px 11px;
+    }
+    .snapshot-route .snapshot-forecast {
+      text-align: right;
+    }
+    .snapshot-route .snapshot-label {
+      font-size: 0.57rem;
+    }
+    .snapshot-route .snapshot-age {
+      margin-left: 3px;
+      font-size: 0.49rem;
+    }
+    .snapshot-route .snapshot-value {
+      margin-top: 4px;
+      font-size: 0.94rem;
+    }
+    .snapshot-route .snapshot-forecast .snapshot-value {
+      font-size: 1.02rem;
+    }
+    .snapshot-route .snapshot-sub {
+      margin-top: 3px;
+      font-size: 0.49rem;
+      white-space: normal;
+    }
+    .snapshot-connector {
+      height: 40px;
+    }
+    .snapshot-route-line {
+      left: 1px;
+      right: 3px;
+    }
+    .snapshot-return-pill {
+      min-width: 0;
+      padding: 3px 5px;
+      font-size: 0.52rem;
+      box-shadow: 0 0 0 4px #11161d;
+    }
+    .snapshot-detail-strip {
+      grid-template-columns: 1fr 1fr;
+    }
+    .snapshot-range-detail {
+      grid-column: 1 / -1;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .snapshot-detail {
+      padding: 8px 10px 9px 10px;
+    }
+    .snapshot-detail:nth-child(2) {
+      border-left: 0;
+    }
+    .snapshot-detail:nth-child(3) {
+      border-left: 1px solid rgba(255,255,255,0.05);
+    }
+    .snapshot-detail-label {
+      font-size: 0.53rem;
+    }
+    .snapshot-detail-value,
+    .snapshot-detail-value.range {
+      margin-top: 3px;
+      font-size: 0.79rem;
+    }
+    .snapshot-detail-sub {
+      margin-top: 2px;
+      font-size: 0.47rem;
+    }
+  }
+
+  @media (max-width: 390px) {
+    .snapshot-route {
+      grid-template-columns: minmax(0, 1fr) 50px minmax(0, 1fr);
+      gap: 5px;
+      padding-left: 9px;
+      padding-right: 9px;
+    }
+    .snapshot-route .snapshot-age { display: none; }
+    .snapshot-route .snapshot-value { font-size: 0.88rem; }
+    .snapshot-route .snapshot-forecast .snapshot-value { font-size: 0.96rem; }
+    .snapshot-return-pill { font-size: 0.49rem; }
+  }
 </style>
 """, unsafe_allow_html=True)
 
@@ -5379,9 +5660,9 @@ def render_forecast_summary(p: Dict, hist: Optional[pd.DataFrame],
                             quotes: Dict, horizon: int) -> None:
     """차트 직전의 가격 정보를 하나의 정돈된 전망 패널로 보여준다.
 
-    현재가, P50 기준값, 예상 범위, 상승 가능성, 변동성을 여러 개의 독립 카드로
-    흩어 놓지 않고 한 패널 안에서 정보 계층에 따라 묶는다. 데스크톱에서는
-    가로로 빠르게 비교하고, 모바일에서는 같은 순서를 유지한 채 자연스럽게 쌓인다.
+    핵심 흐름은 현재가 → P50 기준값으로 단순화하고, 두 가격 사이에는 예상 변화율을
+    작은 연결 배지로 표시한다. 예상 범위·상승 가능성·변동성은 아래 보조 스트립으로
+    분리해 PC와 모바일 모두 같은 시각적 계층을 유지한다.
     """
     currency = str(p.get("currency") or "KRW")
     now = num(p.get("current_price"))
@@ -5429,52 +5710,50 @@ def render_forecast_summary(p: Dict, hist: Optional[pd.DataFrame],
 
     st.markdown(
         "<div class='forecast-snapshot'>"
-        "<div class='forecast-snapshot-body'>"
 
-        "<div class='snapshot-price-block'>"
-        "<div class='snapshot-price-compare'>"
+        "<div class='snapshot-route'>"
         "<div class='snapshot-price snapshot-current'>"
         f"<div class='snapshot-label'>{html.escape(current_label)}"
         f"<span class='snapshot-age'>{html.escape(current_age)}</span></div>"
         f"<div class='snapshot-value'>{html.escape(price(now, currency))}</div>"
         f"<div class='snapshot-sub {day_tone}'>{html.escape(current_sub)}</div>"
         "</div>"
-        "<div class='snapshot-move'>"
-        "<div class='snapshot-arrow'>→</div>"
-        f"<div class='snapshot-return {expected_tone}'>{html.escape(pct(expected))}</div>"
+
+        "<div class='snapshot-connector'>"
+        f"<div class='snapshot-return-pill {expected_tone}'>{html.escape(pct(expected))}</div>"
+        "<div class='snapshot-route-line'></div>"
         "</div>"
+
         "<div class='snapshot-price snapshot-forecast'>"
         "<div class='snapshot-label'>P50 기준값</div>"
         f"<div class='snapshot-value'>{html.escape(price(p.get('p50'), currency))}</div>"
         "<div class='snapshot-sub'>예측 분포의 중앙값</div>"
         "</div>"
         "</div>"
+
+        "<div class='snapshot-detail-strip'>"
+        "<div class='snapshot-detail snapshot-range-detail'>"
+        f"<div class='snapshot-detail-label'>{html.escape(range_label)}</div>"
+        f"<div class='snapshot-detail-value range'>{html.escape(interval_value)}</div>"
+        f"<div class='snapshot-detail-sub'>{html.escape(interval_sub)}</div>"
         "</div>"
 
-        "<div class='snapshot-range-block'>"
-        f"<div class='snapshot-label'>{html.escape(range_label)}</div>"
-        f"<div class='snapshot-range-value'>{html.escape(interval_value)}</div>"
-        f"<div class='snapshot-sub'>{html.escape(interval_sub)}</div>"
+        "<div class='snapshot-detail'>"
+        "<div class='snapshot-detail-label'>상승 가능성</div>"
+        f"<div class='snapshot-detail-value {prob_tone}'>{html.escape(pct(prob_up, signed=False))}</div>"
+        "<div class='snapshot-detail-sub'>50% 부근은 방향 우위 약함</div>"
         "</div>"
 
-        "<div class='snapshot-stats-block'>"
-        "<div class='snapshot-mini'>"
-        "<span>상승 가능성</span>"
-        f"<strong class='{prob_tone}'>{html.escape(pct(prob_up, signed=False))}</strong>"
-        "<small>50% 부근은 방향 우위 약함</small>"
-        "</div>"
-        "<div class='snapshot-mini'>"
-        "<span>최근 변동성</span>"
-        f"<strong>{html.escape(pct(volatility, signed=False))}</strong>"
-        "<small>연율 환산 · 현재 상태</small>"
+        "<div class='snapshot-detail'>"
+        "<div class='snapshot-detail-label'>최근 변동성</div>"
+        f"<div class='snapshot-detail-value'>{html.escape(pct(volatility, signed=False))}</div>"
+        "<div class='snapshot-detail-sub'>연율 환산 · 현재 상태</div>"
         "</div>"
         "</div>"
 
-        "</div>"
         "</div>",
         unsafe_allow_html=True,
     )
-
 
 def render_forecast_reading_guide(p: Dict, horizon: int) -> None:
     """차트를 먼저 본 뒤 숫자의 해석 원칙을 짧게 안내한다."""
