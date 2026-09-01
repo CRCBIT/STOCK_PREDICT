@@ -3513,6 +3513,87 @@ st.markdown("""
     .forecast-current-age { display: none !important; }
   }
 
+
+
+  /* ===============================================================
+     MOBILE HELP — hover tooltip 대신 한 번 탭해서 여는 설명
+     데스크톱에서는 기존 ? tooltip을 유지하고 모바일에서만 details를 사용.
+     =============================================================== */
+  .mobile-help {
+    display: none;
+  }
+
+  @media (max-width: 760px) {
+    /* 모바일 Safari에서는 Streamlit ? tooltip이 long-press 성격이라 숨긴다. */
+    [data-testid="stTooltipIcon"],
+    [data-testid="stTooltipHoverTarget"],
+    button[aria-label*="help" i],
+    button[aria-label*="tooltip" i],
+    button[aria-label*="도움" i] {
+      display: none !important;
+    }
+
+    .mobile-help {
+      display: block;
+      margin-top: 5px;
+      color: #8f9baa;
+      font-size: 0.68rem;
+      line-height: 1.42;
+    }
+    .mobile-help summary {
+      width: fit-content;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      list-style: none;
+      cursor: pointer;
+      user-select: none;
+      -webkit-user-select: none;
+      color: #9aa6b3;
+      padding: 4px 7px;
+      border: 1px solid rgba(120,132,148,0.16);
+      border-radius: 999px;
+      background: rgba(13,17,23,0.72);
+      -webkit-tap-highlight-color: transparent;
+    }
+    .mobile-help summary::-webkit-details-marker { display: none; }
+    .mobile-help summary::before {
+      content: "i";
+      display: inline-grid;
+      place-items: center;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      border: 1px solid rgba(88,166,255,0.38);
+      color: #78adff;
+      font-size: 0.60rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+    .mobile-help[open] summary {
+      color: #c5ced9;
+      border-color: rgba(88,166,255,0.24);
+      background: rgba(49,130,246,0.07);
+    }
+    .mobile-help-copy {
+      margin-top: 6px;
+      padding: 8px 9px;
+      border-left: 2px solid rgba(88,166,255,0.32);
+      border-radius: 0 8px 8px 0;
+      background: rgba(13,17,23,0.64);
+      color: #aeb8c5;
+      font-size: 0.69rem;
+      line-height: 1.52;
+      word-break: keep-all;
+    }
+
+    /* metric 카드 바로 아래 설명은 카드와 너무 멀어지지 않게 */
+    div[data-testid="stMetric"] + div .mobile-help,
+    div[data-testid="stMetric"] ~ div .mobile-help {
+      margin-top: 4px;
+      margin-bottom: 2px;
+    }
+  }
 </style>
 """, unsafe_allow_html=True)
 
@@ -3839,6 +3920,17 @@ def fnum(v, digits: int = 2) -> str:
     f = num(v)
     return "N/A" if f is None else f"{f:.{digits}f}"
 
+
+
+
+def mobile_help_html(text: str, label: str = "설명 보기") -> str:
+    """모바일에서 long-press 없이 탭으로 여는 보조 설명. PC에서는 CSS로 숨긴다."""
+    return (
+        "<details class='mobile-help'>"
+        f"<summary>{html.escape(label)}</summary>"
+        f"<div class='mobile-help-copy'>{html.escape(str(text))}</div>"
+        "</details>"
+    )
 
 def section_head(kicker: str, title: str, note: str = "") -> None:
     """일관된 섹션 헤더. 표시 계층만 담당한다."""
@@ -5297,6 +5389,7 @@ def render_kcs_memory(df: Optional[pd.DataFrame]) -> None:
                 label, f"{latest:,.0f} USD/kg", delta,
                 help=help_text,
             )
+            col.markdown(mobile_help_html(help_text), unsafe_allow_html=True)
 
         c1, c2 = st.columns([2, 1])
         with c1:
@@ -5306,10 +5399,12 @@ def render_kcs_memory(df: Optional[pd.DataFrame]) -> None:
                 label_visibility="collapsed",
             )
         with c2:
+            logic_help = "메모리 사이클과 일반 로직 IC 단가를 상대 비교할 때 사용합니다."
             include_logic = st.checkbox(
                 "Logic 대조군", value=False, key="kcs_logic",
-                help="메모리 사이클과 일반 로직 IC 단가를 상대 비교할 때 사용합니다.",
+                help=logic_help,
             )
+            st.markdown(mobile_help_html(logic_help), unsafe_allow_html=True)
 
         st.plotly_chart(
             kcs_memory_chart(df, years, include_logic),
@@ -5499,13 +5594,15 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
             "1년": 250,
             "2년": 500,
         }
+        chart_period_help = "거래일 수를 직접 고르는 대신 실제 달력 기간에 가까운 구간으로 표시합니다."
         chart_window = st.selectbox(
             "차트 기간",
             options=list(chart_windows),
             index=2,
             key=f"lb_{symbol}",
-            help="거래일 수를 직접 고르는 대신 실제 달력 기간에 가까운 구간으로 표시합니다.",
+            help=chart_period_help,
         )
+        st.markdown(mobile_help_html(chart_period_help), unsafe_allow_html=True)
         lookback = chart_windows[chart_window]
     with c_vol:
         st.markdown("<div style='height:2px'></div>", unsafe_allow_html=True)
@@ -5807,14 +5904,21 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
                 cov, ci = tg.get("coverage_80"), tg.get("coverage_80_ci") or [None, None]
                 dh, dci = tg.get("direction_hit"), tg.get("direction_hit_ci") or [None, None]
                 c = st.columns(4)
-                c[0].metric("확정 표본", f"{n}건",
-                            help="예측을 먼저 기록하고 만기 후 결과를 채운 건수입니다.")
-                c[1].metric("80% 구간 적중", pct(cov, signed=False),
-                            help=f"목표 80%. 95% 신뢰구간 "
-                                 f"{pct(ci[0], signed=False)}~{pct(ci[1], signed=False)}")
-                c[2].metric("방향 적중", pct(dh, signed=False),
-                            help=f"50% 가 동전 던지기. 95% 신뢰구간 "
-                                 f"{pct(dci[0], signed=False)}~{pct(dci[1], signed=False)}")
+                sample_help = "예측을 먼저 기록하고 만기 후 결과를 채운 건수입니다."
+                coverage_help = (
+                    f"목표 80%. 95% 신뢰구간 "
+                    f"{pct(ci[0], signed=False)}~{pct(ci[1], signed=False)}"
+                )
+                direction_help = (
+                    f"50% 가 동전 던지기. 95% 신뢰구간 "
+                    f"{pct(dci[0], signed=False)}~{pct(dci[1], signed=False)}"
+                )
+                c[0].metric("확정 표본", f"{n}건", help=sample_help)
+                c[0].markdown(mobile_help_html(sample_help), unsafe_allow_html=True)
+                c[1].metric("80% 구간 적중", pct(cov, signed=False), help=coverage_help)
+                c[1].markdown(mobile_help_html(coverage_help), unsafe_allow_html=True)
+                c[2].metric("방향 적중", pct(dh, signed=False), help=direction_help)
+                c[2].markdown(mobile_help_html(direction_help), unsafe_allow_html=True)
                 c[3].metric("P50 평균오차", pct(tg.get("mae_p50"), signed=False))
                 if n < 30:
                     st.caption(
