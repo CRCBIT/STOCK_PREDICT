@@ -4763,6 +4763,19 @@ st.markdown("""
     }
   }
 
+
+
+  /* PRICE ONLY — 차트 위에는 현재가 → P50만 남긴다. */
+  .forecast-snapshot-price-only .snapshot-route {
+    padding-top: 18px !important;
+    padding-bottom: 18px !important;
+  }
+  @media (max-width: 760px) {
+    .forecast-snapshot-price-only .snapshot-route {
+      padding-top: 13px !important;
+      padding-bottom: 13px !important;
+    }
+  }
 </style>
 """, unsafe_allow_html=True)
 
@@ -6352,23 +6365,14 @@ def _decision_card(label: str, value: str, sub: str = "") -> str:
 
 def render_forecast_summary(p: Dict, hist: Optional[pd.DataFrame],
                             quotes: Dict, horizon: int) -> None:
-    """차트 직전의 가격 정보를 하나의 정돈된 전망 패널로 보여준다.
+    """차트 직전에는 현재가 → P50 기준값의 핵심 가격 흐름만 보여준다.
 
-    핵심 흐름은 현재가 → P50 기준값으로 단순화하고, 두 가격 사이에는 예상 변화율을
-    작은 연결 배지로 표시한다. 예상 범위·상승 가능성·변동성은 아래 보조 스트립으로
-    분리해 PC와 모바일 모두 같은 시각적 계층을 유지한다.
+    예상 범위·상승 가능성·최근 변동성은 차트 위에서 제거해 시선을 가격과
+    예측 중앙값에 집중시킨다. 관련 수치는 상세/진단 영역에서 확인한다.
     """
     currency = str(p.get("currency") or "KRW")
     now = num(p.get("current_price"))
     expected = ret_of(p)
-    prob_up = num(p.get("prob_up"))
-    volatility = num(p.get("expected_volatility_annual"))
-
-    low = num(p.get("interval_80_low"))
-    high = num(p.get("interval_80_high"))
-    calibrated_interval = low is not None and high is not None
-    if not calibrated_interval:
-        low, high = num(p.get("p10")), num(p.get("p90"))
 
     prev_close, prev_label = prev_close_ref(hist, str(p.get("country") or "KR"))
     day_change = (now / prev_close - 1.0) if (prev_close and now) else None
@@ -6387,23 +6391,11 @@ def render_forecast_summary(p: Dict, hist: Optional[pd.DataFrame],
             else "모델 계산 시점"
         )
 
-    if low is not None and high is not None:
-        interval_value = f"{price(low, currency)} ~ {price(high, currency)}"
-        interval_sub = (
-            f"현재가 대비 {pct(low / now - 1)} ~ {pct(high / now - 1)}"
-            if now else "폭이 넓을수록 불확실성이 큼"
-        )
-    else:
-        interval_value = "N/A"
-        interval_sub = "예상 범위 정보 없음"
-
-    range_label = "모델 80% 예상 범위" if calibrated_interval else "P10~P90 예상 범위"
     expected_tone = _change_tone(expected)
     day_tone = _change_tone(day_change)
-    prob_tone = _change_tone((prob_up - 0.5) if prob_up is not None else None)
 
     st.markdown(
-        "<div class='forecast-snapshot'>"
+        "<div class='forecast-snapshot forecast-snapshot-price-only'>"
 
         "<div class='snapshot-route'>"
         "<div class='snapshot-price snapshot-current'>"
@@ -6424,26 +6416,6 @@ def render_forecast_summary(p: Dict, hist: Optional[pd.DataFrame],
         "<div class='snapshot-label'>P50 기준값</div>"
         f"<div class='snapshot-value'>{html.escape(price(p.get('p50'), currency))}</div>"
         "<div class='snapshot-sub'>예측 분포의 중앙값</div>"
-        "</div>"
-        "</div>"
-
-        "<div class='snapshot-detail-strip'>"
-        "<div class='snapshot-detail snapshot-range-detail'>"
-        f"<div class='snapshot-detail-label'>{html.escape(range_label)}</div>"
-        f"<div class='snapshot-detail-value range'>{html.escape(interval_value)}</div>"
-        f"<div class='snapshot-detail-sub'>{html.escape(interval_sub)}</div>"
-        "</div>"
-
-        "<div class='snapshot-detail'>"
-        "<div class='snapshot-detail-label'>상승 가능성</div>"
-        f"<div class='snapshot-detail-value {prob_tone}'>{html.escape(pct(prob_up, signed=False))}</div>"
-        "<div class='snapshot-detail-sub'>50% 부근은 방향 우위 약함</div>"
-        "</div>"
-
-        "<div class='snapshot-detail'>"
-        "<div class='snapshot-detail-label'>최근 변동성</div>"
-        f"<div class='snapshot-detail-value'>{html.escape(pct(volatility, signed=False))}</div>"
-        "<div class='snapshot-detail-sub'>연율 환산 · 현재 상태</div>"
         "</div>"
         "</div>"
 
