@@ -27,9 +27,10 @@ Discord Webhook은 과거 메시지를 읽을 수 없으므로 재시작 이전 
 개인정보
 --------
 원본 IP 주소는 Discord 세션 알림에 표시하고, 현재 Streamlit 서버 메모리의 세션 기록에도 보관한다.
+가능하면 브라우저에서 직접 조회한 공인 IP를 사용하고, 실패할 때만 프록시 전달 헤더/st.context로 폴백한다.
 IP 기반 추정 위치/통신사 조회는 백그라운드에서 수행해 화면 로딩을 막지 않는다.
 전체 User-Agent 문자열은 저장하지 않고 클라이언트 종류만 표시한다.
-세션 재연결 판별에는 프록시 전달 헤더 또는 st.context에서 얻은 IP/User-Agent/시간대/locale을 즉시 조합한 뒤
+세션 재연결 판별에는 브라우저 공인 IP 또는 폴백 IP/User-Agent/시간대/locale을 즉시 조합한 뒤
 프로세스마다 새로 생성되는 salt로 해시한 짧은 임시 클라이언트 지문만 사용한다.
 서버 프로세스가 재시작되면 salt와 지문 이력도 함께 사라진다.
 세션 ID는 무작위 UUID 일부만 사용한다.
@@ -963,14 +964,48 @@ def _extract_real_client_ip(headers: dict[str, str], context_ip: str) -> tuple[s
     return "", "unavailable"
 
 
-def _client_snapshot(memory: _AnalyticsMemory) -> dict:
-    """현재 연결의 IP, 클라이언트 정보와 임시 지문을 만든다."""
+def _client_snapshot(
+    memory: _AnalyticsMemory,
+    browser_info: Optional[dict] = None,
+) -> dict:
+    """
+    현재 연결의 IP, 클라이언트 정보와 임시 지문을 만든다.
+
+    Streamlit Community Cloud에서는 서버가 보는 연결 IP가 127.0.0.1일 수 있으므로,
+    streamlit_app.py가 브라우저에서 직접 확인한 공인 IP를 전달하면 그것을 최우선으로 쓴다.
+    브라우저 조회가 실패하거나 없는 경우에만 forwarding header/st.context로 폴백한다.
+    """
     headers = _context_headers()
-    user_agent = headers.get("user-agent", "")
+    browser = browser_info if isinstance(browser_info, dict) else {}
+
     context_ip = str(_safe_context_value("ip_address", "") or "").strip()
-    ip_address, ip_source = _extract_real_client_ip(headers, context_ip)
-    timezone_name = str(_safe_context_value("timezone", "") or "").strip()
-    locale = str(_safe_context_value("locale", "") or "").strip()
+    fallback_ip, fallback_source = _extract_real_client_ip(headers, context_ip)
+
+    browser_ip = _normalize_public_ip(str(browser.get("ip") or ""))
+    if browser_ip:
+        ip_address = browser_ip
+        ip_source = str(browser.get("source") or "browser-ipify")
+    else:
+        ip_address = fallback_ip
+        ip_source = fallback_source
+
+    user_agent = str(
+        browser.get("user_agent")
+        or browser.get("userAgent")
+        or headers.get("user-agent", "")
+        or ""
+    ).strip()
+    timezone_name = str(
+        browser.get("timezone")
+        or _safe_context_value("timezone", "")
+        or ""
+    ).strip()
+    locale = str(
+        browser.get("locale")
+        or browser.get("language")
+        or _safe_context_value("locale", "")
+        or ""
+    ).strip()
 
     raw = "|".join((ip_address, user_agent, timezone_name, locale)).strip("|")
     fingerprint = ""
@@ -1017,7 +1052,10 @@ def _prune_session_records(memory: _AnalyticsMemory, now_utc: datetime) -> None:
         memory.recent_clients.pop(fp, None)
 
 
-def _memory_record_session(sid: str) -> dict:
+def _memory_record_session(
+    sid: str,
+    browser_info: Optional[dict] = None,
+) -> dict:
     """새 연결을 분류하고 서버 메모리 통계에 기록한다."""
     memory = _analytics_memory()
     now_utc = _utc_now()
@@ -1025,7 +1063,7 @@ def _memory_record_session(sid: str) -> dict:
 
     with memory.lock:
         _prune_session_records(memory, now_utc)
-        client = _client_snapshot(memory)
+        client = _client_snapshot(memory, browser_info)
         fingerprint = client["fingerprint"]
         previous = memory.recent_clients.get(fingerprint) if fingerprint else None
 
@@ -1785,6 +1823,7 @@ def _memory_record_symbol(
 
 def track_session(
     app_version: str = "",
+    browser_info: Optional[dict] = None,
 ) -> str:
 
     # 운영자는 모든 방문 통계에서 제외
@@ -1812,7 +1851,7 @@ def track_session(
     st.session_state["dashview_symbol_history"] = []
     st.session_state["dashview_last_symbol"] = None
 
-    diagnostics = _memory_record_session(sid)
+    diagnostics = _memory_record_session(sid, browser_info)
     classification = diagnostics.get("classification", "normal")
     st.session_state["dashview_session_class"] = classification
     st.session_state["dashview_client_fp"] = diagnostics.get("fingerprint", "")
@@ -1825,6 +1864,7 @@ def track_session(
         client=diagnostics.get("client", "-"),
         raw_ip=diagnostics.get("raw_ip", "-"),
         ip_source=diagnostics.get("ip_source", "-"),
+        browser_probe=bool(isinstance(browser_info, dict)),
         context_ip=diagnostics.get("context_ip", "-"),
         masked_ip=diagnostics.get("masked_ip", "-"),
         client_fp=diagnostics.get("fingerprint", ""),

@@ -83,6 +83,9 @@ st.markdown("""
 
   #MainMenu, footer, header {visibility: hidden;}
 
+  /* 방문 분석용 브라우저 JS component는 화면에 노출하지 않는다. */
+  .stElementContainer:has(IFrame) { display: none; }
+
   [data-testid="stAppViewContainer"] {
     background:
       radial-gradient(1100px 420px at 15% -10%, rgba(240,185,11,0.075), transparent 55%),
@@ -7436,25 +7439,170 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
 
 
 # ======================================================================================
+# 브라우저 네트워크 정보 · Streamlit Cloud 프록시 우회용
+# ======================================================================================
+def _browser_network_info() -> Optional[Dict]:
+    """
+    Streamlit Community Cloud의 Python 프로세스에서는 실제 방문자 IP 대신
+    127.0.0.1 같은 내부 프록시 주소만 보일 수 있다.
+
+    streamlit-javascript component가 *방문자의 브라우저에서* ipify를 호출해
+    공인 IP를 받아 Python으로 돌려준다. 첫 호출에서는 component가 비동기로
+    실행되므로 None을 반환할 수 있다. 이때 대시보드는 그대로 렌더링하고,
+    component 값이 돌아와 자동 rerun된 뒤 analytics 세션을 시작한다.
+
+    브라우저 요청은 2.5초에 강제 timeout되므로 외부 서비스 장애가 앱 로딩을
+    막지 않는다. 패키지가 없거나 실행이 실패해도 analytics는 폴백 모드로 동작한다.
+    """
+    cached = st.session_state.get("dashview_browser_network_info")
+    if isinstance(cached, dict):
+        return cached
+
+    try:
+        from streamlit_javascript import st_javascript
+    except Exception as exc:
+        fallback = {
+            "ip": "",
+            "source": "browser-component-unavailable",
+            "user_agent": "",
+            "timezone": "",
+            "locale": "",
+            "ok": False,
+            "error": f"{type(exc).__name__}: {str(exc)[:120]}",
+        }
+        st.session_state["dashview_browser_network_info"] = fallback
+        print(
+            f"DASHVIEW_BROWSER_IP_FALLBACK {fallback['error']}",
+            flush=True,
+        )
+        return fallback
+
+    javascript = r"""
+    (async function(){
+        const base = {
+            user_agent: (window.navigator && window.navigator.userAgent) || "",
+            timezone: (Intl.DateTimeFormat().resolvedOptions().timeZone) || "",
+            locale: (window.navigator && (window.navigator.language ||
+                     (window.navigator.languages && window.navigator.languages[0]))) || ""
+        };
+
+        const controller = new AbortController();
+        const timer = setTimeout(function(){ controller.abort(); }, 2500);
+
+        try {
+            const response = await fetch(
+                "https://api64.ipify.org?format=json",
+                {
+                    method: "GET",
+                    cache: "no-store",
+                    signal: controller.signal
+                }
+            );
+            if (!response.ok) {
+                throw new Error("ipify HTTP " + response.status);
+            }
+            const data = await response.json();
+            return Object.assign({}, base, {
+                ip: (data && data.ip) ? String(data.ip) : "",
+                source: "browser-ipify",
+                ok: Boolean(data && data.ip),
+                error: ""
+            });
+        } catch (error) {
+            return Object.assign({}, base, {
+                ip: "",
+                source: "browser-ipify-failed",
+                ok: false,
+                error: String(error || "browser ip lookup failed")
+            });
+        } finally {
+            clearTimeout(timer);
+        }
+    })()
+    """
+
+    try:
+        value = st_javascript(
+            javascript,
+            None,
+            "DASHVIEW_BROWSER_NETWORK_V1",
+        )
+    except Exception as exc:
+        fallback = {
+            "ip": "",
+            "source": "browser-component-error",
+            "user_agent": "",
+            "timezone": "",
+            "locale": "",
+            "ok": False,
+            "error": f"{type(exc).__name__}: {str(exc)[:120]}",
+        }
+        st.session_state["dashview_browser_network_info"] = fallback
+        print(
+            f"DASHVIEW_BROWSER_IP_ERROR {fallback['error']}",
+            flush=True,
+        )
+        return fallback
+
+    # component는 첫 렌더에서 아직 값이 없을 수 있다. 분석만 잠시 보류하고
+    # 화면 렌더링은 계속 진행한다.
+    if value is None:
+        return None
+
+    if isinstance(value, dict):
+        info = {
+            "ip": str(value.get("ip") or "").strip(),
+            "source": str(value.get("source") or "browser-ipify"),
+            "user_agent": str(value.get("user_agent") or ""),
+            "timezone": str(value.get("timezone") or ""),
+            "locale": str(value.get("locale") or ""),
+            "ok": bool(value.get("ok")),
+            "error": str(value.get("error") or "")[:180],
+        }
+    else:
+        info = {
+            "ip": "",
+            "source": "browser-component-invalid-result",
+            "user_agent": "",
+            "timezone": "",
+            "locale": "",
+            "ok": False,
+            "error": f"unexpected result: {type(value).__name__}",
+        }
+
+    st.session_state["dashview_browser_network_info"] = info
+    print(
+        "DASHVIEW_BROWSER_IP "
+        f"ok={info['ok']} source={info['source']} "
+        f"ip={'set' if info['ip'] else 'missing'}",
+        flush=True,
+    )
+    return info
+
+
+# ======================================================================================
 # 본문
 # ======================================================================================
 def main() -> None:
-    # 방문 추적. Streamlit Cloud 내장 Analytics 가 총 조회수를 주므로,
-    # 여기서는 그것이 주지 않는 것(어떤 종목을 보는가)만 남긴다.
-    # 실패해도 대시보드는 그대로 동작해야 한다.
+    # 방문 추적. 첫 렌더에서는 브라우저 공인 IP component가 비동기로 동작하므로
+    # 값이 아직 없으면 analytics만 잠시 보류한다. 대시보드 화면은 정상 렌더링된다.
+    browser_info = _browser_network_info()
     try:
         from analytics import render_session_footer, track_session, track_symbol
-        track_session()
 
+        if browser_info is None:
+            # component 결과가 돌아오면 Streamlit이 자동 rerun한다.
+            track_symbol = None           # type: ignore[assignment]
+            render_session_footer = None  # type: ignore[assignment]
+        else:
+            track_session(browser_info=browser_info)
     except Exception as exc:
         print(
-            f"DASHVIEW_BOOT_ERROR "
-            f"{type(exc).__name__}: {exc}",
+            f"DASHVIEW_BOOT_ERROR {type(exc).__name__}: {exc}",
             flush=True,
         )
-
-        track_symbol = None
-        render_session_footer = None
+        track_symbol = None           # type: ignore[assignment]
+        render_session_footer = None  # type: ignore[assignment]
 
     manifest = load_manifest()
     payload = load_predictions()
