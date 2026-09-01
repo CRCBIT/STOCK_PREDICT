@@ -2956,6 +2956,348 @@ st.markdown("""
     .stTabs [data-baseweb="tab-list"] { gap: 16px !important; }
     .stTabs button[data-baseweb="tab"] { font-size: 0.76rem !important; }
   }
+
+
+  /* ===============================================================
+     V15 · QUICK CHART / MOBILE FIRST
+     차트가 핵심이라는 원래 설계 원칙을 실제 화면 순서에도 반영한다.
+     큰 요약 카드들을 한 줄 glance strip으로 압축하고, 휴대폰에서는
+     헤더·컨트롤·판정의 세로 높이를 줄여 차트 시작점을 앞당긴다.
+     =============================================================== */
+  .forecast-glance {
+    display: grid;
+    grid-template-columns:
+      minmax(230px, 1.35fr)
+      minmax(135px, 0.78fr)
+      minmax(250px, 1.45fr)
+      minmax(125px, 0.72fr)
+      minmax(125px, 0.72fr);
+    gap: 8px;
+    align-items: stretch;
+    margin: 0 0 10px 0;
+  }
+  .forecast-glance-main,
+  .forecast-glance-stat {
+    min-width: 0;
+    box-sizing: border-box;
+    border: 1px solid rgba(255,255,255,0.055);
+    border-radius: 14px;
+    background: #10141a;
+  }
+  .forecast-glance-main {
+    min-height: 102px;
+    padding: 13px 14px 12px 14px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .forecast-glance-main-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .forecast-glance-main-bottom {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 12px;
+  }
+  .forecast-glance-main-value {
+    min-width: 0;
+    color: #f6f7f9;
+    font-size: clamp(1.34rem, 2.15vw, 1.82rem);
+    font-weight: 780;
+    line-height: 1.1;
+    letter-spacing: -0.045em;
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
+  }
+  .forecast-glance-main-change {
+    flex: 0 0 auto;
+    font-size: 0.76rem;
+    font-weight: 720;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  .forecast-glance-main-change.up,
+  .forecast-glance-sub.up { color: #ff747b; }
+  .forecast-glance-main-change.down,
+  .forecast-glance-sub.down { color: #65adff; }
+  .forecast-glance-main-change.neutral,
+  .forecast-glance-sub.neutral { color: #8b95a1; }
+
+  .forecast-glance-stat {
+    min-height: 102px;
+    padding: 12px 12px 10px 12px;
+    display: flex;
+    flex-direction: column;
+  }
+  .forecast-glance-label {
+    color: #8b95a1;
+    font-size: 0.66rem;
+    font-weight: 660;
+    line-height: 1.3;
+  }
+  .forecast-glance-value {
+    margin-top: auto;
+    color: #edf0f3;
+    font-size: clamp(0.84rem, 1.10vw, 1.00rem);
+    font-weight: 735;
+    line-height: 1.22;
+    letter-spacing: -0.025em;
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
+  }
+  .forecast-glance-sub {
+    margin-top: 5px;
+    color: #717c89;
+    font-size: 0.61rem;
+    line-height: 1.32;
+  }
+  .forecast-glance-stat.interval .forecast-glance-value {
+    font-size: clamp(0.80rem, 1.0vw, 0.94rem);
+  }
+
+  .reading-guide.compact {
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+    margin-top: 8px !important;
+    margin-bottom: 10px !important;
+  }
+
+  /* 컨트롤과 차트의 시각적 연결을 강화 */
+  .forecast-controls {
+    margin-bottom: 1px !important;
+    color: #8d97a3 !important;
+    font-weight: 560 !important;
+  }
+  div[data-testid="stPlotlyChart"] {
+    margin-top: 1px;
+  }
+  .chart-caption {
+    margin-top: 5px !important;
+    margin-bottom: 1px !important;
+  }
+
+  /* PC에서도 상단이 카드 벽처럼 보이지 않도록 섹션 밀도를 조금 낮춘다. */
+  .section-head {
+    margin-top: 20px !important;
+    margin-bottom: 7px !important;
+  }
+  .verdict {
+    margin-bottom: 9px !important;
+    padding-top: 11px !important;
+    padding-bottom: 11px !important;
+  }
+  div[data-testid="stExpander"] details summary {
+    min-height: 44px !important;
+  }
+
+  @media (max-width: 1080px) {
+    .forecast-glance {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    .forecast-glance-main { grid-column: span 2; }
+    .forecast-glance-stat.interval { grid-column: span 2; }
+  }
+
+  @media (max-width: 760px) {
+    .block-container {
+      padding-top: 0.42rem !important;
+      padding-left: 0.72rem !important;
+      padding-right: 0.72rem !important;
+      padding-bottom: 1.5rem !important;
+    }
+
+    /* 헤더: 모바일 첫 화면에서 제목과 최신성만 남긴다. */
+    .dash-hero {
+      display: grid !important;
+      grid-template-columns: minmax(0, 1fr) auto !important;
+      align-items: center !important;
+      gap: 8px !important;
+      padding: 10px 11px !important;
+      margin-bottom: 6px !important;
+      border-radius: 12px !important;
+    }
+    .dash-title { font-size: 1.23rem !important; }
+    .dash-subtitle { display: none !important; }
+    .dash-meta {
+      width: auto !important;
+      padding: 0 !important;
+      border: 0 !important;
+      justify-items: end !important;
+      text-align: right !important;
+    }
+    .dash-updated { display: none !important; }
+    .status-pill {
+      min-height: 25px !important;
+      padding: 5px 7px !important;
+      font-size: 0.62rem !important;
+      white-space: nowrap !important;
+    }
+    .dashboard-facts { display: none !important; }
+
+    .section-head {
+      margin-top: 12px !important;
+      margin-bottom: 5px !important;
+      padding-left: 0 !important;
+    }
+    .section-title { font-size: 0.94rem !important; }
+    .section-note { font-size: 0.64rem !important; }
+    .asset-picker-note { display: none !important; }
+
+    div[data-testid="stSelectbox"] [data-baseweb="select"] > div,
+    div[data-testid="stSelectbox"] div[role="combobox"] {
+      min-height: 40px !important;
+    }
+
+    .stTabs [data-baseweb="tab-list"] {
+      min-height: 38px !important;
+      gap: 14px !important;
+      margin-top: 1px !important;
+    }
+    .stTabs button[data-baseweb="tab"] {
+      min-height: 38px !important;
+      font-size: 0.72rem !important;
+    }
+
+    .forecast-controls { display: none !important; }
+
+    /* 예측기간은 한 줄, 차트기간/거래량은 그 아래 두 칸으로 정리한다. */
+    div[data-testid="stHorizontalBlock"]:has(> div[data-testid="stColumn"] div[data-testid="stRadio"]) {
+      display: grid !important;
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      gap: 0.30rem 0.55rem !important;
+      width: 100% !important;
+      align-items: end !important;
+    }
+    div[data-testid="stHorizontalBlock"]:has(> div[data-testid="stColumn"] div[data-testid="stRadio"]) > div[data-testid="stColumn"] {
+      width: 100% !important;
+      min-width: 0 !important;
+      flex: none !important;
+    }
+    div[data-testid="stHorizontalBlock"]:has(> div[data-testid="stColumn"] div[data-testid="stRadio"]) > div[data-testid="stColumn"]:first-child {
+      grid-column: 1 / -1 !important;
+    }
+    div[data-testid="stRadio"] > label p,
+    div[data-testid="stSelectSlider"] > label p,
+    div[data-testid="stCheckbox"] label p {
+      font-size: 0.64rem !important;
+    }
+    div[role="radiogroup"] label {
+      min-height: 30px !important;
+      padding: 4px 8px !important;
+      font-size: 0.70rem !important;
+    }
+    div[data-testid="stCheckbox"] label { min-height: 28px !important; }
+
+    .verdict {
+      grid-template-columns: minmax(0, 1fr) !important;
+      gap: 0 !important;
+      margin: 5px 0 7px 0 !important;
+      padding: 8px 10px !important;
+      border-radius: 10px !important;
+    }
+    .verdict-icon { display: none !important; }
+    .verdict-title {
+      display: inline !important;
+      margin-right: 6px;
+      font-size: 0.76rem !important;
+    }
+    .verdict-copy {
+      display: inline !important;
+      margin-top: 0 !important;
+      font-size: 0.69rem !important;
+      line-height: 1.38 !important;
+    }
+
+    /* 모바일 핵심: 기존 206px + 4개 세로 카드 대신 2열 compact strip. */
+    .forecast-glance {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      gap: 6px !important;
+      margin-bottom: 7px !important;
+    }
+    .forecast-glance-main {
+      grid-column: 1 / -1 !important;
+      min-height: 76px !important;
+      padding: 9px 10px !important;
+      border-radius: 10px !important;
+    }
+    .forecast-glance-main-top { align-items: center !important; }
+    .forecast-glance-main-bottom { margin-top: 8px !important; }
+    .forecast-glance-main-value { font-size: 1.23rem !important; }
+    .forecast-glance-main-change { font-size: 0.68rem !important; }
+    .confidence-badge {
+      padding: 4px 6px !important;
+      font-size: 0.59rem !important;
+    }
+    .forecast-glance-stat {
+      min-height: 62px !important;
+      padding: 8px 9px 7px 9px !important;
+      border-radius: 10px !important;
+    }
+    .forecast-glance-stat.interval { grid-column: 1 / -1 !important; }
+    .forecast-glance-label { font-size: 0.60rem !important; }
+    .forecast-glance-value {
+      font-size: 0.79rem !important;
+      line-height: 1.18 !important;
+    }
+    .forecast-glance-stat.interval .forecast-glance-value { font-size: 0.78rem !important; }
+    .forecast-glance-sub {
+      margin-top: 3px !important;
+      font-size: 0.56rem !important;
+      line-height: 1.24 !important;
+    }
+
+    div[data-testid="stPlotlyChart"] {
+      border-radius: 12px !important;
+      padding: 0 !important;
+    }
+    .chart-caption {
+      gap: 4px 9px !important;
+      margin: 4px 1px 1px 1px !important;
+      font-size: 0.61rem !important;
+      line-height: 1.35 !important;
+    }
+    .chart-caption span::before {
+      width: 5px !important;
+      height: 5px !important;
+      margin-right: 4px !important;
+    }
+    .reading-guide.compact {
+      grid-template-columns: 1fr !important;
+      gap: 2px !important;
+      padding: 8px 9px !important;
+      margin: 6px 0 8px 0 !important;
+      border-radius: 10px !important;
+    }
+    .reading-guide-label { font-size: 0.61rem !important; }
+    .reading-guide-copy { font-size: 0.64rem !important; line-height: 1.42 !important; }
+
+    div[data-testid="stExpander"] {
+      margin-top: 5px !important;
+      border-radius: 11px !important;
+    }
+    div[data-testid="stExpander"] details summary {
+      min-height: 40px !important;
+      border-radius: 11px !important;
+    }
+  }
+
+  @media (max-width: 430px) {
+    .block-container {
+      padding-left: 0.60rem !important;
+      padding-right: 0.60rem !important;
+    }
+    .dash-title { font-size: 1.16rem !important; }
+    .section-note { display: none !important; }
+    .forecast-glance-main-value { font-size: 1.16rem !important; }
+    .forecast-glance-main-change { font-size: 0.64rem !important; }
+    .forecast-glance-value { font-size: 0.75rem !important; }
+  }
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -4445,7 +4787,11 @@ def _decision_card(label: str, value: str, sub: str = "") -> str:
 
 def render_forecast_summary(p: Dict, hist: Optional[pd.DataFrame],
                             quotes: Dict, horizon: int) -> None:
-    """핵심 숫자와 그 숫자를 읽는 방법을 한 묶음으로 표시한다."""
+    """차트 위에는 판단에 필요한 숫자만 짧게 요약한다.
+
+    기존의 큰 1+4 카드 레이아웃은 모바일에서 차트 시작점을 지나치게 아래로
+    밀어냈다. 값 자체는 그대로 유지하되 한 개의 compact glance strip으로 묶는다.
+    """
     currency = str(p.get("currency") or "KRW")
     now = num(p.get("current_price"))
     expected = ret_of(p)
@@ -4465,23 +4811,21 @@ def render_forecast_summary(p: Dict, hist: Optional[pd.DataFrame],
         current_label = f"현재가 · {quote_age}"
         current_sub = (
             f"{prev_label} 대비 {pct(day_change)}" if day_change is not None
-            else "최신 가격으로 범위를 맞춰 표시"
+            else "최신 가격 기준"
         )
     else:
         current_label = "예측 기준가"
         current_sub = (
             f"{prev_label} 대비 {pct(day_change)}" if day_change is not None
-            else "모델 계산 시점의 가격"
+            else "모델 계산 시점"
         )
 
     if low is not None and high is not None:
-        interval_value = (
-            f"{price(low, currency)} ~ {price(high, currency)}"
+        interval_value = f"{price(low, currency)} ~ {price(high, currency)}"
+        interval_sub = (
+            f"현재가 대비 {pct(low / now - 1)} ~ {pct(high / now - 1)}"
+            if now else "폭이 넓을수록 불확실성이 큼"
         )
-        if now:
-            interval_sub = f"현재가 대비 {pct(low / now - 1)} ~ {pct(high / now - 1)}"
-        else:
-            interval_sub = "폭이 넓을수록 불확실성이 큼"
     else:
         interval_value = "N/A"
         interval_sub = "예상 범위 정보 없음"
@@ -4490,53 +4834,66 @@ def render_forecast_summary(p: Dict, hist: Optional[pd.DataFrame],
     grade_label = grade_ko(grade)
     confidence = fnum(p.get("confidence"), 0)
     expected_tone = _change_tone(expected)
-    primary = (
-        "<div class='forecast-primary-card'>"
-        "<div class='forecast-primary-top'>"
-        f"<div class='forecast-primary-label'>{horizon}거래일 뒤 기준값</div>"
+
+    def glance_stat(label: str, value: str, sub: str = "", tone: str = "neutral",
+                    extra: str = "") -> str:
+        klass = f"forecast-glance-stat {extra}".strip()
+        return (
+            f"<div class='{klass}'>"
+            f"<div class='forecast-glance-label'>{html.escape(label)}</div>"
+            f"<div class='forecast-glance-value'>{html.escape(value)}</div>"
+            f"<div class='forecast-glance-sub {tone}'>{html.escape(sub)}</div>"
+            "</div>"
+        )
+
+    main = (
+        "<div class='forecast-glance-main'>"
+        "<div class='forecast-glance-main-top'>"
+        f"<div class='forecast-glance-label'>{horizon}거래일 뒤 기준값</div>"
         f"<div class='confidence-badge {grade.lower()}'>"
         f"신뢰도 {html.escape(confidence)}/100 · {html.escape(grade_label)}</div>"
         "</div>"
-        f"<div class='forecast-primary-value'>{html.escape(price(p.get('p50'), currency))}</div>"
-        f"<div class='forecast-primary-change {expected_tone}'>"
-        f"현재가 대비 {html.escape(pct(expected))}</div>"
-        "<div class='forecast-primary-note'>예상 분포의 가운데 값이에요. 목표가로 해석하지 마세요.</div>"
+        "<div class='forecast-glance-main-bottom'>"
+        f"<div class='forecast-glance-main-value'>{html.escape(price(p.get('p50'), currency))}</div>"
+        f"<div class='forecast-glance-main-change {expected_tone}'>현재가 대비 {html.escape(pct(expected))}</div>"
+        "</div>"
         "</div>"
     )
 
-    side_cards = [
-        _metric_card(
-            current_label,
-            price(now, currency),
-            current_sub,
-            _change_tone(day_change),
+    cards = [
+        glance_stat(current_label, price(now, currency), current_sub,
+                    _change_tone(day_change), "current"),
+        glance_stat(
+            "모델 80% 예상 범위" if calibrated_interval else "P10~P90 예상 범위",
+            interval_value, interval_sub, extra="interval"
         ),
-        _metric_card(
-            "모델의 80% 예상 범위" if calibrated_interval else "P10~P90 예상 범위",
-            interval_value,
-            interval_sub,
+        glance_stat(
+            "상승 가능성", pct(prob_up, signed=False),
+            "50% 부근이면 방향 우위 약함",
+            _change_tone((prob_up - 0.5) if prob_up is not None else None), "prob"
         ),
-        _metric_card(
-            "상승 가능성",
-            pct(prob_up, signed=False),
-            "50%에 가까우면 방향 우위가 약함",
-            _change_tone((prob_up - 0.5) if prob_up is not None else None),
-        ),
-        _metric_card(
-            "최근 변동성",
-            pct(volatility, signed=False),
-            "연율 환산 · 예측값이 아닌 현재 상태",
+        glance_stat(
+            "최근 변동성", pct(volatility, signed=False),
+            "연율 환산 · 현재 상태", extra="volatility"
         ),
     ]
     st.markdown(
-        "<div class='forecast-summary-grid'>" + primary
-        + "<div class='forecast-side-grid'>" + "".join(side_cards)
-        + "</div></div>",
+        "<div class='forecast-glance'>" + main + "".join(cards) + "</div>",
         unsafe_allow_html=True,
     )
 
+
+def render_forecast_reading_guide(p: Dict, horizon: int) -> None:
+    """차트를 먼저 본 뒤 숫자의 해석 원칙을 짧게 안내한다."""
+    currency = str(p.get("currency") or "KRW")
+    low = num(p.get("interval_80_low"))
+    high = num(p.get("interval_80_high"))
+    if low is None or high is None:
+        low, high = num(p.get("p10")), num(p.get("p90"))
+
+    grade = grade_of(p)
     if grade == "LOW":
-        first = "현재는 <b>방향보다 범위</b>를 보는 화면입니다."
+        first = "현재는 <b>방향보다 범위</b>를 우선해서 보세요."
     elif grade == "MEDIUM":
         first = "방향 신호는 참고하되 <b>예상 범위와 함께</b> 보세요."
     else:
@@ -4544,20 +4901,20 @@ def render_forecast_summary(p: Dict, hist: Optional[pd.DataFrame],
 
     if low is not None and high is not None:
         range_copy = (
-            f" {horizon}거래일 뒤 모델이 제시한 범위는 "
+            f" {horizon}거래일 뒤 예상 범위는 "
             f"<b>{html.escape(price(low, currency))}~{html.escape(price(high, currency))}</b>입니다."
         )
     else:
         range_copy = ""
+
     st.markdown(
-        "<div class='reading-guide'>"
-        "<div class='reading-guide-label'>먼저 이렇게 보세요</div>"
+        "<div class='reading-guide compact'>"
+        "<div class='reading-guide-label'>읽는 법</div>"
         f"<div class='reading-guide-copy'>{first}{range_copy} "
-        "P50은 매수·매도 목표가가 아니라 분포의 가운데 기준점입니다.</div>"
+        "P50은 목표가가 아니라 분포의 가운데 기준점입니다.</div>"
         "</div>",
         unsafe_allow_html=True,
     )
-
 
 def render_forecast_help(p: Dict) -> None:
     """초보자도 차트와 핵심 용어를 바로 이해할 수 있게 설명한다."""
@@ -4816,10 +5173,17 @@ def candle_chart(hist: Optional[pd.DataFrame], p: Dict,
                     font=dict(color=FCOL, size=11), row=1, col=1,
                 )
             fig.add_vline(x=last_date,
-                          line=dict(color="rgba(255,255,255,0.22)", width=1, dash="dot"))
+                          line=dict(color="rgba(255,255,255,0.20)", width=1, dash="dot"))
+            fig.add_hline(
+                y=now,
+                line=dict(color="rgba(255,255,255,0.10)", width=1, dash="dot"),
+                annotation_text="현재가",
+                annotation_position="top left",
+                annotation_font=dict(color="#7f8995", size=10),
+            )
 
     fig.update_layout(
-        template="plotly_dark", height=510 if show_volume else 445,
+        template="plotly_dark", height=438 if show_volume else 398,
         margin=dict(l=8, r=18, t=16, b=10), paper_bgcolor=BG, plot_bgcolor=BG,
         font=dict(color=TEXT, size=12), hovermode="x unified",
         xaxis_rangeslider_visible=False, showlegend=False, bargap=0.1,
@@ -4950,7 +5314,7 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
     )
     render_forecast_summary(p, hist, quotes, horizon)
 
-    # ---- 차트 ----
+    # ---- 차트: 첫 화면에서 최대한 빨리 보이도록 핵심 요약 바로 아래에 둔다. ----
     st.plotly_chart(
         candle_chart(hist, p, lookback, show_volume),
         use_container_width=True, key=f"candle_{uid}",
@@ -4964,6 +5328,7 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
         "</div>",
         unsafe_allow_html=True,
     )
+    render_forecast_reading_guide(p, horizon)
 
     # ---- 판단에 쓰는 참고값은 하나의 찾기 쉬운 묶음으로 제공한다. ----
     with st.expander("투자 판단 참고선 · 목표·손절·추가매수"):
