@@ -44,8 +44,8 @@ GRID = "rgba(255,255,255,0.075)"
 TEXT = "#aeb9c7"      # Plotly 축/범례용: 본문보다 낮지만 충분히 읽히는 회색
 UP = "#f23645"        # 상승 (국내 관행: 빨강)
 DOWN = "#2196f3"      # 하락
-FCOL = "#f0b90b"      # 예측 (앰버)
-DOT = {"HIGH": "🟢", "MEDIUM": "🟡", "LOW": "⚪"}
+FCOL = "#3182f6"      # 예측 (토스 블루)
+DOT = {"HIGH": "●", "MEDIUM": "●", "LOW": "●"}
 
 # 관세청 월별 수출단가. HBM은 전용 HS코드가 아니라 MCP를 대리지표로 표시한다.
 KCS_MEMORY_SERIES = {
@@ -2515,6 +2515,447 @@ st.markdown("""
     .forecast-metric-value { font-size: 0.96rem; }
     .forecast-metric-sub { font-size: 0.64rem; }
   }
+
+  /* ===============================================================
+     TOSS-LIKE CLEAN DARK
+     차분한 블루 포인트, 넓은 여백, 한 단계씩 읽히는 정보 계층.
+     =============================================================== */
+  :root {
+    --bg: #080a0d;
+    --panel: #11151b;
+    --panel-2: #151a21;
+    --line: rgba(255,255,255,0.065);
+    --line-strong: rgba(255,255,255,0.12);
+    --text: #f2f4f6;
+    --text-soft: #d1d6db;
+    --muted: #8b95a1;
+    --muted-2: #6b7684;
+    --accent: #3182f6;
+    --blue: #3182f6;
+  }
+
+  [data-testid="stAppViewContainer"] {
+    background: #080a0d !important;
+  }
+  .block-container {
+    max-width: 1320px !important;
+    padding-top: 1rem !important;
+    padding-left: clamp(1rem, 2.3vw, 2.35rem) !important;
+    padding-right: clamp(1rem, 2.3vw, 2.35rem) !important;
+    padding-bottom: 2.5rem !important;
+  }
+  ::selection { background: rgba(49,130,246,0.28); }
+
+  .dash-hero {
+    align-items: center !important;
+    padding: 19px 20px !important;
+    margin: 0 0 10px 0 !important;
+    border: 1px solid var(--line) !important;
+    border-radius: 18px !important;
+    background: #11151b !important;
+    box-shadow: none !important;
+  }
+  .dash-title {
+    color: #f2f4f6 !important;
+    font-size: clamp(1.42rem, 2vw, 1.78rem) !important;
+    font-weight: 760 !important;
+    letter-spacing: -0.04em !important;
+    line-height: 1.18 !important;
+    text-transform: none !important;
+    text-shadow: none !important;
+  }
+  .dash-subtitle {
+    max-width: 720px !important;
+    margin-top: 7px !important;
+    color: #aeb6bf !important;
+    font-size: 0.84rem !important;
+    line-height: 1.55 !important;
+  }
+  .dash-meta { color: var(--muted) !important; }
+  .dash-updated { color: #7f8995 !important; }
+  .status-pill {
+    min-height: 28px !important;
+    padding: 6px 10px !important;
+    border-color: rgba(255,255,255,0.07) !important;
+    background: #151a21 !important;
+    box-shadow: none !important;
+    color: #b7c0ca !important;
+  }
+  .status-dot.warn {
+    background: #ffb020 !important;
+    box-shadow: 0 0 0 3px rgba(255,176,32,0.10) !important;
+  }
+  .dashboard-facts {
+    gap: 6px !important;
+    margin: 8px 2px 1px 2px !important;
+  }
+  .dashboard-fact {
+    padding: 5px 9px !important;
+    border-color: rgba(255,255,255,0.055) !important;
+    background: rgba(17,21,27,0.62) !important;
+    color: #808b98 !important;
+  }
+  .dashboard-fact b { color: #c9d0d8 !important; }
+
+  .section-head {
+    padding-left: 0 !important;
+    margin-top: 25px !important;
+    margin-bottom: 10px !important;
+  }
+  .section-head::before { display: none !important; }
+  .section-kicker { display: none !important; }
+  .section-title {
+    color: #f2f4f6 !important;
+    font-size: 1.06rem !important;
+    font-weight: 720 !important;
+    letter-spacing: -0.025em !important;
+  }
+  .section-note { color: #7f8995 !important; }
+  .asset-picker-note { color: #8b95a1 !important; }
+
+  div[data-testid="stSelectbox"] [data-baseweb="select"],
+  div[data-testid="stSelectbox"] [data-baseweb="select"] > div,
+  div[data-testid="stSelectbox"] [data-baseweb="select"] > div > div,
+  div[data-testid="stSelectbox"] div[role="combobox"],
+  div[data-testid="stSelectbox"] div[role="combobox"] > div,
+  div[data-testid="stSelectbox"] [data-baseweb="select"] input {
+    background: #11151b !important;
+    background-image: none !important;
+  }
+  div[data-testid="stSelectbox"] [data-baseweb="select"] > div,
+  div[data-testid="stSelectbox"] div[role="combobox"] {
+    min-height: 48px !important;
+    border: 1px solid rgba(255,255,255,0.075) !important;
+    border-radius: 13px !important;
+    box-shadow: none !important;
+  }
+  div[data-testid="stSelectbox"] [data-baseweb="select"] > div:hover,
+  div[data-testid="stSelectbox"] div[role="combobox"]:hover {
+    background: #151a21 !important;
+    border-color: rgba(255,255,255,0.13) !important;
+  }
+  div[data-testid="stSelectbox"] [data-baseweb="select"] > div:focus-within,
+  div[data-testid="stSelectbox"] div[role="combobox"]:focus-within {
+    border-color: rgba(49,130,246,0.55) !important;
+    box-shadow: 0 0 0 3px rgba(49,130,246,0.10) !important;
+  }
+  div[data-baseweb="popover"] > div,
+  div[data-baseweb="menu"],
+  ul[role="listbox"] { background: #11151b !important; }
+  li[role="option"] { background: #11151b !important; }
+  li[role="option"]:hover,
+  li[role="option"][aria-selected="true"] { background: #1b222c !important; }
+
+  div[role="radiogroup"] label {
+    min-height: 36px !important;
+    box-sizing: border-box !important;
+    padding: 7px 11px !important;
+    border-color: rgba(255,255,255,0.07) !important;
+    border-radius: 10px !important;
+    background: #11151b !important;
+  }
+  div[role="radiogroup"] label:hover {
+    background: #151a21 !important;
+    border-color: rgba(255,255,255,0.12) !important;
+  }
+  div[role="radiogroup"] label:has(input:checked) {
+    background: rgba(49,130,246,0.13) !important;
+    border-color: rgba(49,130,246,0.42) !important;
+    box-shadow: none !important;
+  }
+  div[data-testid="stRadio"] input[type="radio"],
+  div[data-testid="stCheckbox"] input[type="checkbox"] {
+    accent-color: #3182f6 !important;
+  }
+  div[data-testid="stSlider"] [data-baseweb="slider"] div[role="slider"] {
+    background-color: #3182f6 !important;
+    border-color: #3182f6 !important;
+  }
+
+  .stTabs [data-baseweb="tab-list"] {
+    gap: 22px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-bottom: 1px solid rgba(255,255,255,0.065) !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+  }
+  .stTabs button[data-baseweb="tab"] {
+    min-height: 46px !important;
+    padding: 0 2px !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    color: #7f8995 !important;
+    font-size: 0.80rem !important;
+    font-weight: 650 !important;
+  }
+  .stTabs button[data-baseweb="tab"]:hover {
+    background: transparent !important;
+    color: #c8cfd7 !important;
+  }
+  .stTabs button[data-baseweb="tab"][aria-selected="true"] {
+    background: transparent !important;
+    color: #f2f4f6 !important;
+  }
+  .stTabs [data-baseweb="tab-highlight"] {
+    height: 2px !important;
+    background: #3182f6 !important;
+  }
+
+  .verdict {
+    padding: 13px 14px !important;
+    margin: 7px 0 12px 0 !important;
+    border: 1px solid rgba(255,255,255,0.065) !important;
+    border-left: 3px solid #6b7684 !important;
+    border-radius: 14px !important;
+    background: #11151b !important;
+    box-shadow: none !important;
+  }
+  .verdict.high { border-left-color: #20c997 !important; }
+  .verdict.medium { border-left-color: #3182f6 !important; }
+  .verdict.low { border-left-color: #6b7684 !important; }
+  .verdict-icon {
+    width: 24px !important;
+    height: 24px !important;
+    background: transparent !important;
+    color: #6b7684 !important;
+    font-size: 0.70rem !important;
+  }
+  .verdict.high .verdict-icon { color: #20c997 !important; }
+  .verdict.medium .verdict-icon { color: #3182f6 !important; }
+  .verdict.low .verdict-icon { color: #6b7684 !important; }
+  .verdict-title { color: #f2f4f6 !important; }
+  .verdict-copy { color: #aeb6bf !important; }
+
+  .forecast-summary-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+    gap: 11px;
+    margin: 0 0 12px 0;
+  }
+  .forecast-primary-card,
+  .forecast-metric {
+    box-sizing: border-box;
+    border: 1px solid rgba(255,255,255,0.065) !important;
+    border-radius: 16px !important;
+    background: #11151b !important;
+    box-shadow: none !important;
+  }
+  .forecast-primary-card {
+    min-height: 216px;
+    padding: 20px 21px 18px 21px;
+    display: flex;
+    flex-direction: column;
+  }
+  .forecast-primary-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .forecast-primary-label {
+    color: #aeb6bf;
+    font-size: 0.78rem;
+    font-weight: 650;
+  }
+  .confidence-badge {
+    flex: 0 0 auto;
+    padding: 5px 8px;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 999px;
+    background: #171c23;
+    color: #aeb6bf;
+    font-size: 0.67rem;
+    font-weight: 700;
+  }
+  .confidence-badge.high {
+    color: #67dbb9;
+    border-color: rgba(32,201,151,0.22);
+    background: rgba(32,201,151,0.08);
+  }
+  .confidence-badge.medium {
+    color: #7db1ff;
+    border-color: rgba(49,130,246,0.26);
+    background: rgba(49,130,246,0.09);
+  }
+  .confidence-badge.low { color: #9aa4af; }
+  .forecast-primary-value {
+    margin-top: auto;
+    color: #f7f8fa;
+    font-size: clamp(1.75rem, 3.2vw, 2.45rem);
+    font-weight: 780;
+    line-height: 1.12;
+    letter-spacing: -0.045em;
+    font-variant-numeric: tabular-nums;
+  }
+  .forecast-primary-change {
+    margin-top: 8px;
+    font-size: 0.86rem;
+    font-weight: 720;
+    font-variant-numeric: tabular-nums;
+  }
+  .forecast-primary-change.up { color: #ff6b72; }
+  .forecast-primary-change.down { color: #5ba9ff; }
+  .forecast-primary-change.neutral { color: #9aa4af; }
+  .forecast-primary-note {
+    margin-top: 10px;
+    color: #7f8995;
+    font-size: 0.72rem;
+    line-height: 1.45;
+  }
+  .forecast-side-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 9px;
+  }
+  .forecast-metric {
+    min-height: 103px !important;
+    padding: 13px 14px 12px 14px !important;
+  }
+  .forecast-metric-label { color: #8b95a1 !important; }
+  .forecast-metric-value {
+    color: #edf0f3 !important;
+    font-size: clamp(0.92rem, 1.25vw, 1.08rem) !important;
+  }
+  .forecast-metric-sub { color: #727d8a !important; }
+  .forecast-metric-sub.up { color: #ff777e !important; }
+  .forecast-metric-sub.down { color: #68adff !important; }
+
+  .reading-guide {
+    padding: 12px 14px !important;
+    margin-bottom: 13px !important;
+    border-color: rgba(49,130,246,0.18) !important;
+    border-radius: 13px !important;
+    background: rgba(49,130,246,0.055) !important;
+  }
+  .reading-guide-label { color: #78adff !important; }
+  .reading-guide-copy { color: #adb7c2 !important; }
+
+  div[data-testid="stPlotlyChart"] {
+    border-color: rgba(255,255,255,0.06) !important;
+    border-radius: 16px !important;
+    background: #0d1116 !important;
+    box-shadow: none !important;
+  }
+  .chart-caption { color: #7f8995 !important; }
+  .chart-caption span::before { background: #3182f6 !important; }
+  .chart-caption span:nth-child(2)::before { background: rgba(49,130,246,0.52) !important; }
+  .chart-caption span:nth-child(3)::before { background: #626d79 !important; }
+
+  div[data-testid="stExpander"] {
+    border-color: rgba(255,255,255,0.06) !important;
+    border-radius: 14px !important;
+    background: #0d1116 !important;
+  }
+  div[data-testid="stExpander"] details,
+  div[data-testid="stExpander"] details summary {
+    background: #0d1116 !important;
+  }
+  div[data-testid="stExpander"] details summary {
+    min-height: 48px !important;
+    border-color: rgba(255,255,255,0.06) !important;
+    border-radius: 14px !important;
+  }
+  div[data-testid="stExpander"] details summary:hover { background: #121820 !important; }
+
+  .decision-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+    margin: 6px 0 9px 0;
+  }
+  .decision-card {
+    min-width: 0;
+    padding: 12px 13px;
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 13px;
+    background: #11151b;
+  }
+  .decision-label {
+    color: #8b95a1;
+    font-size: 0.69rem;
+    font-weight: 650;
+  }
+  .decision-value {
+    margin-top: 7px;
+    color: #edf0f3;
+    font-size: 0.96rem;
+    font-weight: 730;
+    letter-spacing: -0.025em;
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
+  }
+  .decision-sub {
+    margin-top: 5px;
+    color: #717c89;
+    font-size: 0.64rem;
+    line-height: 1.35;
+  }
+
+  .feature-fill,
+  .model-weight-fill {
+    background: linear-gradient(90deg, rgba(49,130,246,0.60), #3182f6) !important;
+  }
+  .feature-catalog-chip strong,
+  .feature-row:nth-child(1) .feature-rank,
+  .feature-row:nth-child(2) .feature-rank,
+  .feature-row:nth-child(3) .feature-rank {
+    color: #68a4ff !important;
+  }
+  .feature-status-top {
+    color: #7db1ff !important;
+    background: rgba(49,130,246,0.10) !important;
+    border-color: rgba(49,130,246,0.25) !important;
+  }
+  [data-testid="stTooltipIcon"] svg,
+  button[aria-label*="help" i] svg,
+  button[aria-label*="tooltip" i] svg,
+  button[aria-label*="도움" i] svg {
+    color: #5e9dff !important;
+    fill: #5e9dff !important;
+    filter: none !important;
+  }
+  [data-testid="stTooltipIcon"]:hover svg,
+  button[aria-label*="help" i]:hover svg,
+  button[aria-label*="tooltip" i]:hover svg,
+  button[aria-label*="도움" i]:hover svg {
+    color: #8bbcff !important;
+    fill: #8bbcff !important;
+    filter: none !important;
+  }
+  [role="tooltip"] {
+    border-color: rgba(49,130,246,0.24) !important;
+    background: #151a21 !important;
+  }
+
+  @media (max-width: 980px) {
+    .forecast-summary-grid { grid-template-columns: 1fr; }
+    .forecast-primary-card { min-height: 190px; }
+    .decision-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 760px) {
+    .dash-hero { padding: 16px !important; }
+    .forecast-side-grid { grid-template-columns: 1fr 1fr; }
+    .forecast-primary-card { padding: 17px !important; }
+    .section-note { text-align: left !important; }
+    .stTabs [data-baseweb="tab-list"] { gap: 18px !important; }
+  }
+  @media (max-width: 470px) {
+    .block-container {
+      padding-left: 0.82rem !important;
+      padding-right: 0.82rem !important;
+    }
+    .forecast-primary-top { align-items: flex-start; flex-direction: column; }
+    .forecast-primary-card { min-height: 206px; }
+    .forecast-side-grid { grid-template-columns: 1fr; }
+    .forecast-metric { min-height: 92px !important; }
+    .decision-grid { grid-template-columns: 1fr 1fr; gap: 7px; }
+    .decision-card { padding: 11px; }
+    .stTabs [data-baseweb="tab-list"] { gap: 16px !important; }
+    .stTabs button[data-baseweb="tab"] { font-size: 0.76rem !important; }
+  }
 </style>
 """, unsafe_allow_html=True)
 
@@ -3991,6 +4432,17 @@ def _metric_card(label: str, value: str, sub: str = "",
     )
 
 
+def _decision_card(label: str, value: str, sub: str = "") -> str:
+    """목표·손절·지지선처럼 판단에 쓰는 값을 한눈에 묶는다."""
+    return (
+        "<div class='decision-card'>"
+        f"<div class='decision-label'>{html.escape(label)}</div>"
+        f"<div class='decision-value'>{html.escape(value)}</div>"
+        f"<div class='decision-sub'>{html.escape(sub)}</div>"
+        "</div>"
+    )
+
+
 def render_forecast_summary(p: Dict, hist: Optional[pd.DataFrame],
                             quotes: Dict, horizon: int) -> None:
     """핵심 숫자와 그 숫자를 읽는 방법을 한 묶음으로 표시한다."""
@@ -4034,18 +4486,30 @@ def render_forecast_summary(p: Dict, hist: Optional[pd.DataFrame],
         interval_value = "N/A"
         interval_sub = "예상 범위 정보 없음"
 
-    cards = [
+    grade = grade_of(p)
+    grade_label = grade_ko(grade)
+    confidence = fnum(p.get("confidence"), 0)
+    expected_tone = _change_tone(expected)
+    primary = (
+        "<div class='forecast-primary-card'>"
+        "<div class='forecast-primary-top'>"
+        f"<div class='forecast-primary-label'>{horizon}거래일 뒤 기준값</div>"
+        f"<div class='confidence-badge {grade.lower()}'>"
+        f"신뢰도 {html.escape(confidence)}/100 · {html.escape(grade_label)}</div>"
+        "</div>"
+        f"<div class='forecast-primary-value'>{html.escape(price(p.get('p50'), currency))}</div>"
+        f"<div class='forecast-primary-change {expected_tone}'>"
+        f"현재가 대비 {html.escape(pct(expected))}</div>"
+        "<div class='forecast-primary-note'>예상 분포의 가운데 값이에요. 목표가로 해석하지 마세요.</div>"
+        "</div>"
+    )
+
+    side_cards = [
         _metric_card(
             current_label,
             price(now, currency),
             current_sub,
             _change_tone(day_change),
-        ),
-        _metric_card(
-            f"{horizon}거래일 뒤 기준값",
-            price(p.get("p50"), currency),
-            f"현재가 대비 {pct(expected)} · 목표가 아님",
-            _change_tone(expected),
         ),
         _metric_card(
             "모델의 80% 예상 범위" if calibrated_interval else "P10~P90 예상 범위",
@@ -4065,11 +4529,12 @@ def render_forecast_summary(p: Dict, hist: Optional[pd.DataFrame],
         ),
     ]
     st.markdown(
-        "<div class='forecast-metric-grid'>" + "".join(cards) + "</div>",
+        "<div class='forecast-summary-grid'>" + primary
+        + "<div class='forecast-side-grid'>" + "".join(side_cards)
+        + "</div></div>",
         unsafe_allow_html=True,
     )
 
-    grade = grade_of(p)
     if grade == "LOW":
         first = "현재는 <b>방향보다 범위</b>를 보는 화면입니다."
     elif grade == "MEDIUM":
@@ -4170,9 +4635,9 @@ def kcs_memory_chart(df: pd.DataFrame, years: int = 5,
 
     # 기존 대시보드 팔레트와 충돌하지 않게 제품별 고정 색을 쓴다.
     colors = {
-        "DRAM": "#f0b90b",
-        "NAND Flash": "#58a6ff",
-        "MCP / HBM proxy": "#3fb950",
+        "DRAM": "#3182f6",
+        "NAND Flash": "#00c2a8",
+        "MCP / HBM proxy": "#8b5cf6",
         "Logic comparator": "#8b949e",
     }
     for code, label in wanted.items():
@@ -4332,17 +4797,17 @@ def candle_chart(hist: Optional[pd.DataFrame], p: Dict,
             if c10 and c90:
                 fig.add_trace(go.Scatter(
                     x=fx + fx[::-1], y=c90 + c10[::-1], mode="lines", fill="toself",
-                    fillcolor="rgba(240,185,11,0.10)", line=dict(width=0),
+                    fillcolor="rgba(49,130,246,0.10)", line=dict(width=0),
                     name="80%", hoverinfo="skip"), row=1, col=1)
             if c25 and c75:
                 fig.add_trace(go.Scatter(
                     x=fx + fx[::-1], y=c75 + c25[::-1], mode="lines", fill="toself",
-                    fillcolor="rgba(240,185,11,0.22)", line=dict(width=0),
+                    fillcolor="rgba(49,130,246,0.20)", line=dict(width=0),
                     name="50%", hoverinfo="skip"), row=1, col=1)
             if c50:
                 fig.add_trace(go.Scatter(
                     x=fx, y=c50, mode="lines", name="P50 (기준값)",
-                    line=dict(color=FCOL, width=1.8, dash="dot"),
+                    line=dict(color=FCOL, width=2.0, dash="dot"),
                     hovertemplate="%{x|%m/%d} · %{y:,.0f}<extra></extra>"), row=1, col=1)
                 fig.add_annotation(
                     x=fx[-1], y=c50[-1], text=f"{price(c50[-1], currency, False)} ",
@@ -4469,8 +4934,6 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
 
     # ---- 결론 -> 핵심 숫자 -> 읽는 법 ----
     grade = grade_of(p)
-    grade_label = grade_ko(grade)
-    confidence = fnum(p.get("confidence"), 0)
     verdict_title = {
         "LOW": "방향 판단은 잠시 보류",
         "MEDIUM": "참고 가능한 신호",
@@ -4478,10 +4941,9 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
     }.get(grade, "방향 판단은 잠시 보류")
     st.markdown(
         f"<div class='verdict {grade.lower()}'>"
-        f"<div class='verdict-icon'>{DOT.get(grade, '⚪')}</div>"
+        f"<div class='verdict-icon'>{DOT.get(grade, '●')}</div>"
         "<div>"
-        f"<div class='verdict-title'>{html.escape(verdict_title)} · "
-        f"신뢰도 {html.escape(confidence)}/100 ({html.escape(grade_label)})</div>"
+        f"<div class='verdict-title'>{html.escape(verdict_title)}</div>"
         f"<div class='verdict-copy'>{html.escape(verdict(p))}</div>"
         "</div></div>",
         unsafe_allow_html=True,
@@ -4496,38 +4958,42 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
     )
     st.markdown(
         "<div class='chart-caption'>"
-        "<span>노란 점선: P50 기준값</span>"
+        "<span>파란 점선: P50 기준값</span>"
         "<span>진한 음영 50% · 옅은 음영 80%</span>"
         "<span>세로 점선 오른쪽: 미래 예상 구간</span>"
         "</div>",
         unsafe_allow_html=True,
     )
 
+    # ---- 판단에 쓰는 참고값은 하나의 찾기 쉬운 묶음으로 제공한다. ----
+    with st.expander("투자 판단 참고선 · 목표·손절·추가매수"):
+        decision_cards = [
+            _decision_card("1차 목표", price(p.get("target_1"), currency), "수익 실현 참고"),
+            _decision_card("2차 목표", price(p.get("target_2"), currency), "강한 상승 시 참고"),
+            _decision_card("추가매수 고려", price(p.get("add_buy_reference"), currency), "분할 접근 참고"),
+            _decision_card("손절 고려", price(p.get("stop_loss_reference"), currency), "위험 관리 참고"),
+            _decision_card("20일 지지", price(p.get("support_20d"), currency), "최근 가격 하단"),
+            _decision_card("20일 저항", price(p.get("resistance_20d"), currency), "최근 가격 상단"),
+            _decision_card("손익비 R/R", fnum(p.get("risk_reward")), "1보다 크면 보상 우위"),
+            _decision_card("ATR", pct(p.get("atr_pct"), signed=False), "최근 가격 변동 폭"),
+        ]
+        st.markdown(
+            "<div class='decision-grid'>" + "".join(decision_cards) + "</div>",
+            unsafe_allow_html=True,
+        )
+        st.caption("기계적인 주문 가격이 아니라, 예상 분포와 최근 가격대를 바탕으로 만든 참고선입니다.")
+
+    with st.expander("예상 분포 자세히 보기 · P10~P90"):
+        rows = []
+        for key, lab in [("p90", "P90"), ("p75", "P75"), ("p50", "P50 (기준값)"),
+                         ("p25", "P25"), ("p10", "P10")]:
+            v = num(p.get(key))
+            chg = (v / now - 1.0) if (v is not None and now) else None
+            rows.append({"구간": lab, "가격": price(v, currency), "현재가 대비": pct(chg)})
+        render_dark_table(pd.DataFrame(rows))
+
     with st.expander("차트와 숫자, 어떻게 읽나요?"):
         render_forecast_help(p)
-
-    # ---- 접힌 상세 ----
-    with st.expander("예상 가격과 참고선 자세히 보기"):
-        left, right = st.columns(2)
-        with left:
-            rows = []
-            for key, lab in [("p90", "P90"), ("p75", "P75"), ("p50", "P50 (기준값)"),
-                             ("p25", "P25"), ("p10", "P10")]:
-                v = num(p.get(key))
-                chg = (v / now - 1.0) if (v is not None and now) else None
-                rows.append({"구간": lab, "가격": price(v, currency), "현재가 대비": pct(chg)})
-            render_dark_table(pd.DataFrame(rows))
-        with right:
-            lv = [("2차 목표", "target_2"), ("1차 목표", "target_1"),
-                  ("추가매수 고려", "add_buy_reference"), ("손절 고려", "stop_loss_reference")]
-            render_dark_table(
-                pd.DataFrame([{"항목": k, "가격": price(p.get(v), currency)} for k, v in lv])
-            )
-            st.caption(
-                f"R/R {fnum(p.get('risk_reward'))} · ATR {pct(p.get('atr_pct'), signed=False)} · "
-                f"지지 {price(p.get('support_20d'), currency, False)} / "
-                f"저항 {price(p.get('resistance_20d'), currency, False)}"
-            )
 
     # 모델 가중치/Feature 중요도는 predictions 행이 아니라 diagnostics에 저장된다.
     # main.py의 latest_predictions.json 구조를 그대로 사용한다.
@@ -4837,10 +5303,9 @@ def main() -> None:
         f"""
         <div class="dash-hero">
           <div>
-            <div class="dash-eyebrow">STOCK FORECAST DASHBOARD</div>
-            <div class="dash-title">주가 전망 대시보드</div>
+            <div class="dash-title">주가 전망</div>
             <div class="dash-subtitle">
-              미래 가격 하나를 단정하기보다, 가능한 범위와 불확실성을 함께 살펴봅니다.
+              가능한 가격 범위와 불확실성을 함께 확인해 보세요.
             </div>
           </div>
           <div class="dash-meta">
@@ -4851,8 +5316,8 @@ def main() -> None:
         </div>
         <div class="dashboard-facts">
           <span class="dashboard-fact">분석 종목 <b>{len(symbols)}개</b></span>
-          <span class="dashboard-fact">예측 조합 <b>{len(preds)}건</b></span>
-          <span class="dashboard-fact">표시 현재가 <b>{html.escape(quote_label)}</b></span>
+          <span class="dashboard-fact">예측 결과 <b>{len(preds)}건</b></span>
+          <span class="dashboard-fact">현재가 기준 <b>{html.escape(quote_label)}</b></span>
         </div>
         """,
         unsafe_allow_html=True,
@@ -4871,7 +5336,7 @@ def main() -> None:
 
     section_head("ASSET", "어떤 종목을 볼까요?", "선택한 종목을 기준으로 모든 탭이 바뀝니다.")
     st.markdown(
-        "<div class='asset-picker-note'>종목을 고른 뒤 먼저 ‘종목 전망’ 탭을 확인해 보세요.</div>",
+        "<div class='asset-picker-note'>종목을 선택하면 전망·업황·검증 결과가 함께 바뀝니다.</div>",
         unsafe_allow_html=True,
     )
     name_of = {sym: str(df[df["symbol"] == sym]["name"].iloc[0]) for sym in symbols}
@@ -4886,10 +5351,10 @@ def main() -> None:
             pass
 
     forecast_tab, cycle_tab, validation_tab, notes_tab = st.tabs([
-        "📈 종목 전망",
-        "💾 메모리 업황",
-        "🧪 전략 검증",
-        "📝 업데이트",
+        "종목 전망",
+        "메모리 업황",
+        "전략 검증",
+        "업데이트",
     ])
 
     with forecast_tab:
