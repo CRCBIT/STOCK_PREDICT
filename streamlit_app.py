@@ -7451,8 +7451,8 @@ def _browser_network_info() -> Optional[Dict]:
     중요:
     - 성공한 브라우저 결과만 session_state에 캐시한다.
     - 첫 component 렌더의 None/미완료 값을 실패로 캐시하지 않는다.
-    - GitHub 1.42.0 streamlit-javascript의 반복 실행 기능으로 결과가 올 때까지
-      약 1.5초 간격으로 재시도한다.
+    - PyPI의 streamlit-javascript 0.1.5가 비동기 fetch 결과를 component value로
+      돌려주면 Streamlit rerun에서 그 값을 사용한다.
     - 실제 공인 IP를 얻기 전에는 analytics 세션 자체를 시작하지 않으므로
       Discord에 127.0.0.1이 방문자 IP처럼 찍히지 않는다.
     """
@@ -7532,26 +7532,11 @@ def _browser_network_info() -> Optional[Dict]:
     """
 
     try:
-        # GitHub 1.42.0 README의 API:
-        # st_javascript(js, placeholder, key, repeat_ms)
-        # 결과를 얻기 전에는 약 1.5초마다 다시 실행한다.
-        value = st_javascript(
-            javascript,
-            None,
-            "DASHVIEW_BROWSER_NETWORK",
-            1500,
-        )
-    except TypeError:
-        # 혹시 이전 API가 남아 있어도 앱 자체가 죽지 않도록 폴백.
-        try:
-            value = st_javascript(javascript, "IP 확인 중…")
-        except Exception as exc:
-            print(
-                "DASHVIEW_BROWSER_IP_EXEC_ERROR "
-                f"{type(exc).__name__}: {str(exc)[:180]}",
-                flush=True,
-            )
-            return None
+        # PyPI에 실제 배포된 streamlit-javascript 0.1.5 API를 사용한다.
+        # 0.1.5도 await/fetch 결과를 component value로 Python에 돌려준다.
+        # 첫 렌더에서는 0/None 같은 초기값이 올 수 있으므로 아래에서 무시하고,
+        # 실제 dict 결과가 도착한 rerun에서만 analytics 세션을 시작한다.
+        value = st_javascript(javascript)
     except Exception as exc:
         print(
             "DASHVIEW_BROWSER_IP_EXEC_ERROR "
