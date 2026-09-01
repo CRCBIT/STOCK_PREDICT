@@ -4207,6 +4207,351 @@ st.markdown("""
     .snapshot-route .snapshot-forecast .snapshot-value { font-size: 0.96rem; }
     .snapshot-return-pill { font-size: 0.49rem; }
   }
+
+  /* ===============================================================
+     V20 · FINAL DASHBOARD SYSTEM
+     모든 메인 탭을 종목 전망과 같은 계층으로 통일한다.
+     큰 제목 → 핵심 카드 → 차트/성과 → 짧은 해석 → 상세보기.
+     =============================================================== */
+  .block-container {
+    max-width: 1320px !important;
+  }
+
+  .section-head {
+    margin: 26px 0 14px 0 !important;
+    padding: 0 !important;
+  }
+  .section-head::before { display: none !important; }
+  .section-title {
+    font-size: 1.14rem !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.028em !important;
+  }
+  .section-kicker {
+    margin-bottom: 4px !important;
+    color: #697582 !important;
+    font-size: 0.61rem !important;
+    letter-spacing: .11em !important;
+  }
+  .section-note {
+    max-width: 520px;
+    color: #7f8a96 !important;
+    font-size: 0.72rem !important;
+    text-align: right;
+  }
+
+  .subsection-head {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 18px;
+    margin: 24px 0 11px 0;
+    padding-top: 2px;
+  }
+  .subsection-title {
+    color: #e7ebf0;
+    font-size: 0.92rem;
+    font-weight: 780;
+    letter-spacing: -0.022em;
+  }
+  .subsection-note {
+    color: #737f8b;
+    font-size: 0.68rem;
+    text-align: right;
+    line-height: 1.4;
+  }
+
+  /* main tabs: 카드처럼 과장하지 않고 단정한 내비게이션 */
+  .stTabs [data-baseweb="tab-list"] {
+    min-height: 48px !important;
+    gap: 26px !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-bottom: 1px solid rgba(255,255,255,0.07) !important;
+    border-radius: 0 !important;
+  }
+  .stTabs button[data-baseweb="tab"] {
+    min-height: 48px !important;
+    padding: 0 1px !important;
+    color: #8f99a5 !important;
+    font-size: 0.84rem !important;
+    font-weight: 650 !important;
+  }
+  .stTabs button[data-baseweb="tab"][aria-selected="true"] {
+    background: transparent !important;
+    color: #f0f3f7 !important;
+  }
+  .stTabs [data-baseweb="tab-highlight"] {
+    height: 2px !important;
+    border-radius: 999px !important;
+    background: #f0b90b !important;
+  }
+
+  /* forecast snapshot: PC에서 가격 두 개를 더 시원하게 */
+  .snapshot-route {
+    grid-template-columns: minmax(0,1fr) 154px minmax(0,1fr) !important;
+    width: min(100%, 900px) !important;
+    gap: 24px !important;
+    padding: 20px 24px 18px !important;
+  }
+  .snapshot-route .snapshot-label { font-size: 0.69rem !important; }
+  .snapshot-route .snapshot-value {
+    font-size: clamp(1.32rem, 1.8vw, 1.58rem) !important;
+  }
+  .snapshot-route .snapshot-forecast .snapshot-value {
+    font-size: clamp(1.44rem, 2vw, 1.72rem) !important;
+  }
+  .snapshot-route .snapshot-sub { font-size: 0.61rem !important; }
+  .snapshot-connector { height: 52px !important; }
+  .snapshot-return-pill {
+    padding: 5px 10px !important;
+    font-size: 0.68rem !important;
+  }
+  .snapshot-detail-strip {
+    grid-template-columns: 1.42fr .79fr .79fr !important;
+  }
+  .snapshot-detail {
+    padding: 13px 17px 14px !important;
+  }
+  .snapshot-detail-label { font-size: 0.64rem !important; }
+  .snapshot-detail-value,
+  .snapshot-detail-value.range { font-size: 0.96rem !important; }
+  .snapshot-detail-sub { font-size: 0.57rem !important; }
+
+  /* 다른 탭의 핵심 수치도 같은 카드 질감 */
+  .cycle-overview-grid,
+  .validation-card-grid,
+  .strategy-card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin: 2px 0 16px 0;
+  }
+  .overview-card,
+  .validation-card,
+  .strategy-card {
+    min-width: 0;
+    border: 1px solid rgba(255,255,255,0.065);
+    border-radius: 14px;
+    background: linear-gradient(180deg, #11161d 0%, #0d1218 100%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.016);
+  }
+  .overview-card { padding: 16px 17px 15px; }
+  .overview-label,
+  .validation-period,
+  .strategy-name {
+    color: #84909d;
+    font-size: 0.66rem;
+    font-weight: 700;
+  }
+  .overview-value {
+    margin-top: 7px;
+    color: #edf1f5;
+    font-size: 1.18rem;
+    font-weight: 820;
+    letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
+  }
+  .overview-value.up,
+  .validation-main.up,
+  .strategy-return.up { color: #ff737a; }
+  .overview-value.down,
+  .validation-main.down,
+  .strategy-return.down { color: #67adff; }
+  .overview-sub {
+    margin-top: 7px;
+    color: #6f7a86;
+    font-size: 0.63rem;
+    line-height: 1.4;
+  }
+
+  .validation-card { padding: 14px 15px 13px; }
+  .validation-main {
+    margin-top: 6px;
+    color: #ecf0f4;
+    font-size: 1.05rem;
+    font-weight: 820;
+    font-variant-numeric: tabular-nums;
+  }
+  .validation-pairs {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0,1fr));
+    gap: 7px;
+    margin-top: 12px;
+  }
+  .validation-pairs > div,
+  .strategy-grid > div {
+    min-width: 0;
+  }
+  .validation-pairs span,
+  .strategy-grid span {
+    display: block;
+    color: #687481;
+    font-size: 0.55rem;
+    line-height: 1.25;
+  }
+  .validation-pairs b,
+  .strategy-grid b {
+    display: block;
+    margin-top: 3px;
+    color: #cfd6de;
+    font-size: 0.67rem;
+    font-weight: 740;
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
+  }
+
+  .strategy-card { padding: 15px 16px 14px; }
+  .strategy-return {
+    margin-top: 6px;
+    color: #edf1f5;
+    font-size: 1.14rem;
+    font-weight: 830;
+    letter-spacing: -0.025em;
+    font-variant-numeric: tabular-nums;
+  }
+  .strategy-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0,1fr));
+    gap: 8px;
+    margin-top: 12px;
+    padding-top: 11px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .validation-context {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin: -2px 0 13px 0;
+  }
+  .validation-context span {
+    padding: 5px 8px;
+    border-radius: 999px;
+    border: 1px solid rgba(255,255,255,0.06);
+    background: rgba(13,18,24,0.8);
+    color: #7f8b97;
+    font-size: 0.60rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .tab-callout {
+    margin: 8px 0 12px;
+    padding: 11px 13px;
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 11px;
+    background: #0e1319;
+    color: #9ba6b2;
+    font-size: 0.70rem;
+    line-height: 1.5;
+  }
+  .tab-callout.warn { border-left: 3px solid #f0b90b; }
+  .tab-callout.neutral { border-left: 3px solid #637080; }
+
+  /* 차트와 expander는 모든 탭에서 같은 표면감 */
+  div[data-testid="stPlotlyChart"],
+  div[data-testid="stExpander"] {
+    border-radius: 15px !important;
+    border-color: rgba(255,255,255,0.06) !important;
+    background: #0d1116 !important;
+    box-shadow: none !important;
+  }
+  div[data-testid="stExpander"] details summary {
+    min-height: 46px !important;
+  }
+
+  @media (max-width: 980px) {
+    .cycle-overview-grid,
+    .validation-card-grid,
+    .strategy-card-grid {
+      grid-template-columns: repeat(2, minmax(0,1fr));
+    }
+    .snapshot-route {
+      grid-template-columns: minmax(0,1fr) 110px minmax(0,1fr) !important;
+      width: 100% !important;
+      gap: 15px !important;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .block-container {
+      padding-left: 0.78rem !important;
+      padding-right: 0.78rem !important;
+    }
+    .section-head {
+      margin: 20px 0 11px !important;
+      gap: 4px !important;
+    }
+    .section-title { font-size: 1.04rem !important; }
+    .section-note {
+      font-size: 0.64rem !important;
+      text-align: left !important;
+    }
+    .subsection-head {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 3px;
+      margin: 20px 0 9px;
+    }
+    .subsection-title { font-size: 0.88rem; }
+    .subsection-note { font-size: 0.62rem; text-align: left; }
+
+    .stTabs [data-baseweb="tab-list"] {
+      gap: 20px !important;
+      min-height: 46px !important;
+      overflow-x: auto !important;
+      scrollbar-width: none;
+    }
+    .stTabs [data-baseweb="tab-list"]::-webkit-scrollbar { display: none; }
+    .stTabs button[data-baseweb="tab"] {
+      min-height: 46px !important;
+      font-size: 0.78rem !important;
+      white-space: nowrap !important;
+    }
+
+    .snapshot-route {
+      grid-template-columns: minmax(0,1fr) 66px minmax(0,1fr) !important;
+      gap: 7px !important;
+      padding: 13px 12px 12px !important;
+    }
+    .snapshot-route .snapshot-label { font-size: 0.59rem !important; }
+    .snapshot-route .snapshot-value { font-size: 1.00rem !important; }
+    .snapshot-route .snapshot-forecast .snapshot-value { font-size: 1.08rem !important; }
+    .snapshot-route .snapshot-sub { font-size: 0.50rem !important; }
+    .snapshot-connector { height: 42px !important; }
+    .snapshot-return-pill {
+      padding: 4px 6px !important;
+      font-size: 0.54rem !important;
+    }
+    .snapshot-detail { padding: 9px 11px 10px !important; }
+    .snapshot-detail-label { font-size: 0.55rem !important; }
+    .snapshot-detail-value,
+    .snapshot-detail-value.range { font-size: 0.82rem !important; }
+    .snapshot-detail-sub { font-size: 0.49rem !important; }
+
+    .cycle-overview-grid,
+    .validation-card-grid,
+    .strategy-card-grid {
+      grid-template-columns: 1fr;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .overview-card { padding: 13px 14px 12px; }
+    .overview-value { font-size: 1.04rem; }
+    .validation-card,
+    .strategy-card { padding: 12px 13px; }
+    .validation-pairs { gap: 6px; }
+    .strategy-grid {
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      row-gap: 8px;
+    }
+    .reading-guide.compact {
+      margin-top: 8px !important;
+      padding: 10px 11px !important;
+    }
+
+  }
 </style>
 """, unsafe_allow_html=True)
 
@@ -4279,79 +4624,110 @@ def load_portfolio_backtest() -> Optional[Dict]:
 
 
 def render_portfolio_backtest(data: Optional[Dict]) -> None:
-    """
-    횡단면 포트폴리오 성과.
-
-    종목별 백테스트(각 종목 화면 안)와 다르다. 여기서는 매일 전 종목을
-    예측 순위로 정렬해 상위를 사고 하위를 판다. 패널이 학습하는 것이
-    횡단면 신호이므로 IC 가 실제로 돈이 되는지는 이쪽으로 봐야 한다.
-    """
+    """횡단면 포트폴리오 성과를 기간 선택 → 핵심 성과 → 상세 순서로 보여준다."""
     if not data:
         return
 
-    section_head(
-        "PORTFOLIO", "종목 선택 전략 성적",
+    subsection_head(
+        "종목 선택 전략",
         "매일 예측 순위가 높은 종목을 골랐을 때의 과거 성적입니다.",
     )
-    with st.expander("종목 선택 전략의 과거 검증 결과 보기", expanded=False):
-        horizons = sorted(data, key=lambda x: int(x) if str(x).isdigit() else 0)
-        tabs = st.tabs([f"{h}일" for h in horizons])
-        for tab, h in zip(tabs, horizons):
-            d = data.get(h) or {}
-            with tab:
-                rows = []
-                for name, m in (d.get("metrics") or {}).items():
-                    rows.append({
-                        "전략": name,
-                        "연수익": pct(m.get("annual_return")),
-                        "Sharpe": fnum(m.get("sharpe")),
-                        "MDD": pct(m.get("max_drawdown")),
-                        "적중률": pct(m.get("hit_rate"), signed=False),
-                        "일회전": fnum(m.get("turnover_daily")),
-                    })
-                if rows:
-                    render_dark_table(pd.DataFrame(rows))
 
-                # 분위별 수익 — IC 보다 중요하다. 단조성이 무너지면 실전에서
-                # 상위 분위만 골라 담아도 기대만큼 나오지 않는다.
-                q = d.get("quantile_returns") or {}
-                if q:
-                    mono = d.get("monotonicity")
-                    st.markdown(
-                        f"<div class='diag-subhead'>분위별 {h}일 수익 "
-                        f"<span>단조성 {fnum(mono)} · 1.0이면 완전단조</span></div>",
-                        unsafe_allow_html=True,
-                    )
-                    render_dark_table(pd.DataFrame([
-                        {"분위": k, "평균 수익": pct(v),
-                         "표본": f"{(d.get('quantile_counts') or {}).get(k, 0):,}일"}
-                        for k, v in q.items()
-                    ]))
-                    if mono is not None and mono < 0.5:
-                        st.warning(
-                            "분위별 수익이 단조롭지 않습니다. 예측 순위가 실제 "
-                            "수익 순위와 어긋난다는 뜻이므로, 평균 IC 가 양수여도 "
-                            "상위 분위만 골라 담는 전략은 기대만큼 나오지 않습니다.",
-                            icon="⚠️",
-                        )
+    horizons = sorted(data, key=lambda x: int(x) if str(x).isdigit() else 0)
+    if not horizons:
+        return
 
-                ic, ic_sd = d.get("mean_ic"), d.get("ic_std")
-                bits = []
-                if ic is not None:
-                    bits.append(f"평균 횡단면 IC {ic:+.3f}")
-                if ic_sd:
-                    bits.append(f"표준편차 {ic_sd:.3f}")
-                if d.get("n_names_avg"):
-                    bits.append(f"평균 {d['n_names_avg']:.1f}종목")
-                if d.get("n_effective"):
-                    bits.append(f"실효표본 {d['n_effective']:.0f}")
-                if d.get("cost_bps"):
-                    bits.append(f"비용 {d['cost_bps']:.1f}bp/회전")
-                if bits:
-                    st.caption(" · ".join(bits))
+    selected_h = st.radio(
+        "검증 기간",
+        horizons,
+        horizontal=True,
+        key="portfolio_validation_horizon",
+        format_func=lambda h: f"{h}일",
+    )
+    d = data.get(selected_h) or {}
+    metrics = d.get("metrics") or {}
 
-                for n in (d.get("notes") or []):
-                    st.caption(f"· {n}")
+    strategy_cards = []
+    for name, m in metrics.items():
+        ann = num(m.get("annual_return"))
+        tone = _change_tone(ann)
+        strategy_cards.append(
+            "<div class='strategy-card'>"
+            f"<div class='strategy-name'>{html.escape(str(name))}</div>"
+            f"<div class='strategy-return {tone}'>{html.escape(pct(ann))}</div>"
+            "<div class='strategy-grid'>"
+            f"<div><span>Sharpe</span><b>{html.escape(fnum(m.get('sharpe')))}</b></div>"
+            f"<div><span>MDD</span><b>{html.escape(pct(m.get('max_drawdown')))}</b></div>"
+            f"<div><span>적중률</span><b>{html.escape(pct(m.get('hit_rate'), signed=False))}</b></div>"
+            f"<div><span>일회전</span><b>{html.escape(fnum(m.get('turnover_daily')))}</b></div>"
+            "</div></div>"
+        )
+
+    if strategy_cards:
+        st.markdown(
+            "<div class='strategy-card-grid'>" + "".join(strategy_cards) + "</div>",
+            unsafe_allow_html=True,
+        )
+
+    ic, ic_sd = num(d.get("mean_ic")), num(d.get("ic_std"))
+    context_bits = []
+    if ic is not None:
+        context_bits.append(f"평균 횡단면 IC {ic:+.3f}")
+    if ic_sd is not None:
+        context_bits.append(f"표준편차 {ic_sd:.3f}")
+    if d.get("n_names_avg") is not None:
+        context_bits.append(f"평균 {float(d['n_names_avg']):.1f}종목")
+    if d.get("n_effective") is not None:
+        context_bits.append(f"실효표본 {float(d['n_effective']):.0f}")
+    if d.get("cost_bps") is not None:
+        context_bits.append(f"비용 {float(d['cost_bps']):.1f}bp/회전")
+    if context_bits:
+        st.markdown(
+            "<div class='validation-context'>" + "<span>" + "</span><span>".join(
+                html.escape(x) for x in context_bits
+            ) + "</span></div>",
+            unsafe_allow_html=True,
+        )
+
+    q = d.get("quantile_returns") or {}
+    with st.expander("분위별 수익과 상세 검증 보기", expanded=False):
+        rows = []
+        for name, m in metrics.items():
+            rows.append({
+                "전략": name,
+                "연수익": pct(m.get("annual_return")),
+                "Sharpe": fnum(m.get("sharpe")),
+                "MDD": pct(m.get("max_drawdown")),
+                "적중률": pct(m.get("hit_rate"), signed=False),
+                "일회전": fnum(m.get("turnover_daily")),
+            })
+        if rows:
+            render_dark_table(pd.DataFrame(rows))
+
+        if q:
+            mono = num(d.get("monotonicity"))
+            st.markdown(
+                f"<div class='diag-subhead'>분위별 {html.escape(str(selected_h))}일 수익 "
+                f"<span>단조성 {html.escape(fnum(mono))} · 1.0이면 완전단조</span></div>",
+                unsafe_allow_html=True,
+            )
+            render_dark_table(pd.DataFrame([
+                {
+                    "분위": k,
+                    "평균 수익": pct(v),
+                    "표본": f"{(d.get('quantile_counts') or {}).get(k, 0):,}일",
+                }
+                for k, v in q.items()
+            ]))
+            if mono is not None and mono < 0.5:
+                st.warning(
+                    "분위별 수익이 단조롭지 않습니다. 예측 순위와 실제 수익 순위가 "
+                    "충분히 맞지 않을 수 있습니다.",
+                    icon="⚠️",
+                )
+
+        for n in (d.get("notes") or []):
+            st.caption(f"· {n}")
 
 
 @st.cache_data(ttl=300, show_spinner=False)
@@ -4376,58 +4752,91 @@ def load_panel_diagnostics() -> Optional[Dict]:
 
 
 def render_panel_diagnostics(data: Optional[Dict], symbol: str) -> None:
-    """패널 학습 요약. horizon 별로 IC·실효표본·구성 모델을 보여준다."""
+    """패널 학습 요약을 카드 우선, 상세 표 후순위로 보여준다."""
     if not data:
         return
 
-    section_head(
-        "PANEL", "여러 종목을 함께 학습한 공통 모델",
-        "반도체 종목의 공통 흐름을 학습해 개별 종목 예측을 보완합니다.",
+    subsection_head(
+        "공통 모델",
+        "여러 반도체 종목의 공통 흐름이 개별 종목 예측을 얼마나 보완했는지 봅니다.",
     )
-    with st.expander("공통 모델의 검증 결과 보기", expanded=True):
-        rows = []
-        included = False
-        for h in sorted(data, key=lambda x: int(x) if str(x).isdigit() else 0):
-            d = data.get(h) or {}
-            m = d.get("metrics") or {}
-            per = (d.get("per_symbol") or {}).get(symbol) or {}
-            if per:
-                included = True
-            weights = d.get("weights") or {}
-            w_txt = ", ".join(f"{k.replace('panel_', '')} {v:.2f}"
-                              for k, v in sorted(weights.items(),
-                                                 key=lambda kv: -kv[1]))
-            rows.append({
-                "기간": f"{h}일",
-                "IC": fnum(m.get("rank_ic"), 3),
-                "방향": (f"{m.get('directional_accuracy') * 100:.1f}%"
-                       if m.get("directional_accuracy") is not None else "-"),
-                "OOF": f"{int(m.get('n_oof', 0)):,}행",
-                "실효표본": f"{d.get('effective_n', float('nan')):.0f}",
-                "구성": w_txt or "-",
-                f"{symbol} IC": fnum(per.get("rank_ic"), 3) if per else "미포함",
-            })
+
+    rows = []
+    cards = []
+    included = False
+    any_rejected = False
+    for h in sorted(data, key=lambda x: int(x) if str(x).isdigit() else 0):
+        d = data.get(h) or {}
+        m = d.get("metrics") or {}
+        per = (d.get("per_symbol") or {}).get(symbol) or {}
+        if per:
+            included = True
+        if d.get("nnls_rejected"):
+            any_rejected = True
+
+        rank_ic = num(m.get("rank_ic"))
+        da = num(m.get("directional_accuracy"))
+        eff = num(d.get("effective_n"))
+        sym_ic = num(per.get("rank_ic")) if per else None
+        tone = "up" if (rank_ic is not None and rank_ic > 0.03) else (
+            "down" if (rank_ic is not None and rank_ic < 0) else "neutral"
+        )
+        cards.append(
+            "<div class='validation-card'>"
+            f"<div class='validation-period'>{html.escape(str(h))}일</div>"
+            f"<div class='validation-main {tone}'>IC {html.escape(fnum(rank_ic, 3))}</div>"
+            "<div class='validation-pairs'>"
+            f"<div><span>방향</span><b>{html.escape(pct(da, signed=False))}</b></div>"
+            f"<div><span>실효표본</span><b>{html.escape(fnum(eff, 0))}</b></div>"
+            f"<div><span>{html.escape(symbol)} IC</span><b>{html.escape(fnum(sym_ic, 3) if per else '미포함')}</b></div>"
+            "</div></div>"
+        )
+
+        weights = d.get("weights") or {}
+        w_txt = ", ".join(
+            f"{k.replace('panel_', '')} {v:.2f}"
+            for k, v in sorted(weights.items(), key=lambda kv: -kv[1])
+        )
+        rows.append({
+            "기간": f"{h}일",
+            "IC": fnum(rank_ic, 3),
+            "방향": pct(da, signed=False),
+            "OOF": f"{int(m.get('n_oof', 0)):,}행",
+            "실효표본": fnum(eff, 0),
+            "구성": w_txt or "-",
+            f"{symbol} IC": fnum(sym_ic, 3) if per else "미포함",
+        })
+
+    if cards:
+        st.markdown(
+            "<div class='validation-card-grid'>" + "".join(cards) + "</div>",
+            unsafe_allow_html=True,
+        )
+
+    if not included:
+        st.markdown(
+            "<div class='tab-callout neutral'>"
+            f"<b>{html.escape(symbol)}</b>은 패널 학습 대상이 아닙니다. "
+            "공통 반도체 사이클 신호가 적용되지 않는 종목입니다."
+            "</div>",
+            unsafe_allow_html=True,
+        )
+    elif any_rejected:
+        st.markdown(
+            "<div class='tab-callout warn'>"
+            "일부 기간에서 NNLS 스태킹이 패널 모델을 기각했습니다. "
+            "해당 기간은 공통 신호의 재현성이 약한 구간으로 보세요."
+            "</div>",
+            unsafe_allow_html=True,
+        )
+
+    with st.expander("공통 모델 상세 수치 보기", expanded=False):
         if rows:
             render_dark_table(pd.DataFrame(rows))
-
         st.caption(
-            "실효표본은 종목 간 잔차 상관(가정 0.6)을 보정한 값입니다. "
-            "반도체 종목은 같은 날 함께 움직이므로 (종목 수 × 기간)을 그대로 "
-            "믿으면 안 됩니다. 기간이 길수록 실효표본이 급격히 줄어듭니다."
+            "실효표본은 종목 간 잔차 상관을 보정한 값입니다. 같은 날 함께 움직이는 "
+            "반도체 종목을 단순히 종목 수 × 기간으로 세지 않습니다."
         )
-        if not included:
-            st.caption(
-                f"{symbol} 은 패널 학습 대상이 아닙니다. 패널이 학습하는 것은 "
-                "반도체 사이클이라, 무관 종목을 섞으면 신호가 희석됩니다. "
-                "이 종목의 예측에는 패널이 들어가지 않습니다."
-            )
-        if any((data.get(h) or {}).get("nnls_rejected") for h in data):
-            st.warning(
-                "일부 기간에서 NNLS 스태킹이 패널 모델을 전부 기각했습니다. "
-                "그 기간의 패널은 재현 가능한 신호를 찾지 못했다는 뜻이므로 "
-                "신뢰하지 마십시오.",
-                icon="⚠️",
-            )
 
 
 def load_kcs_memory() -> Optional[pd.DataFrame]:
@@ -4559,6 +4968,31 @@ def section_head(kicker: str, title: str, note: str = "") -> None:
         </div>
         """,
         unsafe_allow_html=True,
+    )
+
+
+def subsection_head(title: str, note: str = "") -> None:
+    """탭 내부의 2차 섹션 제목. 종목 전망 탭의 계층을 다른 탭에도 그대로 쓴다."""
+    note_html = f"<div class='subsection-note'>{html.escape(note)}</div>" if note else ""
+    st.markdown(
+        f"""
+        <div class="subsection-head">
+          <div class="subsection-title">{html.escape(title)}</div>
+          {note_html}
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def _overview_card(label: str, value: str, sub: str = "", tone: str = "neutral") -> str:
+    """업황/검증 탭에서 공통으로 쓰는 큰 숫자 카드."""
+    return (
+        "<div class='overview-card'>"
+        f"<div class='overview-label'>{html.escape(str(label))}</div>"
+        f"<div class='overview-value {html.escape(tone)}'>{html.escape(str(value))}</div>"
+        f"<div class='overview-sub'>{html.escape(str(sub))}</div>"
+        "</div>"
     )
 
 
@@ -5968,7 +6402,7 @@ def kcs_memory_chart(df: pd.DataFrame, years: int = 5,
 
 
 def render_kcs_memory(df: Optional[pd.DataFrame]) -> None:
-    """대시보드 상단에 메모리 수출단가 최신값과 월별 추이를 표시한다."""
+    """메모리 업황 탭을 종목 전망 탭과 같은 카드 → 차트 → 해석 순서로 렌더링한다."""
     if df is None or df.empty:
         return
 
@@ -5979,55 +6413,76 @@ def render_kcs_memory(df: Optional[pd.DataFrame]) -> None:
     latest_period = str(focus["period"].max())
     section_head(
         "MEMORY CYCLE",
-        "메모리 수출단가 흐름",
-        f"관세청 최근 통계 {latest_period} · 달러/kg",
+        "메모리 업황",
+        f"관세청 최근 통계 {latest_period} · 월별 수출단가 USD/kg",
     )
-    with st.expander("DRAM·NAND·MCP 월별 흐름 보기", expanded=True):
-        cols = st.columns(3)
-        for col, (code, label) in zip(cols, KCS_MEMORY_SERIES.items()):
-            g = focus[focus["hs_code"] == code].sort_values("date")
-            if g.empty:
-                col.metric(label, "N/A")
-                continue
-            latest = float(g["export_unit_price_weight"].iloc[-1])
-            mom = _kcs_change(g, 1)
-            yoy = _kcs_change(g, 12)
-            delta = pct(mom) if mom is not None else None
-            help_text = (
-                f"관세청 품목별 수출입실적의 월별 수출금액/중량 기준 단가. "
-                f"최근 YoY {pct(yoy) if yoy is not None else 'N/A'}."
-            )
-            col.metric(
-                label, f"{latest:,.0f} USD/kg", delta,
-                help=help_text,
-            )
-            col.markdown(mobile_help_html(help_text), unsafe_allow_html=True)
 
-        c1, c2 = st.columns([2, 1])
-        with c1:
-            years = st.select_slider(
-                "표시 기간", options=[3, 5, 7, 10], value=5,
-                key="kcs_years", format_func=lambda v: f"{v}년",
-                label_visibility="collapsed",
+    cards = []
+    for code, label in KCS_MEMORY_SERIES.items():
+        g = focus[focus["hs_code"] == code].sort_values("date")
+        if g.empty:
+            cards.append(_overview_card(label, "N/A", "게시 데이터 없음"))
+            continue
+        latest = float(g["export_unit_price_weight"].iloc[-1])
+        mom = _kcs_change(g, 1)
+        yoy = _kcs_change(g, 12)
+        tone = _change_tone(mom)
+        sub_bits = []
+        if mom is not None:
+            sub_bits.append(f"전월 {pct(mom)}")
+        if yoy is not None:
+            sub_bits.append(f"전년 {pct(yoy)}")
+        cards.append(
+            _overview_card(
+                label,
+                f"{latest:,.0f} USD/kg",
+                " · ".join(sub_bits) if sub_bits else "변화율 계산 대기",
+                tone,
             )
-        with c2:
-            logic_help = "메모리 사이클과 일반 로직 IC 단가를 상대 비교할 때 사용합니다."
-            include_logic = st.checkbox(
-                "Logic 대조군", value=False, key="kcs_logic",
-                help=logic_help,
-            )
-            st.markdown(mobile_help_html(logic_help), unsafe_allow_html=True)
-
-        st.plotly_chart(
-            kcs_memory_chart(df, years, include_logic),
-            use_container_width=True, key="kcs_memory_chart",
-            config={"displayModeBar": False, "responsive": True},
         )
-        st.caption(
-            "관세청 월별 **수출단가(USD/kg)** 입니다. DRAM/NAND 현물 칩 가격이 아니라 "
-            "수출금액÷중량으로 계산된 제품 믹스 포함 지표입니다. "
-            "MCP는 HBM 전용 가격이 아니라 **HBM을 포함할 수 있는 대리지표**이며, "
-            "모델 학습에서는 공표 지연을 반영해 해당 월의 익월 15일 이후에만 사용합니다."
+
+    st.markdown(
+        "<div class='cycle-overview-grid'>" + "".join(cards) + "</div>",
+        unsafe_allow_html=True,
+    )
+
+    c1, c2 = st.columns([3.2, 1.2])
+    with c1:
+        years = st.radio(
+            "차트 기간",
+            options=[3, 5, 7, 10],
+            index=1,
+            horizontal=True,
+            key="kcs_years",
+            format_func=lambda v: f"{v}년",
+        )
+    with c2:
+        st.markdown("<div style='height:2px'></div>", unsafe_allow_html=True)
+        include_logic = st.checkbox("Logic 대조군", value=False, key="kcs_logic")
+
+    st.plotly_chart(
+        kcs_memory_chart(df, years, include_logic),
+        use_container_width=True,
+        key="kcs_memory_chart",
+        config={"displayModeBar": False, "responsive": True},
+    )
+
+    st.markdown(
+        "<div class='reading-guide compact'>"
+        "<div class='reading-guide-label'>읽는 법</div>"
+        "<div class='reading-guide-copy'>"
+        "관세청 수출단가는 <b>현물 칩 가격이 아니라 수출금액÷중량</b>으로 계산한 제품 믹스 포함 지표입니다. "
+        "MCP는 HBM 전용 가격이 아니라 HBM을 포함할 수 있는 대리지표이며, 모델에는 공표 지연을 반영합니다."
+        "</div></div>",
+        unsafe_allow_html=True,
+    )
+
+    with st.expander("메모리 지표 설명 보기", expanded=False):
+        st.markdown(
+            "- **DRAM / NAND Flash**: 관세청 월별 품목별 수출금액÷중량 기준 단가\n"
+            "- **MCP / HBM proxy**: HBM 전용 HS 코드가 없어 사용하는 대리지표\n"
+            "- **Logic 대조군**: 일반 로직 IC와 메모리 사이클의 상대 흐름 비교용\n"
+            "- 모델 학습에서는 해당 월 통계를 **익월 15일 이후**에만 사용할 수 있도록 시점을 지연합니다."
         )
 
 
@@ -6106,6 +6561,7 @@ def candle_chart(hist: Optional[pd.DataFrame], p: Dict,
                 annotation_text="현재가",
                 annotation_position="top left",
                 annotation_font=dict(color="#7f8995", size=10),
+                row=1, col=1,
             )
 
     fig.update_layout(
@@ -6206,15 +6662,12 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
             "1년": 250,
             "2년": 500,
         }
-        chart_period_help = "거래일 수를 직접 고르는 대신 실제 달력 기간에 가까운 구간으로 표시합니다."
         chart_window = st.selectbox(
             "차트 기간",
             options=list(chart_windows),
             index=2,
             key=f"lb_{symbol}",
-            help=chart_period_help,
         )
-        st.markdown(mobile_help_html(chart_period_help), unsafe_allow_html=True)
         lookback = chart_windows[chart_window]
     with c_vol:
         st.markdown("<div style='height:2px'></div>", unsafe_allow_html=True)
@@ -6692,8 +7145,12 @@ def main() -> None:
     with validation_tab:
         panel_data = load_panel_diagnostics()
         portfolio_data = load_portfolio_backtest()
+        section_head(
+            "VALIDATION",
+            "전략 검증",
+            "좋아 보이는 예측이 실제 과거 검증에서도 반복됐는지 확인합니다.",
+        )
         if not panel_data and not portfolio_data:
-            section_head("VALIDATION", "전략 검증", "모델과 포트폴리오의 과거 성적")
             st.info(
                 "게시된 전략 검증 결과가 아직 없습니다. 전체 publish 결과가 생기면 "
                 "패널 모델과 포트폴리오 백테스트를 여기서 확인할 수 있습니다."
@@ -6703,13 +7160,21 @@ def main() -> None:
             render_portfolio_backtest(portfolio_data)
 
     with notes_tab:
-        # 개발자 노트가 없거나 보조 파일이 누락되면 이 탭 안에서 원인을 알려준다.
+        # 업데이트 탭도 동일한 제목 계층을 사용하고, 상세 노트만 아래에 쌓는다.
+        section_head(
+            "UPDATES",
+            "업데이트",
+            "모델·데이터·대시보드에서 무엇이 바뀌었는지 확인합니다.",
+        )
         try:
             from devnotes_view import render_devnotes
 
-            render_devnotes(PUBLISHED, section_head=section_head)
+            # devnotes_view 내부의 큰 섹션 헤더는 2차 제목으로 낮춰 탭 전체 계층을 통일한다.
+            def _devnote_head(_kicker: str, title: str, note: str = "") -> None:
+                subsection_head(title, note)
+
+            render_devnotes(PUBLISHED, section_head=_devnote_head)
         except ImportError:
-            section_head("UPDATES", "업데이트 기록", "대시보드 변경 내역")
             st.info(
                 "아직 표시할 업데이트 기록이 없습니다. devnotes_view.py와 "
                 "published/devnotes.json을 함께 게시하면 이 탭에 나타납니다."
