@@ -7,3 +7,5 @@
 streamlit>=1.36,<2
 pandas>=2.0,<3
 plotly>=5.20,<7
+streamlit-javascript>=1.42.0
+matplotlib>=3.9
