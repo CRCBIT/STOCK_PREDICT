@@ -1,7 +1,7 @@
 {
   "schema_version": "1.2",
-  "generated_at": "2026-09-01T21:25:57+09:00",
-  "published_at": "2026-09-01T15:59:17+00:00",
+  "generated_at": "2026-09-02T00:59:48+09:00",
+  "published_at": "2026-09-01T15:59:49+00:00",
   "symbols": [
     "000660",
     "005930",
@@ -15,6 +15,7 @@
     "CAT",
     "GOOGL",
     "KLAC",
+    "MSFT",
     "MU",
     "NVDA",
     "OKLO",
@@ -30,7 +31,7 @@
     10,
     30
   ],
-  "n_predictions": 63,
+  "n_predictions": 66,
   "files": {
     "predictions_json": "predictions.json",
     "predictions_csv": "predictions.csv",
@@ -47,6 +48,7 @@
       "CAT.csv",
       "GOOGL.csv",
       "KLAC.csv",
+      "MSFT.csv",
       "MU.csv",
       "NVDA.csv",
       "OKLO.csv",
@@ -94,6 +96,9 @@
       "backtest_KLAC_h5.csv",
       "backtest_KLAC_h10.csv",
       "backtest_KLAC_h30.csv",
+      "backtest_MSFT_h5.csv",
+      "backtest_MSFT_h10.csv",
+      "backtest_MSFT_h30.csv",
       "backtest_MU_h5.csv",
       "backtest_MU_h10.csv",
       "backtest_MU_h30.csv",
