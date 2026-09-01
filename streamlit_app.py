@@ -7443,39 +7443,32 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
 # ======================================================================================
 def _browser_network_info() -> Optional[Dict]:
     """
-    Streamlit Community Cloud의 Python 프로세스에서는 실제 방문자 IP 대신
-    127.0.0.1 같은 내부 프록시 주소만 보일 수 있다.
+    방문자 브라우저에서 직접 공인 IP를 조회한다.
 
-    streamlit-javascript component가 *방문자의 브라우저에서* ipify를 호출해
-    공인 IP를 받아 Python으로 돌려준다. 첫 호출에서는 component가 비동기로
-    실행되므로 None을 반환할 수 있다. 이때 대시보드는 그대로 렌더링하고,
-    component 값이 돌아와 자동 rerun된 뒤 analytics 세션을 시작한다.
+    Streamlit Community Cloud의 Python 프로세스는 실제 방문자 대신 내부 프록시
+    (127.0.0.1)를 볼 수 있으므로 서버 IP는 방문자 IP로 사용하지 않는다.
 
-    브라우저 요청은 2.5초에 강제 timeout되므로 외부 서비스 장애가 앱 로딩을
-    막지 않는다. 패키지가 없거나 실행이 실패해도 analytics는 폴백 모드로 동작한다.
+    중요:
+    - 성공한 브라우저 결과만 session_state에 캐시한다.
+    - 첫 component 렌더의 None/미완료 값을 실패로 캐시하지 않는다.
+    - GitHub 1.42.0 streamlit-javascript의 반복 실행 기능으로 결과가 올 때까지
+      약 1.5초 간격으로 재시도한다.
+    - 실제 공인 IP를 얻기 전에는 analytics 세션 자체를 시작하지 않으므로
+      Discord에 127.0.0.1이 방문자 IP처럼 찍히지 않는다.
     """
     cached = st.session_state.get("dashview_browser_network_info")
-    if isinstance(cached, dict):
+    if isinstance(cached, dict) and str(cached.get("ip") or "").strip():
         return cached
 
     try:
         from streamlit_javascript import st_javascript
     except Exception as exc:
-        fallback = {
-            "ip": "",
-            "source": "browser-component-unavailable",
-            "user_agent": "",
-            "timezone": "",
-            "locale": "",
-            "ok": False,
-            "error": f"{type(exc).__name__}: {str(exc)[:120]}",
-        }
-        st.session_state["dashview_browser_network_info"] = fallback
         print(
-            f"DASHVIEW_BROWSER_IP_FALLBACK {fallback['error']}",
+            "DASHVIEW_BROWSER_IP_COMPONENT_ERROR "
+            f"{type(exc).__name__}: {str(exc)[:180]}",
             flush=True,
         )
-        return fallback
+        return None
 
     javascript = r"""
     (async function(){
@@ -7486,94 +7479,122 @@ def _browser_network_info() -> Optional[Dict]:
                      (window.navigator.languages && window.navigator.languages[0]))) || ""
         };
 
-        const controller = new AbortController();
-        const timer = setTimeout(function(){ controller.abort(); }, 2500);
+        async function lookup(url, label) {
+            const controller = new AbortController();
+            const timer = setTimeout(function(){ controller.abort(); }, 3000);
+            try {
+                const response = await fetch(url, {
+                    method: "GET",
+                    mode: "cors",
+                    cache: "no-store",
+                    credentials: "omit",
+                    signal: controller.signal
+                });
+                if (!response.ok) {
+                    throw new Error(label + " HTTP " + response.status);
+                }
+                const data = await response.json();
+                const ip = (data && data.ip) ? String(data.ip).trim() : "";
+                if (!ip) {
+                    throw new Error(label + " returned empty IP");
+                }
+                return Object.assign({}, base, {
+                    ip: ip,
+                    source: label,
+                    ok: true,
+                    error: ""
+                });
+            } finally {
+                clearTimeout(timer);
+            }
+        }
+
+        let errors = [];
+        try {
+            return await lookup("https://api.ipify.org?format=json", "browser-ipify-v4");
+        } catch (e1) {
+            errors.push(String(e1 || "ipify-v4 failed"));
+        }
 
         try {
-            const response = await fetch(
-                "https://api64.ipify.org?format=json",
-                {
-                    method: "GET",
-                    cache: "no-store",
-                    signal: controller.signal
-                }
-            );
-            if (!response.ok) {
-                throw new Error("ipify HTTP " + response.status);
-            }
-            const data = await response.json();
-            return Object.assign({}, base, {
-                ip: (data && data.ip) ? String(data.ip) : "",
-                source: "browser-ipify",
-                ok: Boolean(data && data.ip),
-                error: ""
-            });
-        } catch (error) {
-            return Object.assign({}, base, {
-                ip: "",
-                source: "browser-ipify-failed",
-                ok: false,
-                error: String(error || "browser ip lookup failed")
-            });
-        } finally {
-            clearTimeout(timer);
+            return await lookup("https://api64.ipify.org?format=json", "browser-ipify-v64");
+        } catch (e2) {
+            errors.push(String(e2 || "ipify-v64 failed"));
         }
+
+        return Object.assign({}, base, {
+            ip: "",
+            source: "browser-ipify-failed",
+            ok: false,
+            error: errors.join(" | ")
+        });
     })()
     """
 
     try:
-        # PyPI의 streamlit-javascript 0.1.5 API에 맞춰
-        # 단일 javascript 인자만 사용한다. 이 앱에서는 호출 지점이 하나뿐이라
-        # 별도 key가 필요하지 않다.
-        value = st_javascript(javascript)
+        # GitHub 1.42.0 README의 API:
+        # st_javascript(js, placeholder, key, repeat_ms)
+        # 결과를 얻기 전에는 약 1.5초마다 다시 실행한다.
+        value = st_javascript(
+            javascript,
+            None,
+            "DASHVIEW_BROWSER_NETWORK",
+            1500,
+        )
+    except TypeError:
+        # 혹시 이전 API가 남아 있어도 앱 자체가 죽지 않도록 폴백.
+        try:
+            value = st_javascript(javascript, "IP 확인 중…")
+        except Exception as exc:
+            print(
+                "DASHVIEW_BROWSER_IP_EXEC_ERROR "
+                f"{type(exc).__name__}: {str(exc)[:180]}",
+                flush=True,
+            )
+            return None
     except Exception as exc:
-        fallback = {
-            "ip": "",
-            "source": "browser-component-error",
-            "user_agent": "",
-            "timezone": "",
-            "locale": "",
-            "ok": False,
-            "error": f"{type(exc).__name__}: {str(exc)[:120]}",
-        }
-        st.session_state["dashview_browser_network_info"] = fallback
         print(
-            f"DASHVIEW_BROWSER_IP_ERROR {fallback['error']}",
+            "DASHVIEW_BROWSER_IP_EXEC_ERROR "
+            f"{type(exc).__name__}: {str(exc)[:180]}",
             flush=True,
         )
-        return fallback
+        return None
 
-    # component는 첫 렌더에서 아직 값이 없을 수 있다. 분석만 잠시 보류하고
-    # 화면 렌더링은 계속 진행한다.
+    # Streamlit component는 첫 렌더에서 아직 결과가 없을 수 있다.
     if value is None:
         return None
 
-    if isinstance(value, dict):
-        info = {
-            "ip": str(value.get("ip") or "").strip(),
-            "source": str(value.get("source") or "browser-ipify"),
-            "user_agent": str(value.get("user_agent") or ""),
-            "timezone": str(value.get("timezone") or ""),
-            "locale": str(value.get("locale") or ""),
-            "ok": bool(value.get("ok")),
-            "error": str(value.get("error") or "")[:180],
-        }
-    else:
-        info = {
-            "ip": "",
-            "source": "browser-component-invalid-result",
-            "user_agent": "",
-            "timezone": "",
-            "locale": "",
-            "ok": False,
-            "error": f"unexpected result: {type(value).__name__}",
-        }
+    if not isinstance(value, dict):
+        print(
+            "DASHVIEW_BROWSER_IP_PENDING "
+            f"type={type(value).__name__} value={str(value)[:100]}",
+            flush=True,
+        )
+        return None
+
+    info = {
+        "ip": str(value.get("ip") or "").strip(),
+        "source": str(value.get("source") or "browser-ipify"),
+        "user_agent": str(value.get("user_agent") or ""),
+        "timezone": str(value.get("timezone") or ""),
+        "locale": str(value.get("locale") or ""),
+        "ok": bool(value.get("ok")),
+        "error": str(value.get("error") or "")[:300],
+    }
+
+    if not info["ip"]:
+        print(
+            "DASHVIEW_BROWSER_IP_FAILED "
+            f"source={info['source']} error={info['error']}",
+            flush=True,
+        )
+        # 실패 결과는 캐시하지 않는다. 다음 component 주기에 재시도한다.
+        return None
 
     st.session_state["dashview_browser_network_info"] = info
     print(
-        "DASHVIEW_BROWSER_IP "
-        f"ok={info['ok']} source={info['source']} "
-        f"ip={'set' if info['ip'] else 'missing'}",
+        "DASHVIEW_BROWSER_IP_OK "
+        f"source={info['source']} ip={info['ip']}",
         flush=True,
     )
     return info

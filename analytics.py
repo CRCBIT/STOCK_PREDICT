@@ -855,8 +855,8 @@ def _send_first_session_notification_async(
             f"세션 `{payload.get('sid', '?')}` · {payload.get('kst_time', '-')}",
             f"　IP `{ip_display}` · source `{ip_source}`",
         ]
-        if raw_ip in {"", "-"} and context_ip not in {"", "-"}:
-            lines.append(f"　프록시 연결 IP `{context_ip}`")
+        # 내부 Streamlit 프록시(127.0.0.1)는 방문자 정보가 아니므로
+        # Discord에는 표시하지 않는다. 디버그 로그의 context_ip에는 남아 있다.
         lines.extend([
             f"　추정 위치 **{location_prefix}{geo.get('location', '조회 불가')}**",
             f"　통신사 **{geo.get('isp', '-')}** · ASN `{geo.get('asn', '-')}`",
