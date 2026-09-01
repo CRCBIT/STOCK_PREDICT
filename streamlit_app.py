@@ -2338,11 +2338,70 @@ st.markdown("""
     background: rgba(255,255,255,0.035);
     font-size: 0.83rem;
   }
+  .verdict-body {
+    min-width: 0;
+  }
+  .verdict-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    min-width: 0;
+  }
   .verdict-title {
+    min-width: 0;
     color: #eef3f8;
     font-size: 0.91rem;
     font-weight: 760;
     line-height: 1.35;
+  }
+  .verdict-confidence {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 999px;
+    background: rgba(255,255,255,0.035);
+    color: #aeb6bf;
+    font-size: 0.66rem;
+    font-weight: 730;
+    line-height: 1.2;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+  .verdict-confidence::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    flex: 0 0 7px;
+    border-radius: 50%;
+    background: #7f8995;
+    box-shadow: 0 0 0 3px rgba(127,137,149,0.10);
+  }
+  .verdict-confidence.high {
+    color: #67dbb9;
+    border-color: rgba(32,201,151,0.22);
+    background: rgba(32,201,151,0.075);
+  }
+  .verdict-confidence.high::before {
+    background: #41c79f;
+    box-shadow: 0 0 0 3px rgba(32,201,151,0.11);
+  }
+  .verdict-confidence.medium {
+    color: #f2c94c;
+    border-color: rgba(242,201,76,0.24);
+    background: rgba(242,201,76,0.075);
+  }
+  .verdict-confidence.medium::before {
+    background: #e7b93d;
+    box-shadow: 0 0 0 3px rgba(242,201,76,0.10);
+  }
+  .verdict-confidence.low {
+    color: #aab4bf;
+    border-color: rgba(170,180,191,0.16);
+    background: rgba(170,180,191,0.045);
   }
   .verdict-copy {
     color: #b8c3d0;
@@ -3201,14 +3260,30 @@ st.markdown("""
       border-radius: 10px !important;
     }
     .verdict-icon { display: none !important; }
+    .verdict-head {
+      gap: 7px !important;
+      align-items: center !important;
+    }
     .verdict-title {
-      display: inline !important;
-      margin-right: 6px;
+      display: block !important;
+      margin-right: 0 !important;
       font-size: 0.76rem !important;
+      line-height: 1.30 !important;
+    }
+    .verdict-confidence {
+      gap: 4px !important;
+      padding: 3px 6px !important;
+      font-size: 0.58rem !important;
+    }
+    .verdict-confidence::before {
+      width: 6px !important;
+      height: 6px !important;
+      flex-basis: 6px !important;
+      box-shadow: none !important;
     }
     .verdict-copy {
-      display: inline !important;
-      margin-top: 0 !important;
+      display: block !important;
+      margin-top: 3px !important;
       font-size: 0.69rem !important;
       line-height: 1.38 !important;
     }
@@ -4971,9 +5046,6 @@ def render_forecast_summary(p: Dict, hist: Optional[pd.DataFrame],
         interval_value = "N/A"
         interval_sub = "예상 범위 정보 없음"
 
-    grade = grade_of(p)
-    grade_label = grade_ko(grade)
-    confidence = fnum(p.get("confidence"), 0)
     expected_tone = _change_tone(expected)
 
     def glance_stat(label: str, value: str, sub: str = "", tone: str = "neutral",
@@ -4991,8 +5063,6 @@ def render_forecast_summary(p: Dict, hist: Optional[pd.DataFrame],
         "<div class='forecast-glance-main'>"
         "<div class='forecast-glance-main-top'>"
         f"<div class='forecast-glance-label'>{horizon}거래일 뒤 기준값</div>"
-        f"<div class='confidence-badge {grade.lower()}'>"
-        f"신뢰도 {html.escape(confidence)}/100 · {html.escape(grade_label)}</div>"
         "</div>"
         "<div class='forecast-glance-main-bottom'>"
         "<div class='forecast-glance-forecast'>"
@@ -5458,6 +5528,8 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
 
     # ---- 결론 -> 핵심 숫자 -> 읽는 법 ----
     grade = grade_of(p)
+    grade_label = grade_ko(grade)
+    confidence = fnum(p.get("confidence"), 0)
     verdict_title = {
         "LOW": "방향 판단은 잠시 보류",
         "MEDIUM": "참고 가능한 신호",
@@ -5466,8 +5538,12 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
     st.markdown(
         f"<div class='verdict {grade.lower()}'>"
         f"<div class='verdict-icon'>{DOT.get(grade, '●')}</div>"
-        "<div>"
+        "<div class='verdict-body'>"
+        "<div class='verdict-head'>"
         f"<div class='verdict-title'>{html.escape(verdict_title)}</div>"
+        f"<div class='verdict-confidence {grade.lower()}'>"
+        f"신뢰도 {html.escape(confidence)}/100 · {html.escape(grade_label)}</div>"
+        "</div>"
         f"<div class='verdict-copy'>{html.escape(verdict(p))}</div>"
         "</div></div>",
         unsafe_allow_html=True,
