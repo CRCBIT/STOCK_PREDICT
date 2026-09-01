@@ -4765,6 +4765,44 @@ st.markdown("""
 
 
 
+  /* 차트 아래 보조지표 — 핵심 가격 흐름과 분리한 얇은 정보 스트립 */
+  .forecast-secondary-strip {
+    margin: 9px 0 8px 0 !important;
+    border: 1px solid rgba(255,255,255,0.06) !important;
+    border-radius: 13px !important;
+    overflow: hidden !important;
+    background: #0d1116 !important;
+  }
+  .forecast-secondary-strip.snapshot-detail-strip {
+    border-top: 1px solid rgba(255,255,255,0.06) !important;
+  }
+  .forecast-secondary-strip .snapshot-detail {
+    min-height: 66px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .forecast-secondary-strip .snapshot-detail-label {
+    color: #88939f !important;
+  }
+  .forecast-secondary-strip .snapshot-detail-sub {
+    color: #697480 !important;
+  }
+
+  @media (max-width: 760px) {
+    .forecast-secondary-strip {
+      margin-top: 7px !important;
+      margin-bottom: 7px !important;
+      border-radius: 12px !important;
+    }
+    .forecast-secondary-strip .snapshot-detail {
+      min-height: 58px;
+    }
+    .forecast-secondary-strip .snapshot-range-detail {
+      min-height: 62px;
+    }
+  }
+
   /* PRICE ONLY — 차트 위에는 현재가 → P50만 남긴다. */
   .forecast-snapshot-price-only .snapshot-route {
     padding-top: 18px !important;
@@ -6367,8 +6405,8 @@ def render_forecast_summary(p: Dict, hist: Optional[pd.DataFrame],
                             quotes: Dict, horizon: int) -> None:
     """차트 직전에는 현재가 → P50 기준값의 핵심 가격 흐름만 보여준다.
 
-    예상 범위·상승 가능성·최근 변동성은 차트 위에서 제거해 시선을 가격과
-    예측 중앙값에 집중시킨다. 관련 수치는 상세/진단 영역에서 확인한다.
+    예상 범위·상승 가능성·최근 변동성은 차트 아래 보조 스트립으로 분리해
+    첫 화면의 시선을 가격과 예측 중앙값에 집중시킨다.
     """
     currency = str(p.get("currency") or "KRW")
     now = num(p.get("current_price"))
@@ -6422,6 +6460,56 @@ def render_forecast_summary(p: Dict, hist: Optional[pd.DataFrame],
         "</div>",
         unsafe_allow_html=True,
     )
+
+def render_forecast_secondary_metrics(p: Dict) -> None:
+    """차트 아래에서 예측 범위·상승 가능성·변동성을 얇은 3칸 스트립으로 보여준다."""
+    currency = str(p.get("currency") or "KRW")
+    now = num(p.get("current_price"))
+    prob_up = num(p.get("prob_up"))
+    volatility = num(p.get("expected_volatility_annual"))
+
+    low = num(p.get("interval_80_low"))
+    high = num(p.get("interval_80_high"))
+    calibrated_interval = low is not None and high is not None
+    if not calibrated_interval:
+        low, high = num(p.get("p10")), num(p.get("p90"))
+
+    if low is not None and high is not None:
+        interval_value = f"{price(low, currency)} ~ {price(high, currency)}"
+        interval_sub = (
+            f"현재가 대비 {pct(low / now - 1)} ~ {pct(high / now - 1)}"
+            if now else "폭이 넓을수록 불확실성이 큼"
+        )
+    else:
+        interval_value = "N/A"
+        interval_sub = "예상 범위 정보 없음"
+
+    range_label = "80% 예상 범위" if calibrated_interval else "P10~P90 예상 범위"
+    prob_tone = _change_tone((prob_up - 0.5) if prob_up is not None else None)
+
+    st.markdown(
+        "<div class='forecast-secondary-strip snapshot-detail-strip'>"
+        "<div class='snapshot-detail snapshot-range-detail'>"
+        f"<div class='snapshot-detail-label'>{html.escape(range_label)}</div>"
+        f"<div class='snapshot-detail-value range'>{html.escape(interval_value)}</div>"
+        f"<div class='snapshot-detail-sub'>{html.escape(interval_sub)}</div>"
+        "</div>"
+
+        "<div class='snapshot-detail'>"
+        "<div class='snapshot-detail-label'>상승 가능성</div>"
+        f"<div class='snapshot-detail-value {prob_tone}'>{html.escape(pct(prob_up, signed=False))}</div>"
+        "<div class='snapshot-detail-sub'>50% 부근은 방향 우위 약함</div>"
+        "</div>"
+
+        "<div class='snapshot-detail'>"
+        "<div class='snapshot-detail-label'>최근 변동성</div>"
+        f"<div class='snapshot-detail-value'>{html.escape(pct(volatility, signed=False))}</div>"
+        "<div class='snapshot-detail-sub'>연율 환산 · 현재 상태</div>"
+        "</div>"
+        "</div>",
+        unsafe_allow_html=True,
+    )
+
 
 def render_forecast_reading_guide(p: Dict, horizon: int) -> None:
     """차트를 먼저 본 뒤 숫자의 해석 원칙을 짧게 안내한다."""
@@ -6901,6 +6989,7 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
         use_container_width=True, key=f"candle_{uid}",
         config={"displayModeBar": False, "responsive": True},
     )
+    render_forecast_secondary_metrics(p)
     st.markdown(
         "<div class='chart-caption'>"
         "<span>파란 점선: P50 기준값</span>"
