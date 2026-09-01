@@ -5,7 +5,7 @@ Streamlit 대시보드 방문 추적 + Discord 알림 + 일일 통계 그래프.
 
 동작
 ----
-1. 새 Streamlit 세션 → 일반 / 재연결 의심 / 자동접속 의심으로 분류하고 첫 종목과 합쳐 Discord 1회 알림
+1. 새 Streamlit 세션 → 일반 / 재연결 의심 / 자동접속 의심으로 분류해 Discord 알림
 2. 같은 클라이언트가 짧은 간격으로 새 세션을 만들고 이전 세션에 상호작용이 없으면 재연결 의심
 3. 첫 화면의 자동 선택 종목은 알림 생략, 사용자가 실제로 종목을 전환할 때만 Discord 알림 (webhook_verbose=true)
 4. 같은 종목 단순 rerun → 조회로 세지 않음
@@ -26,7 +26,7 @@ Discord Webhook은 과거 메시지를 읽을 수 없으므로 재시작 이전 
 
 개인정보
 --------
-원본 IP 주소와 전체 User-Agent 문자열은 저장하지 않는다. Discord에는 IP를 일부 마스킹해서만 표시한다.
+원본 IP 주소와 전체 User-Agent 문자열은 저장하거나 Discord로 전송하지 않는다.
 세션 재연결 판별에는 st.context의 IP/User-Agent/시간대/locale을 즉시 조합한 뒤
 프로세스마다 새로 생성되는 salt로 해시한 짧은 임시 클라이언트 지문만 사용한다.
 서버 프로세스가 재시작되면 salt와 지문 이력도 함께 사라진다.
@@ -647,31 +647,8 @@ def _looks_like_bot(user_agent: str) -> bool:
     ))
 
 
-def _mask_ip(ip_address: str) -> str:
-    """Discord에는 원본 IP 대신 일부만 남긴 마스킹 주소를 표시한다."""
-    value = str(ip_address or "").strip()
-    if not value:
-        return "-"
-
-    # IPv4: 211.234.56.78 -> 211.234.xxx.xxx
-    parts = value.split(".")
-    if len(parts) == 4 and all(part.isdigit() for part in parts):
-        return f"{parts[0]}.{parts[1]}.xxx.xxx"
-
-    # IPv6: 앞 두 블록만 남기고 나머지는 숨긴다.
-    if ":" in value:
-        blocks = [block for block in value.split(":") if block]
-        if len(blocks) >= 2:
-            return f"{blocks[0]}:{blocks[1]}:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx"
-        if blocks:
-            return f"{blocks[0]}:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx:xxxx"
-        return "IPv6(masked)"
-
-    return "masked"
-
-
 def _client_snapshot(memory: _AnalyticsMemory) -> dict:
-    """원본 식별정보는 저장하지 않고 현재 연결의 마스킹 정보와 임시 지문만 만든다."""
+    """원본 식별정보를 남기지 않고 현재 연결의 임시 클라이언트 특성을 만든다."""
     headers = _context_headers()
     user_agent = headers.get("user-agent", "")
     ip_address = str(_safe_context_value("ip_address", "") or "").strip()
@@ -690,7 +667,6 @@ def _client_snapshot(memory: _AnalyticsMemory) -> dict:
 
     return {
         "fingerprint": fingerprint,
-        "masked_ip": _mask_ip(ip_address),
         "client": _client_family(user_agent),
         "timezone": timezone_name or "-",
         "locale": locale or "-",
@@ -781,7 +757,6 @@ def _memory_record_session(sid: str) -> dict:
             "classification": classification,
             "reason": reason,
             "fingerprint": fingerprint,
-            "masked_ip": client.get("masked_ip", "-"),
             "client": client["client"],
             "timezone": client["timezone"],
             "locale": client["locale"],
@@ -1524,7 +1499,6 @@ def track_session(
         version=app_version,
         classification=classification,
         client=diagnostics.get("client", "-"),
-        masked_ip=diagnostics.get("masked_ip", "-"),
         client_fp=diagnostics.get("fingerprint", ""),
         gap_minutes=diagnostics.get("gap_minutes"),
         previous_engaged=diagnostics.get("previous_engaged"),
@@ -1538,15 +1512,11 @@ def track_session(
     }
     icon, label = labels.get(classification, ("📈", "새 세션"))
 
-    # 첫 화면에서 자동 선택되는 첫 종목까지 한 번에 보여주기 위해
-    # 세션 알림은 여기서 즉시 보내지 않고 track_symbol()의 첫 호출까지 잠시 보관한다.
-    # 이렇게 하면 "세션 알림 + 첫 종목 알림"이 두 개로 나뉘지 않고 Discord 메시지 1개로 합쳐진다.
     if _session_diagnostics_enabled():
         lines = [
             f"{icon} **{label}** · 세션 `{sid}` · {_kst_now()}",
-            f"　IP `{diagnostics.get('masked_ip') or '-'}` · "
-            f"클라이언트 **{diagnostics.get('client', '-')}**",
-            f"　임시지문 `{diagnostics.get('fingerprint') or '-'}` · "
+            f"　클라이언트 **{diagnostics.get('client', '-')}** · "
+            f"임시지문 `{diagnostics.get('fingerprint') or '-'}` · "
             f"TZ `{diagnostics.get('timezone', '-')}` · "
             f"locale `{diagnostics.get('locale', '-')}`",
         ]
@@ -1562,11 +1532,12 @@ def track_session(
 
         if classification != "normal":
             lines.append(f"　판정 근거: {diagnostics.get('reason', '-')}")
-    else:
-        lines = [f"{icon} {label} · 세션 `{sid}` · {_kst_now()}"]
 
-    st.session_state["dashview_pending_session_lines"] = lines
-    _log("session_notification_pending", sid=sid)
+        _webhook_send("\n".join(lines))
+    else:
+        _webhook_send(
+            f"{icon} {label} · 세션 `{sid}` · {_kst_now()}"
+        )
 
     return sid
 
@@ -1675,33 +1646,10 @@ def track_symbol(symbol: str) -> None:
     # ------------------------------------------------------------------
     # Discord
     # ------------------------------------------------------------------
-    # 첫 종목은 세션 진단 메시지와 합쳐서 딱 1개의 Discord 메시지로 보낸다.
-    # 이후 실제 종목 전환은 webhook_verbose=true일 때 별도 알림한다.
-    if order == 1:
-        pending_lines = st.session_state.pop(
-            "dashview_pending_session_lines",
-            None,
-        )
-
-        if pending_lines:
-            pending_lines = list(pending_lines)
-            pending_lines.append(
-                f"　첫 종목 **{symbol}**"
-            )
-            _webhook_send("\n".join(pending_lines))
-            _log(
-                "session_notification_sent",
-                sid=sid,
-                first_symbol=symbol,
-            )
-        elif _webhook_verbose():
-            # Hot reload 등으로 pending 상태가 사라진 예외 상황에서도
-            # 첫 종목 자체는 놓치지 않는다.
-            _webhook_send(
-                f"　└ `{sid}` → **{symbol}** (첫 종목)"
-            )
-
-    elif _webhook_verbose():
+    # 첫 번째 종목은 앱이 처음 렌더링될 때 자동으로 선택되는 값이므로
+    # 방문 알림과 동시에 한 번 더 울리지 않게 한다.
+    # 사용자가 실제로 다른 종목으로 전환한 두 번째 이벤트부터 알린다.
+    if _webhook_verbose() and order >= 2:
         _webhook_send(
             f"　└ `{sid}` → **{symbol}** "
             f"(전체 {order}번째 · "
