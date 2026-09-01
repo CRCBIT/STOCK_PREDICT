@@ -29,7 +29,7 @@ Discord Webhook은 과거 메시지를 읽을 수 없으므로 재시작 이전 
 원본 IP 주소는 Discord 세션 알림에 표시하고, 현재 Streamlit 서버 메모리의 세션 기록에도 보관한다.
 IP 기반 추정 위치/통신사 조회는 백그라운드에서 수행해 화면 로딩을 막지 않는다.
 전체 User-Agent 문자열은 저장하지 않고 클라이언트 종류만 표시한다.
-세션 재연결 판별에는 st.context의 IP/User-Agent/시간대/locale을 즉시 조합한 뒤
+세션 재연결 판별에는 프록시 전달 헤더 또는 st.context에서 얻은 IP/User-Agent/시간대/locale을 즉시 조합한 뒤
 프로세스마다 새로 생성되는 salt로 해시한 짧은 임시 클라이언트 지문만 사용한다.
 서버 프로세스가 재시작되면 salt와 지문 이력도 함께 사라진다.
 세션 ID는 무작위 UUID 일부만 사용한다.
@@ -846,16 +846,23 @@ def _send_first_session_notification_async(
         geo = _lookup_geoip(raw_ip)
 
         location_prefix = f"{geo.get('flag', '')} " if geo.get("flag") else ""
+        ip_source = str(payload.get("ip_source") or "unavailable")
+        context_ip = str(payload.get("context_ip") or "-")
+        ip_display = raw_ip if raw_ip not in {"", "-"} else "실제 클라이언트 IP 조회 불가"
         lines = [
             f"{payload.get('icon', '📈')} **{payload.get('label', '새 세션')}** · "
             f"세션 `{payload.get('sid', '?')}` · {payload.get('kst_time', '-')}",
-            f"　IP `{raw_ip}`",
+            f"　IP `{ip_display}` · source `{ip_source}`",
+        ]
+        if raw_ip in {"", "-"} and context_ip not in {"", "-"}:
+            lines.append(f"　프록시 연결 IP `{context_ip}`")
+        lines.extend([
             f"　추정 위치 **{location_prefix}{geo.get('location', '조회 불가')}**",
             f"　통신사 **{geo.get('isp', '-')}** · ASN `{geo.get('asn', '-')}`",
             f"　클라이언트 **{payload.get('client', '-')}** · "
             f"TZ `{payload.get('timezone', '-')}` · locale `{payload.get('locale', '-')}`",
             f"　임시지문 `{payload.get('fingerprint') or '-'}`",
-        ]
+        ])
 
         gap = payload.get("gap_minutes")
         if gap is not None:
@@ -883,15 +890,88 @@ def _send_first_session_notification_async(
             error=f"{type(exc).__name__}: {str(exc)[:220]}",
         )
 
+def _parse_ip_token(value: str) -> str:
+    """헤더의 IP 토큰(IPv4/IPv6, [IPv6]:port, ::ffff:IPv4)을 정규화한다."""
+    token = str(value or "").strip().strip('"').strip("'")
+    if not token or token.lower() in {"unknown", "null", "none", "-"}:
+        return ""
+
+    if token.lower().startswith("for="):
+        token = token[4:].strip().strip('"').strip("'")
+
+    if token.startswith("[") and "]" in token:
+        token = token[1:token.index("]")]
+    elif token.count(":") == 1 and "." in token:
+        host, maybe_port = token.rsplit(":", 1)
+        if maybe_port.isdigit():
+            token = host
+
+    try:
+        parsed = ipaddress.ip_address(token)
+        if isinstance(parsed, ipaddress.IPv6Address) and parsed.ipv4_mapped:
+            parsed = parsed.ipv4_mapped
+        return str(parsed)
+    except ValueError:
+        return ""
+
+
+def _is_public_ip(value: str) -> bool:
+    try:
+        return ipaddress.ip_address(value).is_global
+    except ValueError:
+        return False
+
+
+def _extract_real_client_ip(headers: dict[str, str], context_ip: str) -> tuple[str, str]:
+    """
+    Streamlit Cloud/reverse proxy 환경에서 실제 클라이언트 IP 후보를 찾는다.
+
+    forwarding header는 위조될 수 있으므로 보안/인증에는 사용하지 않고
+    방문 분석·GeoIP 표시용 best-effort 값으로만 사용한다.
+    """
+    for name in (
+        "cf-connecting-ip",
+        "true-client-ip",
+        "x-real-ip",
+        "fly-client-ip",
+        "x-client-ip",
+    ):
+        value = _parse_ip_token(headers.get(name, ""))
+        if value and _is_public_ip(value):
+            return value, name
+
+    xff = headers.get("x-forwarded-for", "")
+    if xff:
+        for part in xff.split(","):
+            value = _parse_ip_token(part)
+            if value and _is_public_ip(value):
+                return value, "x-forwarded-for"
+
+    forwarded = headers.get("forwarded", "")
+    if forwarded:
+        for group in forwarded.split(","):
+            for part in group.split(";"):
+                if part.strip().lower().startswith("for="):
+                    value = _parse_ip_token(part.strip())
+                    if value and _is_public_ip(value):
+                        return value, "forwarded"
+
+    direct = _parse_ip_token(context_ip)
+    if direct and _is_public_ip(direct):
+        return direct, "st.context.ip_address"
+
+    return "", "unavailable"
+
+
 def _client_snapshot(memory: _AnalyticsMemory) -> dict:
-    """현재 연결의 원본 IP, 마스킹 IP, 클라이언트 정보와 임시 지문을 만든다."""
+    """현재 연결의 IP, 클라이언트 정보와 임시 지문을 만든다."""
     headers = _context_headers()
     user_agent = headers.get("user-agent", "")
-    ip_address = str(_safe_context_value("ip_address", "") or "").strip()
+    context_ip = str(_safe_context_value("ip_address", "") or "").strip()
+    ip_address, ip_source = _extract_real_client_ip(headers, context_ip)
     timezone_name = str(_safe_context_value("timezone", "") or "").strip()
     locale = str(_safe_context_value("locale", "") or "").strip()
 
-    # 재연결 판별용 지문에는 프로세스별 salt를 섞는다.
     raw = "|".join((ip_address, user_agent, timezone_name, locale)).strip("|")
     fingerprint = ""
     if raw:
@@ -904,6 +984,8 @@ def _client_snapshot(memory: _AnalyticsMemory) -> dict:
     return {
         "fingerprint": fingerprint,
         "raw_ip": ip_address or "-",
+        "ip_source": ip_source,
+        "context_ip": _parse_ip_token(context_ip) or context_ip or "-",
         "masked_ip": _mask_ip(ip_address),
         "client": _client_family(user_agent),
         "timezone": timezone_name or "-",
@@ -996,6 +1078,8 @@ def _memory_record_session(sid: str) -> dict:
             "reason": reason,
             "fingerprint": fingerprint,
             "raw_ip": client.get("raw_ip", "-"),
+            "ip_source": client.get("ip_source", "-"),
+            "context_ip": client.get("context_ip", "-"),
             "masked_ip": client.get("masked_ip", "-"),
             "client": client["client"],
             "timezone": client["timezone"],
@@ -1740,6 +1824,8 @@ def track_session(
         classification=classification,
         client=diagnostics.get("client", "-"),
         raw_ip=diagnostics.get("raw_ip", "-"),
+        ip_source=diagnostics.get("ip_source", "-"),
+        context_ip=diagnostics.get("context_ip", "-"),
         masked_ip=diagnostics.get("masked_ip", "-"),
         client_fp=diagnostics.get("fingerprint", ""),
         gap_minutes=diagnostics.get("gap_minutes"),
@@ -1762,6 +1848,8 @@ def track_session(
         "sid": sid,
         "kst_time": _kst_now(),
         "raw_ip": diagnostics.get("raw_ip") or "-",
+        "ip_source": diagnostics.get("ip_source", "-"),
+        "context_ip": diagnostics.get("context_ip", "-"),
         "client": diagnostics.get("client", "-"),
         "fingerprint": diagnostics.get("fingerprint", ""),
         "timezone": diagnostics.get("timezone", "-"),
