@@ -7444,11 +7444,17 @@ def main() -> None:
     # 실패해도 대시보드는 그대로 동작해야 한다.
     try:
         from analytics import render_session_footer, track_session, track_symbol
-
         track_session()
-    except Exception:
-        track_symbol = None          # type: ignore[assignment]
-        render_session_footer = None  # type: ignore[assignment]
+
+    except Exception as exc:
+        print(
+            f"DASHVIEW_BOOT_ERROR "
+            f"{type(exc).__name__}: {exc}",
+            flush=True,
+        )
+
+        track_symbol = None
+        render_session_footer = None
 
     manifest = load_manifest()
     payload = load_predictions()
