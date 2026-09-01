@@ -4831,12 +4831,120 @@ st.markdown("""
 
   @media (max-width: 390px) {
     .snapshot-route {
-      grid-template-columns: minmax(0,1fr) 70px minmax(0,1fr) !important;
+      grid-template-columns: minmax(0,1fr) 98px minmax(0,1fr) !important;
     }
     .snapshot-return-pill {
       min-width: 56px !important;
       padding: 4px 6px !important;
       font-size: 0.66rem !important;
+    }
+  }
+
+  /* ===============================================================
+     V24 · REAL ARROW — PC / MOBILE
+     중앙 배지를 덮는 작은 점/쐐기 조합 대신 하나의 SVG 화살표를 쓴다.
+     모바일에서도 수익률 배지 양옆의 shaft와 arrow head가 항상 보이도록
+     connector 폭을 확보한다.
+     =============================================================== */
+  .snapshot-route-line { display: none !important; }
+
+  .snapshot-connector {
+    position: relative !important;
+    overflow: visible !important;
+  }
+
+  .snapshot-arrow-svg {
+    position: absolute;
+    inset: 50% 0 auto 0;
+    width: 100%;
+    height: 24px;
+    transform: translateY(-50%);
+    overflow: visible;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .snapshot-arrow-svg path {
+    fill: none;
+    stroke: rgba(155,167,180,0.74);
+    stroke-width: 1.7;
+    vector-effect: non-scaling-stroke;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .snapshot-return-pill {
+    z-index: 2 !important;
+    background: #11161d !important;
+  }
+
+  @media (max-width: 760px) {
+    .snapshot-route {
+      grid-template-columns: minmax(0,1fr) 108px minmax(0,1fr) !important;
+      gap: 5px !important;
+    }
+    .snapshot-arrow-svg {
+      height: 22px;
+    }
+    .snapshot-arrow-svg path {
+      stroke: rgba(166,178,190,0.82);
+      stroke-width: 1.8;
+    }
+    .snapshot-return-pill {
+      min-width: 60px !important;
+      box-shadow: 0 0 0 4px #11161d !important;
+    }
+  }
+
+  @media (max-width: 390px) {
+    .snapshot-route {
+      grid-template-columns: minmax(0,1fr) 98px minmax(0,1fr) !important;
+      gap: 4px !important;
+    }
+    .snapshot-return-pill {
+      min-width: 56px !important;
+      box-shadow: 0 0 0 3px #11161d !important;
+    }
+  }
+
+  /* V25 · BIG ARROW */
+  .snapshot-arrow-svg {
+    left: -18px !important;
+    right: auto !important;
+    width: calc(100% + 36px) !important;
+    height: 30px !important;
+  }
+  .snapshot-arrow-svg path {
+    stroke: rgba(171,183,196,0.88) !important;
+    stroke-width: 2.15 !important;
+  }
+  .snapshot-return-pill {
+    box-shadow: 0 0 0 3px #11161d !important;
+  }
+
+  @media (max-width: 760px) {
+    .snapshot-arrow-svg {
+      left: -24px !important;
+      width: calc(100% + 48px) !important;
+      height: 34px !important;
+    }
+    .snapshot-arrow-svg path {
+      stroke: rgba(186,197,209,0.96) !important;
+      stroke-width: 2.6 !important;
+    }
+    .snapshot-return-pill {
+      box-shadow: 0 0 0 2px #11161d !important;
+    }
+  }
+
+  @media (max-width: 390px) {
+    .snapshot-arrow-svg {
+      left: -22px !important;
+      width: calc(100% + 44px) !important;
+      height: 32px !important;
+    }
+    .snapshot-arrow-svg path {
+      stroke-width: 2.45 !important;
     }
   }
 </style>
@@ -6469,8 +6577,10 @@ def render_forecast_summary(p: Dict, hist: Optional[pd.DataFrame],
         "</div>"
 
         "<div class='snapshot-connector'>"
+        "<svg class='snapshot-arrow-svg' viewBox='0 0 160 32' preserveAspectRatio='none' aria-hidden='true'>"
+        "<path d='M4 16 H150 M136 5 L150 16 L136 27'></path>"
+        "</svg>"
         f"<div class='snapshot-return-pill {expected_tone}'>{html.escape(pct(expected))}</div>"
-        "<div class='snapshot-route-line'></div>"
         "</div>"
 
         "<div class='snapshot-price snapshot-forecast'>"
