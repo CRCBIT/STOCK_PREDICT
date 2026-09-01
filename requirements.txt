@@ -1,0 +1,9 @@
+# Streamlit Cloud 전용 (읽기 전용 대시보드)
+# 학습 라이브러리(scikit-learn, torch 등)는 클라우드에서 불필요하다.
+# publish.py 가 배포 시 이 파일을 requirements.txt 로 게시한다.
+#
+# 상한을 둔 이유: Streamlit 은 메이저 버전에서 위젯 인자를 제거한 전례가 있어
+# (use_container_width 등) 클라우드가 임의로 최신 버전을 받으면 앱이 깨질 수 있다.
+streamlit>=1.36,<2
+pandas>=2.0,<3
+plotly>=5.20,<7
