@@ -7060,7 +7060,7 @@ def candle_chart(hist: Optional[pd.DataFrame], p: Dict,
                 past_bars = int(min(len(hist), lookback)) if hist is not None else 0
                 span = max(past_bars + steps, 1)
 
-                mx, my, up, dn, lows, sizes, labels, cdata = [], [], [], [], [], [], [], []
+                mx, my, sizes, labels, cdata = [], [], [], [], []
                 for i, (hzn, q) in enumerate(nodes):
                     if hzn > steps:
                         continue
@@ -7070,9 +7070,6 @@ def candle_chart(hist: Optional[pd.DataFrame], p: Dict,
                     nxt = nodes[i + 1][0] if i + 1 < len(nodes) else None
                     mx.append(fx[hzn])
                     my.append(med)
-                    up.append(max(hi - med, 0.0))
-                    dn.append(max(med - lo, 0.0))
-                    lows.append(lo)
                     sizes.append(8 if hzn == sel_h else 5.5)
                     cdata.append([hzn, lo, hi])
                     # 라벨이 서로 겹칠 만큼 가까우면(가로 폭의 2.5% 미만) 앞쪽은 생략한다.
@@ -7083,15 +7080,13 @@ def candle_chart(hist: Optional[pd.DataFrame], p: Dict,
                         x=mx, y=my, mode="markers", customdata=cdata,
                         marker=dict(color=FCOL, size=sizes,
                                     line=dict(color="rgba(8,11,16,0.9)", width=1)),
-                        error_y=dict(type="data", symmetric=False, array=up, arrayminus=dn,
-                                     color="rgba(49,130,246,0.65)", thickness=1, width=3),
                         name="지평", showlegend=False,
                         hovertemplate=("%{customdata[0]}일 뒤 · %{y:" + fmt + "}"
                                        "<br>80% %{customdata[1]:" + fmt + "}"
                                        " ~ %{customdata[2]:" + fmt + "}<extra></extra>")),
                         row=1, col=1)
                     fig.add_trace(go.Scatter(
-                        x=mx, y=lows, mode="text", text=labels,
+                        x=mx, y=my, mode="text", text=labels,
                         textposition="bottom center",
                         textfont=dict(color="#7f8995", size=10),
                         showlegend=False, hoverinfo="skip"), row=1, col=1)
