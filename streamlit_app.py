@@ -6896,22 +6896,82 @@ def render_kcs_memory(df: Optional[pd.DataFrame]) -> None:
 # ======================================================================================
 # 차트 — 캔들 + 예측 구간
 # ======================================================================================
-def _fan_value(anchors: List[Tuple[float, float]], t: float) -> float:
+def _mono_cubic(xs: List[float], ys: List[float], x: float) -> float:
     """
-    분위수 앵커 [(거래일, 값), ...] 를 **sqrt 시간축**에서 선형 보간한다.
+    Fritsch–Carlson 단조 보존 3차 에르미트 보간.
 
-    확산이 sqrt(t) 에 비례해 벌어지는 성질을 유지하기 때문에, 지평이 하나뿐일 때는
-    기존의 ((i+1)/steps)**0.5 스케일과 완전히 같은 곡선이 나온다. 지평이 여럿이면
-    각 지평의 분위수를 정확히 통과하면서 그 사이를 자연스럽게 잇는다.
+    - 노드를 **정확히** 통과한다 (모델 산출값을 훼손하지 않는다).
+    - 노드 사이에서 오버슈트하지 않는다 (없는 봉우리를 만들어내지 않는다).
+    - 입력이 직선이면 결과도 정확히 같은 직선이다.
     """
-    if t <= anchors[0][0]:
-        return anchors[0][1]
-    for (t0, v0), (t1, v1) in zip(anchors, anchors[1:]):
-        if t <= t1:
-            span = t1 ** 0.5 - t0 ** 0.5
-            w = 1.0 if span <= 0 else (t ** 0.5 - t0 ** 0.5) / span
-            return v0 + (v1 - v0) * w
-    return anchors[-1][1]                      # 마지막 앵커 이후는 수평 유지
+    n = len(xs)
+    if n < 2:
+        return ys[0] if ys else 0.0
+    if x <= xs[0]:
+        return ys[0]
+    if x >= xs[-1]:
+        return ys[-1]
+
+    d = [(ys[i + 1] - ys[i]) / (xs[i + 1] - xs[i]) for i in range(n - 1)]
+    m = [0.0] * n
+    m[0], m[-1] = d[0], d[-1]
+    for i in range(1, n - 1):
+        if d[i - 1] * d[i] <= 0:
+            m[i] = 0.0                          # 국소 극점에서는 기울기 0 -> 흔들림 방지
+        else:
+            w1 = 2 * (xs[i + 1] - xs[i]) + (xs[i] - xs[i - 1])
+            w2 = (xs[i + 1] - xs[i]) + 2 * (xs[i] - xs[i - 1])
+            m[i] = (w1 + w2) / (w1 / d[i - 1] + w2 / d[i])
+
+    k = next(i for i in range(n - 1) if x <= xs[i + 1])
+    hk = xs[k + 1] - xs[k]
+    t = (x - xs[k]) / hk
+    t2 = t * t
+    t3 = t2 * t
+    return ((2 * t3 - 3 * t2 + 1) * ys[k] + (t3 - 2 * t2 + t) * hk * m[k]
+            + (-2 * t3 + 3 * t2) * ys[k + 1] + (t3 - t2) * hk * m[k + 1])
+
+
+def _forecast_fan(now: float, nodes: List[Tuple[int, Dict]],
+                  keys: Tuple[str, ...], steps: int) -> Dict[str, List[float]]:
+    """
+    여러 지평의 분위수를 모두 통과하는 **하나의 연속 분포**를 만든다.
+
+    로그수익률 공간에서 두 성분을 분리해 각각 자기 시간축에서 보간한다.
+      - 추세  m(t) = ln(p50_h / now)      -> **t** 축 (기대수익은 시간에 비례해 쌓인다)
+      - 폭    s(u) = ln(p_q,h / p50_h)    -> **u = sqrt(t)** 축 (확산은 sqrt(t) 로 벌어진다)
+    복원은 P_q(t) = now * exp(m(t) + s(t)).
+
+    이렇게 하면 (1) t=h 에서 모델 산출 분위수를 그대로 통과하고, (2) 추세가 일정하고
+    변동성이 일정한 GBM 이면 결과가 정확히 교과서적인 sqrt(t) 원뿔이 되며,
+    (3) 거기서 벗어난 부분만이 모델이 말하는 기간구조가 된다. 로그 공간이므로
+    상단이 하단보다 넓은 주가다운 비대칭도 자동으로 유지된다.
+    """
+    from math import exp, log
+
+    out: Dict[str, List[float]] = {}
+    cx, cy = [0.0], [0.0]                       # 추세 앵커: 지금은 수익률 0
+    for h, q in nodes:
+        v = num(q.get("p50"))
+        if v and v > 0:
+            cx.append(float(h))
+            cy.append(log(v / now))
+    if len(cx) < 2:
+        return out
+    center = [_mono_cubic(cx, cy, float(i)) for i in range(steps + 1)]
+
+    for key in keys:
+        sx, sy = [0.0], [0.0]                   # 폭 앵커: 지금은 불확실성 0
+        for h, q in nodes:
+            v, med = num(q.get(key)), num(q.get("p50"))
+            if v and med and v > 0 and med > 0:
+                sx.append(float(h) ** 0.5)
+                sy.append(log(v / med))
+        if len(sx) < 2:
+            continue
+        out[key] = [now * exp(center[i] + _mono_cubic(sx, sy, float(i) ** 0.5))
+                    for i in range(steps + 1)]
+    return out
 
 
 def candle_chart(hist: Optional[pd.DataFrame], p: Dict,
@@ -6965,24 +7025,15 @@ def candle_chart(hist: Optional[pd.DataFrame], p: Dict,
     nodes.sort(key=lambda item: item[0])
 
     now = num(p.get("current_price"))
-    if nodes and now:
+    if nodes and now and now > 0:
         max_h = nodes[-1][0]
         future = pd.bdate_range(last_date + pd.Timedelta(days=1), periods=max_h)
         steps = len(future)
         if steps:
             fx = [last_date] + list(future)
-
-            def cone(key: str) -> List[float]:
-                anchors: List[Tuple[float, float]] = [(0.0, now)]
-                for hzn, q in nodes:
-                    v = num(q.get(key))
-                    if v is not None:
-                        anchors.append((float(hzn), v))
-                if len(anchors) < 2:
-                    return []
-                return [now] + [_fan_value(anchors, float(i + 1)) for i in range(steps)]
-
-            c10, c25, c50, c75, c90 = (cone(k) for k in ("p10", "p25", "p50", "p75", "p90"))
+            qkeys = ("p10", "p25", "p50", "p75", "p90")
+            paths = _forecast_fan(now, nodes, qkeys, steps)
+            c10, c25, c50, c75, c90 = (paths.get(k, []) for k in qkeys)
             if c10 and c90:
                 fig.add_trace(go.Scatter(
                     x=fx + fx[::-1], y=c90 + c10[::-1], mode="lines", fill="toself",
@@ -6994,43 +7045,63 @@ def candle_chart(hist: Optional[pd.DataFrame], p: Dict,
                     fillcolor="rgba(49,130,246,0.20)", line=dict(width=0),
                     name="50%", hoverinfo="skip"), row=1, col=1)
             if c50:
+                fmt = ",.0f" if currency == "KRW" else ",.2f"
                 fig.add_trace(go.Scatter(
                     x=fx, y=c50, mode="lines", name="P50 (기준값)",
                     line=dict(color=FCOL, width=2.0, dash="dot"),
-                    hovertemplate="%{x|%m/%d} · %{y:,.0f}<extra></extra>"), row=1, col=1)
-                # 선택한 기간을 조금 더 크게 찍어, 아래 숫자들이 어느 지점인지 잇는다.
+                    hovertemplate="%{x|%m/%d} · %{y:" + fmt + "}<extra></extra>"),
+                    row=1, col=1)
+
+                # ---- 부드러운 팬은 '보간'이고, 아래 점과 구간이 모델의 실제 산출값이다 ----
                 try:
                     sel_h = int(p.get("horizon") or 0)
                 except (TypeError, ValueError):
                     sel_h = 0
-                mx, my, mtext, msize, mpos = [], [], [], [], []
+                past_bars = int(min(len(hist), lookback)) if hist is not None else 0
+                span = max(past_bars + steps, 1)
+
+                mx, my, up, dn, lows, sizes, labels, cdata = [], [], [], [], [], [], [], []
                 for i, (hzn, q) in enumerate(nodes):
                     if hzn > steps:
                         continue
+                    med = num(q.get("p50"))
+                    lo = num(q.get("p10")) or med
+                    hi = num(q.get("p90")) or med
+                    nxt = nodes[i + 1][0] if i + 1 < len(nodes) else None
                     mx.append(fx[hzn])
-                    my.append(num(q.get("p50")))
-                    mtext.append(f"{hzn}일")
-                    msize.append(9 if hzn == sel_h else 6)
-                    mpos.append("top center" if i % 2 == 0 else "bottom center")
+                    my.append(med)
+                    up.append(max(hi - med, 0.0))
+                    dn.append(max(med - lo, 0.0))
+                    lows.append(lo)
+                    sizes.append(8 if hzn == sel_h else 5.5)
+                    cdata.append([hzn, lo, hi])
+                    # 라벨이 서로 겹칠 만큼 가까우면(가로 폭의 2.5% 미만) 앞쪽은 생략한다.
+                    labels.append(f"{hzn}일" if nxt is None
+                                  or (nxt - hzn) / span >= 0.025 else "")
                 if mx:
                     fig.add_trace(go.Scatter(
-                        x=mx, y=my, mode="markers+text", text=mtext,
-                        textposition=mpos, textfont=dict(color="#7f8995", size=10),
-                        marker=dict(color=FCOL, size=msize,
+                        x=mx, y=my, mode="markers", customdata=cdata,
+                        marker=dict(color=FCOL, size=sizes,
                                     line=dict(color="rgba(8,11,16,0.9)", width=1)),
+                        error_y=dict(type="data", symmetric=False, array=up, arrayminus=dn,
+                                     color="rgba(49,130,246,0.65)", thickness=1, width=3),
                         name="지평", showlegend=False,
-                        hovertemplate="%{text} 뒤 · %{y:,.0f}<extra></extra>"), row=1, col=1)
+                        hovertemplate=("%{customdata[0]}일 뒤 · %{y:" + fmt + "}"
+                                       "<br>80% %{customdata[1]:" + fmt + "}"
+                                       " ~ %{customdata[2]:" + fmt + "}<extra></extra>")),
+                        row=1, col=1)
+                    fig.add_trace(go.Scatter(
+                        x=mx, y=lows, mode="text", text=labels,
+                        textposition="bottom center",
+                        textfont=dict(color="#7f8995", size=10),
+                        showlegend=False, hoverinfo="skip"), row=1, col=1)
 
                 node_map = {hzn: q for hzn, q in nodes}
-                ann_hs = [nodes[-1][0]]
-                if sel_h in node_map and sel_h != nodes[-1][0] and sel_h <= steps:
-                    ann_hs.insert(0, sel_h)
-                for hzn in ann_hs:
-                    av = num(node_map[hzn].get("p50"))
-                    if av is None:
-                        continue
+                ann_h = sel_h if sel_h in node_map and sel_h <= steps else nodes[-1][0]
+                ann_v = num(node_map[ann_h].get("p50"))
+                if ann_v is not None:
                     fig.add_annotation(
-                        x=fx[hzn], y=av, text=f"{price(av, currency, False)} ",
+                        x=fx[ann_h], y=ann_v, text=f"{price(ann_v, currency, False)} ",
                         showarrow=False, xanchor="right",
                         bgcolor="rgba(8,11,16,0.72)", borderpad=2,
                         font=dict(color=FCOL, size=11), row=1, col=1,
