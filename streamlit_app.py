@@ -6896,9 +6896,34 @@ def render_kcs_memory(df: Optional[pd.DataFrame]) -> None:
 # ======================================================================================
 # 차트 — 캔들 + 예측 구간
 # ======================================================================================
+def _fan_value(anchors: List[Tuple[float, float]], t: float) -> float:
+    """
+    분위수 앵커 [(거래일, 값), ...] 를 **sqrt 시간축**에서 선형 보간한다.
+
+    확산이 sqrt(t) 에 비례해 벌어지는 성질을 유지하기 때문에, 지평이 하나뿐일 때는
+    기존의 ((i+1)/steps)**0.5 스케일과 완전히 같은 곡선이 나온다. 지평이 여럿이면
+    각 지평의 분위수를 정확히 통과하면서 그 사이를 자연스럽게 잇는다.
+    """
+    if t <= anchors[0][0]:
+        return anchors[0][1]
+    for (t0, v0), (t1, v1) in zip(anchors, anchors[1:]):
+        if t <= t1:
+            span = t1 ** 0.5 - t0 ** 0.5
+            w = 1.0 if span <= 0 else (t ** 0.5 - t0 ** 0.5) / span
+            return v0 + (v1 - v0) * w
+    return anchors[-1][1]                      # 마지막 앵커 이후는 수평 유지
+
+
 def candle_chart(hist: Optional[pd.DataFrame], p: Dict,
-                 lookback: int, show_volume: bool) -> go.Figure:
-    """과거 캔들과 미래 예측 분포를 같은 x축에 이어 그린다."""
+                 lookback: int, show_volume: bool,
+                 forecasts: Optional[List[Dict]] = None) -> go.Figure:
+    """
+    과거 캔들과 미래 예측 분포를 같은 x축에 이어 그린다.
+
+    `forecasts` 로 여러 지평(5·10·30일)의 예측 행을 함께 주면, 지평마다 따로 그리지
+    않고 각 지평의 분위수를 통과하는 **하나의 연속된 팬(fan)** 으로 이어 그린다.
+    주지 않으면 기존처럼 `p` 한 건만 그린다.
+    """
     currency = p.get("currency", "KRW")
     rows = 2 if show_volume else 1
     fig = make_subplots(rows=rows, cols=1, shared_xaxes=True,
@@ -6925,18 +6950,37 @@ def candle_chart(hist: Optional[pd.DataFrame], p: Dict,
     if last_date is None:
         last_date = pd.Timestamp.today().normalize()
 
-    hz = int(p.get("horizon") or 0)
+    # ---- 지평 수집: 5·10·30일을 따로 그리지 않고 하나의 팬으로 잇는다 ----
+    nodes: List[Tuple[int, Dict]] = []
+    seen: set = set()
+    for q in (forecasts if forecasts else [p]):
+        try:
+            hzn = int(q.get("horizon") or 0)
+        except (TypeError, ValueError):
+            continue                            # horizon 이 NaN·문자열인 행은 건너뛴다
+        if hzn <= 0 or hzn in seen or num(q.get("p50")) is None:
+            continue
+        seen.add(hzn)
+        nodes.append((hzn, q))
+    nodes.sort(key=lambda item: item[0])
+
     now = num(p.get("current_price"))
-    if hz and now:
-        future = pd.bdate_range(last_date + pd.Timedelta(days=1), periods=hz)
+    if nodes and now:
+        max_h = nodes[-1][0]
+        future = pd.bdate_range(last_date + pd.Timedelta(days=1), periods=max_h)
         steps = len(future)
         if steps:
-            scale = [((i + 1) / steps) ** 0.5 for i in range(steps)]
             fx = [last_date] + list(future)
 
             def cone(key: str) -> List[float]:
-                v = num(p.get(key))
-                return [] if v is None else [now] + [now + (v - now) * s for s in scale]
+                anchors: List[Tuple[float, float]] = [(0.0, now)]
+                for hzn, q in nodes:
+                    v = num(q.get(key))
+                    if v is not None:
+                        anchors.append((float(hzn), v))
+                if len(anchors) < 2:
+                    return []
+                return [now] + [_fan_value(anchors, float(i + 1)) for i in range(steps)]
 
             c10, c25, c50, c75, c90 = (cone(k) for k in ("p10", "p25", "p50", "p75", "p90"))
             if c10 and c90:
@@ -6954,12 +6998,43 @@ def candle_chart(hist: Optional[pd.DataFrame], p: Dict,
                     x=fx, y=c50, mode="lines", name="P50 (기준값)",
                     line=dict(color=FCOL, width=2.0, dash="dot"),
                     hovertemplate="%{x|%m/%d} · %{y:,.0f}<extra></extra>"), row=1, col=1)
-                fig.add_annotation(
-                    x=fx[-1], y=c50[-1], text=f"{price(c50[-1], currency, False)} ",
-                    showarrow=False, xanchor="right",
-                    bgcolor="rgba(8,11,16,0.72)", borderpad=2,
-                    font=dict(color=FCOL, size=11), row=1, col=1,
-                )
+                # 선택한 기간을 조금 더 크게 찍어, 아래 숫자들이 어느 지점인지 잇는다.
+                try:
+                    sel_h = int(p.get("horizon") or 0)
+                except (TypeError, ValueError):
+                    sel_h = 0
+                mx, my, mtext, msize, mpos = [], [], [], [], []
+                for i, (hzn, q) in enumerate(nodes):
+                    if hzn > steps:
+                        continue
+                    mx.append(fx[hzn])
+                    my.append(num(q.get("p50")))
+                    mtext.append(f"{hzn}일")
+                    msize.append(9 if hzn == sel_h else 6)
+                    mpos.append("top center" if i % 2 == 0 else "bottom center")
+                if mx:
+                    fig.add_trace(go.Scatter(
+                        x=mx, y=my, mode="markers+text", text=mtext,
+                        textposition=mpos, textfont=dict(color="#7f8995", size=10),
+                        marker=dict(color=FCOL, size=msize,
+                                    line=dict(color="rgba(8,11,16,0.9)", width=1)),
+                        name="지평", showlegend=False,
+                        hovertemplate="%{text} 뒤 · %{y:,.0f}<extra></extra>"), row=1, col=1)
+
+                node_map = {hzn: q for hzn, q in nodes}
+                ann_hs = [nodes[-1][0]]
+                if sel_h in node_map and sel_h != nodes[-1][0] and sel_h <= steps:
+                    ann_hs.insert(0, sel_h)
+                for hzn in ann_hs:
+                    av = num(node_map[hzn].get("p50"))
+                    if av is None:
+                        continue
+                    fig.add_annotation(
+                        x=fx[hzn], y=av, text=f"{price(av, currency, False)} ",
+                        showarrow=False, xanchor="right",
+                        bgcolor="rgba(8,11,16,0.72)", borderpad=2,
+                        font=dict(color=FCOL, size=11), row=1, col=1,
+                    )
             fig.add_vline(x=last_date,
                           line=dict(color="rgba(255,255,255,0.20)", width=1, dash="dot"))
             fig.add_hline(
@@ -7091,6 +7166,8 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
     quotes = quotes or {}
     live = num((quotes.get("quotes") or {}).get(symbol, {}).get("price"))
     p = reanchor(p, live)
+    # 차트는 선택한 기간만이 아니라 5·10·30일 예측을 한 팬으로 이어 그린다.
+    forecasts = [reanchor(r, live) for r in sub.to_dict("records")]
     currency = p.get("currency", "KRW")
     now = num(p.get("current_price"))
     hist = load_history(symbol)
@@ -7121,7 +7198,7 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
 
     # ---- 차트: 첫 화면에서 최대한 빨리 보이도록 핵심 요약 바로 아래에 둔다. ----
     st.plotly_chart(
-        candle_chart(hist, p, lookback, show_volume),
+        candle_chart(hist, p, lookback, show_volume, forecasts),
         use_container_width=True, key=f"candle_{uid}",
         config={"displayModeBar": False, "responsive": True},
     )
