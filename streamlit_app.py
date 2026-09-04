@@ -4950,6 +4950,38 @@ st.markdown("""
       stroke-width: 2.45 !important;
     }
   }
+
+  /* V26 · MOBILE FORECAST HORIZON
+     5·10·15·20·25·30일 선택지는 모바일에서도 한 줄을 유지한다.
+     h_{symbol} 키를 가진 예측기간 라디오에만 적용해 다른 라디오는 건드리지 않는다. */
+  @media (max-width: 760px) {
+    [class*="st-key-h_"] div[role="radiogroup"] {
+      display: grid !important;
+      grid-auto-flow: column !important;
+      grid-auto-columns: minmax(0, 1fr) !important;
+      grid-template-rows: 1fr !important;
+      gap: 3px !important;
+      width: 100% !important;
+      flex-wrap: nowrap !important;
+    }
+
+    [class*="st-key-h_"] div[role="radiogroup"] label {
+      width: 100% !important;
+      min-width: 0 !important;
+      min-height: 30px !important;
+      box-sizing: border-box !important;
+      justify-content: center !important;
+      gap: 3px !important;
+      padding: 4px 1px !important;
+      white-space: nowrap !important;
+    }
+
+    [class*="st-key-h_"] div[role="radiogroup"] label p,
+    [class*="st-key-h_"] div[role="radiogroup"] label span {
+      font-size: 0.68rem !important;
+      white-space: nowrap !important;
+    }
+  }
 </style>
 """, unsafe_allow_html=True)
 
