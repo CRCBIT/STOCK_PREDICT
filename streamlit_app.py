@@ -7096,9 +7096,13 @@ def candle_chart(hist: Optional[pd.DataFrame], p: Dict,
                 ann_v = num(node_map[ann_h].get("p50"))
                 if ann_v is not None:
                     fig.add_annotation(
-                        x=fx[ann_h], y=ann_v, text=f"{price(ann_v, currency, False)} ",
-                        showarrow=False, xanchor="right",
-                        bgcolor="rgba(8,11,16,0.72)", borderpad=2,
+                        x=fx[ann_h], y=ann_v, text=price(ann_v, currency, False),
+                        showarrow=True, arrowhead=0, arrowwidth=1,
+                        arrowcolor="rgba(255,255,255,0.35)",
+                        ax=0, ay=-26 if ann_v >= now else 26,
+                        xanchor="center",
+                        bgcolor="rgba(8,11,16,0.85)", bordercolor="rgba(49,130,246,0.4)",
+                        borderwidth=1, borderpad=4,
                         font=dict(color=FCOL, size=11), row=1, col=1,
                     )
             fig.add_vline(x=last_date,
