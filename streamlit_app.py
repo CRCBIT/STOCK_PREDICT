@@ -34,6 +34,7 @@ from plotly.subplots import make_subplots
 ROOT = Path(__file__).resolve().parent
 KST = ZoneInfo("Asia/Seoul")
 PUBLISHED = ROOT / "published"
+ASSETS_FILE = ROOT / "assets.csv"
 STALE_HOURS = 36
 
 DISCLAIMER = "통계 모델의 예측 분포이며 투자 조언이 아닙니다. 투자 판단의 책임은 이용자에게 있습니다."
@@ -5039,6 +5040,162 @@ def load_quotes() -> Dict:
         return {}
 
 
+def owner_mode() -> bool:
+    """URL 쿼리의 ?owner=master 일 때만 개인 자산 화면을 연다."""
+    try:
+        value = st.query_params.get("owner", "")
+    except Exception:
+        try:
+            raw = st.experimental_get_query_params().get("owner", [""])
+            value = raw[0] if isinstance(raw, list) and raw else raw
+        except Exception:
+            value = ""
+    return str(value).strip().lower() == "master"
+
+
+@st.cache_data(ttl=30, show_spinner=False)
+def load_assets() -> Optional[pd.DataFrame]:
+    """운영자용 보유자산. 형식: symbol,quantity"""
+    if not ASSETS_FILE.exists():
+        return None
+    try:
+        df = pd.read_csv(ASSETS_FILE, dtype={"symbol": str}, encoding="utf-8-sig")
+    except (OSError, pd.errors.ParserError, UnicodeDecodeError):
+        return None
+    required = {"symbol", "quantity"}
+    if not required.issubset(df.columns):
+        return None
+    out = df[["symbol", "quantity"]].copy()
+    out["symbol"] = out["symbol"].astype(str).str.strip()
+    out["quantity"] = pd.to_numeric(out["quantity"], errors="coerce")
+    out = out[(out["symbol"] != "") & out["quantity"].notna() & (out["quantity"] > 0)]
+    if out.empty:
+        return None
+    # 같은 종목을 여러 줄 적어도 한 종목으로 합친다.
+    return out.groupby("symbol", as_index=False, sort=False)["quantity"].sum()
+
+
+def usdkrw_from_quotes(quotes: Dict) -> Optional[float]:
+    fx = ((quotes.get("fx") or {}).get("usdkrw") or {}) if isinstance(quotes, dict) else {}
+    return num(fx.get("rate"))
+
+
+def render_owner_portfolio(df: pd.DataFrame, quotes: Dict) -> None:
+    """보유수량 × 현재가/P50을 계산해 운영자에게만 원화 자산 전망을 보여준다."""
+    section_head(
+        "OWNER PORTFOLIO",
+        "내 자산",
+        "assets.csv의 보유수량과 동일한 N거래일 주가 예측을 결합합니다.",
+    )
+    assets = load_assets()
+    if assets is None or assets.empty:
+        st.info(
+            "프로젝트 루트에 assets.csv를 만들어 주세요. "
+            "필수 열은 symbol,quantity 두 개입니다."
+        )
+        st.code("symbol,quantity\n005930,100\n000660,20\nMU,10\nSNDK,5", language="text")
+        return
+
+    pred_h = pd.to_numeric(df.get("horizon"), errors="coerce")
+    available_horizons = sorted({int(v) for v in pred_h.dropna() if int(v) > 0})
+    if not available_horizons:
+        st.warning("자산 계산에 사용할 예측 기간이 없습니다.")
+        return
+
+    horizon = st.radio(
+        "자산 예측 기간 (거래일 기준)",
+        available_horizons,
+        horizontal=True,
+        key="owner_portfolio_horizon",
+        format_func=lambda h: f"{h}일",
+    )
+
+    fx_rate = usdkrw_from_quotes(quotes)
+    fx_meta = ((quotes.get("fx") or {}).get("usdkrw") or {}) if isinstance(quotes, dict) else {}
+    qmap = quotes.get("quotes") or {} if isinstance(quotes, dict) else {}
+
+    rows = []
+    skipped = []
+    total_now = 0.0
+    total_future = 0.0
+    usd_present = False
+
+    for item in assets.to_dict("records"):
+        sym = str(item["symbol"]).strip()
+        qty = num(item.get("quantity"))
+        if qty is None or qty <= 0:
+            continue
+        sub = df[(df["symbol"].astype(str) == sym) & (pd.to_numeric(df["horizon"], errors="coerce") == horizon)]
+        if sub.empty:
+            skipped.append(f"{sym}: {horizon}일 예측 없음")
+            continue
+
+        raw = sub.iloc[0].to_dict()
+        live = num((qmap.get(sym) or {}).get("price"))
+        p = reanchor(raw, live)
+        now = num(p.get("current_price"))
+        p50 = num(p.get("p50"))
+        if now is None or p50 is None:
+            skipped.append(f"{sym}: 가격/P50 없음")
+            continue
+
+        currency = str(p.get("currency") or (qmap.get(sym) or {}).get("currency") or "KRW").upper()
+        name = str(p.get("name") or sym)
+        native_now = qty * now
+        native_future = qty * p50
+
+        if currency == "USD":
+            usd_present = True
+            if fx_rate is None or fx_rate <= 0:
+                skipped.append(f"{sym}: USD/KRW 환율 없음")
+                continue
+            krw_now = native_now * fx_rate
+            krw_future = native_future * fx_rate
+        elif currency == "KRW":
+            krw_now = native_now
+            krw_future = native_future
+        else:
+            skipped.append(f"{sym}: 지원하지 않는 통화 {currency}")
+            continue
+
+        pnl = krw_future - krw_now
+        expected_return = (krw_future / krw_now - 1.0) if krw_now else None
+        total_now += krw_now
+        total_future += krw_future
+        rows.append({
+            "종목": f"{name} · {sym}",
+            "보유수량": f"{qty:,.4f}".rstrip("0").rstrip("."),
+            "현재가": price(now, currency),
+            f"{horizon}일 P50": price(p50, currency),
+            "현재 평가액": f"{krw_now:,.0f}원",
+            f"{horizon}일 예상액": f"{krw_future:,.0f}원",
+            "예상 손익": f"{pnl:+,.0f}원",
+            "예상 수익률": pct(expected_return),
+        })
+
+    if not rows:
+        st.warning("합산할 수 있는 보유자산이 없습니다. 종목코드와 예측/환율 데이터를 확인해 주세요.")
+        if skipped:
+            st.caption(" · ".join(skipped))
+        return
+
+    total_pnl = total_future - total_now
+    total_ret = (total_future / total_now - 1.0) if total_now else None
+    c1, c2, c3, c4 = st.columns(4)
+    c1.metric("현재 자산", f"{total_now:,.0f}원")
+    c2.metric(f"{horizon}거래일 뒤 예상 자산", f"{total_future:,.0f}원")
+    c3.metric("예상 손익", f"{total_pnl:+,.0f}원")
+    c4.metric("예상 수익률", pct(total_ret))
+
+    if usd_present and fx_rate is not None:
+        fx_age = quote_age_label(fx_meta.get("fetched_at")) if fx_meta.get("fetched_at") else "갱신 시각 미상"
+        st.caption(f"미국주식 원화 환산: Toss USD/KRW {fx_rate:,.2f}원 · {fx_age} · 미래 환율은 현재값 고정")
+    st.caption("예상 자산은 각 종목의 동일 horizon P50 중앙값을 합산한 값입니다. 포트폴리오 자체의 확률분포는 아닙니다.")
+    render_dark_table(pd.DataFrame(rows))
+    if skipped:
+        st.warning("일부 항목 제외: " + " · ".join(skipped))
+
+
 @st.cache_data(ttl=300, show_spinner=False)
 def load_portfolio_backtest() -> Optional[Dict]:
     """publish.py 가 올린 횡단면 포트폴리오 백테스트 결과."""
@@ -7858,15 +8015,30 @@ def main() -> None:
         except Exception:
             pass
 
-    forecast_tab, cycle_tab, validation_tab, notes_tab = st.tabs([
-        "종목 전망",
-        "메모리 업황",
-        "전략 검증",
-        "업데이트",
-    ])
+    is_owner = owner_mode()
+    if is_owner:
+        forecast_tab, portfolio_tab, cycle_tab, validation_tab, notes_tab = st.tabs([
+            "종목 전망",
+            "내 자산",
+            "메모리 업황",
+            "전략 검증",
+            "업데이트",
+        ])
+    else:
+        forecast_tab, cycle_tab, validation_tab, notes_tab = st.tabs([
+            "종목 전망",
+            "메모리 업황",
+            "전략 검증",
+            "업데이트",
+        ])
+        portfolio_tab = None
 
     with forecast_tab:
         render_symbol(symbol, df[df["symbol"] == symbol], payload, quotes)
+
+    if portfolio_tab is not None:
+        with portfolio_tab:
+            render_owner_portfolio(df, quotes)
 
     with cycle_tab:
         # Streamlit Cloud에서는 외부 API를 직접 호출하지 않고 게시된 월별 스냅샷만 읽는다.
