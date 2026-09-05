@@ -5206,66 +5206,6 @@ def _owner_horizon_snapshot(df: pd.DataFrame, quotes: Dict, assets: pd.DataFrame
     }
 
 
-def _owner_value_cards(snapshots: List[Dict], selected_horizon: int) -> None:
-    """현재/각 horizon P50을 Plotly 밖에 항상 표시."""
-    if not snapshots:
-        return
-
-    values = [("현재", snapshots[0]["total_now"], False)]
-    values += [
-        (f"{int(s['horizon'])}일 P50", s["total_p50"], int(s["horizon"]) == int(selected_horizon))
-        for s in snapshots
-    ]
-
-    parts = []
-    for label, value, selected in values:
-        cls = " owner-card-selected" if selected else ""
-        badge = "<span class='owner-card-badge'>선택</span>" if selected else ""
-        exact = "—" if value is None else f"{float(value):,.0f}원"
-        parts.append(
-            f"<div class='owner-forecast-card{cls}'>"
-            f"<div class='owner-forecast-label'>{html.escape(label)}{badge}</div>"
-            f"<div class='owner-forecast-value'>{html.escape(_owner_short_krw(value))}</div>"
-            f"<div class='owner-forecast-exact'>{html.escape(exact)}</div>"
-            f"</div>"
-        )
-
-    st.markdown(
-        """
-<style>
-.owner-forecast-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
-  gap:8px;
-  margin:8px 0 24px 0;
-}
-.owner-forecast-card{
-  padding:11px 12px 10px;
-  border:1px solid rgba(120,132,148,.18);
-  border-radius:11px;
-  background:linear-gradient(180deg,rgba(18,23,31,.88),rgba(13,17,23,.80));
-  min-width:0;
-}
-.owner-card-selected{
-  border-color:rgba(240,185,11,.58);
-  box-shadow:inset 0 0 0 1px rgba(240,185,11,.08);
-  background:linear-gradient(180deg,rgba(240,185,11,.08),rgba(13,17,23,.82));
-}
-.owner-forecast-label{font-size:.69rem;color:#aeb9c7;font-weight:650;white-space:nowrap}
-.owner-card-badge{margin-left:5px;padding:1px 5px;border-radius:999px;color:#f0b90b;background:rgba(240,185,11,.10);font-size:.56rem}
-.owner-forecast-value{margin-top:5px;color:#eef3f8;font-size:1.08rem;font-weight:780;white-space:nowrap}
-.owner-forecast-exact{margin-top:3px;color:#7f8b99;font-size:.60rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-@media(max-width:700px){
-  .owner-forecast-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-bottom:22px}
-  .owner-forecast-card{padding:10px}
-  .owner-forecast-value{font-size:1.02rem}
-}
-</style>
-<div class="owner-forecast-grid">""" + "".join(parts) + "</div>",
-        unsafe_allow_html=True,
-    )
-
-
 def _render_owner_charts(snapshots: List[Dict], selected_horizon: int) -> None:
     if not snapshots:
         return
@@ -5275,8 +5215,6 @@ def _render_owner_charts(snapshots: List[Dict], selected_horizon: int) -> None:
     # 전체 자산 전망
     st.markdown("#### 전체 자산 전망")
     st.caption("현재 자산과 각 horizon의 P50 예상 자산입니다.")
-    _owner_value_cards(snapshots, selected_horizon)
-
     x = ["현재"] + [f"{int(s['horizon'])}일" for s in snapshots]
     now = snapshots[0]["total_now"]
     p50 = [now] + [s["total_p50"] for s in snapshots]
@@ -5298,12 +5236,38 @@ def _render_owner_charts(snapshots: List[Dict], selected_horizon: int) -> None:
         fill="toself", mode="lines", line=dict(width=0),
         fillcolor="rgba(49,130,246,0.18)", name="P25~P75",
     ))
+    y50 = [v / scale for v in p50]
     fig.add_trace(go.Scatter(
-        x=x, y=[v/scale for v in p50],
+        x=x, y=y50,
         mode="lines+markers", name="P50 예상 자산",
         line=dict(color=FCOL, width=3), marker=dict(color=FCOL, size=8),
     ))
-    _owner_static_layout(fig, 350, 50)
+
+    # 각 시점의 P50 자산값을 그래프 점 위에 항상 표시한다.
+    # annotation의 yshift로 선/점과 겹치지 않게 띄우고, 상단 y-range도 넉넉히 확보한다.
+    for xi, yi, raw_value in zip(x, y50, p50):
+        label = _owner_short_krw(raw_value).replace("억원", "억").replace("만원", "만")
+        fig.add_annotation(
+            x=xi, y=yi, text=label,
+            showarrow=False,
+            yshift=20,
+            xanchor="center", yanchor="bottom",
+            font=dict(color="#e8edf3", size=11),
+            bgcolor="rgba(8,11,16,0.82)",
+            bordercolor="rgba(120,132,148,0.16)",
+            borderwidth=1,
+            borderpad=3,
+        )
+
+    _owner_static_layout(fig, 390, 50)
+    # annotation이 위쪽에서 잘리지 않도록 Y축 상단에 여유를 둔다.
+    finite_y = [float(v) for v in y50 + [v/scale for v in p90] if v is not None]
+    if finite_y:
+        ymin = min(finite_y)
+        ymax = max(finite_y)
+        span = max(ymax - ymin, abs(ymax) * 0.08, 0.5)
+        fig.update_yaxes(range=[max(0.0, ymin - span * 0.18), ymax + span * 0.34])
+    fig.update_layout(margin=dict(l=50, r=18, t=62, b=42))
     fig.update_yaxes(title="자산 (억원)")
     st.plotly_chart(fig, use_container_width=True, config=OWNER_PLOTLY_CONFIG)
 
