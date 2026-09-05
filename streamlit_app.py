@@ -5080,13 +5080,475 @@ def usdkrw_from_quotes(quotes: Dict) -> Optional[float]:
     return num(fx.get("rate"))
 
 
+def _owner_portfolio_snapshot(
+    df: pd.DataFrame,
+    quotes: Dict,
+    assets: pd.DataFrame,
+    horizon: int,
+) -> Dict:
+    """특정 horizon의 보유자산 현재/예상 평가액을 원화 기준으로 계산한다."""
+    fx_rate = usdkrw_from_quotes(quotes)
+    qmap = (quotes.get("quotes") or {}) if isinstance(quotes, dict) else {}
+
+    pred_h = pd.to_numeric(df.get("horizon"), errors="coerce")
+    pred_sym = df["symbol"].astype(str)
+
+    details = []
+    skipped = []
+    usd_present = False
+
+    for item in assets.to_dict("records"):
+        sym = str(item["symbol"]).strip()
+        qty = num(item.get("quantity"))
+        if qty is None or qty <= 0:
+            continue
+
+        sub = df[(pred_sym == sym) & (pred_h == horizon)]
+        if sub.empty:
+            skipped.append(f"{sym}: {horizon}일 예측 없음")
+            continue
+
+        raw = sub.iloc[0].to_dict()
+        live = num((qmap.get(sym) or {}).get("price"))
+        pred = reanchor(raw, live)
+
+        now = num(pred.get("current_price"))
+        p10 = num(pred.get("p10"))
+        p25 = num(pred.get("p25"))
+        p50 = num(pred.get("p50"))
+        p75 = num(pred.get("p75"))
+        p90 = num(pred.get("p90"))
+        if now is None or p50 is None:
+            skipped.append(f"{sym}: 가격/P50 없음")
+            continue
+
+        currency = str(
+            pred.get("currency")
+            or (qmap.get(sym) or {}).get("currency")
+            or "KRW"
+        ).upper()
+        name = str(pred.get("name") or sym)
+
+        if currency == "USD":
+            usd_present = True
+            if fx_rate is None or fx_rate <= 0:
+                skipped.append(f"{sym}: USD/KRW 환율 없음")
+                continue
+            rate = fx_rate
+        elif currency == "KRW":
+            rate = 1.0
+        else:
+            skipped.append(f"{sym}: 지원하지 않는 통화 {currency}")
+            continue
+
+        def to_krw(v: Optional[float]) -> Optional[float]:
+            return qty * v * rate if v is not None else None
+
+        krw_now = to_krw(now)
+        krw_p10 = to_krw(p10)
+        krw_p25 = to_krw(p25)
+        krw_p50 = to_krw(p50)
+        krw_p75 = to_krw(p75)
+        krw_p90 = to_krw(p90)
+        if krw_now is None or krw_p50 is None:
+            continue
+
+        pnl = krw_p50 - krw_now
+        ret = krw_p50 / krw_now - 1.0 if krw_now else None
+        details.append({
+            "symbol": sym,
+            "name": name,
+            "quantity": qty,
+            "currency": currency,
+            "now": now,
+            "p50": p50,
+            "krw_now": krw_now,
+            "krw_p10": krw_p10,
+            "krw_p25": krw_p25,
+            "krw_p50": krw_p50,
+            "krw_p75": krw_p75,
+            "krw_p90": krw_p90,
+            "pnl": pnl,
+            "ret": ret,
+        })
+
+    total_now = sum(x["krw_now"] for x in details)
+    total_p50 = sum(x["krw_p50"] for x in details)
+
+    def sum_quantile(key: str) -> Optional[float]:
+        vals = [x.get(key) for x in details]
+        # 일부 종목만 분위값이 없는 경우 과소합산하지 않고 해당 밴드를 생략한다.
+        if not vals or any(v is None for v in vals):
+            return None
+        return float(sum(vals))
+
+    return {
+        "details": details,
+        "skipped": skipped,
+        "usd_present": usd_present,
+        "total_now": total_now,
+        "total_p10": sum_quantile("krw_p10"),
+        "total_p25": sum_quantile("krw_p25"),
+        "total_p50": total_p50,
+        "total_p75": sum_quantile("krw_p75"),
+        "total_p90": sum_quantile("krw_p90"),
+        "total_pnl": total_p50 - total_now,
+        "total_ret": (total_p50 / total_now - 1.0) if total_now else None,
+    }
+
+
+def _owner_common_assets(
+    df: pd.DataFrame,
+    assets: pd.DataFrame,
+    horizons: List[int],
+) -> pd.DataFrame:
+    """모든 horizon에 예측이 존재하는 자산만 골라 시계열 차트의 구성종목을 고정한다."""
+    pred_h = pd.to_numeric(df.get("horizon"), errors="coerce")
+    pred_sym = df["symbol"].astype(str)
+    available = {
+        (str(sym), int(h))
+        for sym, h in zip(pred_sym, pred_h)
+        if pd.notna(h) and int(h) > 0
+    }
+    keep = []
+    for row in assets.to_dict("records"):
+        sym = str(row["symbol"]).strip()
+        if all((sym, int(h)) in available for h in horizons):
+            keep.append(sym)
+    return assets[assets["symbol"].astype(str).isin(keep)].copy()
+
+
+def _plot_owner_total_outlook(curve: List[Dict], selected_horizon: int) -> None:
+    """현재 → horizon별 원화 자산 전망. 모바일에서도 전체 폭 한 차트로 렌더링."""
+    if not curve:
+        return
+
+    x = ["현재"] + [f"{int(r['horizon'])}일" for r in curve]
+    current = curve[0]["total_now"]
+    p50 = [current] + [r["total_p50"] for r in curve]
+
+    fig = go.Figure()
+
+    have_90 = all(r.get("total_p10") is not None and r.get("total_p90") is not None for r in curve)
+    have_75 = all(r.get("total_p25") is not None and r.get("total_p75") is not None for r in curve)
+
+    if have_90:
+        lo = [current] + [r["total_p10"] for r in curve]
+        hi = [current] + [r["total_p90"] for r in curve]
+        fig.add_trace(go.Scatter(
+            x=x + x[::-1],
+            y=hi + lo[::-1],
+            fill="toself",
+            mode="lines",
+            line=dict(width=0),
+            fillcolor="rgba(49,130,246,0.09)",
+            name="P10~P90 참고 범위",
+            hoverinfo="skip",
+        ))
+
+    if have_75:
+        lo = [current] + [r["total_p25"] for r in curve]
+        hi = [current] + [r["total_p75"] for r in curve]
+        fig.add_trace(go.Scatter(
+            x=x + x[::-1],
+            y=hi + lo[::-1],
+            fill="toself",
+            mode="lines",
+            line=dict(width=0),
+            fillcolor="rgba(49,130,246,0.17)",
+            name="P25~P75 참고 범위",
+            hoverinfo="skip",
+        ))
+
+    fig.add_trace(go.Scatter(
+        x=x,
+        y=p50,
+        mode="lines+markers",
+        name="P50 예상 자산",
+        line=dict(color=FCOL, width=3),
+        marker=dict(size=8, color=FCOL),
+        hovertemplate="%{x}<br>%{y:.2f}억원<extra></extra>",
+    ))
+
+    selected_label = f"{selected_horizon}일"
+    if selected_label in x:
+        idx = x.index(selected_label)
+        fig.add_trace(go.Scatter(
+            x=[x[idx]],
+            y=[p50[idx]],
+            mode="markers",
+            name="선택 기간",
+            marker=dict(size=14, color="#f0b90b", line=dict(width=2, color="#f0b90b")),
+            hovertemplate="%{x}<br>%{y:.2f}억원<extra></extra>",
+        ))
+
+    fig.update_layout(
+        height=370,
+        margin=dict(l=8, r=8, t=12, b=8),
+        paper_bgcolor=BG,
+        plot_bgcolor=BG,
+        hovermode="x unified",
+        legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.02,
+            xanchor="left",
+            x=0,
+            font=dict(color=TEXT, size=11),
+        ),
+        xaxis=dict(showgrid=False, tickfont=dict(color=TEXT, size=11)),
+        yaxis=dict(
+            title="자산 (억원)",
+            gridcolor=GRID,
+            tickfont=dict(color=TEXT, size=11),
+            title_font=dict(color=TEXT, size=12),
+            tickformat=".1f",
+        ),
+    )
+    # 실제 값은 원 단위이므로 억원으로 변환
+    for tr in fig.data:
+        if getattr(tr, "y", None) is not None:
+            tr.y = [v / 1e8 if isinstance(v, (int, float)) else v for v in tr.y]
+    st.plotly_chart(fig, use_container_width=True, config={"displayModeBar": False})
+
+
+def _plot_owner_weight_area(curve: List[Dict], common_assets: pd.DataFrame) -> None:
+    """현재와 각 horizon의 P50 평가액을 기준으로 종목별 비중 변화를 100% 누적으로 표시."""
+    if not curve or common_assets.empty:
+        return
+
+    x = ["현재"] + [f"{int(r['horizon'])}일" for r in curve]
+    first = curve[0]
+    first_by_sym = {d["symbol"]: d for d in first["details"]}
+
+    fig = go.Figure()
+    for sym in common_assets["symbol"].astype(str):
+        d0 = first_by_sym.get(sym)
+        if not d0:
+            continue
+        name = d0["name"]
+        vals = [d0["krw_now"]]
+        for r in curve:
+            by_sym = {d["symbol"]: d for d in r["details"]}
+            d = by_sym.get(sym)
+            vals.append(d["krw_p50"] if d else 0.0)
+
+        fig.add_trace(go.Scatter(
+            x=x,
+            y=vals,
+            mode="lines",
+            stackgroup="portfolio",
+            groupnorm="percent",
+            name=name,
+            hovertemplate=f"{name}<br>%{{x}} · %{{y:.1f}}%<extra></extra>",
+        ))
+
+    fig.update_layout(
+        height=330,
+        margin=dict(l=8, r=8, t=8, b=8),
+        paper_bgcolor=BG,
+        plot_bgcolor=BG,
+        hovermode="x unified",
+        legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.02,
+            xanchor="left",
+            x=0,
+            font=dict(color=TEXT, size=10),
+        ),
+        xaxis=dict(showgrid=False, tickfont=dict(color=TEXT, size=11)),
+        yaxis=dict(
+            title="비중",
+            range=[0, 100],
+            ticksuffix="%",
+            gridcolor=GRID,
+            tickfont=dict(color=TEXT, size=11),
+            title_font=dict(color=TEXT, size=12),
+        ),
+    )
+    st.plotly_chart(fig, use_container_width=True, config={"displayModeBar": False})
+
+
+def _plot_owner_current_vs_future(snapshot: Dict, horizon: int) -> None:
+    """선택 horizon의 종목별 현재 평가액과 P50 예상액을 가로 막대로 비교."""
+    details = snapshot.get("details") or []
+    if not details:
+        return
+
+    names = [d["name"] for d in details]
+    current = [d["krw_now"] / 1e8 for d in details]
+    future = [d["krw_p50"] / 1e8 for d in details]
+
+    fig = go.Figure()
+    fig.add_trace(go.Bar(
+        y=names,
+        x=current,
+        name="현재",
+        orientation="h",
+        marker_color="rgba(139,192,236,0.72)",
+        hovertemplate="%{y}<br>현재 %{x:.2f}억원<extra></extra>",
+    ))
+    fig.add_trace(go.Bar(
+        y=names,
+        x=future,
+        name=f"{horizon}일 P50",
+        orientation="h",
+        marker_color=FCOL,
+        hovertemplate=f"%{{y}}<br>{horizon}일 P50 %{{x:.2f}}억원<extra></extra>",
+    ))
+    fig.update_layout(
+        barmode="group",
+        height=max(270, 90 + len(details) * 58),
+        margin=dict(l=8, r=8, t=8, b=8),
+        paper_bgcolor=BG,
+        plot_bgcolor=BG,
+        legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.02,
+            xanchor="left",
+            x=0,
+            font=dict(color=TEXT, size=11),
+        ),
+        xaxis=dict(
+            title="평가액 (억원)",
+            gridcolor=GRID,
+            tickfont=dict(color=TEXT, size=11),
+            title_font=dict(color=TEXT, size=12),
+        ),
+        yaxis=dict(
+            autorange="reversed",
+            tickfont=dict(color=TEXT, size=11),
+            automargin=True,
+        ),
+    )
+    st.plotly_chart(fig, use_container_width=True, config={"displayModeBar": False})
+
+
+def _plot_owner_pnl_contribution(snapshot: Dict, horizon: int) -> None:
+    """선택 horizon에서 각 종목이 예상 손익에 기여하는 금액을 가로 막대로 표시."""
+    details = snapshot.get("details") or []
+    if not details:
+        return
+
+    names = [d["name"] for d in details]
+    pnl_man = [d["pnl"] / 1e4 for d in details]
+    colors = [UP if v >= 0 else DOWN for v in pnl_man]
+
+    fig = go.Figure(go.Bar(
+        y=names,
+        x=pnl_man,
+        orientation="h",
+        marker_color=colors,
+        hovertemplate=f"%{{y}}<br>{horizon}일 예상 손익 %{{x:+,.0f}}만원<extra></extra>",
+    ))
+    fig.add_vline(x=0, line_width=1, line_color="rgba(255,255,255,0.28)")
+    fig.update_layout(
+        height=max(260, 85 + len(details) * 56),
+        margin=dict(l=8, r=8, t=8, b=8),
+        paper_bgcolor=BG,
+        plot_bgcolor=BG,
+        showlegend=False,
+        xaxis=dict(
+            title="예상 손익 (만원)",
+            gridcolor=GRID,
+            zeroline=False,
+            tickfont=dict(color=TEXT, size=11),
+            title_font=dict(color=TEXT, size=12),
+        ),
+        yaxis=dict(
+            autorange="reversed",
+            tickfont=dict(color=TEXT, size=11),
+            automargin=True,
+        ),
+    )
+    st.plotly_chart(fig, use_container_width=True, config={"displayModeBar": False})
+
+
+def _interpolate_owner_path(curve: List[Dict]) -> Tuple[List[int], List[float], List[int], List[float]]:
+    """0일과 horizon P50 앵커 사이를 선형 보간해 시각화용 경로를 만든다."""
+    if not curve:
+        return [], [], [], []
+
+    anchors_x = [0] + [int(r["horizon"]) for r in curve]
+    anchors_y = [curve[0]["total_now"]] + [r["total_p50"] for r in curve]
+
+    path_x = []
+    path_y = []
+    for i in range(len(anchors_x) - 1):
+        x0, x1 = anchors_x[i], anchors_x[i + 1]
+        y0, y1 = anchors_y[i], anchors_y[i + 1]
+        for day in range(x0, x1):
+            frac = (day - x0) / max(x1 - x0, 1)
+            path_x.append(day)
+            path_y.append(y0 + (y1 - y0) * frac)
+    path_x.append(anchors_x[-1])
+    path_y.append(anchors_y[-1])
+    return path_x, path_y, anchors_x, anchors_y
+
+
+def _plot_owner_estimated_path(curve: List[Dict]) -> None:
+    """실제 horizon 앵커를 연결한 포트폴리오 P50 추정 자산 경로."""
+    path_x, path_y, anchor_x, anchor_y = _interpolate_owner_path(curve)
+    if not path_x:
+        return
+
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(
+        x=path_x,
+        y=[v / 1e8 for v in path_y],
+        mode="lines",
+        name="P50 추정 경로",
+        line=dict(color="#8bc0ec", width=3),
+        hovertemplate="%{x}거래일<br>%{y:.2f}억원<extra></extra>",
+    ))
+    fig.add_trace(go.Scatter(
+        x=anchor_x,
+        y=[v / 1e8 for v in anchor_y],
+        mode="markers",
+        name="실제 예측 앵커",
+        marker=dict(size=9, color=FCOL),
+        hovertemplate="%{x}거래일<br>%{y:.2f}억원<extra></extra>",
+    ))
+    fig.update_layout(
+        height=350,
+        margin=dict(l=8, r=8, t=8, b=8),
+        paper_bgcolor=BG,
+        plot_bgcolor=BG,
+        hovermode="x",
+        legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.02,
+            xanchor="left",
+            x=0,
+            font=dict(color=TEXT, size=11),
+        ),
+        xaxis=dict(
+            title="거래일",
+            showgrid=False,
+            tickfont=dict(color=TEXT, size=11),
+            title_font=dict(color=TEXT, size=12),
+        ),
+        yaxis=dict(
+            title="자산 (억원)",
+            gridcolor=GRID,
+            tickfont=dict(color=TEXT, size=11),
+            title_font=dict(color=TEXT, size=12),
+        ),
+    )
+    st.plotly_chart(fig, use_container_width=True, config={"displayModeBar": False})
+
+
 def render_owner_portfolio(df: pd.DataFrame, quotes: Dict) -> None:
-    """보유수량 × 현재가/P50을 계산해 운영자에게만 원화 자산 전망을 보여준다."""
+    """보유수량과 동일 horizon 예측을 결합한 운영자용 포트폴리오 화면."""
     section_head(
         "OWNER PORTFOLIO",
         "내 자산",
         "assets.csv의 보유수량과 동일한 N거래일 주가 예측을 결합합니다.",
     )
+
     assets = load_assets()
     if assets is None or assets.empty:
         st.info(
@@ -5110,88 +5572,86 @@ def render_owner_portfolio(df: pd.DataFrame, quotes: Dict) -> None:
         format_func=lambda h: f"{h}일",
     )
 
-    fx_rate = usdkrw_from_quotes(quotes)
-    fx_meta = ((quotes.get("fx") or {}).get("usdkrw") or {}) if isinstance(quotes, dict) else {}
-    qmap = quotes.get("quotes") or {} if isinstance(quotes, dict) else {}
+    selected = _owner_portfolio_snapshot(df, quotes, assets, horizon)
+    details = selected["details"]
+    skipped = selected["skipped"]
 
-    rows = []
-    skipped = []
-    total_now = 0.0
-    total_future = 0.0
-    usd_present = False
-
-    for item in assets.to_dict("records"):
-        sym = str(item["symbol"]).strip()
-        qty = num(item.get("quantity"))
-        if qty is None or qty <= 0:
-            continue
-        sub = df[(df["symbol"].astype(str) == sym) & (pd.to_numeric(df["horizon"], errors="coerce") == horizon)]
-        if sub.empty:
-            skipped.append(f"{sym}: {horizon}일 예측 없음")
-            continue
-
-        raw = sub.iloc[0].to_dict()
-        live = num((qmap.get(sym) or {}).get("price"))
-        p = reanchor(raw, live)
-        now = num(p.get("current_price"))
-        p50 = num(p.get("p50"))
-        if now is None or p50 is None:
-            skipped.append(f"{sym}: 가격/P50 없음")
-            continue
-
-        currency = str(p.get("currency") or (qmap.get(sym) or {}).get("currency") or "KRW").upper()
-        name = str(p.get("name") or sym)
-        native_now = qty * now
-        native_future = qty * p50
-
-        if currency == "USD":
-            usd_present = True
-            if fx_rate is None or fx_rate <= 0:
-                skipped.append(f"{sym}: USD/KRW 환율 없음")
-                continue
-            krw_now = native_now * fx_rate
-            krw_future = native_future * fx_rate
-        elif currency == "KRW":
-            krw_now = native_now
-            krw_future = native_future
-        else:
-            skipped.append(f"{sym}: 지원하지 않는 통화 {currency}")
-            continue
-
-        pnl = krw_future - krw_now
-        expected_return = (krw_future / krw_now - 1.0) if krw_now else None
-        total_now += krw_now
-        total_future += krw_future
-        rows.append({
-            "종목": f"{name} · {sym}",
-            "보유수량": f"{qty:,.4f}".rstrip("0").rstrip("."),
-            "현재가": price(now, currency),
-            f"{horizon}일 P50": price(p50, currency),
-            "현재 평가액": f"{krw_now:,.0f}원",
-            f"{horizon}일 예상액": f"{krw_future:,.0f}원",
-            "예상 손익": f"{pnl:+,.0f}원",
-            "예상 수익률": pct(expected_return),
-        })
-
-    if not rows:
+    if not details:
         st.warning("합산할 수 있는 보유자산이 없습니다. 종목코드와 예측/환율 데이터를 확인해 주세요.")
         if skipped:
             st.caption(" · ".join(skipped))
         return
 
-    total_pnl = total_future - total_now
-    total_ret = (total_future / total_now - 1.0) if total_now else None
+    total_now = selected["total_now"]
+    total_future = selected["total_p50"]
+    total_pnl = selected["total_pnl"]
+    total_ret = selected["total_ret"]
+
     c1, c2, c3, c4 = st.columns(4)
     c1.metric("현재 자산", f"{total_now:,.0f}원")
     c2.metric(f"{horizon}거래일 뒤 예상 자산", f"{total_future:,.0f}원")
     c3.metric("예상 손익", f"{total_pnl:+,.0f}원")
     c4.metric("예상 수익률", pct(total_ret))
 
-    if usd_present and fx_rate is not None:
+    fx_rate = usdkrw_from_quotes(quotes)
+    fx_meta = ((quotes.get("fx") or {}).get("usdkrw") or {}) if isinstance(quotes, dict) else {}
+    if selected["usd_present"] and fx_rate is not None:
         fx_age = quote_age_label(fx_meta.get("fetched_at")) if fx_meta.get("fetched_at") else "갱신 시각 미상"
-        st.caption(f"미국주식 원화 환산: Toss USD/KRW {fx_rate:,.2f}원 · {fx_age} · 미래 환율은 현재값 고정")
-    st.caption("예상 자산은 각 종목의 동일 horizon P50 중앙값을 합산한 값입니다. 포트폴리오 자체의 확률분포는 아닙니다.")
+        st.caption(
+            f"미국주식 원화 환산: Toss USD/KRW {fx_rate:,.2f}원 · "
+            f"{fx_age} · 미래 환율은 현재값 고정"
+        )
+
+    # horizon을 따라 비교하는 차트는 구성 종목이 바뀌지 않도록 모든 horizon에
+    # 예측이 존재하는 보유종목만 사용한다.
+    common_assets = _owner_common_assets(df, assets, available_horizons)
+    curve = []
+    for h in available_horizons:
+        snap = _owner_portfolio_snapshot(df, quotes, common_assets, h)
+        if snap["details"]:
+            curve.append({"horizon": h, **snap})
+
+    st.markdown("### 전체 자산 전망")
+    st.caption("모든 예측 기간에 공통으로 값이 있는 보유종목 기준입니다.")
+    _plot_owner_total_outlook(curve, horizon)
+    st.caption(
+        "P10~P90·P25~P75는 각 종목 분위값의 단순 합산 참고 범위입니다. "
+        "포트폴리오의 엄밀한 결합 확률분포는 아닙니다."
+    )
+
+    st.markdown("### 종목별 비중 변화")
+    st.caption("현재 평가액과 각 horizon의 P50 예상액을 기준으로 포트폴리오 비중 변화를 표시합니다.")
+    _plot_owner_weight_area(curve, common_assets)
+
+    st.markdown("### 선택 기간 비교")
+    st.markdown(f"#### 현재 vs {horizon}일 예상 평가액")
+    _plot_owner_current_vs_future(selected, horizon)
+
+    st.markdown("#### 예상 손익 기여도")
+    _plot_owner_pnl_contribution(selected, horizon)
+
+    st.markdown("### 추정 자산 경로")
+    st.caption(
+        "실제 모델 출력은 선택된 horizon 앵커입니다. 앵커 사이 선은 화면에서 흐름을 보기 위한 "
+        "선형 보간이며 일별 모델 예측값이 아닙니다."
+    )
+    _plot_owner_estimated_path(curve)
+
+    st.markdown("### 보유자산 상세")
+    rows = []
+    for d in details:
+        rows.append({
+            "종목": f"{d['name']} · {d['symbol']}",
+            "보유수량": f"{d['quantity']:,.4f}".rstrip("0").rstrip("."),
+            "현재가": price(d["now"], d["currency"]),
+            f"{horizon}일 P50": price(d["p50"], d["currency"]),
+            "현재 평가액": f"{d['krw_now']:,.0f}원",
+            f"{horizon}일 예상액": f"{d['krw_p50']:,.0f}원",
+            "예상 손익": f"{d['pnl']:+,.0f}원",
+            "예상 수익률": pct(d["ret"]),
+        })
     render_dark_table(pd.DataFrame(rows))
+
     if skipped:
         st.warning("일부 항목 제외: " + " · ".join(skipped))
 
