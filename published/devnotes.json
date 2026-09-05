@@ -1,10 +1,37 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-05T11:26:09+09:00",
-  "n_versions": 12,
-  "latest_version": "0.9.8",
-  "latest_date": "2026-09-01",
+  "generated_at": "2026-09-05T17:30:07+09:00",
+  "n_versions": 13,
+  "latest_version": "0.9.9",
+  "latest_date": "2026-09-05",
   "notes": [
+    {
+      "version": "0.9.9",
+      "date": "2026-09-05",
+      "sections": {
+        "Fixed": [
+          "패널 `latest_pred` 가 T-h 행(타깃이 확정된 마지막 행)으로 계산되던 버그. `PanelMatrix.latest_rows` 에 마지막 거래일 T 의 z-score 행을 따로 보관해 추론에 사용. `PanelResult.latest_date` 로 날짜를 남기고 `train.py` 가 데이터 마지막 날짜와 대조해 불일치 시 패널을 앙상블에서 제외 (`models/panel.py`, `train.py`)",
+          "conformal sigma 학습/예측 불일치. 학습은 GARCH σ_h 로 잔차를 표준화하는데 `predict.py` 는 EWMA·√h 를 곱해 라이브 80% 구간 커버리지가 98% 로 나왔음. `TrainResult.sigma_h_latest`(같은 추정량의 T 시점 값) 를 예측에 사용 (`train.py`, `predict.py`)"
+        ],
+        "Changed": [
+          "채점용 앙상블 OOF 를 cross-fitted 스태킹으로 합성. fold k 의 가중치는 fold<k 의 OOF 로만 NNLS 적합, 첫 fold 는 균등가중. 최종 predictor 가중치는 종전대로 OOF 전체 NNLS. 패널 OOF 도 동일 (`train._crossfit_stack_oof`, `models/panel.py`). 노이즈 타깃 20회 실험: in-sample 스태킹 IC +0.043 → cross-fit −0.013",
+          "`predict.expected_volatility_annual` 을 구간에 실제 쓴 σ_h 에서 역산하도록 통일"
+        ],
+        "Notes": [
+          "이 버전부터 IC/DA/confidence 는 이전 실행보다 낮게 나오는 것이 정상 (부풀림 제거). 이전 스냅샷과 직접 비교하지 말 것",
+          "백필(`track.py --backfill`)은 아직 패널 없이 재학습하므로 라이브 구성과 다름 — 별도 패치 필요",
+          "회귀 테스트: `python test_patch_20260905.py`"
+        ]
+      },
+      "tags": [
+        "panel",
+        "conformal",
+        "stacking",
+        "bugfix"
+      ],
+      "impact": "high",
+      "author": ""
+    },
     {
       "version": "0.9.8",
       "date": "2026-09-01",
@@ -256,12 +283,12 @@
   ],
   "environment": {
     "optional_models": {
-      "extra_trees": true,
-      "huber": true,
+      "extra_trees_shallow": true,
+      "huber_scaled": true,
       "pls": true,
       "quantile_gbm": true,
       "lgbm_linear": true,
-      "ng_boost": false,
+      "ng_boost": true,
       "garch": true
     },
     "config": {
@@ -279,7 +306,7 @@
       "use_panel": true,
       "use_nnls_stacking": true,
       "use_garch_sigma": true,
-      "n_symbols": 22
+      "n_symbols": 27
     }
   }
 }
