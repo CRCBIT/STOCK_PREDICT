@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-05T14:10:01+09:00",
+  "fetched_at": "2026-09-05T14:15:01+09:00",
   "quotes": {
     "000660": {
       "price": 1662000.0,
@@ -31,15 +31,20 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:45.000+09:00"
     },
-    "AMAT": {
-      "price": 454.4,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:59:45.000+09:00"
-    },
     "AMD": {
       "price": 476.24,
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:51.000+09:00"
+    },
+    "ASML": {
+      "price": 1710.67,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:58:27.000+09:00"
+    },
+    "CAT": {
+      "price": 813.39,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:58:49.000+09:00"
     },
     "GOOGL": {
       "price": 338.8,
@@ -65,6 +70,11 @@
       "price": 229.465,
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:59.000+09:00"
+    },
+    "OKLO": {
+      "price": 41.22,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:59:48.000+09:00"
     },
     "PLTR": {
       "price": 174.5,
@@ -96,20 +106,10 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:50.000+09:00"
     },
-    "OKLO": {
-      "price": 41.22,
+    "AMAT": {
+      "price": 454.4,
       "currency": "USD",
-      "timestamp": "2026-09-05T08:59:48.000+09:00"
-    },
-    "ASML": {
-      "price": 1710.67,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:58:27.000+09:00"
-    },
-    "CAT": {
-      "price": 813.39,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:58:49.000+09:00"
+      "timestamp": "2026-09-05T08:59:45.000+09:00"
     }
   }
 }
