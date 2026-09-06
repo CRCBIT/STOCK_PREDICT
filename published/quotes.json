@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-06T14:15:01+09:00",
+  "fetched_at": "2026-09-06T14:20:02+09:00",
   "quotes": {
     "000660": {
       "price": 1662000.0,
@@ -61,11 +61,6 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:51.000+09:00"
     },
-    "ASML": {
-      "price": 1710.67,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:58:27.000+09:00"
-    },
     "CAT": {
       "price": 813.39,
       "currency": "USD",
@@ -121,11 +116,6 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:48.000+09:00"
     },
-    "PFE": {
-      "price": 28.45,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:48:07.000+09:00"
-    },
     "PLTR": {
       "price": 174.5,
       "currency": "USD",
@@ -135,11 +125,6 @@
       "price": 13.7395,
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:40.000+09:00"
-    },
-    "SMR": {
-      "price": 9.69,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:56:17.000+09:00"
     },
     "SNDK": {
       "price": 1734.01,
@@ -156,15 +141,30 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:55.000+09:00"
     },
+    "TSM": {
+      "price": 427.8829,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:59:58.000+09:00"
+    },
     "VST": {
       "price": 149.64,
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:50.000+09:00"
     },
-    "TSM": {
-      "price": 427.8829,
+    "SMR": {
+      "price": 9.69,
       "currency": "USD",
-      "timestamp": "2026-09-05T08:59:58.000+09:00"
+      "timestamp": "2026-09-05T08:56:17.000+09:00"
+    },
+    "ASML": {
+      "price": 1710.67,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:58:27.000+09:00"
+    },
+    "PFE": {
+      "price": 28.45,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:48:07.000+09:00"
     }
   },
   "fx": {
@@ -172,7 +172,7 @@
       "rate": 1353.1,
       "mid_rate": 1352.6,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-06T14:15:01+09:00"
+      "fetched_at": "2026-09-06T14:20:02+09:00"
     }
   }
 }
