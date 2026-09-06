@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-06T15:00:02+09:00",
+  "fetched_at": "2026-09-06T15:05:02+09:00",
   "quotes": {
     "000660": {
       "price": 1662000.0,
@@ -81,11 +81,6 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:58:59.000+09:00"
     },
-    "LLY": {
-      "price": 1146.63,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:57:15.000+09:00"
-    },
     "MRK": {
       "price": 150.51,
       "currency": "USD",
@@ -136,11 +131,6 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:40.000+09:00"
     },
-    "SMR": {
-      "price": 9.69,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:56:17.000+09:00"
-    },
     "SNDK": {
       "price": 1734.01,
       "currency": "USD",
@@ -165,6 +155,16 @@
       "price": 149.64,
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:50.000+09:00"
+    },
+    "SMR": {
+      "price": 9.69,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:56:17.000+09:00"
+    },
+    "LLY": {
+      "price": 1146.63,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:57:15.000+09:00"
     }
   },
   "fx": {
@@ -172,7 +172,7 @@
       "rate": 1353.1,
       "mid_rate": 1352.6,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-06T15:00:02+09:00"
+      "fetched_at": "2026-09-06T15:05:02+09:00"
     }
   }
 }
