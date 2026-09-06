@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-07T05:50:01+09:00",
+  "fetched_at": "2026-09-07T05:55:02+09:00",
   "quotes": {
     "000660": {
       "price": 1662000.0,
@@ -96,6 +96,11 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:57.000+09:00"
     },
+    "MSFT": {
+      "price": 499.49,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:59:28.000+09:00"
+    },
     "MU": {
       "price": 1015.0,
       "currency": "USD",
@@ -166,11 +171,6 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:08.000+09:00"
     },
-    "MSFT": {
-      "price": 499.49,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:59:28.000+09:00"
-    },
     "RAM": {
       "price": 13.7395,
       "currency": "USD",
@@ -182,7 +182,7 @@
       "rate": 1351.5,
       "mid_rate": 1351.0,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-07T05:50:01+09:00"
+      "fetched_at": "2026-09-07T05:55:02+09:00"
     }
   }
 }
