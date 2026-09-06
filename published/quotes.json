@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-06T12:45:02+09:00",
+  "fetched_at": "2026-09-06T12:50:01+09:00",
   "quotes": {
     "000660": {
       "price": 1662000.0,
@@ -61,6 +61,11 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:51.000+09:00"
     },
+    "ASML": {
+      "price": 1710.67,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:58:27.000+09:00"
+    },
     "CAT": {
       "price": 813.39,
       "currency": "USD",
@@ -71,15 +76,15 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:47.000+09:00"
     },
+    "KLAC": {
+      "price": 185.42,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:58:59.000+09:00"
+    },
     "LLY": {
       "price": 1146.63,
       "currency": "USD",
       "timestamp": "2026-09-05T08:57:15.000+09:00"
-    },
-    "MRK": {
-      "price": 150.51,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:58:00.000+09:00"
     },
     "MRNA": {
       "price": 145.01,
@@ -156,15 +161,10 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:50.000+09:00"
     },
-    "ASML": {
-      "price": 1710.67,
+    "MRK": {
+      "price": 150.51,
       "currency": "USD",
-      "timestamp": "2026-09-05T08:58:27.000+09:00"
-    },
-    "KLAC": {
-      "price": 185.42,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:58:59.000+09:00"
+      "timestamp": "2026-09-05T08:58:00.000+09:00"
     }
   },
   "fx": {
@@ -172,7 +172,7 @@
       "rate": 1353.1,
       "mid_rate": 1352.6,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-06T12:45:02+09:00"
+      "fetched_at": "2026-09-06T12:50:01+09:00"
     }
   }
 }
