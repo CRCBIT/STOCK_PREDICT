@@ -312,6 +312,9 @@ def render_devnotes(
 
     st.markdown(_CSS, unsafe_allow_html=True)
 
+    # 타임라인은 접힌 상세 목록 밖, 섹션 최상단에 항상 보인다
+    render_devnotes_timeline(notes)
+
     with st.expander(
         f"변경 이력 보기 — 최근 {latest.get('version','')} "
         f"({latest.get('date','')}, {_days_ago(str(latest.get('date','')))})",
@@ -321,8 +324,6 @@ def render_devnotes(
             "이전 스냅샷을 볼 때는 그 시점의 로직이 지금과 같다고 가정하지 마십시오. "
             "빨간 테두리(높음) 항목은 예측값이나 그 해석 자체가 달라진 변경입니다."
         )
-
-        render_devnotes_timeline(notes)
 
         opts = ["전체", "해석 영향(높음)만"]
         all_tags = sorted({t for n in notes for t in (n.get("tags") or [])})
