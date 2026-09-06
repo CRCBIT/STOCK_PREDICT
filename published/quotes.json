@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-07T00:25:02+09:00",
+  "fetched_at": "2026-09-07T00:30:01+09:00",
   "quotes": {
     "000660": {
       "price": 1662000.0,
@@ -48,11 +48,6 @@
     },
     "AAPL": {
       "price": 320.0545,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:59:45.000+09:00"
-    },
-    "AMAT": {
-      "price": 454.4,
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:45.000+09:00"
     },
@@ -131,6 +126,11 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:40.000+09:00"
     },
+    "SMR": {
+      "price": 9.69,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:56:17.000+09:00"
+    },
     "SNDK": {
       "price": 1734.01,
       "currency": "USD",
@@ -140,6 +140,11 @@
       "price": 147.88,
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:51.000+09:00"
+    },
+    "STX": {
+      "price": 847.72,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:59:29.000+09:00"
     },
     "TSLA": {
       "price": 352.9,
@@ -161,15 +166,10 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:08.000+09:00"
     },
-    "SMR": {
-      "price": 9.69,
+    "AMAT": {
+      "price": 454.4,
       "currency": "USD",
-      "timestamp": "2026-09-05T08:56:17.000+09:00"
-    },
-    "STX": {
-      "price": 847.72,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:59:29.000+09:00"
+      "timestamp": "2026-09-05T08:59:45.000+09:00"
     },
     "KLAC": {
       "price": 185.42,
@@ -182,7 +182,7 @@
       "rate": 1353.1,
       "mid_rate": 1352.6,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-07T00:25:02+09:00"
+      "fetched_at": "2026-09-07T00:30:01+09:00"
     }
   }
 }
