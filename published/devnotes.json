@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-06T19:57:23+09:00",
+  "generated_at": "2026-09-07T01:55:17+09:00",
   "n_versions": 15,
   "latest_version": "0.9.11",
   "latest_date": "2026-09-06",
@@ -315,7 +315,7 @@
       "pls": true,
       "quantile_gbm": true,
       "lgbm_linear": true,
-      "ng_boost": true,
+      "ng_boost": false,
       "garch": true
     },
     "config": {

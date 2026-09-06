@@ -1,7 +1,7 @@
 {
   "schema_version": "1.2",
-  "generated_at": "2026-09-06T19:57:22+09:00",
-  "published_at": "2026-09-06T10:57:23+00:00",
+  "generated_at": "2026-09-07T01:55:15+09:00",
+  "published_at": "2026-09-06T16:55:17+00:00",
   "symbols": [
     "000660",
     "005930",
@@ -257,6 +257,12 @@
       "backtest_SNDK_h20.csv",
       "backtest_SNDK_h25.csv",
       "backtest_SNDK_h30.csv",
+      "backtest_STX_h5.csv",
+      "backtest_STX_h10.csv",
+      "backtest_STX_h15.csv",
+      "backtest_STX_h20.csv",
+      "backtest_STX_h25.csv",
+      "backtest_STX_h30.csv",
       "backtest_TSLA_h5.csv",
       "backtest_TSLA_h10.csv",
       "backtest_TSLA_h15.csv",
@@ -274,7 +280,13 @@
       "backtest_VST_h15.csv",
       "backtest_VST_h20.csv",
       "backtest_VST_h25.csv",
-      "backtest_VST_h30.csv"
+      "backtest_VST_h30.csv",
+      "backtest_WDC_h5.csv",
+      "backtest_WDC_h10.csv",
+      "backtest_WDC_h15.csv",
+      "backtest_WDC_h20.csv",
+      "backtest_WDC_h25.csv",
+      "backtest_WDC_h30.csv"
     ],
     "kcs_memory_prices": "kcs_memory_prices.csv",
     "devnotes": "devnotes.json",
