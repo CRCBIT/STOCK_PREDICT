@@ -1,7 +1,7 @@
 {
   "schema_version": "1.2",
-  "generated_at": "2026-09-06T15:41:37+09:00",
-  "published_at": "2026-09-06T10:04:18+00:00",
+  "generated_at": "2026-09-06T19:57:22+09:00",
+  "published_at": "2026-09-06T10:57:23+00:00",
   "symbols": [
     "000660",
     "005930",
@@ -33,9 +33,11 @@
     "SMR",
     "SNDK",
     "SPCX",
+    "STX",
     "TSLA",
     "TSM",
-    "VST"
+    "VST",
+    "WDC"
   ],
   "horizons": [
     5,
@@ -45,7 +47,7 @@
     25,
     30
   ],
-  "n_predictions": 198,
+  "n_predictions": 210,
   "files": {
     "predictions_json": "predictions.json",
     "predictions_csv": "predictions.csv",
@@ -80,9 +82,11 @@
       "SMR.csv",
       "SNDK.csv",
       "SPCX.csv",
+      "STX.csv",
       "TSLA.csv",
       "TSM.csv",
-      "VST.csv"
+      "VST.csv",
+      "WDC.csv"
     ],
     "backtest": [
       "backtest_000660_h5.csv",

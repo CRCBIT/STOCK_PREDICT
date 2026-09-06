@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-06T19:04:18+09:00",
+  "generated_at": "2026-09-06T19:57:23+09:00",
   "n_versions": 15,
   "latest_version": "0.9.11",
   "latest_date": "2026-09-06",
@@ -315,7 +315,7 @@
       "pls": true,
       "quantile_gbm": true,
       "lgbm_linear": true,
-      "ng_boost": false,
+      "ng_boost": true,
       "garch": true
     },
     "config": {
@@ -333,7 +333,7 @@
       "use_panel": true,
       "use_nnls_stacking": true,
       "use_garch_sigma": true,
-      "n_symbols": 33
+      "n_symbols": 35
     }
   }
 }
