@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-08T03:46:01+09:00",
+  "fetched_at": "2026-09-08T03:47:02+09:00",
   "quotes": {
     "000660": {
       "price": 1787000.0,
@@ -60,6 +60,16 @@
       "price": 476.24,
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:51.000+09:00"
+    },
+    "ASML": {
+      "price": 1710.67,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:58:27.000+09:00"
+    },
+    "CAT": {
+      "price": 813.39,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:58:49.000+09:00"
     },
     "GOOGL": {
       "price": 338.8,
@@ -156,20 +166,10 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:50.000+09:00"
     },
-    "ASML": {
-      "price": 1710.67,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:58:27.000+09:00"
-    },
     "WDC": {
       "price": 467.0,
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:08.000+09:00"
-    },
-    "CAT": {
-      "price": 813.39,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:58:49.000+09:00"
     },
     "KLAC": {
       "price": 185.42,
@@ -179,10 +179,10 @@
   },
   "fx": {
     "usdkrw": {
-      "rate": 1348.74,
-      "mid_rate": 1348.24,
+      "rate": 1348.79,
+      "mid_rate": 1348.29,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-08T03:46:01+09:00"
+      "fetched_at": "2026-09-08T03:47:02+09:00"
     }
   }
 }
