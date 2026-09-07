@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-08T03:48:01+09:00",
+  "fetched_at": "2026-09-08T03:49:01+09:00",
   "quotes": {
     "000660": {
       "price": 1787000.0,
@@ -48,11 +48,6 @@
     },
     "AAPL": {
       "price": 320.0545,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:59:45.000+09:00"
-    },
-    "AMAT": {
-      "price": 454.4,
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:45.000+09:00"
     },
@@ -116,11 +111,6 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:57:41.000+09:00"
     },
-    "OKLO": {
-      "price": 41.22,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:59:48.000+09:00"
-    },
     "PFE": {
       "price": 28.45,
       "currency": "USD",
@@ -151,11 +141,6 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:51.000+09:00"
     },
-    "STX": {
-      "price": 847.72,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:59:29.000+09:00"
-    },
     "TSLA": {
       "price": 352.9,
       "currency": "USD",
@@ -171,18 +156,33 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:08.000+09:00"
     },
+    "OKLO": {
+      "price": 41.22,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:59:48.000+09:00"
+    },
     "VST": {
       "price": 149.64,
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:50.000+09:00"
+    },
+    "STX": {
+      "price": 847.72,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:59:29.000+09:00"
+    },
+    "AMAT": {
+      "price": 454.4,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:59:45.000+09:00"
     }
   },
   "fx": {
     "usdkrw": {
-      "rate": 1348.79,
-      "mid_rate": 1348.29,
+      "rate": 1348.69,
+      "mid_rate": 1348.19,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-08T03:48:01+09:00"
+      "fetched_at": "2026-09-08T03:49:01+09:00"
     }
   }
 }
