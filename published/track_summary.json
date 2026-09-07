@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-09-07T06:16:58+09:00",
-  "n_total": 1587,
-  "n_pending": 756,
-  "n_resolved": 831,
+  "generated_at": "2026-09-07T22:53:38+09:00",
+  "n_total": 1641,
+  "n_pending": 800,
+  "n_resolved": 841,
   "groups": [
     {
       "source": "BACKFILL",
@@ -1206,210 +1206,210 @@
       "symbol": "000660",
       "name": "SK하이닉스",
       "horizon": 5,
-      "n_resolved": 6,
+      "n_resolved": 7,
       "coverage_80": 1.0,
       "coverage_80_ci": [
-        0.6096569663469354,
-        0.9999999999999999
+        0.6456611570247934,
+        1.0
       ],
-      "coverage_50": 0.8333333333333334,
-      "direction_hit": 0.16666666666666666,
+      "coverage_50": 0.8571428571428571,
+      "direction_hit": 0.2857142857142857,
       "direction_hit_ci": [
-        0.03005258587173032,
-        0.563509436563646
+        0.0822171657090155,
+        0.6410709098517873
       ],
-      "mae_p50": 0.09135565305586833,
+      "mae_p50": 0.08228639594820562,
       "first_anchor": "2026-08-21",
-      "last_target": "2026-09-04"
+      "last_target": "2026-09-07"
     },
     {
       "source": "LIVE",
       "symbol": "000660",
       "name": "SK하이닉스",
       "horizon": 10,
-      "n_resolved": 1,
+      "n_resolved": 2,
       "coverage_80": 1.0,
       "coverage_80_ci": [
-        0.20654329147389294,
+        0.34237195288961925,
         1.0
       ],
       "coverage_50": 1.0,
-      "direction_hit": 0.0,
+      "direction_hit": 0.5,
       "direction_hit_ci": [
-        0.0,
-        0.7934567085261071
+        0.09452865480086614,
+        0.9054713451991339
       ],
-      "mae_p50": 0.1323814326960344,
+      "mae_p50": 0.0699484998516928,
       "first_anchor": "2026-08-21",
-      "last_target": "2026-09-04"
+      "last_target": "2026-09-07"
     },
     {
       "source": "LIVE",
       "symbol": "005930",
       "name": "삼성전자",
       "horizon": 5,
-      "n_resolved": 6,
+      "n_resolved": 7,
       "coverage_80": 1.0,
       "coverage_80_ci": [
-        0.6096569663469354,
-        0.9999999999999999
+        0.6456611570247934,
+        1.0
       ],
-      "coverage_50": 0.8333333333333334,
-      "direction_hit": 0.5,
+      "coverage_50": 0.8571428571428571,
+      "direction_hit": 0.5714285714285714,
       "direction_hit_ci": [
-        0.18761280689940868,
-        0.8123871931005913
+        0.2504542304090258,
+        0.8417830777373732
       ],
-      "mae_p50": 0.04353010924861933,
+      "mae_p50": 0.040499004635364884,
       "first_anchor": "2026-08-21",
-      "last_target": "2026-09-04"
+      "last_target": "2026-09-07"
     },
     {
       "source": "LIVE",
       "symbol": "005930",
       "name": "삼성전자",
       "horizon": 10,
-      "n_resolved": 1,
+      "n_resolved": 2,
       "coverage_80": 1.0,
       "coverage_80_ci": [
-        0.20654329147389294,
+        0.34237195288961925,
         1.0
       ],
       "coverage_50": 1.0,
-      "direction_hit": 0.0,
+      "direction_hit": 0.5,
       "direction_hit_ci": [
-        0.0,
-        0.7934567085261071
+        0.09452865480086614,
+        0.9054713451991339
       ],
-      "mae_p50": 0.108386706823972,
+      "mae_p50": 0.0598060600340607,
       "first_anchor": "2026-08-21",
-      "last_target": "2026-09-04"
+      "last_target": "2026-09-07"
     },
     {
       "source": "LIVE",
       "symbol": "034020",
       "name": "두산에너빌리티",
       "horizon": 5,
-      "n_resolved": 6,
-      "coverage_80": 0.8333333333333334,
+      "n_resolved": 7,
+      "coverage_80": 0.8571428571428571,
       "coverage_80_ci": [
+        0.48686549668097007,
+        0.9743210440510253
+      ],
+      "coverage_50": 0.5714285714285714,
+      "direction_hit": 0.5714285714285714,
+      "direction_hit_ci": [
+        0.2504542304090258,
+        0.8417830777373732
+      ],
+      "mae_p50": 0.10630642663247972,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-09-07"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "034020",
+      "name": "두산에너빌리티",
+      "horizon": 10,
+      "n_resolved": 2,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.34237195288961925,
+        1.0
+      ],
+      "coverage_50": 0.5,
+      "direction_hit": 1.0,
+      "direction_hit_ci": [
+        0.34237195288961925,
+        1.0
+      ],
+      "mae_p50": 0.1325249886531401,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-09-07"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "042700",
+      "name": "한미반도체",
+      "horizon": 5,
+      "n_resolved": 7,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.6456611570247934,
+        1.0
+      ],
+      "coverage_50": 1.0,
+      "direction_hit": 0.8333333333333334,
+      "direction_hit_ci": [
         0.43649056343635395,
         0.9699474141282697
       ],
-      "coverage_50": 0.5,
-      "direction_hit": 0.5,
-      "direction_hit_ci": [
-        0.18761280689940868,
-        0.8123871931005913
-      ],
-      "mae_p50": 0.11512008395382527,
+      "mae_p50": 0.0464067951525617,
       "first_anchor": "2026-08-21",
-      "last_target": "2026-09-04"
-    },
-    {
-      "source": "LIVE",
-      "symbol": "034020",
-      "name": "두산에너빌리티",
-      "horizon": 10,
-      "n_resolved": 1,
-      "coverage_80": 1.0,
-      "coverage_80_ci": [
-        0.20654329147389294,
-        1.0
-      ],
-      "coverage_50": 1.0,
-      "direction_hit": 1.0,
-      "direction_hit_ci": [
-        0.20654329147389294,
-        1.0
-      ],
-      "mae_p50": 0.0610931628834286,
-      "first_anchor": "2026-08-21",
-      "last_target": "2026-09-04"
-    },
-    {
-      "source": "LIVE",
-      "symbol": "042700",
-      "name": "한미반도체",
-      "horizon": 5,
-      "n_resolved": 6,
-      "coverage_80": 1.0,
-      "coverage_80_ci": [
-        0.6096569663469354,
-        0.9999999999999999
-      ],
-      "coverage_50": 1.0,
-      "direction_hit": 0.8,
-      "direction_hit_ci": [
-        0.3755282641185388,
-        0.9637768390302125
-      ],
-      "mae_p50": 0.038793808882069215,
-      "first_anchor": "2026-08-21",
-      "last_target": "2026-09-04"
+      "last_target": "2026-09-07"
     },
     {
       "source": "LIVE",
       "symbol": "042700",
       "name": "한미반도체",
       "horizon": 10,
-      "n_resolved": 1,
+      "n_resolved": 2,
       "coverage_80": 1.0,
       "coverage_80_ci": [
-        0.20654329147389294,
+        0.34237195288961925,
         1.0
       ],
       "coverage_50": 1.0,
       "direction_hit": 0.0,
       "direction_hit_ci": [
         0.0,
-        0.7934567085261071
+        0.6576280471103807
       ],
-      "mae_p50": 0.0872851702060472,
+      "mae_p50": 0.1338177181182918,
       "first_anchor": "2026-08-21",
-      "last_target": "2026-09-04"
+      "last_target": "2026-09-07"
     },
     {
       "source": "LIVE",
       "symbol": "403870",
       "name": "HPSP",
       "horizon": 5,
-      "n_resolved": 6,
+      "n_resolved": 7,
       "coverage_80": 1.0,
       "coverage_80_ci": [
-        0.6096569663469354,
-        0.9999999999999999
+        0.6456611570247934,
+        1.0
       ],
-      "coverage_50": 0.6666666666666666,
-      "direction_hit": 0.8,
+      "coverage_50": 0.7142857142857143,
+      "direction_hit": 0.6666666666666666,
       "direction_hit_ci": [
-        0.3755282641185388,
-        0.9637768390302125
+        0.29998832134152864,
+        0.9032306674407831
       ],
-      "mae_p50": 0.06049779596955308,
+      "mae_p50": 0.0629226468939593,
       "first_anchor": "2026-08-21",
-      "last_target": "2026-09-04"
+      "last_target": "2026-09-07"
     },
     {
       "source": "LIVE",
       "symbol": "403870",
       "name": "HPSP",
       "horizon": 10,
-      "n_resolved": 1,
+      "n_resolved": 2,
       "coverage_80": 1.0,
       "coverage_80_ci": [
-        0.20654329147389294,
+        0.34237195288961925,
         1.0
       ],
       "coverage_50": 1.0,
       "direction_hit": 1.0,
       "direction_hit_ci": [
-        0.20654329147389294,
+        0.34237195288961925,
         1.0
       ],
-      "mae_p50": 0.0811434176988085,
+      "mae_p50": 0.11432002538645905,
       "first_anchor": "2026-08-21",
-      "last_target": "2026-09-04"
+      "last_target": "2026-09-07"
     },
     {
       "source": "LIVE",
