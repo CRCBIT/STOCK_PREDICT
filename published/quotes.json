@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-07T23:16:02+09:00",
+  "fetched_at": "2026-09-07T23:17:01+09:00",
   "quotes": {
     "000660": {
       "price": 1787000.0,
@@ -121,11 +121,6 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:48.000+09:00"
     },
-    "PFE": {
-      "price": 28.45,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:48:07.000+09:00"
-    },
     "PLTR": {
       "price": 174.5,
       "currency": "USD",
@@ -135,6 +130,11 @@
       "price": 13.7395,
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:40.000+09:00"
+    },
+    "SMR": {
+      "price": 9.69,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:56:17.000+09:00"
     },
     "SNDK": {
       "price": 1734.01,
@@ -171,18 +171,18 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:08.000+09:00"
     },
-    "SMR": {
-      "price": 9.69,
+    "PFE": {
+      "price": 28.45,
       "currency": "USD",
-      "timestamp": "2026-09-05T08:56:17.000+09:00"
+      "timestamp": "2026-09-05T08:48:07.000+09:00"
     }
   },
   "fx": {
     "usdkrw": {
-      "rate": 1350.72,
-      "mid_rate": 1350.22,
+      "rate": 1350.59,
+      "mid_rate": 1350.09,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-07T23:16:02+09:00"
+      "fetched_at": "2026-09-07T23:17:01+09:00"
     }
   }
 }
