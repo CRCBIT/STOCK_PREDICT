@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-07T23:14:02+09:00",
+  "fetched_at": "2026-09-07T23:15:01+09:00",
   "quotes": {
     "000660": {
       "price": 1787000.0,
@@ -96,11 +96,6 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:57.000+09:00"
     },
-    "MSFT": {
-      "price": 499.49,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:59:28.000+09:00"
-    },
     "MU": {
       "price": 1015.0,
       "currency": "USD",
@@ -161,15 +156,20 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:58.000+09:00"
     },
+    "WDC": {
+      "price": 467.0,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:59:08.000+09:00"
+    },
     "VST": {
       "price": 149.64,
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:50.000+09:00"
     },
-    "WDC": {
-      "price": 467.0,
+    "MSFT": {
+      "price": 499.49,
       "currency": "USD",
-      "timestamp": "2026-09-05T08:59:08.000+09:00"
+      "timestamp": "2026-09-05T08:59:28.000+09:00"
     },
     "PFE": {
       "price": 28.45,
@@ -179,10 +179,10 @@
   },
   "fx": {
     "usdkrw": {
-      "rate": 1350.78,
-      "mid_rate": 1350.28,
+      "rate": 1350.72,
+      "mid_rate": 1350.22,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-07T23:14:02+09:00"
+      "fetched_at": "2026-09-07T23:15:01+09:00"
     }
   }
 }
