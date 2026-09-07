@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-08T02:34:02+09:00",
+  "fetched_at": "2026-09-08T02:35:01+09:00",
   "quotes": {
     "000660": {
       "price": 1787000.0,
@@ -71,16 +71,6 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:58:49.000+09:00"
     },
-    "GOOGL": {
-      "price": 338.8,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:59:47.000+09:00"
-    },
-    "KLAC": {
-      "price": 185.42,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:58:59.000+09:00"
-    },
     "LLY": {
       "price": 1146.63,
       "currency": "USD",
@@ -136,6 +126,11 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:40.000+09:00"
     },
+    "SMR": {
+      "price": 9.69,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:56:17.000+09:00"
+    },
     "SNDK": {
       "price": 1734.01,
       "currency": "USD",
@@ -171,10 +166,15 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:08.000+09:00"
     },
-    "SMR": {
-      "price": 9.69,
+    "GOOGL": {
+      "price": 338.8,
       "currency": "USD",
-      "timestamp": "2026-09-05T08:56:17.000+09:00"
+      "timestamp": "2026-09-05T08:59:47.000+09:00"
+    },
+    "KLAC": {
+      "price": 185.42,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:58:59.000+09:00"
     }
   },
   "fx": {
@@ -182,7 +182,7 @@
       "rate": 1348.97,
       "mid_rate": 1348.47,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-08T02:34:02+09:00"
+      "fetched_at": "2026-09-08T02:35:01+09:00"
     }
   }
 }
