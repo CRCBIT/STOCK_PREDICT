@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-08T00:14:02+09:00",
+  "fetched_at": "2026-09-08T00:15:01+09:00",
   "quotes": {
     "000660": {
       "price": 1787000.0,
@@ -66,20 +66,10 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:58:27.000+09:00"
     },
-    "CAT": {
-      "price": 813.39,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:58:49.000+09:00"
-    },
     "GOOGL": {
       "price": 338.8,
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:47.000+09:00"
-    },
-    "KLAC": {
-      "price": 185.42,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:58:59.000+09:00"
     },
     "LLY": {
       "price": 1146.63,
@@ -120,6 +110,11 @@
       "price": 41.22,
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:48.000+09:00"
+    },
+    "PFE": {
+      "price": 28.45,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:48:07.000+09:00"
     },
     "PLTR": {
       "price": 174.5,
@@ -171,18 +166,23 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:08.000+09:00"
     },
-    "PFE": {
-      "price": 28.45,
+    "CAT": {
+      "price": 813.39,
       "currency": "USD",
-      "timestamp": "2026-09-05T08:48:07.000+09:00"
+      "timestamp": "2026-09-05T08:58:49.000+09:00"
+    },
+    "KLAC": {
+      "price": 185.42,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:58:59.000+09:00"
     }
   },
   "fx": {
     "usdkrw": {
-      "rate": 1349.74,
-      "mid_rate": 1349.24,
+      "rate": 1350.35,
+      "mid_rate": 1349.85,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-08T00:14:02+09:00"
+      "fetched_at": "2026-09-08T00:15:01+09:00"
     }
   }
 }
