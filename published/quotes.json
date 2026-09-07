@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-07T23:48:02+09:00",
+  "fetched_at": "2026-09-07T23:49:01+09:00",
   "quotes": {
     "000660": {
       "price": 1787000.0,
@@ -111,6 +111,11 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:59.000+09:00"
     },
+    "NVO": {
+      "price": 46.52,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:57:41.000+09:00"
+    },
     "OKLO": {
       "price": 41.22,
       "currency": "USD",
@@ -130,11 +135,6 @@
       "price": 13.7395,
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:40.000+09:00"
-    },
-    "SMR": {
-      "price": 9.69,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:56:17.000+09:00"
     },
     "SNDK": {
       "price": 1734.01,
@@ -171,18 +171,18 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:08.000+09:00"
     },
-    "NVO": {
-      "price": 46.52,
+    "SMR": {
+      "price": 9.69,
       "currency": "USD",
-      "timestamp": "2026-09-05T08:57:41.000+09:00"
+      "timestamp": "2026-09-05T08:56:17.000+09:00"
     }
   },
   "fx": {
     "usdkrw": {
-      "rate": 1349.05,
-      "mid_rate": 1348.55,
+      "rate": 1349.08,
+      "mid_rate": 1348.58,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-07T23:48:02+09:00"
+      "fetched_at": "2026-09-07T23:49:01+09:00"
     }
   }
 }
