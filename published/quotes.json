@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-08T00:02:02+09:00",
+  "fetched_at": "2026-09-08T00:03:01+09:00",
   "quotes": {
     "000660": {
       "price": 1787000.0,
@@ -75,11 +75,6 @@
       "price": 338.8,
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:47.000+09:00"
-    },
-    "KLAC": {
-      "price": 185.42,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:58:59.000+09:00"
     },
     "LLY": {
       "price": 1146.63,
@@ -161,28 +156,33 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:55.000+09:00"
     },
-    "TSM": {
-      "price": 427.8829,
+    "WDC": {
+      "price": 467.0,
       "currency": "USD",
-      "timestamp": "2026-09-05T08:59:58.000+09:00"
+      "timestamp": "2026-09-05T08:59:08.000+09:00"
     },
     "VST": {
       "price": 149.64,
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:50.000+09:00"
     },
-    "WDC": {
-      "price": 467.0,
+    "TSM": {
+      "price": 427.8829,
       "currency": "USD",
-      "timestamp": "2026-09-05T08:59:08.000+09:00"
+      "timestamp": "2026-09-05T08:59:58.000+09:00"
+    },
+    "KLAC": {
+      "price": 185.42,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:58:59.000+09:00"
     }
   },
   "fx": {
     "usdkrw": {
-      "rate": 1350.15,
-      "mid_rate": 1349.65,
+      "rate": 1349.7,
+      "mid_rate": 1349.2,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-08T00:02:02+09:00"
+      "fetched_at": "2026-09-08T00:03:01+09:00"
     }
   }
 }
