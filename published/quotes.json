@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-07T23:29:02+09:00",
+  "fetched_at": "2026-09-07T23:30:01+09:00",
   "quotes": {
     "000660": {
       "price": 1787000.0,
@@ -45,11 +45,6 @@
       "price": 53300.0,
       "currency": "KRW",
       "timestamp": "2026-09-07T18:00:20.000+09:00"
-    },
-    "AAPL": {
-      "price": 320.0545,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:59:45.000+09:00"
     },
     "AMAT": {
       "price": 454.4,
@@ -156,11 +151,6 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:29.000+09:00"
     },
-    "TSLA": {
-      "price": 352.9,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:59:55.000+09:00"
-    },
     "TSM": {
       "price": 427.8829,
       "currency": "USD",
@@ -175,14 +165,24 @@
       "price": 467.0,
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:08.000+09:00"
+    },
+    "AAPL": {
+      "price": 320.0545,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:59:45.000+09:00"
+    },
+    "TSLA": {
+      "price": 352.9,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:59:55.000+09:00"
     }
   },
   "fx": {
     "usdkrw": {
-      "rate": 1349.5,
-      "mid_rate": 1349.0,
+      "rate": 1349.37,
+      "mid_rate": 1348.87,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-07T23:29:02+09:00"
+      "fetched_at": "2026-09-07T23:30:01+09:00"
     }
   }
 }
