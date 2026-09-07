@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-07T23:51:02+09:00",
+  "fetched_at": "2026-09-07T23:52:01+09:00",
   "quotes": {
     "000660": {
       "price": 1787000.0,
@@ -86,6 +86,11 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:57:15.000+09:00"
     },
+    "MRK": {
+      "price": 150.51,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:58:00.000+09:00"
+    },
     "MRNA": {
       "price": 145.01,
       "currency": "USD",
@@ -121,6 +126,11 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:56.000+09:00"
     },
+    "RAM": {
+      "price": 13.7395,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:59:40.000+09:00"
+    },
     "SMR": {
       "price": 9.69,
       "currency": "USD",
@@ -141,11 +151,6 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:29.000+09:00"
     },
-    "TSLA": {
-      "price": 352.9,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:59:55.000+09:00"
-    },
     "TSM": {
       "price": 427.8829,
       "currency": "USD",
@@ -156,33 +161,28 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:50.000+09:00"
     },
-    "OKLO": {
-      "price": 41.22,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:59:48.000+09:00"
-    },
-    "MRK": {
-      "price": 150.51,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:58:00.000+09:00"
-    },
     "WDC": {
       "price": 467.0,
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:08.000+09:00"
     },
-    "RAM": {
-      "price": 13.7395,
+    "OKLO": {
+      "price": 41.22,
       "currency": "USD",
-      "timestamp": "2026-09-05T08:59:40.000+09:00"
+      "timestamp": "2026-09-05T08:59:48.000+09:00"
+    },
+    "TSLA": {
+      "price": 352.9,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:59:55.000+09:00"
     }
   },
   "fx": {
     "usdkrw": {
-      "rate": 1349.09,
-      "mid_rate": 1348.59,
+      "rate": 1349.27,
+      "mid_rate": 1348.77,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-07T23:51:02+09:00"
+      "fetched_at": "2026-09-07T23:52:01+09:00"
     }
   }
 }
