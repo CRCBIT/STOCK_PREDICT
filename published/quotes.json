@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-07T21:45:02+09:00",
+  "fetched_at": "2026-09-07T21:50:01+09:00",
   "quotes": {
     "000660": {
       "price": 1787000.0,
@@ -151,11 +151,6 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:51.000+09:00"
     },
-    "STX": {
-      "price": 847.72,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:59:29.000+09:00"
-    },
     "TSLA": {
       "price": 352.9,
       "currency": "USD",
@@ -171,6 +166,11 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:50.000+09:00"
     },
+    "STX": {
+      "price": 847.72,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:59:29.000+09:00"
+    },
     "WDC": {
       "price": 467.0,
       "currency": "USD",
@@ -179,10 +179,10 @@
   },
   "fx": {
     "usdkrw": {
-      "rate": 1350.7,
-      "mid_rate": 1350.2,
+      "rate": 1350.82,
+      "mid_rate": 1350.32,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-07T21:45:02+09:00"
+      "fetched_at": "2026-09-07T21:50:01+09:00"
     }
   }
 }
