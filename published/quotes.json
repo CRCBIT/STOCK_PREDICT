@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-08T02:08:02+09:00",
+  "fetched_at": "2026-09-08T02:09:02+09:00",
   "quotes": {
     "000660": {
       "price": 1787000.0,
@@ -116,11 +116,6 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:57:41.000+09:00"
     },
-    "OKLO": {
-      "price": 41.22,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:59:48.000+09:00"
-    },
     "PFE": {
       "price": 28.45,
       "currency": "USD",
@@ -136,6 +131,11 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:40.000+09:00"
     },
+    "SMR": {
+      "price": 9.69,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:56:17.000+09:00"
+    },
     "SNDK": {
       "price": 1734.01,
       "currency": "USD",
@@ -145,6 +145,11 @@
       "price": 147.88,
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:51.000+09:00"
+    },
+    "STX": {
+      "price": 847.72,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:59:29.000+09:00"
     },
     "TSLA": {
       "price": 352.9,
@@ -166,15 +171,10 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:08.000+09:00"
     },
-    "SMR": {
-      "price": 9.69,
+    "OKLO": {
+      "price": 41.22,
       "currency": "USD",
-      "timestamp": "2026-09-05T08:56:17.000+09:00"
-    },
-    "STX": {
-      "price": 847.72,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:59:29.000+09:00"
+      "timestamp": "2026-09-05T08:59:48.000+09:00"
     }
   },
   "fx": {
@@ -182,7 +182,7 @@
       "rate": 1348.97,
       "mid_rate": 1348.47,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-08T02:08:02+09:00"
+      "fetched_at": "2026-09-08T02:09:02+09:00"
     }
   }
 }
