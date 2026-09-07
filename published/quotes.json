@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-08T05:59:01+09:00",
+  "fetched_at": "2026-09-08T06:00:01+09:00",
   "quotes": {
     "000660": {
       "price": 1787000.0,
@@ -46,8 +46,8 @@
       "currency": "KRW",
       "timestamp": "2026-09-07T18:00:20.000+09:00"
     },
-    "AAPL": {
-      "price": 320.0545,
+    "AMAT": {
+      "price": 454.4,
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:45.000+09:00"
     },
@@ -76,6 +76,11 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:57:15.000+09:00"
     },
+    "MRK": {
+      "price": 150.51,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:58:00.000+09:00"
+    },
     "MRNA": {
       "price": 145.01,
       "currency": "USD",
@@ -95,6 +100,11 @@
       "price": 229.465,
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:59.000+09:00"
+    },
+    "NVO": {
+      "price": 46.52,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:57:41.000+09:00"
     },
     "OKLO": {
       "price": 41.22,
@@ -146,28 +156,18 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:58.000+09:00"
     },
-    "VST": {
-      "price": 149.64,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:59:50.000+09:00"
-    },
     "WDC": {
       "price": 467.0,
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:08.000+09:00"
     },
-    "NVO": {
-      "price": 46.52,
+    "VST": {
+      "price": 149.64,
       "currency": "USD",
-      "timestamp": "2026-09-05T08:57:41.000+09:00"
+      "timestamp": "2026-09-05T08:59:50.000+09:00"
     },
-    "MRK": {
-      "price": 150.51,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:58:00.000+09:00"
-    },
-    "AMAT": {
-      "price": 454.4,
+    "AAPL": {
+      "price": 320.0545,
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:45.000+09:00"
     },
@@ -182,7 +182,7 @@
       "rate": 1348.5,
       "mid_rate": 1348.0,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-08T05:59:01+09:00"
+      "fetched_at": "2026-09-08T06:00:01+09:00"
     }
   }
 }
