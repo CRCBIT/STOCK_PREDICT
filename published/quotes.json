@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-08T06:18:02+09:00",
+  "fetched_at": "2026-09-08T06:19:01+09:00",
   "quotes": {
     "000660": {
       "price": 1787000.0,
@@ -51,10 +51,20 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:45.000+09:00"
     },
+    "AMAT": {
+      "price": 454.4,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:59:45.000+09:00"
+    },
     "AMD": {
       "price": 476.24,
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:51.000+09:00"
+    },
+    "ASML": {
+      "price": 1710.67,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:58:27.000+09:00"
     },
     "CAT": {
       "price": 813.39,
@@ -161,16 +171,6 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:08.000+09:00"
     },
-    "ASML": {
-      "price": 1710.67,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:58:27.000+09:00"
-    },
-    "AMAT": {
-      "price": 454.4,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:59:45.000+09:00"
-    },
     "KLAC": {
       "price": 185.42,
       "currency": "USD",
@@ -182,7 +182,7 @@
       "rate": 1348.5,
       "mid_rate": 1348.0,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-08T06:18:02+09:00"
+      "fetched_at": "2026-09-08T06:19:01+09:00"
     }
   }
 }
