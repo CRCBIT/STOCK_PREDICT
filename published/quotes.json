@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-08T03:44:01+09:00",
+  "fetched_at": "2026-09-08T03:45:02+09:00",
   "quotes": {
     "000660": {
       "price": 1787000.0,
@@ -66,10 +66,10 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:58:27.000+09:00"
     },
-    "GOOGL": {
-      "price": 338.8,
+    "KLAC": {
+      "price": 185.42,
       "currency": "USD",
-      "timestamp": "2026-09-05T08:59:47.000+09:00"
+      "timestamp": "2026-09-05T08:58:59.000+09:00"
     },
     "LLY": {
       "price": 1146.63,
@@ -126,6 +126,11 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:40.000+09:00"
     },
+    "SMR": {
+      "price": 9.69,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:56:17.000+09:00"
+    },
     "SNDK": {
       "price": 1734.01,
       "currency": "USD",
@@ -135,11 +140,6 @@
       "price": 147.88,
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:51.000+09:00"
-    },
-    "STX": {
-      "price": 847.72,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:59:29.000+09:00"
     },
     "TSLA": {
       "price": 352.9,
@@ -151,38 +151,38 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:58.000+09:00"
     },
-    "VST": {
-      "price": 149.64,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:59:50.000+09:00"
-    },
     "WDC": {
       "price": 467.0,
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:08.000+09:00"
     },
-    "SMR": {
-      "price": 9.69,
+    "GOOGL": {
+      "price": 338.8,
       "currency": "USD",
-      "timestamp": "2026-09-05T08:56:17.000+09:00"
+      "timestamp": "2026-09-05T08:59:47.000+09:00"
+    },
+    "VST": {
+      "price": 149.64,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:59:50.000+09:00"
+    },
+    "STX": {
+      "price": 847.72,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:59:29.000+09:00"
     },
     "CAT": {
       "price": 813.39,
       "currency": "USD",
       "timestamp": "2026-09-05T08:58:49.000+09:00"
-    },
-    "KLAC": {
-      "price": 185.42,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:58:59.000+09:00"
     }
   },
   "fx": {
     "usdkrw": {
-      "rate": 1348.67,
-      "mid_rate": 1348.17,
+      "rate": 1348.79,
+      "mid_rate": 1348.29,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-08T03:44:01+09:00"
+      "fetched_at": "2026-09-08T03:45:02+09:00"
     }
   }
 }
