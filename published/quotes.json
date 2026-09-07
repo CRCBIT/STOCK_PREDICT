@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-08T02:52:02+09:00",
+  "fetched_at": "2026-09-08T02:53:01+09:00",
   "quotes": {
     "000660": {
       "price": 1787000.0,
@@ -56,6 +56,11 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:51.000+09:00"
     },
+    "ASML": {
+      "price": 1710.67,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:58:27.000+09:00"
+    },
     "GOOGL": {
       "price": 338.8,
       "currency": "USD",
@@ -70,11 +75,6 @@
       "price": 1146.63,
       "currency": "USD",
       "timestamp": "2026-09-05T08:57:15.000+09:00"
-    },
-    "MRK": {
-      "price": 150.51,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:58:00.000+09:00"
     },
     "MRNA": {
       "price": 145.01,
@@ -95,6 +95,11 @@
       "price": 229.465,
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:59.000+09:00"
+    },
+    "OKLO": {
+      "price": 41.22,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:59:48.000+09:00"
     },
     "PFE": {
       "price": 28.45,
@@ -136,6 +141,11 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:55.000+09:00"
     },
+    "TSM": {
+      "price": 427.8829,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:59:58.000+09:00"
+    },
     "VST": {
       "price": 149.64,
       "currency": "USD",
@@ -151,20 +161,10 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:57:41.000+09:00"
     },
-    "OKLO": {
-      "price": 41.22,
+    "MRK": {
+      "price": 150.51,
       "currency": "USD",
-      "timestamp": "2026-09-05T08:59:48.000+09:00"
-    },
-    "TSM": {
-      "price": 427.8829,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:59:58.000+09:00"
-    },
-    "ASML": {
-      "price": 1710.67,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:58:27.000+09:00"
+      "timestamp": "2026-09-05T08:58:00.000+09:00"
     },
     "CAT": {
       "price": 813.39,
@@ -182,7 +182,7 @@
       "rate": 1349.02,
       "mid_rate": 1348.52,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-08T02:52:02+09:00"
+      "fetched_at": "2026-09-08T02:53:01+09:00"
     }
   }
 }
