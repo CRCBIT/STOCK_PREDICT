@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-08T01:02:02+09:00",
+  "fetched_at": "2026-09-08T01:03:01+09:00",
   "quotes": {
     "000660": {
       "price": 1787000.0,
@@ -46,11 +46,6 @@
       "currency": "KRW",
       "timestamp": "2026-09-07T18:00:20.000+09:00"
     },
-    "AAPL": {
-      "price": 320.0545,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:59:45.000+09:00"
-    },
     "AMAT": {
       "price": 454.4,
       "currency": "USD",
@@ -86,15 +81,15 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:57:15.000+09:00"
     },
-    "MRK": {
-      "price": 150.51,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:58:00.000+09:00"
-    },
     "MRNA": {
       "price": 145.01,
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:57.000+09:00"
+    },
+    "MSFT": {
+      "price": 499.49,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:59:28.000+09:00"
     },
     "MU": {
       "price": 1015.0,
@@ -131,11 +126,6 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:40.000+09:00"
     },
-    "SMR": {
-      "price": 9.69,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:56:17.000+09:00"
-    },
     "SNDK": {
       "price": 1734.01,
       "currency": "USD",
@@ -171,10 +161,20 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:08.000+09:00"
     },
-    "MSFT": {
-      "price": 499.49,
+    "SMR": {
+      "price": 9.69,
       "currency": "USD",
-      "timestamp": "2026-09-05T08:59:28.000+09:00"
+      "timestamp": "2026-09-05T08:56:17.000+09:00"
+    },
+    "MRK": {
+      "price": 150.51,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:58:00.000+09:00"
+    },
+    "AAPL": {
+      "price": 320.0545,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:59:45.000+09:00"
     }
   },
   "fx": {
@@ -182,7 +182,7 @@
       "rate": 1349.65,
       "mid_rate": 1349.15,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-08T01:02:02+09:00"
+      "fetched_at": "2026-09-08T01:03:01+09:00"
     }
   }
 }
