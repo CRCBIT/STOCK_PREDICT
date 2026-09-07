@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-07T23:33:01+09:00",
+  "fetched_at": "2026-09-07T23:34:01+09:00",
   "quotes": {
     "000660": {
       "price": 1787000.0,
@@ -45,6 +45,16 @@
       "price": 53300.0,
       "currency": "KRW",
       "timestamp": "2026-09-07T18:00:20.000+09:00"
+    },
+    "AAPL": {
+      "price": 320.0545,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:59:45.000+09:00"
+    },
+    "AMAT": {
+      "price": 454.4,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:59:45.000+09:00"
     },
     "AMD": {
       "price": 476.24,
@@ -111,6 +121,11 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:48.000+09:00"
     },
+    "PFE": {
+      "price": 28.45,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:48:07.000+09:00"
+    },
     "PLTR": {
       "price": 174.5,
       "currency": "USD",
@@ -136,6 +151,11 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:51.000+09:00"
     },
+    "STX": {
+      "price": 847.72,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:59:29.000+09:00"
+    },
     "TSLA": {
       "price": 352.9,
       "currency": "USD",
@@ -155,34 +175,14 @@
       "price": 467.0,
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:08.000+09:00"
-    },
-    "STX": {
-      "price": 847.72,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:59:29.000+09:00"
-    },
-    "AAPL": {
-      "price": 320.0545,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:59:45.000+09:00"
-    },
-    "AMAT": {
-      "price": 454.4,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:59:45.000+09:00"
-    },
-    "PFE": {
-      "price": 28.45,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:48:07.000+09:00"
     }
   },
   "fx": {
     "usdkrw": {
-      "rate": 1349.59,
-      "mid_rate": 1349.09,
+      "rate": 1349.55,
+      "mid_rate": 1349.05,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-07T23:33:01+09:00"
+      "fetched_at": "2026-09-07T23:34:01+09:00"
     }
   }
 }
