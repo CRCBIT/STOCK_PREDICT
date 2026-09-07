@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-08T01:37:02+09:00",
+  "fetched_at": "2026-09-08T01:38:01+09:00",
   "quotes": {
     "000660": {
       "price": 1787000.0,
@@ -76,11 +76,6 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:47.000+09:00"
     },
-    "KLAC": {
-      "price": 185.42,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:58:59.000+09:00"
-    },
     "LLY": {
       "price": 1146.63,
       "currency": "USD",
@@ -111,6 +106,11 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:59.000+09:00"
     },
+    "NVO": {
+      "price": 46.52,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:57:41.000+09:00"
+    },
     "OKLO": {
       "price": 41.22,
       "currency": "USD",
@@ -120,11 +120,6 @@
       "price": 28.45,
       "currency": "USD",
       "timestamp": "2026-09-05T08:48:07.000+09:00"
-    },
-    "PLTR": {
-      "price": 174.5,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:59:56.000+09:00"
     },
     "RAM": {
       "price": 13.7395,
@@ -161,20 +156,25 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:58.000+09:00"
     },
-    "VST": {
-      "price": 149.64,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:59:50.000+09:00"
-    },
     "WDC": {
       "price": 467.0,
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:08.000+09:00"
     },
-    "NVO": {
-      "price": 46.52,
+    "VST": {
+      "price": 149.64,
       "currency": "USD",
-      "timestamp": "2026-09-05T08:57:41.000+09:00"
+      "timestamp": "2026-09-05T08:59:50.000+09:00"
+    },
+    "PLTR": {
+      "price": 174.5,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:59:56.000+09:00"
+    },
+    "KLAC": {
+      "price": 185.42,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:58:59.000+09:00"
     }
   },
   "fx": {
@@ -182,7 +182,7 @@
       "rate": 1348.97,
       "mid_rate": 1348.47,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-08T01:37:02+09:00"
+      "fetched_at": "2026-09-08T01:38:01+09:00"
     }
   }
 }
