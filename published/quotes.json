@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-08T02:49:01+09:00",
+  "fetched_at": "2026-09-08T02:50:02+09:00",
   "quotes": {
     "000660": {
       "price": 1787000.0,
@@ -66,6 +66,11 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:58:27.000+09:00"
     },
+    "CAT": {
+      "price": 813.39,
+      "currency": "USD",
+      "timestamp": "2026-09-05T08:58:49.000+09:00"
+    },
     "GOOGL": {
       "price": 338.8,
       "currency": "USD",
@@ -131,11 +136,6 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:40.000+09:00"
     },
-    "SMR": {
-      "price": 9.69,
-      "currency": "USD",
-      "timestamp": "2026-09-05T08:56:17.000+09:00"
-    },
     "SNDK": {
       "price": 1734.01,
       "currency": "USD",
@@ -171,18 +171,18 @@
       "currency": "USD",
       "timestamp": "2026-09-05T08:59:08.000+09:00"
     },
-    "CAT": {
-      "price": 813.39,
+    "SMR": {
+      "price": 9.69,
       "currency": "USD",
-      "timestamp": "2026-09-05T08:58:49.000+09:00"
+      "timestamp": "2026-09-05T08:56:17.000+09:00"
     }
   },
   "fx": {
     "usdkrw": {
-      "rate": 1348.97,
-      "mid_rate": 1348.47,
+      "rate": 1349.04,
+      "mid_rate": 1348.54,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-08T02:49:01+09:00"
+      "fetched_at": "2026-09-08T02:50:02+09:00"
     }
   }
 }
