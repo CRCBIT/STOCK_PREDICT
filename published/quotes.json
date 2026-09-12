@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-12T16:37:02+09:00",
+  "fetched_at": "2026-09-12T16:38:02+09:00",
   "quotes": {
     "000660": {
       "price": 1832000.0,
@@ -66,6 +66,11 @@
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:12.000+09:00"
     },
+    "CAT": {
+      "price": 817.52,
+      "currency": "USD",
+      "timestamp": "2026-09-12T08:56:16.000+09:00"
+    },
     "GOOGL": {
       "price": 338.22,
       "currency": "USD",
@@ -85,6 +90,11 @@
       "price": 144.18,
       "currency": "USD",
       "timestamp": "2026-09-12T08:57:37.000+09:00"
+    },
+    "MRNA": {
+      "price": 144.63,
+      "currency": "USD",
+      "timestamp": "2026-09-12T08:59:21.000+09:00"
     },
     "MSFT": {
       "price": 494.815,
@@ -151,30 +161,20 @@
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:53.000+09:00"
     },
-    "VST": {
-      "price": 148.76,
-      "currency": "USD",
-      "timestamp": "2026-09-12T08:59:22.000+09:00"
-    },
     "WDC": {
       "price": 447.1,
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:54.000+09:00"
-    },
-    "MRNA": {
-      "price": 144.63,
-      "currency": "USD",
-      "timestamp": "2026-09-12T08:59:21.000+09:00"
     },
     "NVO": {
       "price": 43.1,
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:44.000+09:00"
     },
-    "CAT": {
-      "price": 817.52,
+    "VST": {
+      "price": 148.76,
       "currency": "USD",
-      "timestamp": "2026-09-12T08:56:16.000+09:00"
+      "timestamp": "2026-09-12T08:59:22.000+09:00"
     }
   },
   "fx": {
@@ -182,7 +182,7 @@
       "rate": 1346.9,
       "mid_rate": 1346.4,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-12T16:37:02+09:00"
+      "fetched_at": "2026-09-12T16:38:02+09:00"
     }
   }
 }
