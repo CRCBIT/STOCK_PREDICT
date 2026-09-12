@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-12T13:55:01+09:00",
+  "fetched_at": "2026-09-12T13:56:02+09:00",
   "quotes": {
     "000660": {
       "price": 1832000.0,
@@ -106,11 +106,6 @@
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:56.000+09:00"
     },
-    "NVO": {
-      "price": 43.1,
-      "currency": "USD",
-      "timestamp": "2026-09-12T08:59:44.000+09:00"
-    },
     "OKLO": {
       "price": 36.275,
       "currency": "USD",
@@ -141,11 +136,6 @@
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:58.000+09:00"
     },
-    "SPCX": {
-      "price": 150.2622,
-      "currency": "USD",
-      "timestamp": "2026-09-12T08:59:51.000+09:00"
-    },
     "STX": {
       "price": 831.49,
       "currency": "USD",
@@ -171,6 +161,16 @@
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:54.000+09:00"
     },
+    "NVO": {
+      "price": 43.1,
+      "currency": "USD",
+      "timestamp": "2026-09-12T08:59:44.000+09:00"
+    },
+    "SPCX": {
+      "price": 150.2622,
+      "currency": "USD",
+      "timestamp": "2026-09-12T08:59:51.000+09:00"
+    },
     "CAT": {
       "price": 817.52,
       "currency": "USD",
@@ -182,7 +182,7 @@
       "rate": 1346.9,
       "mid_rate": 1346.4,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-12T13:55:01+09:00"
+      "fetched_at": "2026-09-12T13:56:02+09:00"
     }
   }
 }
