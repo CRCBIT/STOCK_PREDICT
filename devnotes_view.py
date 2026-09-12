@@ -323,15 +323,17 @@ def build_milestone_figure(notes: List[Dict], track: Dict, horizon: int = 5, hei
         line=dict(color=C_LINE, width=2.5, shape="spline", smoothing=0.6),
         marker=dict(size=[9 + 2.2 * min(a, 6) for a in n_anc], color=C_LINE,
                     line=dict(color="rgba(255,255,255,0.9)", width=1.5)),
-        text=[f"{c:.0f}%" if c is not None else "" for c in cov], textposition="top center",
+        text=[f"{c:.0f}%" if c is not None else "" for c in cov],
+        textposition=["bottom center" if (c or 0) > 92 else "top center" for c in cov],
         textfont=dict(size=10, color=C_LINE),
         hovertext=hover, hoverinfo="text+y", name="80% 구간 적중률",
     ), row=1, col=1)
+    fig.add_hline(y=80, line=dict(color="rgba(42,157,143,0.6)", width=1, dash="dash"), row=1, col=1)
     fig.add_trace(go.Bar(
         x=weeks, y=edge, marker=dict(color=[C_POS if (e or 0) >= 0 else C_NEG for e in edge], opacity=0.85),
-        width=[4 * 86400000] * len(weeks), hovertext=hover, hoverinfo="text+y", name="방향 edge",
-        text=[f"{e:+.0f}" if e is not None else "" for e in edge], textposition="outside",
-        textfont=dict(size=10),
+        width=[2.6 * 86400000] * len(weeks), hovertext=hover, hoverinfo="text+y", name="방향 edge",
+        text=[f"{e:+.0f}%p" if e is not None else "" for e in edge], textposition="inside",
+        insidetextanchor="end", textfont=dict(size=10, color="white"),
     ), row=2, col=1)
     fig.add_hline(y=0, line=dict(color="rgba(128,128,128,0.6)", width=1), row=2, col=1)
 
@@ -348,22 +350,24 @@ def build_milestone_figure(notes: List[Dict], track: Dict, horizon: int = 5, hei
         if dt < x0 or dt > x1:
             continue
         by_date.setdefault(d, []).append(str(n.get("version", "")))
-    for d, vers in by_date.items():
+    for i, (d, vers) in enumerate(sorted(by_date.items())):
         dt = datetime.strptime(d, "%Y-%m-%d")
         vers = sorted(vers, key=lambda v: tuple(int(x) if x.isdigit() else 0 for x in v.split(".")))
         label = vers[0] if len(vers) == 1 else f"{vers[0]}~{vers[-1]}"
         fig.add_shape(type="line", x0=dt, x1=dt, y0=0, y1=1, xref="x", yref="paper",
                       line=dict(color=C_MARK, width=1, dash="dot"))
-        fig.add_annotation(x=dt, y=42, xref="x", yref="y", text=label, showarrow=False, textangle=-90,
-                           xanchor="right", yanchor="bottom", font=dict(size=9, color="rgba(230,57,70,0.9)"))
+        fig.add_annotation(x=dt, y=1.02 + 0.09 * (i % 2), xref="x", yref="paper", text=f"<b>{label}</b>",
+                           showarrow=False, xanchor="center", yanchor="bottom",
+                           font=dict(size=10, color="rgba(230,57,70,0.95)"),
+                           bgcolor="rgba(230,57,70,0.10)", borderpad=3)
 
-    fig.update_yaxes(range=[40, 105], ticksuffix="%", showgrid=True, gridcolor=C_GRID, zeroline=False,
+    fig.update_yaxes(range=[50, 106], ticksuffix="%", showgrid=True, gridcolor=C_GRID, zeroline=False,
                      title=dict(text="80% 구간 적중률", font=dict(size=11)), row=1, col=1)
     fig.update_yaxes(ticksuffix="%p", showgrid=False, zeroline=False,
                      title=dict(text="방향 edge", font=dict(size=11)), row=2, col=1)
     fig.update_xaxes(range=[x0, x1], tickformat="%m-%d", showgrid=False, ticks="outside", row=2, col=1)
     fig.update_xaxes(showgrid=False, row=1, col=1)
-    fig.update_layout(height=height, margin=dict(l=55, r=15, t=10, b=30), showlegend=False,
+    fig.update_layout(height=height + 40, margin=dict(l=55, r=15, t=58, b=30), showlegend=False,
                       plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)",
                       hoverlabel=dict(align="left"), bargap=0.4)
     return fig
