@@ -307,7 +307,25 @@ def build_milestone_figure(notes: List[Dict], track: Dict, horizon: int = 5, hei
     cov = [None if r.get("coverage_80") is None else r["coverage_80"] * 100 for r in rows]
     edge = [None if r.get("direction_edge") is None else r["direction_edge"] * 100 for r in rows]
     n_anc = [int(r.get("n_anchors") or 0) for r in rows]
-    hover = [f"{r['week']} 주<br>표본 {r['n']}건 · 기준일 {r['n_anchors']}일" for r in rows]
+    def _model_label(r: Dict) -> str:
+        ta = [t for t in (r.get("trained_at") or []) if t]
+        if not ta:
+            return "모델 학습일 기록 없음 (0.9.10 이전 모델)"
+        # 학습일 → 그 날짜 이전 가장 최근 DEVNOTES 버전
+        vers = []
+        for t in ta:
+            v = ""
+            for n in sorted(notes, key=lambda n: str(n.get("date", ""))):
+                if str(n.get("date", ""))[:10] <= t:
+                    v = str(n.get("version", ""))
+            vers.append(f"{t[5:].replace('-', '/')}{f' ({v})' if v else ''}")
+        return "모델 학습일 " + ", ".join(vers) + (" — 한 주에 모델 2개 섞임" if len(ta) > 1 else "")
+
+    hover = [
+        f"기준일 {r.get('anchor_first', r['week'])[5:].replace('-', '/')}~{r.get('anchor_last', r['week'])[5:].replace('-', '/')}"
+        f"<br>표본 {r['n']}건 · 기준일 {r['n_anchors']}일 (만기 채점 완료분)<br>{_model_label(r)}"
+        for r in rows
+    ]
 
     # 대시보드 톤(하늘색-파랑)에 맞춘 팔레트
     C_LINE, C_BAND, C_POS, C_NEG = "#7cc4ff", "rgba(59,130,246,0.16)", "#60a5fa", "#64748b"
@@ -393,8 +411,8 @@ def render_milestones(notes: List[Dict], track: Dict) -> None:
     fig = build_milestone_figure(notes, track or {})
     if fig is not None:
         st.plotly_chart(fig, use_container_width=True, config={"displayModeBar": False})
-        st.caption("점 크기 = 그 주의 기준일(앵커) 수. 세로선 = 해석에 영향 주는 버전 배포일. "
-                   "라이브 기록은 8월 21일부터라 세로선 이전 구간은 짧고, 앵커 20일이 쌓이기 전엔 흐름만 참고.")
+        st.caption("x = 예측 기준일 주의 금요일(만기가 돌아와 채점된 것만). 점 크기 = 그 주 기준일 수. "
+                   "세로선 = 해석에 영향 주는 버전 배포일. 라이브 기록은 8월 21일부터, 앵커 20일 전엔 흐름만 참고.")
     else:
         st.caption("라이브 주간 기록이 아직 없습니다 (track_summary.json 의 timeline).")
     rows = [{"버전": v, "지표": m, "값": val, "비고": note} for v, m, val, note in _MILESTONE_ROWS]
