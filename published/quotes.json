@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-12T12:11:02+09:00",
+  "fetched_at": "2026-09-12T12:12:01+09:00",
   "quotes": {
     "000660": {
       "price": 1832000.0,
@@ -45,6 +45,11 @@
       "price": 53300.0,
       "currency": "KRW",
       "timestamp": "2026-09-11T18:00:02.000+09:00"
+    },
+    "AAPL": {
+      "price": 332.55,
+      "currency": "USD",
+      "timestamp": "2026-09-12T08:59:56.000+09:00"
     },
     "AMAT": {
       "price": 456.95,
@@ -136,6 +141,11 @@
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:49.000+09:00"
     },
+    "SNDK": {
+      "price": 1631.1,
+      "currency": "USD",
+      "timestamp": "2026-09-12T08:59:58.000+09:00"
+    },
     "SPCX": {
       "price": 150.2622,
       "currency": "USD",
@@ -156,25 +166,15 @@
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:53.000+09:00"
     },
-    "VST": {
-      "price": 148.76,
-      "currency": "USD",
-      "timestamp": "2026-09-12T08:59:22.000+09:00"
-    },
     "WDC": {
       "price": 447.1,
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:54.000+09:00"
     },
-    "AAPL": {
-      "price": 332.55,
+    "VST": {
+      "price": 148.76,
       "currency": "USD",
-      "timestamp": "2026-09-12T08:59:56.000+09:00"
-    },
-    "SNDK": {
-      "price": 1631.1,
-      "currency": "USD",
-      "timestamp": "2026-09-12T08:59:58.000+09:00"
+      "timestamp": "2026-09-12T08:59:22.000+09:00"
     }
   },
   "fx": {
@@ -182,7 +182,7 @@
       "rate": 1346.9,
       "mid_rate": 1346.4,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-12T12:11:02+09:00"
+      "fetched_at": "2026-09-12T12:12:01+09:00"
     }
   }
 }
