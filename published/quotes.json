@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-12T23:11:02+09:00",
+  "fetched_at": "2026-09-12T23:12:02+09:00",
   "quotes": {
     "000660": {
       "price": 1832000.0,
@@ -146,11 +146,6 @@
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:54.000+09:00"
     },
-    "STX": {
-      "price": 830.479,
-      "currency": "USD",
-      "timestamp": "2026-09-12T08:59:23.000+09:00"
-    },
     "TSLA": {
       "price": 365.25,
       "currency": "USD",
@@ -161,11 +156,6 @@
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:52.000+09:00"
     },
-    "NVO": {
-      "price": 43.1007,
-      "currency": "USD",
-      "timestamp": "2026-09-12T08:59:43.000+09:00"
-    },
     "VST": {
       "price": 148.9187,
       "currency": "USD",
@@ -175,6 +165,16 @@
       "price": 447.1001,
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:54.000+09:00"
+    },
+    "NVO": {
+      "price": 43.1007,
+      "currency": "USD",
+      "timestamp": "2026-09-12T08:59:43.000+09:00"
+    },
+    "STX": {
+      "price": 830.479,
+      "currency": "USD",
+      "timestamp": "2026-09-12T08:59:23.000+09:00"
     }
   },
   "fx": {
@@ -182,7 +182,7 @@
       "rate": 1346.9,
       "mid_rate": 1346.4,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-12T23:11:02+09:00"
+      "fetched_at": "2026-09-12T23:12:02+09:00"
     }
   }
 }
