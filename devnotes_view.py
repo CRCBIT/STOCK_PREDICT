@@ -309,7 +309,9 @@ def build_milestone_figure(notes: List[Dict], track: Dict, horizon: int = 5, hei
     n_anc = [int(r.get("n_anchors") or 0) for r in rows]
     hover = [f"{r['week']} 주<br>표본 {r['n']}건 · 기준일 {r['n_anchors']}일" for r in rows]
 
-    C_LINE, C_BAND, C_POS, C_NEG, C_MARK, C_GRID = "#4cc9f0", "rgba(42,157,143,0.18)", "#2a9d8f", "#e07b39", "rgba(230,57,70,0.45)", "rgba(128,128,128,0.15)"
+    # 대시보드 톤(하늘색-파랑)에 맞춘 팔레트
+    C_LINE, C_BAND, C_POS, C_NEG = "#7cc4ff", "rgba(59,130,246,0.16)", "#60a5fa", "#64748b"
+    C_MARK, C_TEXT, C_GRID = "rgba(148,163,184,0.5)", "#94a3b8", "rgba(148,163,184,0.12)"
     fig = make_subplots(rows=2, cols=1, shared_xaxes=True, row_heights=[0.62, 0.38], vertical_spacing=0.06)
 
     # 목표 띠 75~85%
@@ -318,6 +320,8 @@ def build_milestone_figure(notes: List[Dict], track: Dict, horizon: int = 5, hei
                   fillcolor=C_BAND, line=dict(width=0), layer="below")
     fig.add_annotation(x=x1, y=85, xref="x", yref="y", text="목표 75~85%", showarrow=False,
                        xanchor="right", yanchor="bottom", font=dict(size=10, color=C_POS))
+    fig.add_annotation(x=x0, y=104, xref="x", yref="y", text="80% 구간 적중률 (LIVE h5, 주간)", showarrow=False,
+                       xanchor="left", yanchor="top", font=dict(size=11, color=C_TEXT))
     fig.add_trace(go.Scatter(
         x=weeks, y=cov, mode="lines+markers+text",
         line=dict(color=C_LINE, width=2.5, shape="spline", smoothing=0.6),
@@ -328,14 +332,14 @@ def build_milestone_figure(notes: List[Dict], track: Dict, horizon: int = 5, hei
         textfont=dict(size=10, color=C_LINE),
         hovertext=hover, hoverinfo="text+y", name="80% 구간 적중률",
     ), row=1, col=1)
-    fig.add_hline(y=80, line=dict(color="rgba(42,157,143,0.6)", width=1, dash="dash"), row=1, col=1)
+    fig.add_hline(y=80, line=dict(color="rgba(96,165,250,0.55)", width=1, dash="dash"), row=1, col=1)
     fig.add_trace(go.Bar(
         x=weeks, y=edge, marker=dict(color=[C_POS if (e or 0) >= 0 else C_NEG for e in edge], opacity=0.85),
         width=[2.6 * 86400000] * len(weeks), hovertext=hover, hoverinfo="text+y", name="방향 edge",
         text=[f"{e:+.0f}%p" if e is not None else "" for e in edge], textposition="inside",
         insidetextanchor="end", textfont=dict(size=10, color="white"),
     ), row=2, col=1)
-    fig.add_hline(y=0, line=dict(color="rgba(128,128,128,0.6)", width=1), row=2, col=1)
+    fig.add_hline(y=0, line=dict(color="rgba(148,163,184,0.6)", width=1), row=2, col=1)
 
     # 버전 표식: 같은 날 여러 버전은 한 라벨, 라벨은 위 패널 아래쪽에
     by_date: Dict[str, List[str]] = {}
@@ -350,24 +354,22 @@ def build_milestone_figure(notes: List[Dict], track: Dict, horizon: int = 5, hei
         if dt < x0 or dt > x1:
             continue
         by_date.setdefault(d, []).append(str(n.get("version", "")))
-    for i, (d, vers) in enumerate(sorted(by_date.items())):
+    for d, vers in sorted(by_date.items()):
         dt = datetime.strptime(d, "%Y-%m-%d")
         vers = sorted(vers, key=lambda v: tuple(int(x) if x.isdigit() else 0 for x in v.split(".")))
         label = vers[0] if len(vers) == 1 else f"{vers[0]}~{vers[-1]}"
         fig.add_shape(type="line", x0=dt, x1=dt, y0=0, y1=1, xref="x", yref="paper",
                       line=dict(color=C_MARK, width=1, dash="dot"))
-        fig.add_annotation(x=dt, y=1.02 + 0.09 * (i % 2), xref="x", yref="paper", text=f"<b>{label}</b>",
-                           showarrow=False, xanchor="center", yanchor="bottom",
-                           font=dict(size=10, color="rgba(230,57,70,0.95)"),
-                           bgcolor="rgba(230,57,70,0.10)", borderpad=3)
+        fig.add_annotation(x=dt, y=51, xref="x", yref="y", text=label, showarrow=False, textangle=-90,
+                           xanchor="right", yanchor="bottom", font=dict(size=9, color=C_TEXT))
 
     fig.update_yaxes(range=[50, 106], ticksuffix="%", showgrid=True, gridcolor=C_GRID, zeroline=False,
-                     title=dict(text="80% 구간 적중률", font=dict(size=11)), row=1, col=1)
+                     title=dict(text="", font=dict(size=11)), row=1, col=1)
     fig.update_yaxes(ticksuffix="%p", showgrid=False, zeroline=False,
                      title=dict(text="방향 edge", font=dict(size=11)), row=2, col=1)
     fig.update_xaxes(range=[x0, x1], tickformat="%m-%d", showgrid=False, ticks="outside", row=2, col=1)
     fig.update_xaxes(showgrid=False, row=1, col=1)
-    fig.update_layout(height=height + 40, margin=dict(l=55, r=15, t=58, b=30), showlegend=False,
+    fig.update_layout(height=height, margin=dict(l=45, r=15, t=12, b=30), showlegend=False,
                       plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)",
                       hoverlabel=dict(align="left"), bargap=0.4)
     return fig
