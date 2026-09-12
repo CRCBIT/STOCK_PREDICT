@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-13T01:53:01+09:00",
+  "fetched_at": "2026-09-13T01:54:02+09:00",
   "quotes": {
     "000660": {
       "price": 1832000.0,
@@ -86,11 +86,6 @@
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:33.000+09:00"
     },
-    "MRK": {
-      "price": 144.3,
-      "currency": "USD",
-      "timestamp": "2026-09-12T08:57:37.000+09:00"
-    },
     "MRNA": {
       "price": 144.6472,
       "currency": "USD",
@@ -100,11 +95,6 @@
       "price": 494.89,
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:30.000+09:00"
-    },
-    "MU": {
-      "price": 975.45,
-      "currency": "USD",
-      "timestamp": "2026-09-12T08:59:59.000+09:00"
     },
     "NVDA": {
       "price": 218.26,
@@ -136,6 +126,11 @@
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:46.000+09:00"
     },
+    "SMR": {
+      "price": 8.68,
+      "currency": "USD",
+      "timestamp": "2026-09-12T08:59:49.000+09:00"
+    },
     "SNDK": {
       "price": 1631.0821,
       "currency": "USD",
@@ -156,6 +151,16 @@
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:59.000+09:00"
     },
+    "VST": {
+      "price": 148.9187,
+      "currency": "USD",
+      "timestamp": "2026-09-12T08:59:27.000+09:00"
+    },
+    "MRK": {
+      "price": 144.3,
+      "currency": "USD",
+      "timestamp": "2026-09-12T08:57:37.000+09:00"
+    },
     "TSM": {
       "price": 432.804,
       "currency": "USD",
@@ -166,15 +171,10 @@
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:54.000+09:00"
     },
-    "SMR": {
-      "price": 8.68,
+    "MU": {
+      "price": 975.45,
       "currency": "USD",
-      "timestamp": "2026-09-12T08:59:49.000+09:00"
-    },
-    "VST": {
-      "price": 148.9187,
-      "currency": "USD",
-      "timestamp": "2026-09-12T08:59:27.000+09:00"
+      "timestamp": "2026-09-12T08:59:59.000+09:00"
     }
   },
   "fx": {
@@ -182,7 +182,7 @@
       "rate": 1346.9,
       "mid_rate": 1346.4,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-13T01:53:01+09:00"
+      "fetched_at": "2026-09-13T01:54:02+09:00"
     }
   }
 }
