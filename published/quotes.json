@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-12T22:47:02+09:00",
+  "fetched_at": "2026-09-12T22:48:01+09:00",
   "quotes": {
     "000660": {
       "price": 1832000.0,
@@ -76,11 +76,6 @@
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:59.000+09:00"
     },
-    "KLAC": {
-      "price": 180.9,
-      "currency": "USD",
-      "timestamp": "2026-09-12T08:59:20.000+09:00"
-    },
     "LLY": {
       "price": 1116.29,
       "currency": "USD",
@@ -101,11 +96,6 @@
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:30.000+09:00"
     },
-    "MU": {
-      "price": 975.45,
-      "currency": "USD",
-      "timestamp": "2026-09-12T08:59:59.000+09:00"
-    },
     "NVDA": {
       "price": 218.26,
       "currency": "USD",
@@ -115,11 +105,6 @@
       "price": 43.1007,
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:43.000+09:00"
-    },
-    "OKLO": {
-      "price": 36.3,
-      "currency": "USD",
-      "timestamp": "2026-09-12T08:59:59.000+09:00"
     },
     "PFE": {
       "price": 27.74,
@@ -151,11 +136,6 @@
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:54.000+09:00"
     },
-    "STX": {
-      "price": 830.479,
-      "currency": "USD",
-      "timestamp": "2026-09-12T08:59:23.000+09:00"
-    },
     "TSLA": {
       "price": 365.25,
       "currency": "USD",
@@ -175,6 +155,26 @@
       "price": 447.1001,
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:54.000+09:00"
+    },
+    "OKLO": {
+      "price": 36.3,
+      "currency": "USD",
+      "timestamp": "2026-09-12T08:59:59.000+09:00"
+    },
+    "STX": {
+      "price": 830.479,
+      "currency": "USD",
+      "timestamp": "2026-09-12T08:59:23.000+09:00"
+    },
+    "MU": {
+      "price": 975.45,
+      "currency": "USD",
+      "timestamp": "2026-09-12T08:59:59.000+09:00"
+    },
+    "KLAC": {
+      "price": 180.9,
+      "currency": "USD",
+      "timestamp": "2026-09-12T08:59:20.000+09:00"
     }
   },
   "fx": {
@@ -182,7 +182,7 @@
       "rate": 1346.9,
       "mid_rate": 1346.4,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-12T22:47:02+09:00"
+      "fetched_at": "2026-09-12T22:48:01+09:00"
     }
   }
 }
