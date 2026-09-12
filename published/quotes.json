@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-12T17:54:02+09:00",
+  "fetched_at": "2026-09-12T17:55:01+09:00",
   "quotes": {
     "000660": {
       "price": 1832000.0,
@@ -51,11 +51,6 @@
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:56.000+09:00"
     },
-    "AMAT": {
-      "price": 456.95,
-      "currency": "USD",
-      "timestamp": "2026-09-12T08:58:04.000+09:00"
-    },
     "AMD": {
       "price": 515.75,
       "currency": "USD",
@@ -76,10 +71,10 @@
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:55.000+09:00"
     },
-    "KLAC": {
-      "price": 180.53,
+    "LLY": {
+      "price": 1116.2,
       "currency": "USD",
-      "timestamp": "2026-09-12T08:59:26.000+09:00"
+      "timestamp": "2026-09-12T08:59:25.000+09:00"
     },
     "MRK": {
       "price": 144.18,
@@ -166,15 +161,20 @@
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:54.000+09:00"
     },
-    "LLY": {
-      "price": 1116.2,
-      "currency": "USD",
-      "timestamp": "2026-09-12T08:59:25.000+09:00"
-    },
     "RAM": {
       "price": 13.36,
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:38.000+09:00"
+    },
+    "AMAT": {
+      "price": 456.95,
+      "currency": "USD",
+      "timestamp": "2026-09-12T08:58:04.000+09:00"
+    },
+    "KLAC": {
+      "price": 180.53,
+      "currency": "USD",
+      "timestamp": "2026-09-12T08:59:26.000+09:00"
     }
   },
   "fx": {
@@ -182,7 +182,7 @@
       "rate": 1346.9,
       "mid_rate": 1346.4,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-12T17:54:02+09:00"
+      "fetched_at": "2026-09-12T17:55:01+09:00"
     }
   }
 }
