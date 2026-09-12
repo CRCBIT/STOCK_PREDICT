@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-12T22:30:01+09:00",
+  "fetched_at": "2026-09-12T22:31:02+09:00",
   "quotes": {
     "000660": {
       "price": 1832000.0,
@@ -51,6 +51,11 @@
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:59.000+09:00"
     },
+    "AMAT": {
+      "price": 456.9474,
+      "currency": "USD",
+      "timestamp": "2026-09-12T08:56:58.000+09:00"
+    },
     "AMD": {
       "price": 515.7785,
       "currency": "USD",
@@ -70,11 +75,6 @@
       "price": 338.3895,
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:59.000+09:00"
-    },
-    "KLAC": {
-      "price": 180.9,
-      "currency": "USD",
-      "timestamp": "2026-09-12T08:59:20.000+09:00"
     },
     "LLY": {
       "price": 1116.29,
@@ -161,20 +161,20 @@
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:27.000+09:00"
     },
-    "WDC": {
-      "price": 447.1001,
-      "currency": "USD",
-      "timestamp": "2026-09-12T08:59:54.000+09:00"
-    },
     "OKLO": {
       "price": 36.3,
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:59.000+09:00"
     },
-    "AMAT": {
-      "price": 456.9474,
+    "WDC": {
+      "price": 447.1001,
       "currency": "USD",
-      "timestamp": "2026-09-12T08:56:58.000+09:00"
+      "timestamp": "2026-09-12T08:59:54.000+09:00"
+    },
+    "KLAC": {
+      "price": 180.9,
+      "currency": "USD",
+      "timestamp": "2026-09-12T08:59:20.000+09:00"
     }
   },
   "fx": {
@@ -182,7 +182,7 @@
       "rate": 1346.9,
       "mid_rate": 1346.4,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-12T22:30:01+09:00"
+      "fetched_at": "2026-09-12T22:31:02+09:00"
     }
   }
 }
