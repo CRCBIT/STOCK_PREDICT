@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-12T12:18:01+09:00",
+  "fetched_at": "2026-09-12T12:19:01+09:00",
   "quotes": {
     "000660": {
       "price": 1832000.0,
@@ -121,11 +121,6 @@
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:53.000+09:00"
     },
-    "RAM": {
-      "price": 13.36,
-      "currency": "USD",
-      "timestamp": "2026-09-12T08:59:38.000+09:00"
-    },
     "SMR": {
       "price": 8.69,
       "currency": "USD",
@@ -140,11 +135,6 @@
       "price": 150.2622,
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:51.000+09:00"
-    },
-    "STX": {
-      "price": 831.49,
-      "currency": "USD",
-      "timestamp": "2026-09-12T08:58:22.000+09:00"
     },
     "TSLA": {
       "price": 365.25,
@@ -166,10 +156,20 @@
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:54.000+09:00"
     },
+    "STX": {
+      "price": 831.49,
+      "currency": "USD",
+      "timestamp": "2026-09-12T08:58:22.000+09:00"
+    },
     "MRK": {
       "price": 144.18,
       "currency": "USD",
       "timestamp": "2026-09-12T08:57:37.000+09:00"
+    },
+    "RAM": {
+      "price": 13.36,
+      "currency": "USD",
+      "timestamp": "2026-09-12T08:59:38.000+09:00"
     },
     "KLAC": {
       "price": 180.53,
@@ -182,7 +182,7 @@
       "rate": 1346.9,
       "mid_rate": 1346.4,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-12T12:18:01+09:00"
+      "fetched_at": "2026-09-12T12:19:01+09:00"
     }
   }
 }
