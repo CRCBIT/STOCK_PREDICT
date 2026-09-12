@@ -7959,18 +7959,37 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
                     f"목표 80%. 95% 신뢰구간 "
                     f"{pct(ci[0], signed=False)}~{pct(ci[1], signed=False)}"
                 )
+                base = tg.get("direction_base_rate")
+                edge = tg.get("direction_edge")
                 direction_help = (
-                    f"50% 가 동전 던지기. 95% 신뢰구간 "
-                    f"{pct(dci[0], signed=False)}~{pct(dci[1], signed=False)}"
+                    "비교 기준은 50% 가 아니라 이 기간의 다수 방향 적중률"
+                    f"({pct(base, signed=False) if base is not None else '-'}) 입니다 — 매번 '상승' 이라고만 해도 "
+                    "그만큼은 맞습니다. 그 기준 대비 차이(edge)가 실력입니다. "
+                    f"95% 신뢰구간 {pct(dci[0], signed=False)}~{pct(dci[1], signed=False)}"
                 )
                 c[0].metric("확정 표본", f"{n}건", help=sample_help)
                 c[0].markdown(mobile_help_html(sample_help), unsafe_allow_html=True)
                 c[1].metric("80% 구간 적중", pct(cov, signed=False), help=coverage_help)
                 c[1].markdown(mobile_help_html(coverage_help), unsafe_allow_html=True)
-                c[2].metric("방향 적중", pct(dh, signed=False), help=direction_help)
+                c[2].metric("방향 적중", pct(dh, signed=False),
+                            delta=(f"기준 대비 {edge * 100:+.1f}%p" if edge is not None else None),
+                            delta_color="normal", help=direction_help)
                 c[2].markdown(mobile_help_html(direction_help), unsafe_allow_html=True)
                 c[3].metric("P50 평균오차", pct(tg.get("mae_p50"), signed=False))
-                if n < 30:
+                up_hit, dn_hit = tg.get("up_pred_hit"), tg.get("down_pred_hit")
+                up_n, dn_n = tg.get("up_pred_n") or 0, tg.get("down_pred_n") or 0
+                if up_hit is not None or dn_hit is not None:
+                    st.caption(
+                        f"방향별: '상승' 예측 {up_n}건 중 적중 {pct(up_hit, signed=False) if up_hit is not None else '-'} · "
+                        f"'하락' 예측 {dn_n}건 중 적중 {pct(dn_hit, signed=False) if dn_hit is not None else '-'}"
+                    )
+                n_anchor = int(tg.get("n_anchors") or 0)
+                if n_anchor and n_anchor < 20:
+                    st.caption(
+                        f"기준일(앵커) {n_anchor}일치 기록입니다. 같은 날의 예측은 서로 독립이 아니라 "
+                        f"실질 표본은 {n}건이 아니라 {n_anchor}일에 가깝습니다 — 20일 이상 쌓이기 전엔 판단 보류."
+                    )
+                elif n < 30:
                     st.caption(
                         f"표본 {n}건은 판단 근거가 되기에 부족합니다. "
                         "신뢰구간이 넓어 어떤 결론도 내리기 어렵습니다."
@@ -7983,6 +8002,26 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
                     f"기록 {track.get('n_total', 0)}건 · 대기 {track.get('n_pending', 0)}건. "
                     f"h={horizon} 이므로 기록 후 약 {horizon}거래일 뒤부터 채워집니다."
                 )
+            aggs = [a for a in (track.get("aggregates") or []) if int(a.get("horizon", -1)) == horizon]
+            if aggs:
+                st.markdown("**전 종목 합산 (같은 horizon)**")
+                rows = []
+                for a in aggs:
+                    cia = a.get("coverage_80_ci_anchor")
+                    dia = a.get("direction_hit_ci_anchor")
+                    rows.append({
+                        "구분": a.get("source"),
+                        "표본": f"{a.get('n_resolved')}건 · {a.get('n_symbols')}종목 · 앵커 {a.get('n_anchors')}일",
+                        "80% 구간 적중": (f"{pct(a.get('coverage_80'), signed=False)}"
+                                     + (f" ({pct(cia[0], signed=False)}~{pct(cia[1], signed=False)})" if cia else " (구간 없음)")),
+                        "방향 적중 / 기준": f"{pct(a.get('direction_hit'), signed=False)} / {pct(a.get('direction_base_rate'), signed=False)}",
+                        "edge": (f"{a['direction_edge'] * 100:+.1f}%p" if a.get("direction_edge") is not None else "-"),
+                        "상승예측 적중": pct(a.get("up_pred_hit"), signed=False) if a.get("up_pred_hit") is not None else "-",
+                        "하락예측 적중": pct(a.get("down_pred_hit"), signed=False) if a.get("down_pred_hit") is not None else "-",
+                        "판정": a.get("verdict", ""),
+                    })
+                st.dataframe(pd.DataFrame(rows), hide_index=True, use_container_width=True)
+                st.caption("신뢰구간(괄호)은 기준일을 단위로 계산 — 같은 날 종목들은 같이 움직여 독립 표본이 아닙니다.")
             st.caption(
                 "백테스트와 달리 예측을 먼저 남기고 나중에 결과를 채우므로 "
                 "사후 조정이 불가능한 검증입니다. 대신 표본이 쌓이는 데 시간이 걸립니다."

@@ -1,10 +1,85 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-12T11:46:10+09:00",
-  "n_versions": 15,
-  "latest_version": "0.9.11",
-  "latest_date": "2026-09-06",
+  "generated_at": "2026-09-12T18:11:26+09:00",
+  "n_versions": 18,
+  "latest_version": "0.9.14",
+  "latest_date": "2026-09-12",
   "notes": [
+    {
+      "version": "0.9.14",
+      "date": "2026-09-12",
+      "sections": {
+        "Changed": [
+          "**σ 국면 계수**: σ_h × (단기 10일 / 기준 40일 EWMA 변동성)^0.5, [0.5, 2.0] 클립. 학습 잔차 표준화와 예측에 같은 값 → calibration 유지하며 국면 추적. 삼성 실측(09-04): 비율 0.60 → 계수 0.78, 80% 폭 h5 −20%·h30 −22%, 표준화 잔차 분위수는 불변(−1.2/+1.8). `sigma_regime_gamma=0` 이면 끔.",
+          "**conformal 잔차 최근 가중** 반감기 250거래일(분위수·상승확률 모두 가중). 분산 2배 구간 합성 테스트: p90 1.90 → 2.58. `conformal_half_life_days=0` 이면 비가중. 잔차 가중은 토요일 학습부터, σ 계수는 predict-only 에서도 즉시.",
+          "트래커(`track.py`): 방향 적중을 **다수방향 기준**과 비교한 `direction_edge`, 상승/하락 예측별 적중, 앵커 수, 앵커 클러스터 신뢰구간, 소스·horizon 합산(`aggregates`). 앵커 20일 미만 = 판단 보류. 대시보드 '예측 기록과 실제 결과 비교'에 표시.",
+          "한국 다음 발표일 추정에서 \"매출액또는손익구조 30%\" 공시(확정실적, 2~3주 늦음)를 잠정실적과 분리. 분기 표본 1개면 전체 중앙값. 삼성 10-14 → 10-08."
+        ],
+        "Notes": [
+          "실측(09-12 로그): LIVE h5 방향 적중 45.2% vs 기준 54.8% → edge **−9.5%p**, 상승예측 적중 50%·하락예측 29%, 앵커 6일 → 판단 보류. BACKFILL h5/10/30 edge −3.9/−14.0/−8.3%p (앵커 13일).",
+          "회귀 테스트 `test_sigma_regime.py` 12항목."
+        ]
+      },
+      "tags": [
+        "conformal",
+        "volatility",
+        "measurement",
+        "kcs",
+        "dashboard"
+      ],
+      "impact": "high",
+      "author": ""
+    },
+    {
+      "version": "0.9.13",
+      "date": "2026-09-07",
+      "sections": {
+        "Added": [
+          "**실적 발표일 캘린더**(`collect_earnings.py`, `features/earnings.py`): 미국 SEC 8-K item 2.02 접수일, 한국 DART 잠정실적 공정공시 접수일(없으면 정기보고서). 접수일 기준이라 look-ahead 없음. 다음 발표일은 분기 패턴 추정, `data/earnings/earnings_manual.json` 수동 우선. 종목별 반응 크기 k(발표일 |수익률| / 평일) 실측: 삼성 1.7, MU 2.8, NVDA 3.3, AMD 4.5, AAPL 5.0(상한).",
+          "feature 3개 `earn_days_since/earn_days_to/earn_window`(토요일 학습부터). 커버리지 예외 접두사에 `earn_` 추가.",
+          "**구간 폭 조정**: 예측 기간에 발표일이 m개 들면 σ_h × √(1 + m(k²−1)/h). MU h30 실측 ×1.13(σ 0.287→0.324), h5 면 ×1.5. 비고에 발표일·배수 표시. `earnings_interval_adjust=False` 로 끔."
+        ],
+        "Known Issues": [
+          "외국 발행사(ASML·TSM·NVO)는 8-K 가 없어 이력 0 → 수동 파일로 다음 날짜만. 이번 분기부터 이력 자동 누적."
+        ]
+      },
+      "tags": [
+        "features",
+        "conformal",
+        "data"
+      ],
+      "impact": "medium",
+      "author": ""
+    },
+    {
+      "version": "0.9.12",
+      "date": "2026-09-06",
+      "sections": {
+        "Added": [
+          "**RAM(Roundhill T-REX 2X Long DRAM) ETF 합성**(`etf_synth.py`): 자체 학습 대신 DRAM 편입 종목 예측 분포로 일간 2배 복리 시뮬레이션(2만 경로, t(5), 250일 상관, USDKRW 확산, 비용 6%/년). 편입 비중 2026-08-31(주식+스왑 합산), 커버 86%(CXMT·Kioxia·대만 4종 미포함, 재정규화). 30일 decay 추정 −3~−4%. 신뢰도는 편입 종목 가중평균×커버율.",
+          "종목 추가 STX·WDC(DRAM ETF 편입 4.6%·3.8%), **패널 12종목**(STX·WDC 포함). 34종목 학습 + RAM 합성 = 210행."
+        ],
+        "Fixed": [
+          "`--symbols` 부분 실행이 `latest_predictions.json` 을 통째로 덮던 문제 → 병합(다른 종목 예측·백테스트·진단 유지). RUN_INFO 는 `partial_runs` 로 덧붙임. ETF 합성은 편입 커버 50% 미만이면 생략(기존 행 유지)."
+        ],
+        "Changed": [
+          "추적 로그에 `models`·`trained_at` 열 추가 — 모델 구성이 바뀌어도 로그를 지우지 않고 구간별로 평가(이전 행은 빈 값)."
+        ],
+        "Notes": [
+          "20년 전체 학습 실측 8.5h(GPU·캐시), 09-12 토요일 크론 5.6h."
+        ]
+      },
+      "tags": [
+        "etf",
+        "config",
+        "panel",
+        "predict-only",
+        "backup",
+        "measurement"
+      ],
+      "impact": "high",
+      "author": ""
+    },
     {
       "version": "0.9.11",
       "date": "2026-09-06",
@@ -53,9 +128,9 @@
           "관세청 메모리 코드(8542.32) HS2007부터 → 확장 상한 2007년, 2017 이전은 HSK 매핑 필요."
         ],
         "Known Issues": [
-          "`track.py` 방향 적중이 50% 기준 → 다수방향(`da_ref`) 기준 + 앵커 클러스터 신뢰구간 필요.",
+          "`track.py` 방향 적중이 50% 기준 (→0.9.14 에서 다수방향 기준·앵커 신뢰구간으로 해결).",
           "백필은 패널 없이 재학습 → 라이브와 다른 모델.",
-          "크론: 평일 `--predict-only`(8분) + 토요일 전체(8.5h)."
+          "크론: 평일 `--predict-only`(8분) + 토요일 전체(5.6h)."
         ]
       },
       "tags": [
