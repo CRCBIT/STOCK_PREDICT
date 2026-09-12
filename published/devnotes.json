@@ -1,56 +1,38 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-12T23:23:31+09:00",
-  "n_versions": 19,
-  "latest_version": "0.9.15",
+  "generated_at": "2026-09-12T23:27:10+09:00",
+  "n_versions": 10,
+  "latest_version": "0.9.14",
   "latest_date": "2026-09-12",
   "notes": [
-    {
-      "version": "0.9.15",
-      "date": "2026-09-12",
-      "sections": {
-        "Changed": [
-          "**σ 국면 계수 다성분화**(`features/sigma_regime.py`): 가격 10/40일 비율 × VIX/1년EWMA × 하이일드 OAS/1년EWMA 의 기하평균 ^0.5. 가격 성분은 종목 고유 국면(사후적), VIX·HY 는 글로벌 위험·신용 국면(선행적). 한국 종목엔 VIX·HY 1일 지연, 캐시 없는 성분은 자동 제외, `sigma_regime_use_vix/use_hy/weights` 로 조정. 실측(09-04, HY 캐시 전): 삼성 ×0.83(가격 0.60·VIX 0.80), MU ×0.86, NVDA ×0.96. 비고에 성분별 수치.",
-          "FRED 수집에 `FRED_SIGMA_SERIES`(VIXCLS, BAMLH0A0HYM2) 포함 — 방향 feature 가 아니라 σ 용도라 0.9.7 의 매크로 off 와 별개."
-        ],
-        "Added": [
-          "`collect_iv.py`: 미국 종목 30일 만기 ATM IV(콜·풋 중앙값 평균) 일별 기록 `data/iv/iv_daily.csv`. 학습엔 미사용 — 개별 IV 는 무료 이력이 없어 지금부터 쌓아 1년 뒤 네 번째 성분 후보. 크론 06:20 평일."
-        ],
-        "Notes": [
-          "공포탐욕지수는 미채택: VIX·모멘텀 등 이미 쓰는 재료의 합성이라 중복이고 비공식 소스. 개별 IV 는 이력이 없어 학습·예측 일관성을 못 지켜 보류.",
-          "회귀 테스트 `test_sigma_regime.py` 20항목(한국 1일 지연·기하평균·성분 결측·IV 파서 포함)."
-        ]
-      },
-      "tags": [
-        "volatility",
-        "conformal",
-        "data",
-        "measurement"
-      ],
-      "impact": "high",
-      "author": ""
-    },
     {
       "version": "0.9.14",
       "date": "2026-09-12",
       "sections": {
         "Changed": [
-          "**σ 국면 계수**(→0.9.15 에서 VIX·HY 성분 추가): σ_h × (단기 10일 / 기준 40일 EWMA 변동성)^0.5, [0.5, 2.0] 클립. 학습 잔차 표준화와 예측에 같은 값 → calibration 유지하며 국면 추적. 삼성 실측(09-04): 비율 0.60 → 계수 0.78, 80% 폭 h5 −20%·h30 −22%, 표준화 잔차 분위수는 불변(−1.2/+1.8). `sigma_regime_gamma=0` 이면 끔.",
-          "**conformal 잔차 최근 가중** 반감기 250거래일(분위수·상승확률 모두 가중). 분산 2배 구간 합성 테스트: p90 1.90 → 2.58. `conformal_half_life_days=0` 이면 비가중. 잔차 가중은 토요일 학습부터, σ 계수는 predict-only 에서도 즉시.",
-          "트래커(`track.py`): 방향 적중을 **다수방향 기준**과 비교한 `direction_edge`, 상승/하락 예측별 적중, 앵커 수, 앵커 클러스터 신뢰구간, 소스·horizon 합산(`aggregates`). 앵커 20일 미만 = 판단 보류. 대시보드 '예측 기록과 실제 결과 비교'에 표시.",
-          "한국 다음 발표일 추정에서 \"매출액또는손익구조 30%\" 공시(확정실적, 2~3주 늦음)를 잠정실적과 분리. 분기 표본 1개면 전체 중앙값. 삼성 10-14 → 10-08."
+          "**σ 국면 계수**(`features/sigma_regime.py`): σ_h × [가격 10/40일 EWMA 변동성 비율 × VIX/1년EWMA × 하이일드 OAS/1년EWMA]의 기하평균^0.5, 성분 [0.5, 2.0] 클립. 가격 성분은 종목 고유 국면(사후적), VIX·HY는 글로벌 위험·신용 국면(선행적). 한국 종목엔 VIX·HY 1일 지연, 캐시 없는 성분은 제외. 학습 잔차 표준화와 예측에 같은 값 → calibration 유지하며 국면 추적. 실측(09-04): 삼성 ×0.83(가격 0.60·VIX 0.80), MU ×0.86, NVDA ×0.96; 가격 성분만일 때 삼성 0.78 → 80% 폭 h5 −20%·h30 −22%, 표준화 잔차 분위수 불변(−1.2/+1.8). `sigma_regime_gamma=0` 이면 끔, `use_vix/use_hy/weights` 로 성분 조정.",
+          "**conformal 잔차 최근 가중** 반감기 250거래일(분위수·상승확률 모두 가중). 분산 2배 구간 합성 테스트 p90 1.90 → 2.58. `conformal_half_life_days=0` 이면 비가중. 잔차 가중은 전체 학습부터, σ 계수는 predict-only 에서도 즉시.",
+          "트래커(`track.py`): 방향 적중을 **다수방향 기준**과 비교한 `direction_edge`, 상승/하락 예측별 적중, 앵커 수, 앵커 클러스터 신뢰구간, 소스·horizon 합산(`aggregates`), 주간 시계열(`timeline`). 앵커 20일 미만 = 판단 보류. 대시보드 '예측 기록과 실제 결과 비교'에 표시, 업데이트 탭에 마일스톤 그래프.",
+          "한국 다음 발표일 추정에서 \"매출액또는손익구조 30%\" 공시(확정실적, 2~3주 늦음)를 잠정실적과 분리. 분기 표본 1개면 전체 중앙값. 삼성 10-14 → 10-08.",
+          "FRED 수집에 VIX·HY(`FRED_SIGMA_SERIES`) 포함 — σ 용도라 0.9.7 의 매크로 feature off 와 별개."
+        ],
+        "Added": [
+          "`collect_iv.py`: 미국 종목 30일 ATM IV(콜·풋 중앙값 평균) 일별 기록 `data/iv/iv_daily.csv`. 학습엔 미사용 — 개별 IV 는 무료 이력이 없어(유료: ORATS 2007~, Alpha Vantage 등) 지금부터 쌓아 1년 뒤 성분 후보. 크론 06:20 평일."
         ],
         "Notes": [
-          "실측(09-12 로그): LIVE h5 방향 적중 45.2% vs 기준 54.8% → edge **−9.5%p**, 상승예측 적중 50%·하락예측 29%, 앵커 6일 → 판단 보류. BACKFILL h5/10/30 edge −3.9/−14.0/−8.3%p (앵커 13일).",
-          "회귀 테스트 `test_sigma_regime.py` 12항목."
+          "실측(09-12 로그): LIVE h5 방향 적중 45.2% vs 기준 54.8% → edge **−9.5%p**, 상승예측 적중 50%·하락예측 29%, 앵커 6일 → 판단 보류. BACKFILL h5/10/30 edge −3.9/−14.0/−8.3%p(앵커 13일).",
+          "공포탐욕지수 미채택: VIX·모멘텀 등 이미 쓰는 재료의 합성이라 중복이고 비공식 소스.",
+          "판정 시점: 앵커 20일(9월 말) 뒤 LIVE h5 80% 적중이 98% → 80%대면 성공, 90%대면 γ 0.5→0.7, 그래도 안 되면 개별 IV.",
+          "회귀 테스트 `test_sigma_regime.py` 20항목."
         ]
       },
       "tags": [
-        "conformal",
         "volatility",
+        "conformal",
         "measurement",
         "kcs",
-        "dashboard"
+        "dashboard",
+        "data"
       ],
       "impact": "high",
       "author": ""
@@ -61,7 +43,7 @@
       "sections": {
         "Added": [
           "**실적 발표일 캘린더**(`collect_earnings.py`, `features/earnings.py`): 미국 SEC 8-K item 2.02 접수일, 한국 DART 잠정실적 공정공시 접수일(없으면 정기보고서). 접수일 기준이라 look-ahead 없음. 다음 발표일은 분기 패턴 추정, `data/earnings/earnings_manual.json` 수동 우선. 종목별 반응 크기 k(발표일 |수익률| / 평일) 실측: 삼성 1.7, MU 2.8, NVDA 3.3, AMD 4.5, AAPL 5.0(상한).",
-          "feature 3개 `earn_days_since/earn_days_to/earn_window`(토요일 학습부터). 커버리지 예외 접두사에 `earn_` 추가.",
+          "feature 3개 `earn_days_since/earn_days_to/earn_window`. 커버리지 예외 접두사에 `earn_` 추가.",
           "**구간 폭 조정**: 예측 기간에 발표일이 m개 들면 σ_h × √(1 + m(k²−1)/h). MU h30 실측 ×1.13(σ 0.287→0.324), h5 면 ×1.5. 비고에 발표일·배수 표시. `earnings_interval_adjust=False` 로 끔."
         ],
         "Known Issues": [
@@ -77,56 +59,6 @@
       "author": ""
     },
     {
-      "version": "0.9.12",
-      "date": "2026-09-06",
-      "sections": {
-        "Added": [
-          "**RAM(Roundhill T-REX 2X Long DRAM) ETF 합성**(`etf_synth.py`): 자체 학습 대신 DRAM 편입 종목 예측 분포로 일간 2배 복리 시뮬레이션(2만 경로, t(5), 250일 상관, USDKRW 확산, 비용 6%/년). 편입 비중 2026-08-31(주식+스왑 합산), 커버 86%(CXMT·Kioxia·대만 4종 미포함, 재정규화). 30일 decay 추정 −3~−4%. 신뢰도는 편입 종목 가중평균×커버율.",
-          "종목 추가 STX·WDC(DRAM ETF 편입 4.6%·3.8%), **패널 12종목**(STX·WDC 포함). 34종목 학습 + RAM 합성 = 210행."
-        ],
-        "Fixed": [
-          "`--symbols` 부분 실행이 `latest_predictions.json` 을 통째로 덮던 문제 → 병합(다른 종목 예측·백테스트·진단 유지). RUN_INFO 는 `partial_runs` 로 덧붙임. ETF 합성은 편입 커버 50% 미만이면 생략(기존 행 유지)."
-        ],
-        "Changed": [
-          "추적 로그에 `models`·`trained_at` 열 추가 — 모델 구성이 바뀌어도 로그를 지우지 않고 구간별로 평가(이전 행은 빈 값)."
-        ],
-        "Notes": [
-          "20년 전체 학습 실측 8.5h(GPU·캐시), 09-12 토요일 크론 5.6h."
-        ]
-      },
-      "tags": [
-        "etf",
-        "config",
-        "panel",
-        "predict-only",
-        "backup",
-        "measurement"
-      ],
-      "impact": "high",
-      "author": ""
-    },
-    {
-      "version": "0.9.11",
-      "date": "2026-09-06",
-      "sections": {
-        "Changed": [
-          "GRU 배치 sweep(`sweep_gru.py`, 9종목×h5·h30×5fold): 64 대비 IC 128 −0.017±0.019, 256 −0.027±0.016, 512 −0.053±0.022(유의). 조기종료 11~15 epoch → 큰 배치는 갱신 부족. **128/1.4e-3 채택**, fit 3.1→1.8초.",
-          "GRU GPU 학습(ROCm torch, RX 6750 XT, `ROCM_GFX_OVERRIDE=10.3.0` 코드 설정). GARCH 적합 종목당 1회 캐시. 20년 전체 12.1h → 8.5h."
-        ],
-        "Added": [
-          "전체 학습 전 `models_saved/` → `models_backup/` 자동 스냅샷(최근 4개), 종료 시 `RUN_INFO.json`. 256 vs 128 실측 GRU IC 0.016 vs 0.023 (잡음)."
-        ]
-      },
-      "tags": [
-        "gru",
-        "gpu",
-        "backup",
-        "measurement"
-      ],
-      "impact": "medium",
-      "author": ""
-    },
-    {
       "version": "0.9.10",
       "date": "2026-09-06",
       "sections": {
@@ -135,33 +67,41 @@
           "**최근 가중 학습** 반감기 4년(2007년 행 3%). fold 끝 기준, 평균 1. zoo·최종·패널 적용, PLS 비가중, GRU 가중 손실.",
           "커버리지 예외 접두사 `(\"kcs_\",\"flow_\")` config화 — 20년에서도 관세청·수급 feature 유지.",
           "`KCS_PUBLISH_LAG_DAYS` 1→**15 복원**: 포털 \"15일경 현행화\", 9/1 CSV는 2026-07까지, first_seen 관측 0. 1일이면 매월 1~14일 look-ahead.",
-          "`ng_boost` off: 조합당 110초 중 82초(74%), 채택률 10%. 조합당 45초.",
-          "종목 추가: RAM, 이차전지 5종(006400, 373220, 096770, 247540, TSLA). 33종목 198조합."
+          "GRU 배치 sweep(`sweep_gru.py`, 9종목×h5·h30×5fold): 64 대비 IC 128 −0.017±0.019, 256 −0.027±0.016, 512 −0.053±0.022(유의). 조기종료 11~15 epoch → 큰 배치는 갱신 부족. **128/1.4e-3 채택**. 256 vs 128 전체 학습 실측 GRU IC 0.016 vs 0.023(잡음).",
+          "GRU GPU 학습(ROCm torch, RX 6750 XT, `ROCM_GFX_OVERRIDE=10.3.0` 코드 설정), `ng_boost` off(조합당 110초 중 82초·채택률 10%), GARCH 적합 종목당 1회 캐시. 20년 전체 학습 12.1h → 8.5h → 5.6h(토요일 크론 실측).",
+          "종목 추가: 이차전지 5종(006400, 373220, 096770, 247540, TSLA), STX·WDC(DRAM ETF 편입 4.6%·3.8%), RAM. **패널 12종목**(STX·WDC 포함). 34종목 학습 + RAM 합성 = 210행.",
+          "추적 로그에 `models`·`trained_at` 열 — 모델 구성이 바뀌어도 로그를 지우지 않고 구간별로 평가(이전 행은 빈 값)."
         ],
         "Added": [
-          "`main.py --predict-only`: 저장 모델로 예측만(패널 최신값·σ_h 오늘 기준 재계산, 백테스트 승계, 10일 초과 모델 제외). 4종목 9초, 학습 실행과 값 동일.",
-          "joblib에 `train_result` 전체, 패널 모델 `panel_h{h}.joblib`. `ab_compare.py`, `bench_zoo.py`, `test_patch_history20.py`.",
-          "`progress.py` horizon 단위 진행·ETA·종목 접기(예전엔 첫 horizon 완료를 done으로 계산)."
+          "`main.py --predict-only`: 저장 모델로 예측만(패널 최신값·σ_h 오늘 기준 재계산, 백테스트 승계, 10일 초과 모델 제외). 같은 데이터에서 학습 실행과 값 동일, 4종목 9초. 크론: 평일 predict-only + 토요일 전체.",
+          "**RAM(Roundhill T-REX 2X Long DRAM) ETF 합성**(`etf_synth.py`): 자체 학습 대신 DRAM 편입 종목 예측 분포로 일간 2배 복리 시뮬레이션(2만 경로, t(5), 250일 상관, USDKRW 확산, 비용 6%/년). 편입 비중 2026-08-31(주식+스왑 합산), 커버 86%(CXMT·Kioxia·대만 4종 미포함, 재정규화). 30일 decay 추정 −3~−4%. 신뢰도 = 편입 종목 가중평균×커버율.",
+          "전체 학습 전 `models_saved/` → `models_backup/` 자동 스냅샷(최근 4개), 종료 시 `RUN_INFO.json`(설정 기록). joblib에 `train_result` 전체, 패널 모델 `panel_h{h}.joblib`.",
+          "`ab_compare.py`, `bench_zoo.py`, `model_oof_check.py`, `test_patch_history20.py`, `progress.py` horizon 단위 진행·ETA·GPU 표시."
+        ],
+        "Fixed": [
+          "`--symbols` 부분 실행이 `latest_predictions.json` 을 통째로 덮던 문제 → 병합. RUN_INFO 는 `partial_runs` 로 덧붙임. ETF 합성은 편입 커버 50% 미만이면 생략."
         ],
         "Notes": [
           "정직 채점(같은 10종목·fold): 패널 IC h5 0.046→0.005, h20 0.135→0.102, h30 0.178→−0.033. 종목 58조합 0.153→0.025. 최종 가중치 동일 → 차이는 전부 채점 방식.",
           "IC SE≈1/√실효표본: h5 ±0.08, h20 ±0.16, h30 ±0.20. 진짜 신호(0.02~0.05)는 이 아래 → 종목당 5년으로 방향 예측력 검증 불가.",
           "방향 적중 분해: '상승' 예측 64~68%(=시장 상승률), **'하락' 예측 20~43%**(백필), 라이브 47%/32%.",
           "라이브 n=110 = 앵커 6일×21종목(상관 0.4~0.6) → 실효표본 ≈6. Wilson(6) 하한 0.59, 커버리지 98% 미확정.",
-          "σ 국면 지연: holdout 60~70%(급변동기) vs 라이브 98%(진정기). σ 불일치 수정은 폭 4% 영향뿐.",
+          "σ 국면 지연: holdout 60~70%(급변동기) vs 라이브 98%(진정기). σ 불일치 수정은 폭 4% 영향뿐(→0.9.14).",
           "패널 상관 실측 1일 0.41 / 5일 0.49 / 30일 0.56 (ρ=0.6은 h30용, h5는 0.5).",
           "관세청 메모리 코드(8542.32) HS2007부터 → 확장 상한 2007년, 2017 이전은 HSK 매핑 필요."
         ],
         "Known Issues": [
-          "`track.py` 방향 적중이 50% 기준 (→0.9.14 에서 다수방향 기준·앵커 신뢰구간으로 해결).",
-          "백필은 패널 없이 재학습 → 라이브와 다른 모델.",
-          "크론: 평일 `--predict-only`(8분) + 토요일 전체(5.6h)."
+          "백필은 패널 없이 재학습 → 라이브와 다른 모델."
         ]
       },
       "tags": [
         "data",
         "training",
         "predict-only",
+        "etf",
+        "gru",
+        "gpu",
+        "backup",
         "kcs",
         "config",
         "measurement"
@@ -195,24 +135,30 @@
       "author": ""
     },
     {
-      "version": "0.9.8",
+      "version": "0.9.7",
       "date": "2026-09-01",
       "sections": {
         "Changed": [
-          "관세청 공표일 가정→**관측**(`kcs_first_seen.json`). 관측 없는 월만 `KCS_PUBLISH_LAG_DAYS`."
+          "FRED 매크로 4종 비활성화(패널 IC h5 0.079→0.042, h10 0.105→0.097). feature 추가 실험 4전 4패.",
+          "관세청 공표일 가정→**관측**(`kcs_first_seen.json`). 관측 없는 월만 `KCS_PUBLISH_LAG_DAYS`. 관측일이 가정값보다 늦으면 무시(기록 첫날 문제)."
         ],
         "Fixed": [
-          "kcs_trade 크론 `.venv` 경로 오류로 CSV가 2026-07에 정지(API 문제 아님).",
+          "kcs_trade 크론 `.venv` 경로 오류로 CSV가 2026-07에 정지(API 문제 아님). 9/1 시점 8월분 API에 없음; 산업부 잠정치와 관세청 HS10 통계는 별개.",
           "`main.py` 16:10 크론 제거(US 개장 전 기준일 불일치), 06:10만 유지."
         ],
         "Notes": [
-          "관측일이 가정값보다 늦으면 무시(기록 첫날 문제). 9/1 시점 8월분 API에 없음; 산업부 잠정치와 관세청 HS10 통계는 별개."
+          "횡단면 포트폴리오: **동일비중이 전 전략을 이김**(Sharpe h5 2.19/h10 2.27/h30 2.20, 롱숏 −0.69/+0.58/−0.18). h10 분위 단조 +1.00이나 Q1~Q5 격차 1.2%p로 비용 미달. 동일비중 연 108%의 강한 상승장."
+        ],
+        "Added": [
+          "대시보드 방문 추적(`analytics.py`, `analytics_report.py`)."
         ],
         "Known Issues": [
           "공표 지연을 짧게 잡으면 누수 — 백테스트만 좋아지고 티가 안 남."
         ]
       },
       "tags": [
+        "measurement",
+        "features",
         "kcs",
         "cron"
       ],
@@ -220,31 +166,11 @@
       "author": ""
     },
     {
-      "version": "0.9.7",
-      "date": "2026-09-01",
-      "sections": {
-        "Changed": [
-          "FRED 매크로 4종 비활성화(패널 IC h5 0.079→0.042, h10 0.105→0.097). feature 추가 실험 4전 4패."
-        ],
-        "Notes": [
-          "횡단면 포트폴리오: **동일비중이 전 전략을 이김**(Sharpe h5 2.19/h10 2.27/h30 2.20, 롱숏 −0.69/+0.58/−0.18). h10 분위 단조 +1.00이나 Q1~Q5 격차 1.2%p로 비용 미달. 동일비중 연 108%의 강한 상승장."
-        ],
-        "Added": [
-          "대시보드 방문 추적(`analytics.py`, `analytics_report.py`)."
-        ]
-      },
-      "tags": [
-        "measurement",
-        "features"
-      ],
-      "impact": "high",
-      "author": ""
-    },
-    {
-      "version": "0.9.6",
+      "version": "0.9.5",
       "date": "2026-08-31",
       "sections": {
         "Added": [
+          "FRED 매크로 4종(VIX·달러지수·기대인플레·금융환경) 20 feature(→0.9.7에서 off). 국채와 분리한 이유: `_us_bond_block`이 US만 호출돼 패널 공통 80% 미달. 새 데이터 기준: 패널 10종목 전부에 붙는가.",
           "횡단면 포트폴리오 백테스트(`portfolio_backtest.py`), 대시보드 PANEL·PORTFOLIO 섹션."
         ],
         "Changed": [
@@ -255,6 +181,7 @@
         ]
       },
       "tags": [
+        "features",
         "backtest",
         "dashboard"
       ],
@@ -262,101 +189,34 @@
       "author": ""
     },
     {
-      "version": "0.9.5",
-      "date": "2026-08-31",
-      "sections": {
-        "Added": [
-          "FRED 매크로 4종 20 feature(→0.9.7에서 off). 국채와 분리한 이유: `_us_bond_block`이 US만 호출돼 패널 공통 80% 미달. 새 데이터 기준: 패널 10종목 전부에 붙는가."
-        ]
-      },
-      "tags": [
-        "features"
-      ],
-      "impact": "medium",
-      "author": ""
-    },
-    {
-      "version": "0.9.4",
+      "version": "0.9.0",
       "date": "2026-08-30",
       "sections": {
+        "Added": [
+          "**종목 횡단 패널**(`models/panel.py`, 날짜 기준 walk-forward, 공통 feature만). `PANEL_SYMBOLS`(반도체 10종)로 제한 — 패널 IC 반도체 +0.220 / 전력·원전 +0.087 / 연산·플랫폼 +0.062 (in-sample 채점). 제한 A/B: h5 0.077→0.079, h10 0.122→0.105, h30 0.200→0.227, 표본 절반에 실효표본 81→79.",
+          "**NNLS 스태킹**(softmax(−RMSE)는 모델 상관을 못 봄). **GJR-GARCH skew-t** σ(`models/vol.py`, arch 없으면 EWMA). NGBoost·QuantileGBM·PLS·lgbm_linear. 개발자 노트 시스템."
+        ],
+        "Changed": [
+          "**MZ 재보정 off**(IC MU +0.099→+0.269, 000660 +0.047→+0.192, 005930 −0.005→+0.073; fold별 α·β로 비단조 추정. 0.9.9 이전 in-sample 채점).",
+          "**조건부 σ off**(`use_conditional_sigma`, honest 커버리지 MU 84.1→91.0%). 구현 유지(`scale_only`)."
+        ],
         "Fixed": [
-          "`_ConstPredictor` 지역 클래스 joblib 저장 실패 → 모듈 최상위."
+          "`_PLS`·`_ConstPredictor` 지역 클래스 joblib 저장 실패 → 모듈 최상위. `publish.py`에 `devnotes_view.py` 누락."
         ],
         "Notes": [
-          "패널 제한 A/B: h5 0.077→0.079, h10 0.122→0.105, h30 0.200→0.227. 표본 절반에 실효표본 81→79."
+          "NNLS 중복: catboost~lightgbm 0.99, lightgbm~xgboost 0.99, extra_trees~random_forest 0.96.",
+          "`PanelForecaster` 상수 반환(→0.9.9 T행, 0.9.10 매일 재계산). 실효표본 ρ=0.6 가정(→0.9.10 실측 0.41~0.56)."
         ],
         "Known Issues": [
           "h30 부호 반전 다수(CAT −0.382, GOOGL −0.263): NNLS가 단일 선형모델에 90%+, 실효표본 27."
         ]
       },
       "tags": [
-        "bugfix",
-        "panel"
-      ],
-      "impact": "medium",
-      "author": ""
-    },
-    {
-      "version": "0.9.3",
-      "date": "2026-08-30",
-      "sections": {
-        "Added": [
-          "패널을 `PANEL_SYMBOLS`(반도체 10종)로 제한. 패널 IC 반도체 +0.220 / 전력·원전 +0.087 / 연산·플랫폼 +0.062."
-        ]
-      },
-      "tags": [
-        "panel"
-      ],
-      "impact": "high",
-      "author": ""
-    },
-    {
-      "version": "0.9.2",
-      "date": "2026-08-30",
-      "sections": {
-        "Changed": [
-          "**MZ 재보정 off**(IC MU +0.099→+0.269, 000660 +0.047→+0.192, 005930 −0.005→+0.073; fold별 α·β로 비단조 추정. 0.9.9 이전 in-sample 채점).",
-          "**조건부 σ off**(`use_conditional_sigma`, honest 커버리지 MU 84.1→91.0%). 구현 유지."
-        ]
-      },
-      "tags": [
-        "calibration"
-      ],
-      "impact": "high",
-      "author": ""
-    },
-    {
-      "version": "0.9.1",
-      "date": "2026-08-30",
-      "sections": {
-        "Fixed": [
-          "`_PLS` 지역 클래스 저장 실패 → `PLSForecaster`. 조건부 σ 미작동(NNLS가 ng_boost·quantile_gbm 제외) → `scale_only`. `publish.py`에 `devnotes_view.py` 누락."
-        ],
-        "Notes": [
-          "NNLS 중복: catboost~lightgbm 0.99, lightgbm~xgboost 0.99, extra_trees~random_forest 0.96."
-        ]
-      },
-      "tags": [
-        "bugfix"
-      ],
-      "impact": "high",
-      "author": ""
-    },
-    {
-      "version": "0.9.0",
-      "date": "2026-08-30",
-      "sections": {
-        "Added": [
-          "**종목 횡단 패널**(`models/panel.py`, 날짜 기준 walk-forward, 공통 feature만). **NNLS 스태킹**. **GJR-GARCH skew-t** σ(`models/vol.py`, arch 없으면 EWMA). NGBoost·QuantileGBM·PLS·lgbm_linear. 개발자 노트 시스템."
-        ],
-        "Notes": [
-          "`PanelForecaster` 상수 반환(→0.9.9 T행, 0.9.10 매일 재계산). 실효표본 ρ=0.6 가정(→0.9.10 실측 0.41~0.56)."
-        ]
-      },
-      "tags": [
         "panel",
         "ensemble",
-        "volatility"
+        "volatility",
+        "calibration",
+        "bugfix"
       ],
       "impact": "high",
       "author": ""
