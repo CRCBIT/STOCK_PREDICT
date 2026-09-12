@@ -13,13 +13,14 @@ Streamlit 대시보드의 "개발자 노트" 섹션.
 from __future__ import annotations
 
 import html
-from datetime import datetime
+from datetime import datetime, timedelta
 import re
 import json
 from datetime import date
 from pathlib import Path
 from typing import Callable, Dict, List, Optional
 
+import pandas as pd
 import streamlit as st
 
 IMPACT_META = {
@@ -283,6 +284,121 @@ def render_devnotes_timeline(notes: List[Dict]) -> None:
     st.caption("점 = 버전(시간순), 높이 = 해석 영향도, 크기 = 항목 수, 색 = 대표 태그. 마우스를 올리면 요약.")
 
 
+# --------------------------------------------------------------------------------------
+# 마일스톤별 개선 — 라이브 트래커 주간 지표 위에 버전 표식
+# --------------------------------------------------------------------------------------
+def build_milestone_figure(notes: List[Dict], track: Dict, horizon: int = 5, height: int = 360):
+    """
+    위: 80% 구간 적중률(주간, 앵커 기준). 75~85% 를 '목표 구간' 띠로, 점 크기 = 앵커 수.
+    아래: 방향 edge(다수방향 대비) 막대 — 양수 초록, 음수 주황.
+    세로선 = 해석 영향(high) 버전 배포일, 같은 날은 한 라벨. LIVE 만.
+    """
+    try:
+        import plotly.graph_objects as go
+        from plotly.subplots import make_subplots
+    except Exception:
+        return None
+    rows = [t for t in (track.get("timeline") or [])
+            if str(t.get("source")) == "LIVE" and int(t.get("horizon", -1)) == horizon]
+    if not rows:
+        return None
+    rows.sort(key=lambda r: r["week"])
+    weeks = [datetime.strptime(r["week"], "%Y-%m-%d") for r in rows]
+    cov = [None if r.get("coverage_80") is None else r["coverage_80"] * 100 for r in rows]
+    edge = [None if r.get("direction_edge") is None else r["direction_edge"] * 100 for r in rows]
+    n_anc = [int(r.get("n_anchors") or 0) for r in rows]
+    hover = [f"{r['week']} 주<br>표본 {r['n']}건 · 기준일 {r['n_anchors']}일" for r in rows]
+
+    C_LINE, C_BAND, C_POS, C_NEG, C_MARK, C_GRID = "#4cc9f0", "rgba(42,157,143,0.18)", "#2a9d8f", "#e07b39", "rgba(230,57,70,0.45)", "rgba(128,128,128,0.15)"
+    fig = make_subplots(rows=2, cols=1, shared_xaxes=True, row_heights=[0.62, 0.38], vertical_spacing=0.06)
+
+    # 목표 띠 75~85%
+    x0, x1 = min(weeks) - timedelta(days=4), max(weeks) + timedelta(days=18)
+    fig.add_shape(type="rect", x0=x0, x1=x1, y0=75, y1=85, xref="x", yref="y",
+                  fillcolor=C_BAND, line=dict(width=0), layer="below")
+    fig.add_annotation(x=x1, y=85, xref="x", yref="y", text="목표 75~85%", showarrow=False,
+                       xanchor="right", yanchor="bottom", font=dict(size=10, color=C_POS))
+    fig.add_trace(go.Scatter(
+        x=weeks, y=cov, mode="lines+markers+text",
+        line=dict(color=C_LINE, width=2.5, shape="spline", smoothing=0.6),
+        marker=dict(size=[9 + 2.2 * min(a, 6) for a in n_anc], color=C_LINE,
+                    line=dict(color="rgba(255,255,255,0.9)", width=1.5)),
+        text=[f"{c:.0f}%" if c is not None else "" for c in cov], textposition="top center",
+        textfont=dict(size=10, color=C_LINE),
+        hovertext=hover, hoverinfo="text+y", name="80% 구간 적중률",
+    ), row=1, col=1)
+    fig.add_trace(go.Bar(
+        x=weeks, y=edge, marker=dict(color=[C_POS if (e or 0) >= 0 else C_NEG for e in edge], opacity=0.85),
+        width=[4 * 86400000] * len(weeks), hovertext=hover, hoverinfo="text+y", name="방향 edge",
+        text=[f"{e:+.0f}" if e is not None else "" for e in edge], textposition="outside",
+        textfont=dict(size=10),
+    ), row=2, col=1)
+    fig.add_hline(y=0, line=dict(color="rgba(128,128,128,0.6)", width=1), row=2, col=1)
+
+    # 버전 표식: 같은 날 여러 버전은 한 라벨, 라벨은 위 패널 아래쪽에
+    by_date: Dict[str, List[str]] = {}
+    for n in notes:
+        if str(n.get("impact", "")).lower() != "high":
+            continue
+        d = str(n.get("date", ""))[:10]
+        try:
+            dt = datetime.strptime(d, "%Y-%m-%d")
+        except Exception:
+            continue
+        if dt < x0 or dt > x1:
+            continue
+        by_date.setdefault(d, []).append(str(n.get("version", "")))
+    for d, vers in by_date.items():
+        dt = datetime.strptime(d, "%Y-%m-%d")
+        vers = sorted(vers, key=lambda v: tuple(int(x) if x.isdigit() else 0 for x in v.split(".")))
+        label = vers[0] if len(vers) == 1 else f"{vers[0]}~{vers[-1]}"
+        fig.add_shape(type="line", x0=dt, x1=dt, y0=0, y1=1, xref="x", yref="paper",
+                      line=dict(color=C_MARK, width=1, dash="dot"))
+        fig.add_annotation(x=dt, y=42, xref="x", yref="y", text=label, showarrow=False, textangle=-90,
+                           xanchor="right", yanchor="bottom", font=dict(size=9, color="rgba(230,57,70,0.9)"))
+
+    fig.update_yaxes(range=[40, 105], ticksuffix="%", showgrid=True, gridcolor=C_GRID, zeroline=False,
+                     title=dict(text="80% 구간 적중률", font=dict(size=11)), row=1, col=1)
+    fig.update_yaxes(ticksuffix="%p", showgrid=False, zeroline=False,
+                     title=dict(text="방향 edge", font=dict(size=11)), row=2, col=1)
+    fig.update_xaxes(range=[x0, x1], tickformat="%m-%d", showgrid=False, ticks="outside", row=2, col=1)
+    fig.update_xaxes(showgrid=False, row=1, col=1)
+    fig.update_layout(height=height, margin=dict(l=55, r=15, t=10, b=30), showlegend=False,
+                      plot_bgcolor="rgba(0,0,0,0)", paper_bgcolor="rgba(0,0,0,0)",
+                      hoverlabel=dict(align="left"), bargap=0.4)
+    return fig
+
+
+_MILESTONE_ROWS = [
+    # (버전, 지표, 값, 비고) — DEVNOTES 의 실측치. 같은 잣대끼리만 비교할 것.
+    ("0.9.3", "패널 IC h30", "+0.220", "in-sample 채점 (0.9.9 이전 잣대)"),
+    ("0.9.9", "패널 IC h30", "−0.033", "cross-fit 채점 — 잣대가 바뀜, 모델은 같음"),
+    ("0.9.10", "종목 IC 평균(58조합)", "0.153 → 0.025", "정직 채점. 이후 이 잣대로만 비교"),
+    ("0.9.10", "전체 학습 시간", "5.1h → 12.1h", "5년 → 20년"),
+    ("0.9.11", "전체 학습 시간", "12.1h → 8.5h", "GRU GPU + NGBoost off"),
+    ("0.9.12", "전체 학습 시간", "8.5h → 5.6h", "토요일 크론 실측"),
+    ("0.9.14", "LIVE h5 방향 edge", "−9.5%p", "다수방향 기준, 앵커 6일 → 판단 보류"),
+    ("0.9.14", "삼성 h5 80% 폭", "−20%", "σ 국면 계수 0.78 (가격 비율만)"),
+    ("0.9.15", "삼성 σ 국면 계수", "0.83", "가격 0.60 · VIX 0.80 · HY (수집 시작)"),
+    ("목표", "LIVE h5 80% 적중", "98% → 80%대", "앵커 20일 이상 쌓인 뒤 판정 (9월 말)"),
+]
+
+
+def render_milestones(notes: List[Dict], track: Dict) -> None:
+    """업데이트 탭: 마일스톤별 성적. 그래프(라이브 주간) + 표(DEVNOTES 실측치)."""
+    st.markdown("**마일스톤별 성적**")
+    fig = build_milestone_figure(notes, track or {})
+    if fig is not None:
+        st.plotly_chart(fig, use_container_width=True, config={"displayModeBar": False})
+        st.caption("점 크기 = 그 주의 기준일(앵커) 수. 세로선 = 해석에 영향 주는 버전 배포일. "
+                   "라이브 기록은 8월 21일부터라 세로선 이전 구간은 짧고, 앵커 20일이 쌓이기 전엔 흐름만 참고.")
+    else:
+        st.caption("라이브 주간 기록이 아직 없습니다 (track_summary.json 의 timeline).")
+    rows = [{"버전": v, "지표": m, "값": val, "비고": note} for v, m, val, note in _MILESTONE_ROWS]
+    st.dataframe(pd.DataFrame(rows), hide_index=True, use_container_width=True)
+    st.caption("0.9.9 에서 채점 방식이 바뀌어 그 전후 IC 는 같은 잣대가 아닙니다. 이후 개선의 기준은 라이브 트래커입니다.")
+
+
 def render_devnotes(
     published_dir: Path,
     section_head: Optional[Callable[..., None]] = None,
@@ -314,6 +430,18 @@ def render_devnotes(
 
     # 타임라인은 접힌 상세 목록 밖, 섹션 최상단에 항상 보인다
     render_devnotes_timeline(notes)
+
+    # 마일스톤별 성적 (라이브 트래커 주간 지표 + 버전 표식)
+    track: Dict = {}
+    try:
+        import json as _json
+        tp = Path(published_dir) / "track_summary.json"
+        if tp.exists():
+            track = _json.loads(tp.read_text(encoding="utf-8")) or {}
+    except Exception:
+        track = {}
+    with st.expander("마일스톤별 성적 — 버전이 바뀌면서 얼마나 좋아졌나", expanded=False):
+        render_milestones(notes, track)
 
     with st.expander(
         f"변경 이력 보기 — 최근 {latest.get('version','')} "
