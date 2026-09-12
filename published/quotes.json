@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-12T15:39:01+09:00",
+  "fetched_at": "2026-09-12T15:40:01+09:00",
   "quotes": {
     "000660": {
       "price": 1832000.0,
@@ -46,6 +46,11 @@
       "currency": "KRW",
       "timestamp": "2026-09-11T18:00:02.000+09:00"
     },
+    "AAPL": {
+      "price": 332.55,
+      "currency": "USD",
+      "timestamp": "2026-09-12T08:59:56.000+09:00"
+    },
     "AMAT": {
       "price": 456.95,
       "currency": "USD",
@@ -71,15 +76,15 @@
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:55.000+09:00"
     },
+    "KLAC": {
+      "price": 180.53,
+      "currency": "USD",
+      "timestamp": "2026-09-12T08:59:26.000+09:00"
+    },
     "LLY": {
       "price": 1116.2,
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:25.000+09:00"
-    },
-    "MRK": {
-      "price": 144.18,
-      "currency": "USD",
-      "timestamp": "2026-09-12T08:57:37.000+09:00"
     },
     "MRNA": {
       "price": 144.63,
@@ -166,15 +171,10 @@
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:54.000+09:00"
     },
-    "AAPL": {
-      "price": 332.55,
+    "MRK": {
+      "price": 144.18,
       "currency": "USD",
-      "timestamp": "2026-09-12T08:59:56.000+09:00"
-    },
-    "KLAC": {
-      "price": 180.53,
-      "currency": "USD",
-      "timestamp": "2026-09-12T08:59:26.000+09:00"
+      "timestamp": "2026-09-12T08:57:37.000+09:00"
     }
   },
   "fx": {
@@ -182,7 +182,7 @@
       "rate": 1346.9,
       "mid_rate": 1346.4,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-12T15:39:01+09:00"
+      "fetched_at": "2026-09-12T15:40:01+09:00"
     }
   }
 }
