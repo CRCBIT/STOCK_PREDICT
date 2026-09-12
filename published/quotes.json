@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-13T07:59:02+09:00",
+  "fetched_at": "2026-09-13T08:00:01+09:00",
   "quotes": {
     "000660": {
       "price": 1832000.0,
@@ -51,11 +51,6 @@
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:59.000+09:00"
     },
-    "AMAT": {
-      "price": 456.9474,
-      "currency": "USD",
-      "timestamp": "2026-09-12T08:56:58.000+09:00"
-    },
     "AMD": {
       "price": 515.7785,
       "currency": "USD",
@@ -86,10 +81,10 @@
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:33.000+09:00"
     },
-    "MRNA": {
-      "price": 144.6472,
+    "MRK": {
+      "price": 144.3,
       "currency": "USD",
-      "timestamp": "2026-09-12T08:59:42.000+09:00"
+      "timestamp": "2026-09-12T08:57:37.000+09:00"
     },
     "MSFT": {
       "price": 494.89,
@@ -115,11 +110,6 @@
       "price": 36.3,
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:59.000+09:00"
-    },
-    "PFE": {
-      "price": 27.74,
-      "currency": "USD",
-      "timestamp": "2026-09-12T08:59:30.000+09:00"
     },
     "PLTR": {
       "price": 167.3923,
@@ -156,11 +146,6 @@
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:59.000+09:00"
     },
-    "TSM": {
-      "price": 432.804,
-      "currency": "USD",
-      "timestamp": "2026-09-12T08:59:52.000+09:00"
-    },
     "VST": {
       "price": 148.9187,
       "currency": "USD",
@@ -171,10 +156,25 @@
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:54.000+09:00"
     },
-    "MRK": {
-      "price": 144.3,
+    "MRNA": {
+      "price": 144.6472,
       "currency": "USD",
-      "timestamp": "2026-09-12T08:57:37.000+09:00"
+      "timestamp": "2026-09-12T08:59:42.000+09:00"
+    },
+    "TSM": {
+      "price": 432.804,
+      "currency": "USD",
+      "timestamp": "2026-09-12T08:59:52.000+09:00"
+    },
+    "AMAT": {
+      "price": 456.9474,
+      "currency": "USD",
+      "timestamp": "2026-09-12T08:56:58.000+09:00"
+    },
+    "PFE": {
+      "price": 27.74,
+      "currency": "USD",
+      "timestamp": "2026-09-12T08:59:30.000+09:00"
     }
   },
   "fx": {
@@ -182,7 +182,7 @@
       "rate": 1346.9,
       "mid_rate": 1346.4,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-13T07:59:02+09:00"
+      "fetched_at": "2026-09-13T08:00:01+09:00"
     }
   }
 }
