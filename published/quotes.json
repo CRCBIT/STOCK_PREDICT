@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-13T13:53:02+09:00",
+  "fetched_at": "2026-09-13T13:54:02+09:00",
   "quotes": {
     "000660": {
       "price": 1832000.0,
@@ -81,6 +81,11 @@
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:33.000+09:00"
     },
+    "MRK": {
+      "price": 144.3,
+      "currency": "USD",
+      "timestamp": "2026-09-12T08:57:37.000+09:00"
+    },
     "MRNA": {
       "price": 144.6472,
       "currency": "USD",
@@ -96,10 +101,15 @@
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:59.000+09:00"
     },
-    "NVO": {
-      "price": 43.1007,
+    "NVDA": {
+      "price": 218.26,
       "currency": "USD",
-      "timestamp": "2026-09-12T08:59:43.000+09:00"
+      "timestamp": "2026-09-12T08:59:59.000+09:00"
+    },
+    "OKLO": {
+      "price": 36.3,
+      "currency": "USD",
+      "timestamp": "2026-09-12T08:59:59.000+09:00"
     },
     "PFE": {
       "price": 27.74,
@@ -131,6 +141,11 @@
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:54.000+09:00"
     },
+    "STX": {
+      "price": 830.479,
+      "currency": "USD",
+      "timestamp": "2026-09-12T08:59:23.000+09:00"
+    },
     "TSLA": {
       "price": 365.25,
       "currency": "USD",
@@ -151,25 +166,10 @@
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:54.000+09:00"
     },
-    "NVDA": {
-      "price": 218.26,
+    "NVO": {
+      "price": 43.1007,
       "currency": "USD",
-      "timestamp": "2026-09-12T08:59:59.000+09:00"
-    },
-    "OKLO": {
-      "price": 36.3,
-      "currency": "USD",
-      "timestamp": "2026-09-12T08:59:59.000+09:00"
-    },
-    "STX": {
-      "price": 830.479,
-      "currency": "USD",
-      "timestamp": "2026-09-12T08:59:23.000+09:00"
-    },
-    "MRK": {
-      "price": 144.3,
-      "currency": "USD",
-      "timestamp": "2026-09-12T08:57:37.000+09:00"
+      "timestamp": "2026-09-12T08:59:43.000+09:00"
     },
     "CAT": {
       "price": 818.57,
@@ -182,7 +182,7 @@
       "rate": 1346.9,
       "mid_rate": 1346.4,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-13T13:53:02+09:00"
+      "fetched_at": "2026-09-13T13:54:02+09:00"
     }
   }
 }
