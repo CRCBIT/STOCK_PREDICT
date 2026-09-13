@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-13T21:08:01+09:00",
+  "fetched_at": "2026-09-13T21:09:01+09:00",
   "quotes": {
     "000660": {
       "price": 1832000.0,
@@ -60,11 +60,6 @@
       "price": 515.7785,
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:58.000+09:00"
-    },
-    "ASML": {
-      "price": 1701.0,
-      "currency": "USD",
-      "timestamp": "2026-09-12T08:59:59.000+09:00"
     },
     "CAT": {
       "price": 818.57,
@@ -141,6 +136,11 @@
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:49.000+09:00"
     },
+    "SNDK": {
+      "price": 1631.0821,
+      "currency": "USD",
+      "timestamp": "2026-09-12T08:59:59.000+09:00"
+    },
     "SPCX": {
       "price": 150.28,
       "currency": "USD",
@@ -166,15 +166,15 @@
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:27.000+09:00"
     },
+    "ASML": {
+      "price": 1701.0,
+      "currency": "USD",
+      "timestamp": "2026-09-12T08:59:59.000+09:00"
+    },
     "WDC": {
       "price": 447.1001,
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:54.000+09:00"
-    },
-    "SNDK": {
-      "price": 1631.0821,
-      "currency": "USD",
-      "timestamp": "2026-09-12T08:59:59.000+09:00"
     }
   },
   "fx": {
@@ -182,7 +182,7 @@
       "rate": 1346.9,
       "mid_rate": 1346.4,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-13T21:08:01+09:00"
+      "fetched_at": "2026-09-13T21:09:01+09:00"
     }
   }
 }
