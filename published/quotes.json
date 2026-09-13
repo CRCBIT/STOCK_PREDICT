@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-13T22:14:01+09:00",
+  "fetched_at": "2026-09-13T22:15:02+09:00",
   "quotes": {
     "000660": {
       "price": 1832000.0,
@@ -51,6 +51,11 @@
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:59.000+09:00"
     },
+    "AMAT": {
+      "price": 456.9474,
+      "currency": "USD",
+      "timestamp": "2026-09-12T08:56:58.000+09:00"
+    },
     "AMD": {
       "price": 515.7785,
       "currency": "USD",
@@ -60,11 +65,6 @@
       "price": 1701.0,
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:59.000+09:00"
-    },
-    "CAT": {
-      "price": 818.57,
-      "currency": "USD",
-      "timestamp": "2026-09-12T08:56:58.000+09:00"
     },
     "GOOGL": {
       "price": 338.3895,
@@ -146,6 +146,11 @@
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:54.000+09:00"
     },
+    "STX": {
+      "price": 830.479,
+      "currency": "USD",
+      "timestamp": "2026-09-12T08:59:23.000+09:00"
+    },
     "TSLA": {
       "price": 365.25,
       "currency": "USD",
@@ -161,18 +166,13 @@
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:27.000+09:00"
     },
-    "STX": {
-      "price": 830.479,
-      "currency": "USD",
-      "timestamp": "2026-09-12T08:59:23.000+09:00"
-    },
     "WDC": {
       "price": 447.1001,
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:54.000+09:00"
     },
-    "AMAT": {
-      "price": 456.9474,
+    "CAT": {
+      "price": 818.57,
       "currency": "USD",
       "timestamp": "2026-09-12T08:56:58.000+09:00"
     }
@@ -182,7 +182,7 @@
       "rate": 1346.9,
       "mid_rate": 1346.4,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-13T22:14:01+09:00"
+      "fetched_at": "2026-09-13T22:15:02+09:00"
     }
   }
 }
