@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-13T04:47:04+09:00",
+  "generated_at": "2026-09-13T23:03:53+09:00",
   "n_versions": 10,
   "latest_version": "0.9.14",
   "latest_date": "2026-09-12",
@@ -24,6 +24,9 @@
           "공포탐욕지수 미채택: VIX·모멘텀 등 이미 쓰는 재료의 합성이라 중복이고 비공식 소스.",
           "판정 시점: 앵커 20일(9월 말) 뒤 LIVE h5 80% 적중이 98% → 80%대면 성공, 90%대면 γ 0.5→0.7, 그래도 안 되면 개별 IV.",
           "회귀 테스트 `test_sigma_regime.py` 20항목."
+        ],
+        "Fixed": [
+          "σ 국면 계수 블록이 result 생성 전에 notes 에 접근해 UnboundLocalError → 09-12 학습 204조합 전부 계수 미적용(conformal 가중·실적·RAM 은 정상). 비고를 result 생성 뒤에 붙이도록 수정, 09-13 재학습"
         ]
       },
       "tags": [
@@ -275,7 +278,7 @@
       "pls": true,
       "quantile_gbm": true,
       "lgbm_linear": true,
-      "ng_boost": true,
+      "ng_boost": false,
       "garch": true
     },
     "config": {
