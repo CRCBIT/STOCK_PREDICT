@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-14T07:15:02+09:00",
+  "fetched_at": "2026-09-14T07:16:01+09:00",
   "quotes": {
     "000660": {
       "price": 1832000.0,
@@ -106,11 +106,6 @@
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:59.000+09:00"
     },
-    "NVO": {
-      "price": 43.1007,
-      "currency": "USD",
-      "timestamp": "2026-09-12T08:59:43.000+09:00"
-    },
     "OKLO": {
       "price": 36.3,
       "currency": "USD",
@@ -156,6 +151,11 @@
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:59.000+09:00"
     },
+    "TSM": {
+      "price": 432.804,
+      "currency": "USD",
+      "timestamp": "2026-09-12T08:59:52.000+09:00"
+    },
     "VST": {
       "price": 148.9187,
       "currency": "USD",
@@ -166,15 +166,15 @@
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:54.000+09:00"
     },
+    "NVO": {
+      "price": 43.1007,
+      "currency": "USD",
+      "timestamp": "2026-09-12T08:59:43.000+09:00"
+    },
     "MRK": {
       "price": 144.3,
       "currency": "USD",
       "timestamp": "2026-09-12T08:57:37.000+09:00"
-    },
-    "TSM": {
-      "price": 432.804,
-      "currency": "USD",
-      "timestamp": "2026-09-12T08:59:52.000+09:00"
     }
   },
   "fx": {
@@ -182,7 +182,7 @@
       "rate": 1342.7,
       "mid_rate": 1342.2,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-14T07:15:02+09:00"
+      "fetched_at": "2026-09-14T07:16:01+09:00"
     }
   }
 }
