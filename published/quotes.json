@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-14T04:31:02+09:00",
+  "fetched_at": "2026-09-14T04:32:01+09:00",
   "quotes": {
     "000660": {
       "price": 1832000.0,
@@ -56,11 +56,6 @@
       "currency": "USD",
       "timestamp": "2026-09-12T08:56:58.000+09:00"
     },
-    "AMD": {
-      "price": 515.7785,
-      "currency": "USD",
-      "timestamp": "2026-09-12T08:59:58.000+09:00"
-    },
     "ASML": {
       "price": 1701.0,
       "currency": "USD",
@@ -106,21 +101,6 @@
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:59.000+09:00"
     },
-    "NVO": {
-      "price": 43.1007,
-      "currency": "USD",
-      "timestamp": "2026-09-12T08:59:43.000+09:00"
-    },
-    "OKLO": {
-      "price": 36.3,
-      "currency": "USD",
-      "timestamp": "2026-09-12T08:59:59.000+09:00"
-    },
-    "PFE": {
-      "price": 27.74,
-      "currency": "USD",
-      "timestamp": "2026-09-12T08:59:30.000+09:00"
-    },
     "PLTR": {
       "price": 167.3923,
       "currency": "USD",
@@ -130,11 +110,6 @@
       "price": 13.4,
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:46.000+09:00"
-    },
-    "SMR": {
-      "price": 8.68,
-      "currency": "USD",
-      "timestamp": "2026-09-12T08:59:49.000+09:00"
     },
     "SNDK": {
       "price": 1631.0821,
@@ -156,6 +131,11 @@
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:59.000+09:00"
     },
+    "TSM": {
+      "price": 432.804,
+      "currency": "USD",
+      "timestamp": "2026-09-12T08:59:52.000+09:00"
+    },
     "VST": {
       "price": 148.9187,
       "currency": "USD",
@@ -166,10 +146,30 @@
       "currency": "USD",
       "timestamp": "2026-09-12T08:59:54.000+09:00"
     },
-    "TSM": {
-      "price": 432.804,
+    "SMR": {
+      "price": 8.68,
       "currency": "USD",
-      "timestamp": "2026-09-12T08:59:52.000+09:00"
+      "timestamp": "2026-09-12T08:59:49.000+09:00"
+    },
+    "NVO": {
+      "price": 43.1007,
+      "currency": "USD",
+      "timestamp": "2026-09-12T08:59:43.000+09:00"
+    },
+    "OKLO": {
+      "price": 36.3,
+      "currency": "USD",
+      "timestamp": "2026-09-12T08:59:59.000+09:00"
+    },
+    "AMD": {
+      "price": 515.7785,
+      "currency": "USD",
+      "timestamp": "2026-09-12T08:59:58.000+09:00"
+    },
+    "PFE": {
+      "price": 27.74,
+      "currency": "USD",
+      "timestamp": "2026-09-12T08:59:30.000+09:00"
     },
     "KLAC": {
       "price": 180.9,
@@ -182,7 +182,7 @@
       "rate": 1346.9,
       "mid_rate": 1346.4,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-14T04:31:02+09:00"
+      "fetched_at": "2026-09-14T04:32:01+09:00"
     }
   }
 }
