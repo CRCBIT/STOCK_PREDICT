@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-09-17T06:17:08+09:00",
-  "n_total": 3111,
-  "n_pending": 1924,
-  "n_resolved": 1187,
+  "generated_at": "2026-09-18T06:17:10+09:00",
+  "n_total": 3321,
+  "n_pending": 2077,
+  "n_resolved": 1244,
   "groups": [
     {
       "source": "BACKFILL",
@@ -1719,6 +1719,546 @@
       "symbol": "000660",
       "name": "SK하이닉스",
       "horizon": 5,
+      "n_resolved": 15,
+      "n_anchors": 15,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.7961107336956521,
+        1.0
+      ],
+      "coverage_50": 0.8,
+      "direction_hit": 0.4,
+      "direction_hit_ci": [
+        0.19824228082594664,
+        0.642535572434923
+      ],
+      "direction_base_rate": 0.6,
+      "direction_edge": -0.19999999999999996,
+      "realized_up_rate": 0.4,
+      "predicted_up_rate": 1.0,
+      "up_pred_n": 15,
+      "up_pred_hit": 0.4,
+      "down_pred_n": 0,
+      "down_pred_hit": null,
+      "mae_p50": 0.07414801067907069,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-09-17"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "000660",
+      "name": "SK하이닉스",
+      "horizon": 10,
+      "n_resolved": 10,
+      "n_anchors": 10,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.7224598312333834,
+        1.0
+      ],
+      "coverage_50": 0.9,
+      "direction_hit": 0.9,
+      "direction_hit_ci": [
+        0.5958436145024278,
+        0.9821242504842788
+      ],
+      "direction_base_rate": 0.9,
+      "direction_edge": 0.0,
+      "realized_up_rate": 0.9,
+      "predicted_up_rate": 1.0,
+      "up_pred_n": 10,
+      "up_pred_hit": 0.9,
+      "down_pred_n": 0,
+      "down_pred_hit": null,
+      "mae_p50": 0.05822638133842224,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-09-17"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "005930",
+      "name": "삼성전자",
+      "horizon": 5,
+      "n_resolved": 15,
+      "n_anchors": 15,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.7961107336956521,
+        1.0
+      ],
+      "coverage_50": 0.8666666666666667,
+      "direction_hit": 0.5333333333333333,
+      "direction_hit_ci": [
+        0.3011663015105079,
+        0.7519077474025355
+      ],
+      "direction_base_rate": 0.5333333333333333,
+      "direction_edge": 0.0,
+      "realized_up_rate": 0.5333333333333333,
+      "predicted_up_rate": 1.0,
+      "up_pred_n": 15,
+      "up_pred_hit": 0.5333333333333333,
+      "down_pred_n": 0,
+      "down_pred_hit": null,
+      "mae_p50": 0.0506516812820153,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-09-17"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "005930",
+      "name": "삼성전자",
+      "horizon": 10,
+      "n_resolved": 10,
+      "n_anchors": 10,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.7224598312333834,
+        1.0
+      ],
+      "coverage_50": 1.0,
+      "direction_hit": 0.7,
+      "direction_hit_ci": [
+        0.39677321997956516,
+        0.892210712513788
+      ],
+      "direction_base_rate": 0.7,
+      "direction_edge": 0.0,
+      "realized_up_rate": 0.7,
+      "predicted_up_rate": 1.0,
+      "up_pred_n": 10,
+      "up_pred_hit": 0.7,
+      "down_pred_n": 0,
+      "down_pred_hit": null,
+      "mae_p50": 0.039864700377396665,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-09-17"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "006400",
+      "name": "삼성SDI",
+      "horizon": 5,
+      "n_resolved": 5,
+      "n_anchors": 5,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.5655085052479191,
+        1.0
+      ],
+      "coverage_50": 1.0,
+      "direction_hit": 0.2,
+      "direction_hit_ci": [
+        0.03622316096978745,
+        0.6244717358814613
+      ],
+      "direction_base_rate": 0.8,
+      "direction_edge": -0.6000000000000001,
+      "realized_up_rate": 0.2,
+      "predicted_up_rate": 1.0,
+      "up_pred_n": 5,
+      "up_pred_hit": 0.2,
+      "down_pred_n": 0,
+      "down_pred_hit": null,
+      "mae_p50": 0.0351264616920154,
+      "first_anchor": "2026-09-04",
+      "last_target": "2026-09-17"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "034020",
+      "name": "두산에너빌리티",
+      "horizon": 5,
+      "n_resolved": 15,
+      "n_anchors": 15,
+      "coverage_80": 0.8666666666666667,
+      "coverage_80_ci": [
+        0.6211750079348376,
+        0.9626395301086407
+      ],
+      "coverage_50": 0.4666666666666667,
+      "direction_hit": 0.46153846153846156,
+      "direction_hit_ci": [
+        0.2320575430148814,
+        0.7085656756816796
+      ],
+      "direction_base_rate": 0.5333333333333333,
+      "direction_edge": -0.06666666666666665,
+      "realized_up_rate": 0.5333333333333333,
+      "predicted_up_rate": 0.9333333333333333,
+      "up_pred_n": 14,
+      "up_pred_hit": 0.5,
+      "down_pred_n": 1,
+      "down_pred_hit": 0.0,
+      "mae_p50": 0.10174648479723794,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-09-17"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "034020",
+      "name": "두산에너빌리티",
+      "horizon": 10,
+      "n_resolved": 10,
+      "n_anchors": 10,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.7224598312333834,
+        1.0
+      ],
+      "coverage_50": 0.8,
+      "direction_hit": 0.8888888888888888,
+      "direction_hit_ci": [
+        0.5649937852319399,
+        0.9801096286728695
+      ],
+      "direction_base_rate": 1.0,
+      "direction_edge": -0.09999999999999998,
+      "realized_up_rate": 1.0,
+      "predicted_up_rate": 0.9,
+      "up_pred_n": 9,
+      "up_pred_hit": 1.0,
+      "down_pred_n": 1,
+      "down_pred_hit": 0.0,
+      "mae_p50": 0.07471086097308678,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-09-17"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "042700",
+      "name": "한미반도체",
+      "horizon": 5,
+      "n_resolved": 15,
+      "n_anchors": 15,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.7961107336956521,
+        1.0
+      ],
+      "coverage_50": 0.8,
+      "direction_hit": 0.7857142857142857,
+      "direction_hit_ci": [
+        0.5241027622679172,
+        0.9242875166308363
+      ],
+      "direction_base_rate": 0.6,
+      "direction_edge": 0.20000000000000007,
+      "realized_up_rate": 0.6,
+      "predicted_up_rate": 0.5333333333333333,
+      "up_pred_n": 8,
+      "up_pred_hit": 0.875,
+      "down_pred_n": 7,
+      "down_pred_hit": 0.7142857142857143,
+      "mae_p50": 0.06948695213979988,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-09-17"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "042700",
+      "name": "한미반도체",
+      "horizon": 10,
+      "n_resolved": 10,
+      "n_anchors": 10,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.7224598312333834,
+        1.0
+      ],
+      "coverage_50": 1.0,
+      "direction_hit": 0.4444444444444444,
+      "direction_hit_ci": [
+        0.188775429471914,
+        0.7333526542559703
+      ],
+      "direction_base_rate": 1.0,
+      "direction_edge": -0.6,
+      "realized_up_rate": 1.0,
+      "predicted_up_rate": 0.4,
+      "up_pred_n": 4,
+      "up_pred_hit": 1.0,
+      "down_pred_n": 6,
+      "down_pred_hit": 0.0,
+      "mae_p50": 0.09475612335018176,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-09-17"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "096770",
+      "name": "SK이노베이션",
+      "horizon": 5,
+      "n_resolved": 5,
+      "n_anchors": 5,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.5655085052479191,
+        1.0
+      ],
+      "coverage_50": 0.6,
+      "direction_hit": 0.6,
+      "direction_hit_ci": [
+        0.23071993220883708,
+        0.8823817688407467
+      ],
+      "direction_base_rate": 0.6,
+      "direction_edge": 0.0,
+      "realized_up_rate": 0.4,
+      "predicted_up_rate": 0.0,
+      "up_pred_n": 0,
+      "up_pred_hit": null,
+      "down_pred_n": 5,
+      "down_pred_hit": 0.6,
+      "mae_p50": 0.05558287379146246,
+      "first_anchor": "2026-09-04",
+      "last_target": "2026-09-17"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "247540",
+      "name": "에코프로비엠",
+      "horizon": 5,
+      "n_resolved": 5,
+      "n_anchors": 5,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.5655085052479191,
+        1.0
+      ],
+      "coverage_50": 0.6,
+      "direction_hit": 0.4,
+      "direction_hit_ci": [
+        0.1176182311592533,
+        0.769280067791163
+      ],
+      "direction_base_rate": 0.6,
+      "direction_edge": -0.19999999999999996,
+      "realized_up_rate": 0.4,
+      "predicted_up_rate": 0.2,
+      "up_pred_n": 1,
+      "up_pred_hit": 0.0,
+      "down_pred_n": 4,
+      "down_pred_hit": 0.5,
+      "mae_p50": 0.04812893459582116,
+      "first_anchor": "2026-09-04",
+      "last_target": "2026-09-17"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "373220",
+      "name": "LG에너지솔루션",
+      "horizon": 5,
+      "n_resolved": 5,
+      "n_anchors": 5,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.5655085052479191,
+        1.0
+      ],
+      "coverage_50": 1.0,
+      "direction_hit": 0.6,
+      "direction_hit_ci": [
+        0.23071993220883708,
+        0.8823817688407467
+      ],
+      "direction_base_rate": 0.6,
+      "direction_edge": 0.0,
+      "realized_up_rate": 0.6,
+      "predicted_up_rate": 0.2,
+      "up_pred_n": 1,
+      "up_pred_hit": 1.0,
+      "down_pred_n": 4,
+      "down_pred_hit": 0.5,
+      "mae_p50": 0.018099731315125146,
+      "first_anchor": "2026-09-04",
+      "last_target": "2026-09-17"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "403870",
+      "name": "HPSP",
+      "horizon": 5,
+      "n_resolved": 15,
+      "n_anchors": 15,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.7961107336956521,
+        1.0
+      ],
+      "coverage_50": 0.8666666666666667,
+      "direction_hit": 0.5714285714285714,
+      "direction_hit_ci": [
+        0.3259026690286936,
+        0.7861949006959948
+      ],
+      "direction_base_rate": 0.6,
+      "direction_edge": 0.0,
+      "realized_up_rate": 0.6,
+      "predicted_up_rate": 0.2,
+      "up_pred_n": 3,
+      "up_pred_hit": 1.0,
+      "down_pred_n": 12,
+      "down_pred_hit": 0.5,
+      "mae_p50": 0.06141126381473752,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-09-17"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "403870",
+      "name": "HPSP",
+      "horizon": 10,
+      "n_resolved": 10,
+      "n_anchors": 10,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.7224598312333834,
+        1.0
+      ],
+      "coverage_50": 1.0,
+      "direction_hit": 0.5,
+      "direction_hit_ci": [
+        0.23658959361548731,
+        0.7634104063845126
+      ],
+      "direction_base_rate": 1.0,
+      "direction_edge": -0.5,
+      "realized_up_rate": 1.0,
+      "predicted_up_rate": 0.5,
+      "up_pred_n": 5,
+      "up_pred_hit": 1.0,
+      "down_pred_n": 5,
+      "down_pred_hit": 0.0,
+      "mae_p50": 0.09179129101753997,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-09-17"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "AAPL",
+      "name": "애플",
+      "horizon": 5,
+      "n_resolved": 14,
+      "n_anchors": 14,
+      "coverage_80": 0.9285714285714286,
+      "coverage_80_ci": [
+        0.6853073044604219,
+        0.9872781138877085
+      ],
+      "coverage_50": 0.7142857142857143,
+      "direction_hit": 0.7692307692307693,
+      "direction_hit_ci": [
+        0.49743126004873084,
+        0.918206209075343
+      ],
+      "direction_base_rate": 0.7857142857142857,
+      "direction_edge": -0.0714285714285714,
+      "realized_up_rate": 0.7857142857142857,
+      "predicted_up_rate": 0.9285714285714286,
+      "up_pred_n": 13,
+      "up_pred_hit": 0.7692307692307693,
+      "down_pred_n": 1,
+      "down_pred_hit": 0.0,
+      "mae_p50": 0.02275521415438525,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-09-17"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "AAPL",
+      "name": "애플",
+      "horizon": 10,
+      "n_resolved": 9,
+      "n_anchors": 9,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.7008472464490407,
+        1.0
+      ],
+      "coverage_50": 0.8888888888888888,
+      "direction_hit": 1.0,
+      "direction_hit_ci": [
+        0.7008472464490407,
+        1.0
+      ],
+      "direction_base_rate": 1.0,
+      "direction_edge": 0.0,
+      "realized_up_rate": 1.0,
+      "predicted_up_rate": 1.0,
+      "up_pred_n": 9,
+      "up_pred_hit": 1.0,
+      "down_pred_n": 0,
+      "down_pred_hit": null,
+      "mae_p50": 0.024666922753317874,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-09-17"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "AMAT",
+      "name": "어플라이드 머티리얼즈",
+      "horizon": 5,
+      "n_resolved": 14,
+      "n_anchors": 14,
+      "coverage_80": 0.7857142857142857,
+      "coverage_80_ci": [
+        0.5241027622679172,
+        0.9242875166308363
+      ],
+      "coverage_50": 0.5,
+      "direction_hit": 0.16666666666666666,
+      "direction_hit_ci": [
+        0.04696414761482223,
+        0.44803635738467273
+      ],
+      "direction_base_rate": 0.7142857142857143,
+      "direction_edge": -0.5,
+      "realized_up_rate": 0.2857142857142857,
+      "predicted_up_rate": 0.7857142857142857,
+      "up_pred_n": 11,
+      "up_pred_hit": 0.18181818181818182,
+      "down_pred_n": 3,
+      "down_pred_hit": 0.3333333333333333,
+      "mae_p50": 0.06497473841586694,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-09-17"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "AMAT",
+      "name": "어플라이드 머티리얼즈",
+      "horizon": 10,
+      "n_resolved": 9,
+      "n_anchors": 9,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.7008472464490407,
+        1.0
+      ],
+      "coverage_50": 0.3333333333333333,
+      "direction_hit": 0.0,
+      "direction_hit_ci": [
+        0.0,
+        0.3244156195108769
+      ],
+      "direction_base_rate": 1.0,
+      "direction_edge": -1.0,
+      "realized_up_rate": 0.0,
+      "predicted_up_rate": 1.0,
+      "up_pred_n": 9,
+      "up_pred_hit": 0.0,
+      "down_pred_n": 0,
+      "down_pred_hit": null,
+      "mae_p50": 0.08928425449663838,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-09-17"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "AMD",
+      "name": "AMD",
+      "horizon": 5,
       "n_resolved": 14,
       "n_anchors": 14,
       "coverage_80": 1.0,
@@ -1726,7 +2266,187 @@
         0.7846829880728186,
         1.0
       ],
-      "coverage_50": 0.7857142857142857,
+      "coverage_50": 0.6428571428571429,
+      "direction_hit": 0.6428571428571429,
+      "direction_hit_ci": [
+        0.3876400468214042,
+        0.8365550926279727
+      ],
+      "direction_base_rate": 0.7142857142857143,
+      "direction_edge": -0.0714285714285714,
+      "realized_up_rate": 0.7142857142857143,
+      "predicted_up_rate": 0.9285714285714286,
+      "up_pred_n": 13,
+      "up_pred_hit": 0.6923076923076923,
+      "down_pred_n": 1,
+      "down_pred_hit": 0.0,
+      "mae_p50": 0.04854117272906883,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-09-17"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "AMD",
+      "name": "AMD",
+      "horizon": 10,
+      "n_resolved": 9,
+      "n_anchors": 9,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.7008472464490407,
+        1.0
+      ],
+      "coverage_50": 0.8888888888888888,
+      "direction_hit": 0.2222222222222222,
+      "direction_hit_ci": [
+        0.06322376231222723,
+        0.5474166563271946
+      ],
+      "direction_base_rate": 1.0,
+      "direction_edge": -0.7777777777777778,
+      "realized_up_rate": 1.0,
+      "predicted_up_rate": 0.2222222222222222,
+      "up_pred_n": 2,
+      "up_pred_hit": 1.0,
+      "down_pred_n": 7,
+      "down_pred_hit": 0.0,
+      "mae_p50": 0.09093499730828922,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-09-17"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "ASML",
+      "name": "ASML 홀딩(ADR)",
+      "horizon": 5,
+      "n_resolved": 14,
+      "n_anchors": 14,
+      "coverage_80": 0.7142857142857143,
+      "coverage_80_ci": [
+        0.4535045882751561,
+        0.882788120898909
+      ],
+      "coverage_50": 0.5714285714285714,
+      "direction_hit": 0.3076923076923077,
+      "direction_hit_ci": [
+        0.12680497161618087,
+        0.5763111218666236
+      ],
+      "direction_base_rate": 0.6428571428571428,
+      "direction_edge": -0.3571428571428571,
+      "realized_up_rate": 0.35714285714285715,
+      "predicted_up_rate": 0.5,
+      "up_pred_n": 7,
+      "up_pred_hit": 0.14285714285714285,
+      "down_pred_n": 7,
+      "down_pred_hit": 0.42857142857142855,
+      "mae_p50": 0.04312912753913095,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-09-17"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "ASML",
+      "name": "ASML 홀딩(ADR)",
+      "horizon": 10,
+      "n_resolved": 9,
+      "n_anchors": 9,
+      "coverage_80": 0.8888888888888888,
+      "coverage_80_ci": [
+        0.5649937852319399,
+        0.9801096286728695
+      ],
+      "coverage_50": 0.5555555555555556,
+      "direction_hit": 0.1111111111111111,
+      "direction_hit_ci": [
+        0.019890371327130535,
+        0.4350062147680601
+      ],
+      "direction_base_rate": 0.8888888888888888,
+      "direction_edge": -0.7777777777777777,
+      "realized_up_rate": 0.1111111111111111,
+      "predicted_up_rate": 1.0,
+      "up_pred_n": 9,
+      "up_pred_hit": 0.1111111111111111,
+      "down_pred_n": 0,
+      "down_pred_hit": null,
+      "mae_p50": 0.048799051577858715,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-09-17"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "CAT",
+      "name": "캐터필러",
+      "horizon": 5,
+      "n_resolved": 14,
+      "n_anchors": 14,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.7846829880728186,
+        1.0
+      ],
+      "coverage_50": 0.7142857142857143,
+      "direction_hit": 0.5714285714285714,
+      "direction_hit_ci": [
+        0.3259026690286936,
+        0.7861949006959948
+      ],
+      "direction_base_rate": 0.6428571428571428,
+      "direction_edge": -0.0714285714285714,
+      "realized_up_rate": 0.35714285714285715,
+      "predicted_up_rate": 0.6428571428571429,
+      "up_pred_n": 9,
+      "up_pred_hit": 0.4444444444444444,
+      "down_pred_n": 5,
+      "down_pred_hit": 0.8,
+      "mae_p50": 0.026602040363077818,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-09-17"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "CAT",
+      "name": "캐터필러",
+      "horizon": 10,
+      "n_resolved": 9,
+      "n_anchors": 9,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.7008472464490407,
+        1.0
+      ],
+      "coverage_50": 1.0,
+      "direction_hit": 0.2222222222222222,
+      "direction_hit_ci": [
+        0.06322376231222723,
+        0.5474166563271946
+      ],
+      "direction_base_rate": 0.7777777777777778,
+      "direction_edge": -0.5555555555555556,
+      "realized_up_rate": 0.2222222222222222,
+      "predicted_up_rate": 1.0,
+      "up_pred_n": 9,
+      "up_pred_hit": 0.2222222222222222,
+      "down_pred_n": 0,
+      "down_pred_hit": null,
+      "mae_p50": 0.027274381340401745,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-09-17"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "GOOGL",
+      "name": "알파벳 A",
+      "horizon": 5,
+      "n_resolved": 14,
+      "n_anchors": 14,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.7846829880728186,
+        1.0
+      ],
+      "coverage_50": 0.9285714285714286,
       "direction_hit": 0.42857142857142855,
       "direction_hit_ci": [
         0.21380509930400526,
@@ -1740,14 +2460,14 @@
       "up_pred_hit": 0.42857142857142855,
       "down_pred_n": 0,
       "down_pred_hit": null,
-      "mae_p50": 0.0724914789100117,
+      "mae_p50": 0.0229273421130816,
       "first_anchor": "2026-08-21",
-      "last_target": "2026-09-16"
+      "last_target": "2026-09-17"
     },
     {
       "source": "LIVE",
-      "symbol": "000660",
-      "name": "SK하이닉스",
+      "symbol": "GOOGL",
+      "name": "알파벳 A",
       "horizon": 10,
       "n_resolved": 9,
       "n_anchors": 9,
@@ -1757,27 +2477,237 @@
         1.0
       ],
       "coverage_50": 0.8888888888888888,
-      "direction_hit": 0.8888888888888888,
+      "direction_hit": 0.3333333333333333,
       "direction_hit_ci": [
-        0.5649937852319399,
-        0.9801096286728695
+        0.12058159868274293,
+        0.6458026525009102
       ],
-      "direction_base_rate": 0.8888888888888888,
-      "direction_edge": 0.0,
-      "realized_up_rate": 0.8888888888888888,
+      "direction_base_rate": 0.6666666666666667,
+      "direction_edge": -0.3333333333333334,
+      "realized_up_rate": 0.3333333333333333,
       "predicted_up_rate": 1.0,
       "up_pred_n": 9,
-      "up_pred_hit": 0.8888888888888888,
+      "up_pred_hit": 0.3333333333333333,
       "down_pred_n": 0,
       "down_pred_hit": null,
-      "mae_p50": 0.061595320917605716,
+      "mae_p50": 0.04375936095983688,
       "first_anchor": "2026-08-21",
-      "last_target": "2026-09-16"
+      "last_target": "2026-09-17"
     },
     {
       "source": "LIVE",
-      "symbol": "005930",
-      "name": "삼성전자",
+      "symbol": "KLAC",
+      "name": "KLA",
+      "horizon": 5,
+      "n_resolved": 14,
+      "n_anchors": 14,
+      "coverage_80": 0.8571428571428571,
+      "coverage_80_ci": [
+        0.600580922361363,
+        0.9599069262620787
+      ],
+      "coverage_50": 0.5,
+      "direction_hit": 0.38461538461538464,
+      "direction_hit_ci": [
+        0.17709446581236818,
+        0.6447751902773146
+      ],
+      "direction_base_rate": 0.6428571428571428,
+      "direction_edge": -0.21428571428571425,
+      "realized_up_rate": 0.35714285714285715,
+      "predicted_up_rate": 0.9285714285714286,
+      "up_pred_n": 13,
+      "up_pred_hit": 0.38461538461538464,
+      "down_pred_n": 1,
+      "down_pred_hit": 1.0,
+      "mae_p50": 0.060208017189665466,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-09-17"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "KLAC",
+      "name": "KLA",
+      "horizon": 10,
+      "n_resolved": 9,
+      "n_anchors": 9,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.7008472464490407,
+        1.0
+      ],
+      "coverage_50": 1.0,
+      "direction_hit": 0.2222222222222222,
+      "direction_hit_ci": [
+        0.06322376231222723,
+        0.5474166563271946
+      ],
+      "direction_base_rate": 0.7777777777777778,
+      "direction_edge": -0.5555555555555556,
+      "realized_up_rate": 0.2222222222222222,
+      "predicted_up_rate": 1.0,
+      "up_pred_n": 9,
+      "up_pred_hit": 0.2222222222222222,
+      "down_pred_n": 0,
+      "down_pred_hit": null,
+      "mae_p50": 0.04585935357684298,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-09-17"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "LLY",
+      "name": "일라이 릴리",
+      "horizon": 5,
+      "n_resolved": 4,
+      "n_anchors": 4,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.5100999795960008,
+        1.0
+      ],
+      "coverage_50": 1.0,
+      "direction_hit": 0.75,
+      "direction_hit_ci": [
+        0.3006360524426366,
+        0.9544139373553637
+      ],
+      "direction_base_rate": 0.75,
+      "direction_edge": 0.0,
+      "realized_up_rate": 0.75,
+      "predicted_up_rate": 1.0,
+      "up_pred_n": 4,
+      "up_pred_hit": 0.75,
+      "down_pred_n": 0,
+      "down_pred_hit": null,
+      "mae_p50": 0.010213244541749,
+      "first_anchor": "2026-09-04",
+      "last_target": "2026-09-17"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "MRK",
+      "name": "머크",
+      "horizon": 5,
+      "n_resolved": 4,
+      "n_anchors": 4,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.5100999795960008,
+        1.0
+      ],
+      "coverage_50": 0.5,
+      "direction_hit": 0.3333333333333333,
+      "direction_hit_ci": [
+        0.0614903152761605,
+        0.7923450448735121
+      ],
+      "direction_base_rate": 0.75,
+      "direction_edge": -0.5,
+      "realized_up_rate": 0.25,
+      "predicted_up_rate": 1.0,
+      "up_pred_n": 4,
+      "up_pred_hit": 0.25,
+      "down_pred_n": 0,
+      "down_pred_hit": null,
+      "mae_p50": 0.027083574947043228,
+      "first_anchor": "2026-09-04",
+      "last_target": "2026-09-17"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "MRNA",
+      "name": "모더나",
+      "horizon": 5,
+      "n_resolved": 4,
+      "n_anchors": 4,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.5100999795960008,
+        1.0
+      ],
+      "coverage_50": 0.75,
+      "direction_hit": 0.0,
+      "direction_hit_ci": [
+        0.0,
+        0.48990002040399916
+      ],
+      "direction_base_rate": 1.0,
+      "direction_edge": -1.0,
+      "realized_up_rate": 1.0,
+      "predicted_up_rate": 0.0,
+      "up_pred_n": 0,
+      "up_pred_hit": null,
+      "down_pred_n": 4,
+      "down_pred_hit": 0.0,
+      "mae_p50": 0.2047884537288262,
+      "first_anchor": "2026-09-04",
+      "last_target": "2026-09-17"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "MSFT",
+      "name": "마이크로소프트",
+      "horizon": 5,
+      "n_resolved": 8,
+      "n_anchors": 8,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.6755843804891231,
+        1.0
+      ],
+      "coverage_50": 1.0,
+      "direction_hit": 0.375,
+      "direction_hit_ci": [
+        0.13684175946152105,
+        0.6942621454161981
+      ],
+      "direction_base_rate": 0.625,
+      "direction_edge": -0.25,
+      "realized_up_rate": 0.375,
+      "predicted_up_rate": 1.0,
+      "up_pred_n": 8,
+      "up_pred_hit": 0.375,
+      "down_pred_n": 0,
+      "down_pred_hit": null,
+      "mae_p50": 0.0171386876822623,
+      "first_anchor": "2026-08-31",
+      "last_target": "2026-09-17"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "MSFT",
+      "name": "마이크로소프트",
+      "horizon": 10,
+      "n_resolved": 3,
+      "n_anchors": 3,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.43849391955098227,
+        1.0
+      ],
+      "coverage_50": 1.0,
+      "direction_hit": 1.0,
+      "direction_hit_ci": [
+        0.43849391955098227,
+        1.0
+      ],
+      "direction_base_rate": 1.0,
+      "direction_edge": 0.0,
+      "realized_up_rate": 0.0,
+      "predicted_up_rate": 0.0,
+      "up_pred_n": 0,
+      "up_pred_hit": null,
+      "down_pred_n": 3,
+      "down_pred_hit": 1.0,
+      "mae_p50": 0.007001596996737733,
+      "first_anchor": "2026-08-31",
+      "last_target": "2026-09-17"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "MU",
+      "name": "마이크론 테크놀로지",
       "horizon": 5,
       "n_resolved": 14,
       "n_anchors": 14,
@@ -1786,28 +2716,28 @@
         0.7846829880728186,
         1.0
       ],
-      "coverage_50": 0.8571428571428571,
-      "direction_hit": 0.5714285714285714,
+      "coverage_50": 0.7142857142857143,
+      "direction_hit": 0.5,
       "direction_hit_ci": [
-        0.3259026690286936,
-        0.7861949006959948
+        0.2679886791947528,
+        0.7320113208052472
       ],
-      "direction_base_rate": 0.5714285714285714,
+      "direction_base_rate": 0.5,
       "direction_edge": 0.0,
-      "realized_up_rate": 0.5714285714285714,
+      "realized_up_rate": 0.5,
       "predicted_up_rate": 1.0,
       "up_pred_n": 14,
-      "up_pred_hit": 0.5714285714285714,
+      "up_pred_hit": 0.5,
       "down_pred_n": 0,
       "down_pred_hit": null,
-      "mae_p50": 0.04988606426410803,
+      "mae_p50": 0.058318385451803754,
       "first_anchor": "2026-08-21",
-      "last_target": "2026-09-16"
+      "last_target": "2026-09-17"
     },
     {
       "source": "LIVE",
-      "symbol": "005930",
-      "name": "삼성전자",
+      "symbol": "MU",
+      "name": "마이크론 테크놀로지",
       "horizon": 10,
       "n_resolved": 9,
       "n_anchors": 9,
@@ -1830,14 +2760,74 @@
       "up_pred_hit": 0.6666666666666666,
       "down_pred_n": 0,
       "down_pred_hit": null,
-      "mae_p50": 0.04425147006177582,
+      "mae_p50": 0.04962884803530451,
       "first_anchor": "2026-08-21",
-      "last_target": "2026-09-16"
+      "last_target": "2026-09-17"
     },
     {
       "source": "LIVE",
-      "symbol": "006400",
-      "name": "삼성SDI",
+      "symbol": "NVDA",
+      "name": "엔비디아",
+      "horizon": 5,
+      "n_resolved": 14,
+      "n_anchors": 14,
+      "coverage_80": 0.9285714285714286,
+      "coverage_80_ci": [
+        0.6853073044604219,
+        0.9872781138877085
+      ],
+      "coverage_50": 0.42857142857142855,
+      "direction_hit": 0.5714285714285714,
+      "direction_hit_ci": [
+        0.3259026690286936,
+        0.7861949006959948
+      ],
+      "direction_base_rate": 0.5714285714285714,
+      "direction_edge": 0.0,
+      "realized_up_rate": 0.5714285714285714,
+      "predicted_up_rate": 1.0,
+      "up_pred_n": 14,
+      "up_pred_hit": 0.5714285714285714,
+      "down_pred_n": 0,
+      "down_pred_hit": null,
+      "mae_p50": 0.040526126464299664,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-09-17"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "NVDA",
+      "name": "엔비디아",
+      "horizon": 10,
+      "n_resolved": 9,
+      "n_anchors": 9,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.7008472464490407,
+        1.0
+      ],
+      "coverage_50": 0.7777777777777778,
+      "direction_hit": 0.6666666666666666,
+      "direction_hit_ci": [
+        0.35419734749908977,
+        0.879418401317257
+      ],
+      "direction_base_rate": 0.5555555555555556,
+      "direction_edge": 0.11111111111111105,
+      "realized_up_rate": 0.4444444444444444,
+      "predicted_up_rate": 0.7777777777777778,
+      "up_pred_n": 7,
+      "up_pred_hit": 0.5714285714285714,
+      "down_pred_n": 2,
+      "down_pred_hit": 1.0,
+      "mae_p50": 0.03386928681040865,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-09-17"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "NVO",
+      "name": "노보노디스크(ADR)",
       "horizon": 5,
       "n_resolved": 4,
       "n_anchors": 4,
@@ -1846,7 +2836,97 @@
         0.5100999795960008,
         1.0
       ],
-      "coverage_50": 1.0,
+      "coverage_50": 0.25,
+      "direction_hit": 0.25,
+      "direction_hit_ci": [
+        0.045586062644636216,
+        0.6993639475573634
+      ],
+      "direction_base_rate": 1.0,
+      "direction_edge": -0.75,
+      "realized_up_rate": 0.0,
+      "predicted_up_rate": 0.75,
+      "up_pred_n": 3,
+      "up_pred_hit": 0.0,
+      "down_pred_n": 1,
+      "down_pred_hit": 1.0,
+      "mae_p50": 0.05674955157148443,
+      "first_anchor": "2026-09-04",
+      "last_target": "2026-09-17"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "OKLO",
+      "name": "오클로",
+      "horizon": 5,
+      "n_resolved": 14,
+      "n_anchors": 14,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.7846829880728186,
+        1.0
+      ],
+      "coverage_50": 0.7142857142857143,
+      "direction_hit": 0.36363636363636365,
+      "direction_hit_ci": [
+        0.15166223614131383,
+        0.6462032231083628
+      ],
+      "direction_base_rate": 0.5714285714285714,
+      "direction_edge": -0.21428571428571425,
+      "realized_up_rate": 0.42857142857142855,
+      "predicted_up_rate": 0.21428571428571427,
+      "up_pred_n": 3,
+      "up_pred_hit": 0.0,
+      "down_pred_n": 11,
+      "down_pred_hit": 0.45454545454545453,
+      "mae_p50": 0.06786967925643267,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-09-17"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "OKLO",
+      "name": "오클로",
+      "horizon": 10,
+      "n_resolved": 9,
+      "n_anchors": 9,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.7008472464490407,
+        1.0
+      ],
+      "coverage_50": 0.8888888888888888,
+      "direction_hit": 0.625,
+      "direction_hit_ci": [
+        0.30573785458380187,
+        0.863158240538479
+      ],
+      "direction_base_rate": 0.6666666666666667,
+      "direction_edge": -0.11111111111111116,
+      "realized_up_rate": 0.3333333333333333,
+      "predicted_up_rate": 0.1111111111111111,
+      "up_pred_n": 1,
+      "up_pred_hit": 0.0,
+      "down_pred_n": 8,
+      "down_pred_hit": 0.625,
+      "mae_p50": 0.06373790359242143,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-09-17"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "PFE",
+      "name": "화이자",
+      "horizon": 5,
+      "n_resolved": 4,
+      "n_anchors": 4,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.5100999795960008,
+        1.0
+      ],
+      "coverage_50": 0.75,
       "direction_hit": 0.25,
       "direction_hit_ci": [
         0.045586062644636216,
@@ -1860,44 +2940,134 @@
       "up_pred_hit": 0.25,
       "down_pred_n": 0,
       "down_pred_hit": null,
-      "mae_p50": 0.0341999724198271,
+      "mae_p50": 0.018180633288271124,
       "first_anchor": "2026-09-04",
-      "last_target": "2026-09-16"
+      "last_target": "2026-09-17"
     },
     {
       "source": "LIVE",
-      "symbol": "034020",
-      "name": "두산에너빌리티",
+      "symbol": "PLTR",
+      "name": "팔란티어",
       "horizon": 5,
       "n_resolved": 14,
       "n_anchors": 14,
-      "coverage_80": 0.8571428571428571,
+      "coverage_80": 1.0,
       "coverage_80_ci": [
-        0.600580922361363,
-        0.9599069262620787
+        0.7846829880728186,
+        1.0
       ],
-      "coverage_50": 0.42857142857142855,
-      "direction_hit": 0.5,
+      "coverage_50": 0.6428571428571429,
+      "direction_hit": 0.21428571428571427,
       "direction_hit_ci": [
-        0.2537781703934222,
-        0.7462218296065778
+        0.0757124833691637,
+        0.4758972377320828
       ],
-      "direction_base_rate": 0.5714285714285714,
-      "direction_edge": -0.0714285714285714,
-      "realized_up_rate": 0.5714285714285714,
-      "predicted_up_rate": 0.9285714285714286,
-      "up_pred_n": 13,
-      "up_pred_hit": 0.5384615384615384,
-      "down_pred_n": 1,
+      "direction_base_rate": 0.5,
+      "direction_edge": -0.2857142857142857,
+      "realized_up_rate": 0.5,
+      "predicted_up_rate": 0.7142857142857143,
+      "up_pred_n": 10,
+      "up_pred_hit": 0.3,
+      "down_pred_n": 4,
       "down_pred_hit": 0.0,
-      "mae_p50": 0.10608009728593458,
+      "mae_p50": 0.0457280003730274,
       "first_anchor": "2026-08-21",
-      "last_target": "2026-09-16"
+      "last_target": "2026-09-17"
     },
     {
       "source": "LIVE",
-      "symbol": "034020",
-      "name": "두산에너빌리티",
+      "symbol": "PLTR",
+      "name": "팔란티어",
+      "horizon": 10,
+      "n_resolved": 9,
+      "n_anchors": 9,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.7008472464490407,
+        1.0
+      ],
+      "coverage_50": 0.8888888888888888,
+      "direction_hit": 0.0,
+      "direction_hit_ci": [
+        0.0,
+        0.2991527535509594
+      ],
+      "direction_base_rate": 0.8888888888888888,
+      "direction_edge": -0.8888888888888888,
+      "realized_up_rate": 0.1111111111111111,
+      "predicted_up_rate": 0.8888888888888888,
+      "up_pred_n": 8,
+      "up_pred_hit": 0.0,
+      "down_pred_n": 1,
+      "down_pred_hit": 0.0,
+      "mae_p50": 0.07205117872697774,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-09-17"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "RAM",
+      "name": "RAM",
+      "horizon": 5,
+      "n_resolved": 4,
+      "n_anchors": 4,
+      "coverage_80": 0.25,
+      "coverage_80_ci": [
+        0.045586062644636216,
+        0.6993639475573634
+      ],
+      "coverage_50": 0.25,
+      "direction_hit": 0.0,
+      "direction_hit_ci": [
+        0.0,
+        0.48990002040399916
+      ],
+      "direction_base_rate": 1.0,
+      "direction_edge": -1.0,
+      "realized_up_rate": 0.0,
+      "predicted_up_rate": 1.0,
+      "up_pred_n": 4,
+      "up_pred_hit": 0.0,
+      "down_pred_n": 0,
+      "down_pred_hit": null,
+      "mae_p50": 0.21541223054511244,
+      "first_anchor": "2026-09-04",
+      "last_target": "2026-09-17"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "SMR",
+      "name": "뉴스케일파워",
+      "horizon": 5,
+      "n_resolved": 14,
+      "n_anchors": 14,
+      "coverage_80": 0.7857142857142857,
+      "coverage_80_ci": [
+        0.5241027622679172,
+        0.9242875166308363
+      ],
+      "coverage_50": 0.5714285714285714,
+      "direction_hit": 0.5714285714285714,
+      "direction_hit_ci": [
+        0.3259026690286936,
+        0.7861949006959948
+      ],
+      "direction_base_rate": 0.5,
+      "direction_edge": 0.0714285714285714,
+      "realized_up_rate": 0.5,
+      "predicted_up_rate": 0.5,
+      "up_pred_n": 7,
+      "up_pred_hit": 0.5714285714285714,
+      "down_pred_n": 7,
+      "down_pred_hit": 0.5714285714285714,
+      "mae_p50": 0.09867824050662206,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-09-17"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "SMR",
+      "name": "뉴스케일파워",
       "horizon": 10,
       "n_resolved": 9,
       "n_anchors": 9,
@@ -1907,27 +3077,27 @@
         1.0
       ],
       "coverage_50": 0.7777777777777778,
-      "direction_hit": 0.8888888888888888,
+      "direction_hit": 0.5555555555555556,
       "direction_hit_ci": [
-        0.5649937852319399,
-        0.9801096286728695
+        0.2666473457440297,
+        0.811224570528086
       ],
-      "direction_base_rate": 1.0,
-      "direction_edge": -0.11111111111111116,
-      "realized_up_rate": 1.0,
-      "predicted_up_rate": 0.8888888888888888,
-      "up_pred_n": 8,
-      "up_pred_hit": 1.0,
-      "down_pred_n": 1,
-      "down_pred_hit": 0.0,
-      "mae_p50": 0.0721560394884727,
+      "direction_base_rate": 0.5555555555555556,
+      "direction_edge": 0.0,
+      "realized_up_rate": 0.4444444444444444,
+      "predicted_up_rate": 0.0,
+      "up_pred_n": 0,
+      "up_pred_hit": null,
+      "down_pred_n": 9,
+      "down_pred_hit": 0.5555555555555556,
+      "mae_p50": 0.08494443680364781,
       "first_anchor": "2026-08-21",
-      "last_target": "2026-09-16"
+      "last_target": "2026-09-17"
     },
     {
       "source": "LIVE",
-      "symbol": "042700",
-      "name": "한미반도체",
+      "symbol": "SNDK",
+      "name": "샌디스크",
       "horizon": 5,
       "n_resolved": 14,
       "n_anchors": 14,
@@ -1936,28 +3106,28 @@
         0.7846829880728186,
         1.0
       ],
-      "coverage_50": 0.7857142857142857,
-      "direction_hit": 0.7692307692307693,
+      "coverage_50": 0.7142857142857143,
+      "direction_hit": 0.5714285714285714,
       "direction_hit_ci": [
-        0.49743126004873084,
-        0.918206209075343
+        0.3259026690286936,
+        0.7861949006959948
       ],
-      "direction_base_rate": 0.6428571428571429,
-      "direction_edge": 0.1428571428571428,
-      "realized_up_rate": 0.6428571428571429,
-      "predicted_up_rate": 0.5714285714285714,
-      "up_pred_n": 8,
-      "up_pred_hit": 0.875,
-      "down_pred_n": 6,
-      "down_pred_hit": 0.6666666666666666,
-      "mae_p50": 0.07121608402111597,
+      "direction_base_rate": 0.5714285714285714,
+      "direction_edge": 0.0,
+      "realized_up_rate": 0.5714285714285714,
+      "predicted_up_rate": 0.7142857142857143,
+      "up_pred_n": 10,
+      "up_pred_hit": 0.6,
+      "down_pred_n": 4,
+      "down_pred_hit": 0.5,
+      "mae_p50": 0.06780313568931454,
       "first_anchor": "2026-08-21",
-      "last_target": "2026-09-16"
+      "last_target": "2026-09-17"
     },
     {
       "source": "LIVE",
-      "symbol": "042700",
-      "name": "한미반도체",
+      "symbol": "SNDK",
+      "name": "샌디스크",
       "horizon": 10,
       "n_resolved": 9,
       "n_anchors": 9,
@@ -1966,88 +3136,118 @@
         0.7008472464490407,
         1.0
       ],
-      "coverage_50": 1.0,
-      "direction_hit": 0.375,
+      "coverage_50": 0.8888888888888888,
+      "direction_hit": 0.7777777777777778,
       "direction_hit_ci": [
-        0.13684175946152105,
-        0.6942621454161981
+        0.4525833436728054,
+        0.9367762376877727
       ],
-      "direction_base_rate": 1.0,
-      "direction_edge": -0.6666666666666667,
-      "realized_up_rate": 1.0,
-      "predicted_up_rate": 0.3333333333333333,
-      "up_pred_n": 3,
-      "up_pred_hit": 1.0,
-      "down_pred_n": 6,
+      "direction_base_rate": 0.8888888888888888,
+      "direction_edge": -0.11111111111111105,
+      "realized_up_rate": 0.8888888888888888,
+      "predicted_up_rate": 0.8888888888888888,
+      "up_pred_n": 8,
+      "up_pred_hit": 0.875,
+      "down_pred_n": 1,
       "down_pred_hit": 0.0,
-      "mae_p50": 0.09686814188145969,
+      "mae_p50": 0.07836203365705852,
       "first_anchor": "2026-08-21",
-      "last_target": "2026-09-16"
+      "last_target": "2026-09-17"
     },
     {
       "source": "LIVE",
-      "symbol": "096770",
-      "name": "SK이노베이션",
+      "symbol": "SPCX",
+      "name": "스페이스X",
       "horizon": 5,
-      "n_resolved": 4,
-      "n_anchors": 4,
+      "n_resolved": 14,
+      "n_anchors": 14,
       "coverage_80": 1.0,
       "coverage_80_ci": [
-        0.5100999795960008,
+        0.7846829880728186,
         1.0
       ],
-      "coverage_50": 0.75,
-      "direction_hit": 0.5,
+      "coverage_50": 0.9285714285714286,
+      "direction_hit": 0.07142857142857142,
       "direction_hit_ci": [
-        0.15003570882017148,
-        0.8499642911798285
+        0.012721886112291636,
+        0.3146926955395781
       ],
-      "direction_base_rate": 0.5,
-      "direction_edge": 0.0,
-      "realized_up_rate": 0.5,
+      "direction_base_rate": 0.9285714285714286,
+      "direction_edge": -0.8571428571428572,
+      "realized_up_rate": 0.9285714285714286,
       "predicted_up_rate": 0.0,
       "up_pred_n": 0,
       "up_pred_hit": null,
-      "down_pred_n": 4,
-      "down_pred_hit": 0.5,
-      "mae_p50": 0.0526388671335328,
-      "first_anchor": "2026-09-04",
-      "last_target": "2026-09-16"
+      "down_pred_n": 14,
+      "down_pred_hit": 0.07142857142857142,
+      "mae_p50": 0.059205036949645906,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-09-17"
     },
     {
       "source": "LIVE",
-      "symbol": "247540",
-      "name": "에코프로비엠",
+      "symbol": "SPCX",
+      "name": "스페이스X",
+      "horizon": 10,
+      "n_resolved": 9,
+      "n_anchors": 9,
+      "coverage_80": 1.0,
+      "coverage_80_ci": [
+        0.7008472464490407,
+        1.0
+      ],
+      "coverage_50": 0.8888888888888888,
+      "direction_hit": 0.0,
+      "direction_hit_ci": [
+        0.0,
+        0.2991527535509594
+      ],
+      "direction_base_rate": 1.0,
+      "direction_edge": -1.0,
+      "realized_up_rate": 1.0,
+      "predicted_up_rate": 0.0,
+      "up_pred_n": 0,
+      "up_pred_hit": null,
+      "down_pred_n": 9,
+      "down_pred_hit": 0.0,
+      "mae_p50": 0.09053881291271115,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-09-17"
+    },
+    {
+      "source": "LIVE",
+      "symbol": "STX",
+      "name": "씨게이트",
       "horizon": 5,
       "n_resolved": 4,
       "n_anchors": 4,
-      "coverage_80": 1.0,
+      "coverage_80": 0.5,
       "coverage_80_ci": [
-        0.5100999795960008,
-        1.0
+        0.15003570882017148,
+        0.8499642911798285
       ],
-      "coverage_50": 0.75,
-      "direction_hit": 0.25,
+      "coverage_50": 0.0,
+      "direction_hit": 0.0,
       "direction_hit_ci": [
-        0.045586062644636216,
-        0.6993639475573634
+        0.0,
+        0.48990002040399916
       ],
-      "direction_base_rate": 0.5,
-      "direction_edge": -0.25,
-      "realized_up_rate": 0.5,
-      "predicted_up_rate": 0.25,
-      "up_pred_n": 1,
+      "direction_base_rate": 1.0,
+      "direction_edge": -1.0,
+      "realized_up_rate": 0.0,
+      "predicted_up_rate": 1.0,
+      "up_pred_n": 4,
       "up_pred_hit": 0.0,
-      "down_pred_n": 3,
-      "down_pred_hit": 0.3333333333333333,
-      "mae_p50": 0.04235948825168355,
+      "down_pred_n": 0,
+      "down_pred_hit": null,
+      "mae_p50": 0.125049641619305,
       "first_anchor": "2026-09-04",
-      "last_target": "2026-09-16"
+      "last_target": "2026-09-17"
     },
     {
       "source": "LIVE",
-      "symbol": "373220",
-      "name": "LG에너지솔루션",
+      "symbol": "TSLA",
+      "name": "테슬라",
       "horizon": 5,
       "n_resolved": 4,
       "n_anchors": 4,
@@ -2070,44 +3270,44 @@
       "up_pred_hit": 1.0,
       "down_pred_n": 3,
       "down_pred_hit": 0.6666666666666666,
-      "mae_p50": 0.017427334550339832,
+      "mae_p50": 0.017252849398916227,
       "first_anchor": "2026-09-04",
-      "last_target": "2026-09-16"
+      "last_target": "2026-09-17"
     },
     {
       "source": "LIVE",
-      "symbol": "403870",
-      "name": "HPSP",
+      "symbol": "TSM",
+      "name": "TSMC(ADR)",
       "horizon": 5,
       "n_resolved": 14,
       "n_anchors": 14,
-      "coverage_80": 1.0,
+      "coverage_80": 0.9285714285714286,
       "coverage_80_ci": [
-        0.7846829880728186,
-        1.0
+        0.6853073044604219,
+        0.9872781138877085
       ],
-      "coverage_50": 0.8571428571428571,
-      "direction_hit": 0.5384615384615384,
+      "coverage_50": 0.7857142857142857,
+      "direction_hit": 0.6153846153846154,
       "direction_hit_ci": [
-        0.2914343243183205,
-        0.7679424569851186
+        0.35522480972268555,
+        0.8229055341876319
       ],
       "direction_base_rate": 0.6428571428571429,
       "direction_edge": -0.07142857142857151,
       "realized_up_rate": 0.6428571428571429,
-      "predicted_up_rate": 0.21428571428571427,
-      "up_pred_n": 3,
-      "up_pred_hit": 1.0,
-      "down_pred_n": 11,
-      "down_pred_hit": 0.45454545454545453,
-      "mae_p50": 0.0653737853250365,
+      "predicted_up_rate": 0.9285714285714286,
+      "up_pred_n": 13,
+      "up_pred_hit": 0.6153846153846154,
+      "down_pred_n": 1,
+      "down_pred_hit": 0.0,
+      "mae_p50": 0.025661308118566855,
       "first_anchor": "2026-08-21",
-      "last_target": "2026-09-16"
+      "last_target": "2026-09-17"
     },
     {
       "source": "LIVE",
-      "symbol": "403870",
-      "name": "HPSP",
+      "symbol": "TSM",
+      "name": "TSMC(ADR)",
       "horizon": 10,
       "n_resolved": 9,
       "n_anchors": 9,
@@ -2116,1313 +3316,113 @@
         0.7008472464490407,
         1.0
       ],
-      "coverage_50": 1.0,
-      "direction_hit": 0.5555555555555556,
-      "direction_hit_ci": [
-        0.2666473457440297,
-        0.811224570528086
-      ],
-      "direction_base_rate": 1.0,
-      "direction_edge": -0.4444444444444444,
-      "realized_up_rate": 1.0,
-      "predicted_up_rate": 0.5555555555555556,
-      "up_pred_n": 5,
-      "up_pred_hit": 1.0,
-      "down_pred_n": 4,
-      "down_pred_hit": 0.0,
-      "mae_p50": 0.09026551074515043,
-      "first_anchor": "2026-08-21",
-      "last_target": "2026-09-16"
-    },
-    {
-      "source": "LIVE",
-      "symbol": "AAPL",
-      "name": "애플",
-      "horizon": 5,
-      "n_resolved": 13,
-      "n_anchors": 13,
-      "coverage_80": 0.9230769230769231,
-      "coverage_80_ci": [
-        0.6668546607175265,
-        0.9862899336203037
-      ],
-      "coverage_50": 0.7692307692307693,
-      "direction_hit": 0.75,
-      "direction_hit_ci": [
-        0.46768966087934005,
-        0.9110599603710386
-      ],
-      "direction_base_rate": 0.7692307692307693,
-      "direction_edge": -0.07692307692307698,
-      "realized_up_rate": 0.7692307692307693,
-      "predicted_up_rate": 0.9230769230769231,
-      "up_pred_n": 12,
-      "up_pred_hit": 0.75,
-      "down_pred_n": 1,
-      "down_pred_hit": 0.0,
-      "mae_p50": 0.02200376734284687,
-      "first_anchor": "2026-08-21",
-      "last_target": "2026-09-16"
-    },
-    {
-      "source": "LIVE",
-      "symbol": "AAPL",
-      "name": "애플",
-      "horizon": 10,
-      "n_resolved": 8,
-      "n_anchors": 8,
-      "coverage_80": 1.0,
-      "coverage_80_ci": [
-        0.6755843804891231,
-        1.0
-      ],
-      "coverage_50": 0.875,
-      "direction_hit": 1.0,
-      "direction_hit_ci": [
-        0.6755843804891231,
-        1.0
-      ],
-      "direction_base_rate": 1.0,
-      "direction_edge": 0.0,
-      "realized_up_rate": 1.0,
-      "predicted_up_rate": 1.0,
-      "up_pred_n": 8,
-      "up_pred_hit": 1.0,
-      "down_pred_n": 0,
-      "down_pred_hit": null,
-      "mae_p50": 0.024948687154009573,
-      "first_anchor": "2026-08-21",
-      "last_target": "2026-09-16"
-    },
-    {
-      "source": "LIVE",
-      "symbol": "AMAT",
-      "name": "어플라이드 머티리얼즈",
-      "horizon": 5,
-      "n_resolved": 13,
-      "n_anchors": 13,
-      "coverage_80": 0.8461538461538461,
-      "coverage_80_ci": [
-        0.5776482949136899,
-        0.9567427368172621
-      ],
-      "coverage_50": 0.5384615384615384,
-      "direction_hit": 0.18181818181818182,
-      "direction_hit_ci": [
-        0.05136660067100063,
-        0.4769861375782448
-      ],
-      "direction_base_rate": 0.6923076923076923,
-      "direction_edge": -0.4615384615384615,
-      "realized_up_rate": 0.3076923076923077,
-      "predicted_up_rate": 0.7692307692307693,
-      "up_pred_n": 10,
-      "up_pred_hit": 0.2,
-      "down_pred_n": 3,
-      "down_pred_hit": 0.3333333333333333,
-      "mae_p50": 0.0630050520989384,
-      "first_anchor": "2026-08-21",
-      "last_target": "2026-09-16"
-    },
-    {
-      "source": "LIVE",
-      "symbol": "AMAT",
-      "name": "어플라이드 머티리얼즈",
-      "horizon": 10,
-      "n_resolved": 8,
-      "n_anchors": 8,
-      "coverage_80": 1.0,
-      "coverage_80_ci": [
-        0.6755843804891231,
-        1.0
-      ],
-      "coverage_50": 0.25,
-      "direction_hit": 0.0,
-      "direction_hit_ci": [
-        0.0,
-        0.35433884297520657
-      ],
-      "direction_base_rate": 1.0,
-      "direction_edge": -1.0,
-      "realized_up_rate": 0.0,
-      "predicted_up_rate": 1.0,
-      "up_pred_n": 8,
-      "up_pred_hit": 0.0,
-      "down_pred_n": 0,
-      "down_pred_hit": null,
-      "mae_p50": 0.09268217636316414,
-      "first_anchor": "2026-08-21",
-      "last_target": "2026-09-16"
-    },
-    {
-      "source": "LIVE",
-      "symbol": "AMD",
-      "name": "AMD",
-      "horizon": 5,
-      "n_resolved": 13,
-      "n_anchors": 13,
-      "coverage_80": 1.0,
-      "coverage_80_ci": [
-        0.7718981569447083,
-        1.0
-      ],
-      "coverage_50": 0.6923076923076923,
-      "direction_hit": 0.6153846153846154,
-      "direction_hit_ci": [
-        0.35522480972268555,
-        0.8229055341876319
-      ],
-      "direction_base_rate": 0.6923076923076923,
-      "direction_edge": -0.07692307692307687,
-      "realized_up_rate": 0.6923076923076923,
-      "predicted_up_rate": 0.9230769230769231,
-      "up_pred_n": 12,
-      "up_pred_hit": 0.6666666666666666,
-      "down_pred_n": 1,
-      "down_pred_hit": 0.0,
-      "mae_p50": 0.0466779744290909,
-      "first_anchor": "2026-08-21",
-      "last_target": "2026-09-16"
-    },
-    {
-      "source": "LIVE",
-      "symbol": "AMD",
-      "name": "AMD",
-      "horizon": 10,
-      "n_resolved": 8,
-      "n_anchors": 8,
-      "coverage_80": 1.0,
-      "coverage_80_ci": [
-        0.6755843804891231,
-        1.0
-      ],
-      "coverage_50": 1.0,
-      "direction_hit": 0.125,
-      "direction_hit_ci": [
-        0.02241690886329617,
-        0.4708948057698615
-      ],
-      "direction_base_rate": 1.0,
-      "direction_edge": -0.875,
-      "realized_up_rate": 1.0,
-      "predicted_up_rate": 0.125,
-      "up_pred_n": 1,
-      "up_pred_hit": 1.0,
-      "down_pred_n": 7,
-      "down_pred_hit": 0.0,
-      "mae_p50": 0.07800641940568113,
-      "first_anchor": "2026-08-21",
-      "last_target": "2026-09-16"
-    },
-    {
-      "source": "LIVE",
-      "symbol": "ASML",
-      "name": "ASML 홀딩(ADR)",
-      "horizon": 5,
-      "n_resolved": 13,
-      "n_anchors": 13,
-      "coverage_80": 0.6923076923076923,
-      "coverage_80_ci": [
-        0.4236888781333764,
-        0.8731950283838191
-      ],
-      "coverage_50": 0.6153846153846154,
-      "direction_hit": 0.25,
-      "direction_hit_ci": [
-        0.08894003962896138,
-        0.53231033912066
-      ],
-      "direction_base_rate": 0.6153846153846154,
-      "direction_edge": -0.38461538461538464,
-      "realized_up_rate": 0.38461538461538464,
-      "predicted_up_rate": 0.5384615384615384,
-      "up_pred_n": 7,
-      "up_pred_hit": 0.14285714285714285,
-      "down_pred_n": 6,
-      "down_pred_hit": 0.3333333333333333,
-      "mae_p50": 0.04380093661308934,
-      "first_anchor": "2026-08-21",
-      "last_target": "2026-09-16"
-    },
-    {
-      "source": "LIVE",
-      "symbol": "ASML",
-      "name": "ASML 홀딩(ADR)",
-      "horizon": 10,
-      "n_resolved": 8,
-      "n_anchors": 8,
-      "coverage_80": 0.875,
-      "coverage_80_ci": [
-        0.5291051942301386,
-        0.9775830911367038
-      ],
-      "coverage_50": 0.5,
-      "direction_hit": 0.125,
-      "direction_hit_ci": [
-        0.02241690886329617,
-        0.4708948057698615
-      ],
-      "direction_base_rate": 0.875,
-      "direction_edge": -0.75,
-      "realized_up_rate": 0.125,
-      "predicted_up_rate": 1.0,
-      "up_pred_n": 8,
-      "up_pred_hit": 0.125,
-      "down_pred_n": 0,
-      "down_pred_hit": null,
-      "mae_p50": 0.05104273372450788,
-      "first_anchor": "2026-08-21",
-      "last_target": "2026-09-16"
-    },
-    {
-      "source": "LIVE",
-      "symbol": "CAT",
-      "name": "캐터필러",
-      "horizon": 5,
-      "n_resolved": 13,
-      "n_anchors": 13,
-      "coverage_80": 1.0,
-      "coverage_80_ci": [
-        0.7718981569447083,
-        1.0
-      ],
-      "coverage_50": 0.6923076923076923,
-      "direction_hit": 0.5384615384615384,
-      "direction_hit_ci": [
-        0.2914343243183205,
-        0.7679424569851186
-      ],
-      "direction_base_rate": 0.6153846153846154,
-      "direction_edge": -0.07692307692307698,
-      "realized_up_rate": 0.38461538461538464,
-      "predicted_up_rate": 0.6923076923076923,
-      "up_pred_n": 9,
-      "up_pred_hit": 0.4444444444444444,
-      "down_pred_n": 4,
-      "down_pred_hit": 0.75,
-      "mae_p50": 0.028164328220211036,
-      "first_anchor": "2026-08-21",
-      "last_target": "2026-09-16"
-    },
-    {
-      "source": "LIVE",
-      "symbol": "CAT",
-      "name": "캐터필러",
-      "horizon": 10,
-      "n_resolved": 8,
-      "n_anchors": 8,
-      "coverage_80": 1.0,
-      "coverage_80_ci": [
-        0.6755843804891231,
-        1.0
-      ],
-      "coverage_50": 1.0,
-      "direction_hit": 0.125,
-      "direction_hit_ci": [
-        0.02241690886329617,
-        0.4708948057698615
-      ],
-      "direction_base_rate": 0.875,
-      "direction_edge": -0.75,
-      "realized_up_rate": 0.125,
-      "predicted_up_rate": 1.0,
-      "up_pred_n": 8,
-      "up_pred_hit": 0.125,
-      "down_pred_n": 0,
-      "down_pred_hit": null,
-      "mae_p50": 0.029220212096620825,
-      "first_anchor": "2026-08-21",
-      "last_target": "2026-09-16"
-    },
-    {
-      "source": "LIVE",
-      "symbol": "GOOGL",
-      "name": "알파벳 A",
-      "horizon": 5,
-      "n_resolved": 13,
-      "n_anchors": 13,
-      "coverage_80": 1.0,
-      "coverage_80_ci": [
-        0.7718981569447083,
-        1.0
-      ],
-      "coverage_50": 1.0,
-      "direction_hit": 0.38461538461538464,
-      "direction_hit_ci": [
-        0.17709446581236818,
-        0.6447751902773146
-      ],
-      "direction_base_rate": 0.6153846153846154,
-      "direction_edge": -0.23076923076923078,
-      "realized_up_rate": 0.38461538461538464,
-      "predicted_up_rate": 1.0,
-      "up_pred_n": 13,
-      "up_pred_hit": 0.38461538461538464,
-      "down_pred_n": 0,
-      "down_pred_hit": null,
-      "mae_p50": 0.02204617206068121,
-      "first_anchor": "2026-08-21",
-      "last_target": "2026-09-16"
-    },
-    {
-      "source": "LIVE",
-      "symbol": "GOOGL",
-      "name": "알파벳 A",
-      "horizon": 10,
-      "n_resolved": 8,
-      "n_anchors": 8,
-      "coverage_80": 1.0,
-      "coverage_80_ci": [
-        0.6755843804891231,
-        1.0
-      ],
-      "coverage_50": 0.875,
-      "direction_hit": 0.25,
-      "direction_hit_ci": [
-        0.07147768885802763,
-        0.5907301208974108
-      ],
-      "direction_base_rate": 0.75,
-      "direction_edge": -0.5,
-      "realized_up_rate": 0.25,
-      "predicted_up_rate": 1.0,
-      "up_pred_n": 8,
-      "up_pred_hit": 0.25,
-      "down_pred_n": 0,
-      "down_pred_hit": null,
-      "mae_p50": 0.04746763481735407,
-      "first_anchor": "2026-08-21",
-      "last_target": "2026-09-16"
-    },
-    {
-      "source": "LIVE",
-      "symbol": "KLAC",
-      "name": "KLA",
-      "horizon": 5,
-      "n_resolved": 13,
-      "n_anchors": 13,
-      "coverage_80": 0.8461538461538461,
-      "coverage_80_ci": [
-        0.5776482949136899,
-        0.9567427368172621
-      ],
-      "coverage_50": 0.5384615384615384,
-      "direction_hit": 0.4166666666666667,
-      "direction_hit_ci": [
-        0.19325746190524656,
-        0.6804926643446272
-      ],
-      "direction_base_rate": 0.6153846153846154,
-      "direction_edge": -0.15384615384615385,
-      "realized_up_rate": 0.38461538461538464,
-      "predicted_up_rate": 0.9230769230769231,
-      "up_pred_n": 12,
-      "up_pred_hit": 0.4166666666666667,
-      "down_pred_n": 1,
-      "down_pred_hit": 1.0,
-      "mae_p50": 0.05964188692650614,
-      "first_anchor": "2026-08-21",
-      "last_target": "2026-09-16"
-    },
-    {
-      "source": "LIVE",
-      "symbol": "KLAC",
-      "name": "KLA",
-      "horizon": 10,
-      "n_resolved": 8,
-      "n_anchors": 8,
-      "coverage_80": 1.0,
-      "coverage_80_ci": [
-        0.6755843804891231,
-        1.0
-      ],
-      "coverage_50": 1.0,
-      "direction_hit": 0.25,
-      "direction_hit_ci": [
-        0.07147768885802763,
-        0.5907301208974108
-      ],
-      "direction_base_rate": 0.75,
-      "direction_edge": -0.5,
-      "realized_up_rate": 0.25,
-      "predicted_up_rate": 1.0,
-      "up_pred_n": 8,
-      "up_pred_hit": 0.25,
-      "down_pred_n": 0,
-      "down_pred_hit": null,
-      "mae_p50": 0.046768999860704485,
-      "first_anchor": "2026-08-21",
-      "last_target": "2026-09-16"
-    },
-    {
-      "source": "LIVE",
-      "symbol": "LLY",
-      "name": "일라이 릴리",
-      "horizon": 5,
-      "n_resolved": 3,
-      "n_anchors": 3,
-      "coverage_80": 1.0,
-      "coverage_80_ci": [
-        0.43849391955098227,
-        1.0
-      ],
-      "coverage_50": 1.0,
+      "coverage_50": 0.8888888888888888,
       "direction_hit": 0.6666666666666666,
       "direction_hit_ci": [
-        0.2076549551264879,
-        0.9385096847238394
+        0.35419734749908977,
+        0.879418401317257
       ],
       "direction_base_rate": 0.6666666666666666,
       "direction_edge": 0.0,
       "realized_up_rate": 0.6666666666666666,
       "predicted_up_rate": 1.0,
-      "up_pred_n": 3,
+      "up_pred_n": 9,
       "up_pred_hit": 0.6666666666666666,
       "down_pred_n": 0,
       "down_pred_hit": null,
-      "mae_p50": 0.005993584376559767,
-      "first_anchor": "2026-09-04",
-      "last_target": "2026-09-16"
+      "mae_p50": 0.023449462973147497,
+      "first_anchor": "2026-08-21",
+      "last_target": "2026-09-17"
     },
     {
       "source": "LIVE",
-      "symbol": "MRK",
-      "name": "머크",
+      "symbol": "VST",
+      "name": "비스트라 에너지",
       "horizon": 5,
-      "n_resolved": 3,
-      "n_anchors": 3,
-      "coverage_80": 1.0,
+      "n_resolved": 14,
+      "n_anchors": 14,
+      "coverage_80": 0.7857142857142857,
       "coverage_80_ci": [
-        0.43849391955098227,
-        1.0
+        0.5241027622679172,
+        0.9242875166308363
       ],
-      "coverage_50": 0.3333333333333333,
-      "direction_hit": 0.0,
+      "coverage_50": 0.5,
+      "direction_hit": 0.5,
       "direction_hit_ci": [
-        0.0,
-        0.6576280471103807
-      ],
-      "direction_base_rate": 1.0,
-      "direction_edge": -1.0,
-      "realized_up_rate": 0.0,
-      "predicted_up_rate": 1.0,
-      "up_pred_n": 3,
-      "up_pred_hit": 0.0,
-      "down_pred_n": 0,
-      "down_pred_hit": null,
-      "mae_p50": 0.031144350704111937,
-      "first_anchor": "2026-09-04",
-      "last_target": "2026-09-16"
-    },
-    {
-      "source": "LIVE",
-      "symbol": "MRNA",
-      "name": "모더나",
-      "horizon": 5,
-      "n_resolved": 3,
-      "n_anchors": 3,
-      "coverage_80": 1.0,
-      "coverage_80_ci": [
-        0.43849391955098227,
-        1.0
-      ],
-      "coverage_50": 1.0,
-      "direction_hit": 0.0,
-      "direction_hit_ci": [
-        0.0,
-        0.5615060804490177
-      ],
-      "direction_base_rate": 1.0,
-      "direction_edge": -1.0,
-      "realized_up_rate": 1.0,
-      "predicted_up_rate": 0.0,
-      "up_pred_n": 0,
-      "up_pred_hit": null,
-      "down_pred_n": 3,
-      "down_pred_hit": 0.0,
-      "mae_p50": 0.16799289354082703,
-      "first_anchor": "2026-09-04",
-      "last_target": "2026-09-16"
-    },
-    {
-      "source": "LIVE",
-      "symbol": "MSFT",
-      "name": "마이크로소프트",
-      "horizon": 5,
-      "n_resolved": 7,
-      "n_anchors": 7,
-      "coverage_80": 1.0,
-      "coverage_80_ci": [
-        0.6456611570247934,
-        1.0
-      ],
-      "coverage_50": 1.0,
-      "direction_hit": 0.2857142857142857,
-      "direction_hit_ci": [
-        0.0822171657090155,
-        0.6410709098517873
+        0.2679886791947528,
+        0.7320113208052472
       ],
       "direction_base_rate": 0.7142857142857143,
-      "direction_edge": -0.4285714285714286,
-      "realized_up_rate": 0.2857142857142857,
-      "predicted_up_rate": 1.0,
+      "direction_edge": -0.2142857142857143,
+      "realized_up_rate": 0.7142857142857143,
+      "predicted_up_rate": 0.5,
       "up_pred_n": 7,
-      "up_pred_hit": 0.2857142857142857,
-      "down_pred_n": 0,
-      "down_pred_hit": null,
-      "mae_p50": 0.01953953286692914,
-      "first_anchor": "2026-08-31",
-      "last_target": "2026-09-16"
-    },
-    {
-      "source": "LIVE",
-      "symbol": "MSFT",
-      "name": "마이크로소프트",
-      "horizon": 10,
-      "n_resolved": 2,
-      "n_anchors": 2,
-      "coverage_80": 1.0,
-      "coverage_80_ci": [
-        0.34237195288961925,
-        1.0
-      ],
-      "coverage_50": 1.0,
-      "direction_hit": 1.0,
-      "direction_hit_ci": [
-        0.34237195288961925,
-        1.0
-      ],
-      "direction_base_rate": 1.0,
-      "direction_edge": 0.0,
-      "realized_up_rate": 0.0,
-      "predicted_up_rate": 0.0,
-      "up_pred_n": 0,
-      "up_pred_hit": null,
-      "down_pred_n": 2,
-      "down_pred_hit": 1.0,
-      "mae_p50": 0.0082093869821743,
-      "first_anchor": "2026-08-31",
-      "last_target": "2026-09-16"
-    },
-    {
-      "source": "LIVE",
-      "symbol": "MU",
-      "name": "마이크론 테크놀로지",
-      "horizon": 5,
-      "n_resolved": 13,
-      "n_anchors": 13,
-      "coverage_80": 1.0,
-      "coverage_80_ci": [
-        0.7718981569447083,
-        1.0
-      ],
-      "coverage_50": 0.6923076923076923,
-      "direction_hit": 0.5384615384615384,
-      "direction_hit_ci": [
-        0.2914343243183205,
-        0.7679424569851186
-      ],
-      "direction_base_rate": 0.5384615384615384,
-      "direction_edge": 0.0,
-      "realized_up_rate": 0.5384615384615384,
-      "predicted_up_rate": 1.0,
-      "up_pred_n": 13,
-      "up_pred_hit": 0.5384615384615384,
-      "down_pred_n": 0,
-      "down_pred_hit": null,
-      "mae_p50": 0.059227387982586865,
-      "first_anchor": "2026-08-21",
-      "last_target": "2026-09-16"
-    },
-    {
-      "source": "LIVE",
-      "symbol": "MU",
-      "name": "마이크론 테크놀로지",
-      "horizon": 10,
-      "n_resolved": 8,
-      "n_anchors": 8,
-      "coverage_80": 1.0,
-      "coverage_80_ci": [
-        0.6755843804891231,
-        1.0
-      ],
-      "coverage_50": 1.0,
-      "direction_hit": 0.625,
-      "direction_hit_ci": [
-        0.30573785458380187,
-        0.863158240538479
-      ],
-      "direction_base_rate": 0.625,
-      "direction_edge": 0.0,
-      "realized_up_rate": 0.625,
-      "predicted_up_rate": 1.0,
-      "up_pred_n": 8,
-      "up_pred_hit": 0.625,
-      "down_pred_n": 0,
-      "down_pred_hit": null,
-      "mae_p50": 0.05498769848404976,
-      "first_anchor": "2026-08-21",
-      "last_target": "2026-09-16"
-    },
-    {
-      "source": "LIVE",
-      "symbol": "NVDA",
-      "name": "엔비디아",
-      "horizon": 5,
-      "n_resolved": 13,
-      "n_anchors": 13,
-      "coverage_80": 0.9230769230769231,
-      "coverage_80_ci": [
-        0.6668546607175265,
-        0.9862899336203037
-      ],
-      "coverage_50": 0.38461538461538464,
-      "direction_hit": 0.6153846153846154,
-      "direction_hit_ci": [
-        0.35522480972268555,
-        0.8229055341876319
-      ],
-      "direction_base_rate": 0.6153846153846154,
-      "direction_edge": 0.0,
-      "realized_up_rate": 0.6153846153846154,
-      "predicted_up_rate": 1.0,
-      "up_pred_n": 13,
-      "up_pred_hit": 0.6153846153846154,
-      "down_pred_n": 0,
-      "down_pred_hit": null,
-      "mae_p50": 0.04260351304775424,
-      "first_anchor": "2026-08-21",
-      "last_target": "2026-09-16"
-    },
-    {
-      "source": "LIVE",
-      "symbol": "NVDA",
-      "name": "엔비디아",
-      "horizon": 10,
-      "n_resolved": 8,
-      "n_anchors": 8,
-      "coverage_80": 1.0,
-      "coverage_80_ci": [
-        0.6755843804891231,
-        1.0
-      ],
-      "coverage_50": 0.75,
-      "direction_hit": 0.625,
-      "direction_hit_ci": [
-        0.30573785458380187,
-        0.863158240538479
-      ],
-      "direction_base_rate": 0.5,
-      "direction_edge": 0.125,
-      "realized_up_rate": 0.5,
-      "predicted_up_rate": 0.875,
-      "up_pred_n": 7,
-      "up_pred_hit": 0.5714285714285714,
-      "down_pred_n": 1,
-      "down_pred_hit": 1.0,
-      "mae_p50": 0.03661150225810896,
-      "first_anchor": "2026-08-21",
-      "last_target": "2026-09-16"
-    },
-    {
-      "source": "LIVE",
-      "symbol": "NVO",
-      "name": "노보노디스크(ADR)",
-      "horizon": 5,
-      "n_resolved": 3,
-      "n_anchors": 3,
-      "coverage_80": 1.0,
-      "coverage_80_ci": [
-        0.43849391955098227,
-        1.0
-      ],
-      "coverage_50": 0.0,
-      "direction_hit": 0.3333333333333333,
-      "direction_hit_ci": [
-        0.0614903152761605,
-        0.7923450448735121
-      ],
-      "direction_base_rate": 1.0,
-      "direction_edge": -0.6666666666666667,
-      "realized_up_rate": 0.0,
-      "predicted_up_rate": 0.6666666666666666,
-      "up_pred_n": 2,
-      "up_pred_hit": 0.0,
-      "down_pred_n": 1,
-      "down_pred_hit": 1.0,
-      "mae_p50": 0.06545522655972957,
-      "first_anchor": "2026-09-04",
-      "last_target": "2026-09-16"
-    },
-    {
-      "source": "LIVE",
-      "symbol": "OKLO",
-      "name": "오클로",
-      "horizon": 5,
-      "n_resolved": 13,
-      "n_anchors": 13,
-      "coverage_80": 1.0,
-      "coverage_80_ci": [
-        0.7718981569447083,
-        1.0
-      ],
-      "coverage_50": 0.6923076923076923,
-      "direction_hit": 0.3,
-      "direction_hit_ci": [
-        0.10778928748621183,
-        0.6032267800204347
-      ],
-      "direction_base_rate": 0.5384615384615384,
-      "direction_edge": -0.23076923076923073,
-      "realized_up_rate": 0.46153846153846156,
-      "predicted_up_rate": 0.23076923076923078,
-      "up_pred_n": 3,
-      "up_pred_hit": 0.0,
-      "down_pred_n": 10,
-      "down_pred_hit": 0.4,
-      "mae_p50": 0.07085753101940172,
-      "first_anchor": "2026-08-21",
-      "last_target": "2026-09-16"
-    },
-    {
-      "source": "LIVE",
-      "symbol": "OKLO",
-      "name": "오클로",
-      "horizon": 10,
-      "n_resolved": 8,
-      "n_anchors": 8,
-      "coverage_80": 1.0,
-      "coverage_80_ci": [
-        0.6755843804891231,
-        1.0
-      ],
-      "coverage_50": 0.875,
-      "direction_hit": 0.7142857142857143,
-      "direction_hit_ci": [
-        0.35892909014821267,
-        0.9177828342909844
-      ],
-      "direction_base_rate": 0.75,
-      "direction_edge": -0.125,
-      "realized_up_rate": 0.25,
-      "predicted_up_rate": 0.125,
-      "up_pred_n": 1,
-      "up_pred_hit": 0.0,
+      "up_pred_hit": 0.7142857142857143,
       "down_pred_n": 7,
-      "down_pred_hit": 0.7142857142857143,
-      "mae_p50": 0.05372221029929657,
+      "down_pred_hit": 0.2857142857142857,
+      "mae_p50": 0.046495565996208785,
       "first_anchor": "2026-08-21",
-      "last_target": "2026-09-16"
+      "last_target": "2026-09-17"
     },
     {
       "source": "LIVE",
-      "symbol": "PFE",
-      "name": "화이자",
-      "horizon": 5,
-      "n_resolved": 3,
-      "n_anchors": 3,
+      "symbol": "VST",
+      "name": "비스트라 에너지",
+      "horizon": 10,
+      "n_resolved": 9,
+      "n_anchors": 9,
       "coverage_80": 1.0,
       "coverage_80_ci": [
-        0.43849391955098227,
+        0.7008472464490407,
         1.0
       ],
       "coverage_50": 0.6666666666666666,
-      "direction_hit": 0.0,
+      "direction_hit": 0.1111111111111111,
       "direction_hit_ci": [
-        0.0,
-        0.5615060804490177
+        0.019890371327130535,
+        0.4350062147680601
       ],
       "direction_base_rate": 1.0,
-      "direction_edge": -1.0,
-      "realized_up_rate": 0.0,
-      "predicted_up_rate": 1.0,
-      "up_pred_n": 3,
-      "up_pred_hit": 0.0,
-      "down_pred_n": 0,
-      "down_pred_hit": null,
-      "mae_p50": 0.022126361170512563,
-      "first_anchor": "2026-09-04",
-      "last_target": "2026-09-16"
-    },
-    {
-      "source": "LIVE",
-      "symbol": "PLTR",
-      "name": "팔란티어",
-      "horizon": 5,
-      "n_resolved": 13,
-      "n_anchors": 13,
-      "coverage_80": 1.0,
-      "coverage_80_ci": [
-        0.7718981569447083,
-        1.0
-      ],
-      "coverage_50": 0.6923076923076923,
-      "direction_hit": 0.23076923076923078,
-      "direction_hit_ci": [
-        0.08179379092465713,
-        0.5025687399512693
-      ],
-      "direction_base_rate": 0.5384615384615384,
-      "direction_edge": -0.30769230769230765,
-      "realized_up_rate": 0.46153846153846156,
-      "predicted_up_rate": 0.7692307692307693,
-      "up_pred_n": 10,
-      "up_pred_hit": 0.3,
-      "down_pred_n": 3,
-      "down_pred_hit": 0.0,
-      "mae_p50": 0.044409952914038486,
-      "first_anchor": "2026-08-21",
-      "last_target": "2026-09-16"
-    },
-    {
-      "source": "LIVE",
-      "symbol": "PLTR",
-      "name": "팔란티어",
-      "horizon": 10,
-      "n_resolved": 8,
-      "n_anchors": 8,
-      "coverage_80": 1.0,
-      "coverage_80_ci": [
-        0.6755843804891231,
-        1.0
-      ],
-      "coverage_50": 0.875,
-      "direction_hit": 0.0,
-      "direction_hit_ci": [
-        0.0,
-        0.3244156195108769
-      ],
-      "direction_base_rate": 1.0,
-      "direction_edge": -1.0,
-      "realized_up_rate": 0.0,
-      "predicted_up_rate": 1.0,
-      "up_pred_n": 8,
-      "up_pred_hit": 0.0,
-      "down_pred_n": 0,
-      "down_pred_hit": null,
-      "mae_p50": 0.07631506474833963,
-      "first_anchor": "2026-08-21",
-      "last_target": "2026-09-16"
-    },
-    {
-      "source": "LIVE",
-      "symbol": "RAM",
-      "name": "RAM",
-      "horizon": 5,
-      "n_resolved": 3,
-      "n_anchors": 3,
-      "coverage_80": 0.0,
-      "coverage_80_ci": [
-        0.0,
-        0.5615060804490177
-      ],
-      "coverage_50": 0.0,
-      "direction_hit": 0.0,
-      "direction_hit_ci": [
-        0.0,
-        0.5615060804490177
-      ],
-      "direction_base_rate": 1.0,
-      "direction_edge": -1.0,
-      "realized_up_rate": 0.0,
-      "predicted_up_rate": 1.0,
-      "up_pred_n": 3,
-      "up_pred_hit": 0.0,
-      "down_pred_n": 0,
-      "down_pred_hit": null,
-      "mae_p50": 0.25170692083673973,
-      "first_anchor": "2026-09-04",
-      "last_target": "2026-09-16"
-    },
-    {
-      "source": "LIVE",
-      "symbol": "SMR",
-      "name": "뉴스케일파워",
-      "horizon": 5,
-      "n_resolved": 13,
-      "n_anchors": 13,
-      "coverage_80": 0.7692307692307693,
-      "coverage_80_ci": [
-        0.49743126004873084,
-        0.918206209075343
-      ],
-      "coverage_50": 0.5384615384615384,
-      "direction_hit": 0.6153846153846154,
-      "direction_hit_ci": [
-        0.35522480972268555,
-        0.8229055341876319
-      ],
-      "direction_base_rate": 0.5384615384615384,
-      "direction_edge": 0.07692307692307698,
-      "realized_up_rate": 0.5384615384615384,
-      "predicted_up_rate": 0.46153846153846156,
-      "up_pred_n": 6,
-      "up_pred_hit": 0.6666666666666666,
-      "down_pred_n": 7,
-      "down_pred_hit": 0.5714285714285714,
-      "mae_p50": 0.09770836738651416,
-      "first_anchor": "2026-08-21",
-      "last_target": "2026-09-16"
-    },
-    {
-      "source": "LIVE",
-      "symbol": "SMR",
-      "name": "뉴스케일파워",
-      "horizon": 10,
-      "n_resolved": 8,
-      "n_anchors": 8,
-      "coverage_80": 1.0,
-      "coverage_80_ci": [
-        0.6755843804891231,
-        1.0
-      ],
-      "coverage_50": 0.75,
-      "direction_hit": 0.5,
-      "direction_hit_ci": [
-        0.21521252682444186,
-        0.7847874731755582
-      ],
-      "direction_base_rate": 0.5,
-      "direction_edge": 0.0,
-      "realized_up_rate": 0.5,
-      "predicted_up_rate": 0.0,
-      "up_pred_n": 0,
-      "up_pred_hit": null,
-      "down_pred_n": 8,
-      "down_pred_hit": 0.5,
-      "mae_p50": 0.09464419646614773,
-      "first_anchor": "2026-08-21",
-      "last_target": "2026-09-16"
-    },
-    {
-      "source": "LIVE",
-      "symbol": "SNDK",
-      "name": "샌디스크",
-      "horizon": 5,
-      "n_resolved": 13,
-      "n_anchors": 13,
-      "coverage_80": 1.0,
-      "coverage_80_ci": [
-        0.7718981569447083,
-        1.0
-      ],
-      "coverage_50": 0.7692307692307693,
-      "direction_hit": 0.6153846153846154,
-      "direction_hit_ci": [
-        0.35522480972268555,
-        0.8229055341876319
-      ],
-      "direction_base_rate": 0.6153846153846154,
-      "direction_edge": 0.0,
-      "realized_up_rate": 0.6153846153846154,
-      "predicted_up_rate": 0.6923076923076923,
-      "up_pred_n": 9,
-      "up_pred_hit": 0.6666666666666666,
-      "down_pred_n": 4,
-      "down_pred_hit": 0.5,
-      "mae_p50": 0.06524888167367852,
-      "first_anchor": "2026-08-21",
-      "last_target": "2026-09-16"
-    },
-    {
-      "source": "LIVE",
-      "symbol": "SNDK",
-      "name": "샌디스크",
-      "horizon": 10,
-      "n_resolved": 8,
-      "n_anchors": 8,
-      "coverage_80": 1.0,
-      "coverage_80_ci": [
-        0.6755843804891231,
-        1.0
-      ],
-      "coverage_50": 0.875,
-      "direction_hit": 0.75,
-      "direction_hit_ci": [
-        0.40926987910258916,
-        0.9285223111419724
-      ],
-      "direction_base_rate": 0.875,
-      "direction_edge": -0.125,
-      "realized_up_rate": 0.875,
-      "predicted_up_rate": 0.875,
-      "up_pred_n": 7,
-      "up_pred_hit": 0.8571428571428571,
-      "down_pred_n": 1,
-      "down_pred_hit": 0.0,
-      "mae_p50": 0.06839550194693286,
-      "first_anchor": "2026-08-21",
-      "last_target": "2026-09-16"
-    },
-    {
-      "source": "LIVE",
-      "symbol": "SPCX",
-      "name": "스페이스X",
-      "horizon": 5,
-      "n_resolved": 13,
-      "n_anchors": 13,
-      "coverage_80": 1.0,
-      "coverage_80_ci": [
-        0.7718981569447083,
-        1.0
-      ],
-      "coverage_50": 0.9230769230769231,
-      "direction_hit": 0.07692307692307693,
-      "direction_hit_ci": [
-        0.013710066379696323,
-        0.3331453392824736
-      ],
-      "direction_base_rate": 0.9230769230769231,
-      "direction_edge": -0.8461538461538463,
-      "realized_up_rate": 0.9230769230769231,
-      "predicted_up_rate": 0.0,
-      "up_pred_n": 0,
-      "up_pred_hit": null,
-      "down_pred_n": 13,
-      "down_pred_hit": 0.07692307692307693,
-      "mae_p50": 0.05881222731227325,
-      "first_anchor": "2026-08-21",
-      "last_target": "2026-09-16"
-    },
-    {
-      "source": "LIVE",
-      "symbol": "SPCX",
-      "name": "스페이스X",
-      "horizon": 10,
-      "n_resolved": 8,
-      "n_anchors": 8,
-      "coverage_80": 1.0,
-      "coverage_80_ci": [
-        0.6755843804891231,
-        1.0
-      ],
-      "coverage_50": 1.0,
-      "direction_hit": 0.0,
-      "direction_hit_ci": [
-        0.0,
-        0.3244156195108769
-      ],
-      "direction_base_rate": 1.0,
-      "direction_edge": -1.0,
+      "direction_edge": -0.8888888888888888,
       "realized_up_rate": 1.0,
-      "predicted_up_rate": 0.0,
-      "up_pred_n": 0,
-      "up_pred_hit": null,
-      "down_pred_n": 8,
-      "down_pred_hit": 0.0,
-      "mae_p50": 0.0872448653252359,
-      "first_anchor": "2026-08-21",
-      "last_target": "2026-09-16"
-    },
-    {
-      "source": "LIVE",
-      "symbol": "STX",
-      "name": "씨게이트",
-      "horizon": 5,
-      "n_resolved": 3,
-      "n_anchors": 3,
-      "coverage_80": 0.3333333333333333,
-      "coverage_80_ci": [
-        0.0614903152761605,
-        0.7923450448735121
-      ],
-      "coverage_50": 0.0,
-      "direction_hit": 0.0,
-      "direction_hit_ci": [
-        0.0,
-        0.5615060804490177
-      ],
-      "direction_base_rate": 1.0,
-      "direction_edge": -1.0,
-      "realized_up_rate": 0.0,
-      "predicted_up_rate": 1.0,
-      "up_pred_n": 3,
-      "up_pred_hit": 0.0,
-      "down_pred_n": 0,
-      "down_pred_hit": null,
-      "mae_p50": 0.13285758766223596,
-      "first_anchor": "2026-09-04",
-      "last_target": "2026-09-16"
-    },
-    {
-      "source": "LIVE",
-      "symbol": "TSLA",
-      "name": "테슬라",
-      "horizon": 5,
-      "n_resolved": 3,
-      "n_anchors": 3,
-      "coverage_80": 1.0,
-      "coverage_80_ci": [
-        0.43849391955098227,
-        1.0
-      ],
-      "coverage_50": 1.0,
-      "direction_hit": 1.0,
-      "direction_hit_ci": [
-        0.43849391955098227,
-        1.0
-      ],
-      "direction_base_rate": 0.6666666666666667,
-      "direction_edge": 0.33333333333333326,
-      "realized_up_rate": 0.3333333333333333,
-      "predicted_up_rate": 0.3333333333333333,
+      "predicted_up_rate": 0.1111111111111111,
       "up_pred_n": 1,
       "up_pred_hit": 1.0,
-      "down_pred_n": 2,
-      "down_pred_hit": 1.0,
-      "mae_p50": 0.0157027236876962,
-      "first_anchor": "2026-09-04",
-      "last_target": "2026-09-16"
-    },
-    {
-      "source": "LIVE",
-      "symbol": "TSM",
-      "name": "TSMC(ADR)",
-      "horizon": 5,
-      "n_resolved": 13,
-      "n_anchors": 13,
-      "coverage_80": 0.9230769230769231,
-      "coverage_80_ci": [
-        0.6668546607175265,
-        0.9862899336203037
-      ],
-      "coverage_50": 0.7692307692307693,
-      "direction_hit": 0.5833333333333334,
-      "direction_hit_ci": [
-        0.3195073356553728,
-        0.8067425380947535
-      ],
-      "direction_base_rate": 0.6153846153846154,
-      "direction_edge": -0.07692307692307698,
-      "realized_up_rate": 0.6153846153846154,
-      "predicted_up_rate": 0.9230769230769231,
-      "up_pred_n": 12,
-      "up_pred_hit": 0.5833333333333334,
-      "down_pred_n": 1,
+      "down_pred_n": 8,
       "down_pred_hit": 0.0,
-      "mae_p50": 0.02679286987009222,
+      "mae_p50": 0.06880986376172651,
       "first_anchor": "2026-08-21",
-      "last_target": "2026-09-16"
-    },
-    {
-      "source": "LIVE",
-      "symbol": "TSM",
-      "name": "TSMC(ADR)",
-      "horizon": 10,
-      "n_resolved": 8,
-      "n_anchors": 8,
-      "coverage_80": 1.0,
-      "coverage_80_ci": [
-        0.6755843804891231,
-        1.0
-      ],
-      "coverage_50": 0.875,
-      "direction_hit": 0.625,
-      "direction_hit_ci": [
-        0.30573785458380187,
-        0.863158240538479
-      ],
-      "direction_base_rate": 0.625,
-      "direction_edge": 0.0,
-      "realized_up_rate": 0.625,
-      "predicted_up_rate": 1.0,
-      "up_pred_n": 8,
-      "up_pred_hit": 0.625,
-      "down_pred_n": 0,
-      "down_pred_hit": null,
-      "mae_p50": 0.025879663714163573,
-      "first_anchor": "2026-08-21",
-      "last_target": "2026-09-16"
-    },
-    {
-      "source": "LIVE",
-      "symbol": "VST",
-      "name": "비스트라 에너지",
-      "horizon": 5,
-      "n_resolved": 13,
-      "n_anchors": 13,
-      "coverage_80": 0.7692307692307693,
-      "coverage_80_ci": [
-        0.49743126004873084,
-        0.918206209075343
-      ],
-      "coverage_50": 0.5384615384615384,
-      "direction_hit": 0.5384615384615384,
-      "direction_hit_ci": [
-        0.2914343243183205,
-        0.7679424569851186
-      ],
-      "direction_base_rate": 0.7692307692307693,
-      "direction_edge": -0.23076923076923084,
-      "realized_up_rate": 0.7692307692307693,
-      "predicted_up_rate": 0.46153846153846156,
-      "up_pred_n": 6,
-      "up_pred_hit": 0.8333333333333334,
-      "down_pred_n": 7,
-      "down_pred_hit": 0.2857142857142857,
-      "mae_p50": 0.047136452705248216,
-      "first_anchor": "2026-08-21",
-      "last_target": "2026-09-16"
-    },
-    {
-      "source": "LIVE",
-      "symbol": "VST",
-      "name": "비스트라 에너지",
-      "horizon": 10,
-      "n_resolved": 8,
-      "n_anchors": 8,
-      "coverage_80": 1.0,
-      "coverage_80_ci": [
-        0.6755843804891231,
-        1.0
-      ],
-      "coverage_50": 0.625,
-      "direction_hit": 0.125,
-      "direction_hit_ci": [
-        0.02241690886329617,
-        0.4708948057698615
-      ],
-      "direction_base_rate": 1.0,
-      "direction_edge": -0.875,
-      "realized_up_rate": 1.0,
-      "predicted_up_rate": 0.125,
-      "up_pred_n": 1,
-      "up_pred_hit": 1.0,
-      "down_pred_n": 7,
-      "down_pred_hit": 0.0,
-      "mae_p50": 0.07028605688476182,
-      "first_anchor": "2026-08-21",
-      "last_target": "2026-09-16"
+      "last_target": "2026-09-17"
     },
     {
       "source": "LIVE",
       "symbol": "WDC",
       "name": "웨스턴 디지털",
       "horizon": 5,
-      "n_resolved": 3,
-      "n_anchors": 3,
-      "coverage_80": 0.3333333333333333,
+      "n_resolved": 4,
+      "n_anchors": 4,
+      "coverage_80": 0.5,
       "coverage_80_ci": [
-        0.0614903152761605,
-        0.7923450448735121
+        0.15003570882017148,
+        0.8499642911798285
       ],
       "coverage_50": 0.0,
       "direction_hit": 0.0,
       "direction_hit_ci": [
         0.0,
-        0.5615060804490177
+        0.48990002040399916
       ],
       "direction_base_rate": 1.0,
       "direction_edge": -1.0,
       "realized_up_rate": 0.0,
       "predicted_up_rate": 1.0,
-      "up_pred_n": 3,
+      "up_pred_n": 4,
       "up_pred_hit": 0.0,
       "down_pred_n": 0,
       "down_pred_hit": null,
-      "mae_p50": 0.1491971884515547,
+      "mae_p50": 0.13962652913121876,
       "first_anchor": "2026-09-04",
-      "last_target": "2026-09-16"
+      "last_target": "2026-09-17"
     }
   ],
   "aggregates": [
@@ -3519,62 +3519,62 @@
     {
       "source": "LIVE",
       "horizon": 5,
-      "n_resolved": 328,
+      "n_resolved": 363,
       "n_symbols": 35,
-      "n_anchors": 14,
-      "coverage_80": 0.9207317073170732,
+      "n_anchors": 15,
+      "coverage_80": 0.9256198347107438,
       "coverage_80_ci_wilson": [
-        0.88638836326061,
-        0.9453337595835423
+        0.8939442125556858,
+        0.948381194377443
       ],
       "coverage_80_ci_anchor": [
-        0.8764818340737375,
-        0.964981580560409
+        0.8842289560015111,
+        0.9670107134199766
       ],
-      "direction_hit": 0.45426829268292684,
-      "direction_base_rate": 0.5182926829268293,
-      "direction_edge": -0.06402439024390244,
-      "realized_up_rate": 0.5182926829268293,
-      "predicted_up_rate": 0.7103658536585366,
-      "up_pred_n": 233,
-      "up_pred_hit": 0.48068669527896996,
-      "down_pred_n": 95,
-      "down_pred_hit": 0.3894736842105263,
+      "direction_hit": 0.45179063360881544,
+      "direction_base_rate": 0.5041322314049587,
+      "direction_edge": -0.052341597796143224,
+      "realized_up_rate": 0.5041322314049587,
+      "predicted_up_rate": 0.7052341597796143,
+      "up_pred_n": 256,
+      "up_pred_hit": 0.46875,
+      "down_pred_n": 107,
+      "down_pred_hit": 0.411214953271028,
       "direction_hit_ci_anchor": [
-        0.3905763427615616,
-        0.5179602426042921
+        0.3923483286793908,
+        0.51123293853824
       ],
-      "verdict": "판단 보류 (앵커 14일 — 20일 이상 필요)"
+      "verdict": "판단 보류 (앵커 15일 — 20일 이상 필요)"
     },
     {
       "source": "LIVE",
       "horizon": 10,
-      "n_resolved": 175,
+      "n_resolved": 197,
       "n_symbols": 22,
-      "n_anchors": 9,
-      "coverage_80": 0.9942857142857143,
+      "n_anchors": 10,
+      "coverage_80": 0.9949238578680203,
       "coverage_80_ci_wilson": [
-        0.968345857591291,
-        0.9989906010402579
+        0.971810995601377,
+        0.999103396636088
       ],
       "coverage_80_ci_anchor": [
-        0.983915343915344,
+        0.985590524534687,
         1.0
       ],
-      "direction_hit": 0.44571428571428573,
-      "direction_base_rate": 0.6057142857142858,
-      "direction_edge": -0.16000000000000003,
-      "realized_up_rate": 0.6057142857142858,
-      "predicted_up_rate": 0.7028571428571428,
-      "up_pred_n": 123,
-      "up_pred_hit": 0.5365853658536586,
-      "down_pred_n": 52,
-      "down_pred_hit": 0.23076923076923078,
+      "direction_hit": 0.467005076142132,
+      "direction_base_rate": 0.6192893401015228,
+      "direction_edge": -0.15228426395939082,
+      "realized_up_rate": 0.6192893401015228,
+      "predicted_up_rate": 0.6954314720812182,
+      "up_pred_n": 137,
+      "up_pred_hit": 0.5620437956204379,
+      "down_pred_n": 60,
+      "down_pred_hit": 0.25,
       "direction_hit_ci_anchor": [
-        0.39505252837995236,
-        0.4963760430486191
+        0.38681612023087364,
+        0.5471940320533903
       ],
-      "verdict": "판단 보류 (앵커 9일 — 20일 이상 필요)"
+      "verdict": "판단 보류 (앵커 10일 — 20일 이상 필요)"
     }
   ],
   "timeline": [
@@ -4145,12 +4145,12 @@
       "horizon": 5,
       "week": "2026-09-11",
       "anchor_first": "2026-09-07",
-      "anchor_last": "2026-09-09",
-      "n": 79,
-      "n_anchors": 3,
-      "coverage_80": 0.7848101265822784,
-      "direction_hit": 0.3924050632911392,
-      "direction_edge": -0.3924050632911392,
+      "anchor_last": "2026-09-10",
+      "n": 114,
+      "n_anchors": 4,
+      "coverage_80": 0.8421052631578947,
+      "direction_hit": 0.40350877192982454,
+      "direction_edge": -0.3333333333333334,
       "models": "etf_synth",
       "trained_at": [
         "2026-09-06",
@@ -4198,18 +4198,19 @@
       "horizon": 10,
       "week": "2026-09-04",
       "anchor_first": "2026-08-31",
-      "anchor_last": "2026-09-02",
-      "n": 49,
-      "n_anchors": 3,
+      "anchor_last": "2026-09-03",
+      "n": 71,
+      "n_anchors": 4,
       "coverage_80": 1.0,
-      "direction_hit": 0.40816326530612246,
-      "direction_edge": -0.12244897959183665,
+      "direction_hit": 0.4788732394366197,
+      "direction_edge": -0.07042253521126768,
       "models": "",
       "trained_at": [
         "2026-08-31",
         "2026-09-01",
         "2026-09-02",
-        "2026-09-03"
+        "2026-09-03",
+        "2026-09-04"
       ]
     }
   ],
