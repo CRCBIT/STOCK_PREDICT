@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-18T06:17:12+09:00",
+  "generated_at": "2026-09-18T16:05:56+09:00",
   "n_versions": 10,
   "latest_version": "0.9.14",
   "latest_date": "2026-09-12",
@@ -277,7 +277,7 @@
       "huber_scaled": true,
       "pls": true,
       "quantile_gbm": true,
-      "lgbm_linear": true,
+      "lgbm_linear": false,
       "ng_boost": false,
       "garch": true
     },
