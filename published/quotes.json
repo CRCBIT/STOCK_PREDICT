@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-21T07:43:02+09:00",
+  "fetched_at": "2026-09-21T07:44:02+09:00",
   "quotes": {
     "000660": {
       "price": 1849000.0,
@@ -61,11 +61,6 @@
       "currency": "USD",
       "timestamp": "2026-09-19T08:59:59.000+09:00"
     },
-    "ASML": {
-      "price": 1673.5,
-      "currency": "USD",
-      "timestamp": "2026-09-19T08:59:41.000+09:00"
-    },
     "CAT": {
       "price": 809.0,
       "currency": "USD",
@@ -116,6 +111,11 @@
       "currency": "USD",
       "timestamp": "2026-09-19T08:59:44.000+09:00"
     },
+    "PFE": {
+      "price": 27.62,
+      "currency": "USD",
+      "timestamp": "2026-09-19T08:59:10.000+09:00"
+    },
     "PLTR": {
       "price": 177.46,
       "currency": "USD",
@@ -156,25 +156,25 @@
       "currency": "USD",
       "timestamp": "2026-09-19T08:59:58.000+09:00"
     },
-    "VST": {
-      "price": 141.3481,
-      "currency": "USD",
-      "timestamp": "2026-09-19T08:59:54.000+09:00"
-    },
     "WDC": {
       "price": 442.08,
       "currency": "USD",
       "timestamp": "2026-09-19T08:59:09.000+09:00"
+    },
+    "VST": {
+      "price": 141.3481,
+      "currency": "USD",
+      "timestamp": "2026-09-19T08:59:54.000+09:00"
     },
     "LLY": {
       "price": 1153.6,
       "currency": "USD",
       "timestamp": "2026-09-19T08:59:52.000+09:00"
     },
-    "PFE": {
-      "price": 27.62,
+    "ASML": {
+      "price": 1673.5,
       "currency": "USD",
-      "timestamp": "2026-09-19T08:59:10.000+09:00"
+      "timestamp": "2026-09-19T08:59:41.000+09:00"
     }
   },
   "fx": {
@@ -182,7 +182,7 @@
       "rate": 1386.9,
       "mid_rate": 1386.4,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-21T07:43:02+09:00"
+      "fetched_at": "2026-09-21T07:44:02+09:00"
     }
   }
 }
