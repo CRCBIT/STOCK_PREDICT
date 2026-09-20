@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-21T07:12:02+09:00",
+  "fetched_at": "2026-09-21T07:13:02+09:00",
   "quotes": {
     "000660": {
       "price": 1849000.0,
@@ -96,11 +96,6 @@
       "currency": "USD",
       "timestamp": "2026-09-19T08:59:21.000+09:00"
     },
-    "MSFT": {
-      "price": 493.9,
-      "currency": "USD",
-      "timestamp": "2026-09-19T08:59:46.000+09:00"
-    },
     "MU": {
       "price": 1017.75,
       "currency": "USD",
@@ -136,6 +131,11 @@
       "currency": "USD",
       "timestamp": "2026-09-19T08:59:30.000+09:00"
     },
+    "SMR": {
+      "price": 8.32,
+      "currency": "USD",
+      "timestamp": "2026-09-19T08:59:37.000+09:00"
+    },
     "SNDK": {
       "price": 1798.0,
       "currency": "USD",
@@ -145,6 +145,11 @@
       "price": 152.63,
       "currency": "USD",
       "timestamp": "2026-09-19T08:59:57.000+09:00"
+    },
+    "STX": {
+      "price": 861.25,
+      "currency": "USD",
+      "timestamp": "2026-09-19T08:58:31.000+09:00"
     },
     "TSLA": {
       "price": 364.18,
@@ -166,15 +171,10 @@
       "currency": "USD",
       "timestamp": "2026-09-19T08:59:09.000+09:00"
     },
-    "SMR": {
-      "price": 8.32,
+    "MSFT": {
+      "price": 493.9,
       "currency": "USD",
-      "timestamp": "2026-09-19T08:59:37.000+09:00"
-    },
-    "STX": {
-      "price": 861.25,
-      "currency": "USD",
-      "timestamp": "2026-09-19T08:58:31.000+09:00"
+      "timestamp": "2026-09-19T08:59:46.000+09:00"
     }
   },
   "fx": {
@@ -182,7 +182,7 @@
       "rate": 1389.5,
       "mid_rate": 1389.0,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-21T07:12:02+09:00"
+      "fetched_at": "2026-09-21T07:13:02+09:00"
     }
   }
 }
