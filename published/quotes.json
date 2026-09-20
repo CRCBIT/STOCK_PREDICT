@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-21T06:56:02+09:00",
+  "fetched_at": "2026-09-21T06:57:02+09:00",
   "quotes": {
     "000660": {
       "price": 1849000.0,
@@ -141,6 +141,11 @@
       "currency": "USD",
       "timestamp": "2026-09-19T08:59:55.000+09:00"
     },
+    "SPCX": {
+      "price": 152.63,
+      "currency": "USD",
+      "timestamp": "2026-09-19T08:59:57.000+09:00"
+    },
     "STX": {
       "price": 861.25,
       "currency": "USD",
@@ -161,11 +166,6 @@
       "currency": "USD",
       "timestamp": "2026-09-19T08:59:09.000+09:00"
     },
-    "SPCX": {
-      "price": 152.63,
-      "currency": "USD",
-      "timestamp": "2026-09-19T08:59:57.000+09:00"
-    },
     "TSM": {
       "price": 433.36,
       "currency": "USD",
@@ -179,10 +179,10 @@
   },
   "fx": {
     "usdkrw": {
-      "rate": 1390.6,
-      "mid_rate": 1390.1,
+      "rate": 1389.5,
+      "mid_rate": 1389.0,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-21T06:56:02+09:00"
+      "fetched_at": "2026-09-21T06:57:02+09:00"
     }
   }
 }
