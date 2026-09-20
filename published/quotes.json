@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-21T02:05:02+09:00",
+  "fetched_at": "2026-09-21T02:06:01+09:00",
   "quotes": {
     "000660": {
       "price": 1849000.0,
@@ -51,6 +51,11 @@
       "currency": "USD",
       "timestamp": "2026-09-19T08:59:46.000+09:00"
     },
+    "AMAT": {
+      "price": 443.55,
+      "currency": "USD",
+      "timestamp": "2026-09-19T08:59:57.000+09:00"
+    },
     "AMD": {
       "price": 557.75,
       "currency": "USD",
@@ -100,6 +105,11 @@
       "price": 222.51,
       "currency": "USD",
       "timestamp": "2026-09-19T08:59:48.000+09:00"
+    },
+    "NVO": {
+      "price": 43.26,
+      "currency": "USD",
+      "timestamp": "2026-09-19T08:59:54.000+09:00"
     },
     "OKLO": {
       "price": 38.11,
@@ -161,16 +171,6 @@
       "currency": "USD",
       "timestamp": "2026-09-19T08:59:09.000+09:00"
     },
-    "NVO": {
-      "price": 43.26,
-      "currency": "USD",
-      "timestamp": "2026-09-19T08:59:54.000+09:00"
-    },
-    "AMAT": {
-      "price": 443.55,
-      "currency": "USD",
-      "timestamp": "2026-09-19T08:59:57.000+09:00"
-    },
     "KLAC": {
       "price": 177.01,
       "currency": "USD",
@@ -182,7 +182,7 @@
       "rate": 1391.6,
       "mid_rate": 1391.1,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-21T02:05:02+09:00"
+      "fetched_at": "2026-09-21T02:06:01+09:00"
     }
   }
 }
