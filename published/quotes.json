@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-21T08:54:02+09:00",
+  "fetched_at": "2026-09-21T08:55:02+09:00",
   "quotes": {
     "000660": {
       "price": 1872000.0,
@@ -60,6 +60,11 @@
       "price": 557.75,
       "currency": "USD",
       "timestamp": "2026-09-19T08:59:59.000+09:00"
+    },
+    "ASML": {
+      "price": 1673.5,
+      "currency": "USD",
+      "timestamp": "2026-09-19T08:59:41.000+09:00"
     },
     "CAT": {
       "price": 809.0,
@@ -170,19 +175,14 @@
       "price": 442.08,
       "currency": "USD",
       "timestamp": "2026-09-19T08:59:09.000+09:00"
-    },
-    "ASML": {
-      "price": 1673.5,
-      "currency": "USD",
-      "timestamp": "2026-09-19T08:59:41.000+09:00"
     }
   },
   "fx": {
     "usdkrw": {
-      "rate": 1385.8,
-      "mid_rate": 1385.4,
-      "basis_point": 3.0,
-      "fetched_at": "2026-09-21T08:54:02+09:00"
+      "rate": 1386.0,
+      "mid_rate": 1385.45,
+      "basis_point": 4.0,
+      "fetched_at": "2026-09-21T08:55:02+09:00"
     }
   }
 }
