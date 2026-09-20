@@ -16,6 +16,7 @@ Streamlit Cloud 용 **읽기 전용** 예측 대시보드 (다크).
 로컬 확인:
     streamlit run streamlit_app.py
 """
+
 from __future__ import annotations
 
 from zoneinfo import ZoneInfo
@@ -30,6 +31,12 @@ import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 from plotly.subplots import make_subplots
+
+st.set_page_config(
+    page_title="ChipForecast",
+    page_icon="📈",
+    layout="wide",
+)
 
 ROOT = Path(__file__).resolve().parent
 KST = ZoneInfo("Asia/Seoul")
