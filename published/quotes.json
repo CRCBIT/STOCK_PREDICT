@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-20T13:06:02+09:00",
+  "fetched_at": "2026-09-20T13:07:01+09:00",
   "quotes": {
     "000660": {
       "price": 1849000.0,
@@ -51,11 +51,6 @@
       "currency": "USD",
       "timestamp": "2026-09-19T08:59:46.000+09:00"
     },
-    "AMAT": {
-      "price": 443.55,
-      "currency": "USD",
-      "timestamp": "2026-09-19T08:59:57.000+09:00"
-    },
     "AMD": {
       "price": 557.75,
       "currency": "USD",
@@ -76,6 +71,11 @@
       "currency": "USD",
       "timestamp": "2026-09-19T08:59:59.000+09:00"
     },
+    "KLAC": {
+      "price": 177.01,
+      "currency": "USD",
+      "timestamp": "2026-09-19T08:59:57.000+09:00"
+    },
     "LLY": {
       "price": 1153.6,
       "currency": "USD",
@@ -85,11 +85,6 @@
       "price": 146.49,
       "currency": "USD",
       "timestamp": "2026-09-19T08:58:14.000+09:00"
-    },
-    "MRNA": {
-      "price": 153.9,
-      "currency": "USD",
-      "timestamp": "2026-09-19T08:59:21.000+09:00"
     },
     "MSFT": {
       "price": 493.9,
@@ -146,11 +141,6 @@
       "currency": "USD",
       "timestamp": "2026-09-19T08:59:57.000+09:00"
     },
-    "STX": {
-      "price": 861.25,
-      "currency": "USD",
-      "timestamp": "2026-09-19T08:58:31.000+09:00"
-    },
     "TSLA": {
       "price": 364.18,
       "currency": "USD",
@@ -166,13 +156,23 @@
       "currency": "USD",
       "timestamp": "2026-09-19T08:59:54.000+09:00"
     },
+    "MRNA": {
+      "price": 153.9,
+      "currency": "USD",
+      "timestamp": "2026-09-19T08:59:21.000+09:00"
+    },
+    "STX": {
+      "price": 861.25,
+      "currency": "USD",
+      "timestamp": "2026-09-19T08:58:31.000+09:00"
+    },
     "WDC": {
       "price": 442.08,
       "currency": "USD",
       "timestamp": "2026-09-19T08:59:09.000+09:00"
     },
-    "KLAC": {
-      "price": 177.01,
+    "AMAT": {
+      "price": 443.55,
       "currency": "USD",
       "timestamp": "2026-09-19T08:59:57.000+09:00"
     }
@@ -182,7 +182,7 @@
       "rate": 1391.6,
       "mid_rate": 1391.1,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-20T13:06:02+09:00"
+      "fetched_at": "2026-09-20T13:07:01+09:00"
     }
   }
 }
