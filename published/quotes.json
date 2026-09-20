@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-21T00:54:02+09:00",
+  "fetched_at": "2026-09-21T00:55:02+09:00",
   "quotes": {
     "000660": {
       "price": 1849000.0,
@@ -66,11 +66,6 @@
       "currency": "USD",
       "timestamp": "2026-09-19T08:59:41.000+09:00"
     },
-    "CAT": {
-      "price": 809.0,
-      "currency": "USD",
-      "timestamp": "2026-09-19T08:35:31.000+09:00"
-    },
     "GOOGL": {
       "price": 350.83,
       "currency": "USD",
@@ -105,16 +100,6 @@
       "price": 222.51,
       "currency": "USD",
       "timestamp": "2026-09-19T08:59:48.000+09:00"
-    },
-    "NVO": {
-      "price": 43.26,
-      "currency": "USD",
-      "timestamp": "2026-09-19T08:59:54.000+09:00"
-    },
-    "OKLO": {
-      "price": 38.11,
-      "currency": "USD",
-      "timestamp": "2026-09-19T08:59:44.000+09:00"
     },
     "PFE": {
       "price": 27.62,
@@ -156,11 +141,6 @@
       "currency": "USD",
       "timestamp": "2026-09-19T08:59:58.000+09:00"
     },
-    "TSM": {
-      "price": 433.36,
-      "currency": "USD",
-      "timestamp": "2026-09-19T08:59:58.000+09:00"
-    },
     "VST": {
       "price": 141.3481,
       "currency": "USD",
@@ -170,6 +150,26 @@
       "price": 442.08,
       "currency": "USD",
       "timestamp": "2026-09-19T08:59:09.000+09:00"
+    },
+    "NVO": {
+      "price": 43.26,
+      "currency": "USD",
+      "timestamp": "2026-09-19T08:59:54.000+09:00"
+    },
+    "OKLO": {
+      "price": 38.11,
+      "currency": "USD",
+      "timestamp": "2026-09-19T08:59:44.000+09:00"
+    },
+    "TSM": {
+      "price": 433.36,
+      "currency": "USD",
+      "timestamp": "2026-09-19T08:59:58.000+09:00"
+    },
+    "CAT": {
+      "price": 809.0,
+      "currency": "USD",
+      "timestamp": "2026-09-19T08:35:31.000+09:00"
     },
     "KLAC": {
       "price": 177.01,
@@ -182,7 +182,7 @@
       "rate": 1391.6,
       "mid_rate": 1391.1,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-21T00:54:02+09:00"
+      "fetched_at": "2026-09-21T00:55:02+09:00"
     }
   }
 }
