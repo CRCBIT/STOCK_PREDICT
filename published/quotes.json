@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-21T06:41:01+09:00",
+  "fetched_at": "2026-09-21T06:42:01+09:00",
   "quotes": {
     "000660": {
       "price": 1849000.0,
@@ -131,6 +131,11 @@
       "currency": "USD",
       "timestamp": "2026-09-19T08:59:30.000+09:00"
     },
+    "SMR": {
+      "price": 8.32,
+      "currency": "USD",
+      "timestamp": "2026-09-19T08:59:37.000+09:00"
+    },
     "SNDK": {
       "price": 1798.0,
       "currency": "USD",
@@ -166,11 +171,6 @@
       "currency": "USD",
       "timestamp": "2026-09-19T08:59:09.000+09:00"
     },
-    "SMR": {
-      "price": 8.32,
-      "currency": "USD",
-      "timestamp": "2026-09-19T08:59:37.000+09:00"
-    },
     "KLAC": {
       "price": 177.01,
       "currency": "USD",
@@ -182,7 +182,7 @@
       "rate": 1390.6,
       "mid_rate": 1390.1,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-21T06:41:01+09:00"
+      "fetched_at": "2026-09-21T06:42:01+09:00"
     }
   }
 }
