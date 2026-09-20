@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-21T05:11:02+09:00",
+  "fetched_at": "2026-09-21T05:12:02+09:00",
   "quotes": {
     "000660": {
       "price": 1849000.0,
@@ -91,11 +91,6 @@
       "currency": "USD",
       "timestamp": "2026-09-19T08:58:14.000+09:00"
     },
-    "MRNA": {
-      "price": 153.9,
-      "currency": "USD",
-      "timestamp": "2026-09-19T08:59:21.000+09:00"
-    },
     "MSFT": {
       "price": 493.9,
       "currency": "USD",
@@ -106,10 +101,20 @@
       "currency": "USD",
       "timestamp": "2026-09-19T08:59:58.000+09:00"
     },
+    "NVDA": {
+      "price": 222.51,
+      "currency": "USD",
+      "timestamp": "2026-09-19T08:59:48.000+09:00"
+    },
     "NVO": {
       "price": 43.26,
       "currency": "USD",
       "timestamp": "2026-09-19T08:59:54.000+09:00"
+    },
+    "OKLO": {
+      "price": 38.11,
+      "currency": "USD",
+      "timestamp": "2026-09-19T08:59:44.000+09:00"
     },
     "PFE": {
       "price": 27.62,
@@ -166,15 +171,10 @@
       "currency": "USD",
       "timestamp": "2026-09-19T08:59:09.000+09:00"
     },
-    "NVDA": {
-      "price": 222.51,
+    "MRNA": {
+      "price": 153.9,
       "currency": "USD",
-      "timestamp": "2026-09-19T08:59:48.000+09:00"
-    },
-    "OKLO": {
-      "price": 38.11,
-      "currency": "USD",
-      "timestamp": "2026-09-19T08:59:44.000+09:00"
+      "timestamp": "2026-09-19T08:59:21.000+09:00"
     }
   },
   "fx": {
@@ -182,7 +182,7 @@
       "rate": 1391.6,
       "mid_rate": 1391.1,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-21T05:11:02+09:00"
+      "fetched_at": "2026-09-21T05:12:02+09:00"
     }
   }
 }
