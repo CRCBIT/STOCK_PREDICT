@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-21T07:46:02+09:00",
+  "fetched_at": "2026-09-21T07:47:02+09:00",
   "quotes": {
     "000660": {
       "price": 1849000.0,
@@ -51,11 +51,6 @@
       "currency": "USD",
       "timestamp": "2026-09-19T08:59:46.000+09:00"
     },
-    "AMAT": {
-      "price": 443.55,
-      "currency": "USD",
-      "timestamp": "2026-09-19T08:59:57.000+09:00"
-    },
     "AMD": {
       "price": 557.75,
       "currency": "USD",
@@ -86,10 +81,20 @@
       "currency": "USD",
       "timestamp": "2026-09-19T08:59:52.000+09:00"
     },
+    "MRK": {
+      "price": 146.49,
+      "currency": "USD",
+      "timestamp": "2026-09-19T08:58:14.000+09:00"
+    },
     "MRNA": {
       "price": 153.9,
       "currency": "USD",
       "timestamp": "2026-09-19T08:59:21.000+09:00"
+    },
+    "MSFT": {
+      "price": 493.9,
+      "currency": "USD",
+      "timestamp": "2026-09-19T08:59:46.000+09:00"
     },
     "MU": {
       "price": 1017.75,
@@ -121,10 +126,10 @@
       "currency": "USD",
       "timestamp": "2026-09-19T08:59:58.000+09:00"
     },
-    "RAM": {
-      "price": 13.52,
+    "SMR": {
+      "price": 8.32,
       "currency": "USD",
-      "timestamp": "2026-09-19T08:59:30.000+09:00"
+      "timestamp": "2026-09-19T08:59:37.000+09:00"
     },
     "SNDK": {
       "price": 1798.0,
@@ -161,28 +166,23 @@
       "currency": "USD",
       "timestamp": "2026-09-19T08:59:09.000+09:00"
     },
-    "SMR": {
-      "price": 8.32,
+    "RAM": {
+      "price": 13.52,
       "currency": "USD",
-      "timestamp": "2026-09-19T08:59:37.000+09:00"
+      "timestamp": "2026-09-19T08:59:30.000+09:00"
     },
-    "MRK": {
-      "price": 146.49,
+    "AMAT": {
+      "price": 443.55,
       "currency": "USD",
-      "timestamp": "2026-09-19T08:58:14.000+09:00"
-    },
-    "MSFT": {
-      "price": 493.9,
-      "currency": "USD",
-      "timestamp": "2026-09-19T08:59:46.000+09:00"
+      "timestamp": "2026-09-19T08:59:57.000+09:00"
     }
   },
   "fx": {
     "usdkrw": {
-      "rate": 1386.9,
-      "mid_rate": 1386.4,
+      "rate": 1386.4,
+      "mid_rate": 1385.9,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-21T07:46:02+09:00"
+      "fetched_at": "2026-09-21T07:47:02+09:00"
     }
   }
 }
