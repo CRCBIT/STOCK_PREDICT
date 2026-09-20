@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-20T17:14:02+09:00",
+  "fetched_at": "2026-09-20T17:15:01+09:00",
   "quotes": {
     "000660": {
       "price": 1849000.0,
@@ -50,6 +50,11 @@
       "price": 334.77,
       "currency": "USD",
       "timestamp": "2026-09-19T08:59:46.000+09:00"
+    },
+    "AMAT": {
+      "price": 443.55,
+      "currency": "USD",
+      "timestamp": "2026-09-19T08:59:57.000+09:00"
     },
     "AMD": {
       "price": 557.75,
@@ -151,6 +156,11 @@
       "currency": "USD",
       "timestamp": "2026-09-19T08:59:58.000+09:00"
     },
+    "TSM": {
+      "price": 433.36,
+      "currency": "USD",
+      "timestamp": "2026-09-19T08:59:58.000+09:00"
+    },
     "VST": {
       "price": 141.3481,
       "currency": "USD",
@@ -160,16 +170,6 @@
       "price": 442.08,
       "currency": "USD",
       "timestamp": "2026-09-19T08:59:09.000+09:00"
-    },
-    "TSM": {
-      "price": 433.36,
-      "currency": "USD",
-      "timestamp": "2026-09-19T08:59:58.000+09:00"
-    },
-    "AMAT": {
-      "price": 443.55,
-      "currency": "USD",
-      "timestamp": "2026-09-19T08:59:57.000+09:00"
     },
     "KLAC": {
       "price": 177.01,
@@ -182,7 +182,7 @@
       "rate": 1391.6,
       "mid_rate": 1391.1,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-20T17:14:02+09:00"
+      "fetched_at": "2026-09-20T17:15:01+09:00"
     }
   }
 }
