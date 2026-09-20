@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-20T20:55:01+09:00",
+  "fetched_at": "2026-09-20T20:56:02+09:00",
   "quotes": {
     "000660": {
       "price": 1849000.0,
@@ -51,6 +51,11 @@
       "currency": "USD",
       "timestamp": "2026-09-19T08:59:46.000+09:00"
     },
+    "AMAT": {
+      "price": 443.55,
+      "currency": "USD",
+      "timestamp": "2026-09-19T08:59:57.000+09:00"
+    },
     "AMD": {
       "price": 557.75,
       "currency": "USD",
@@ -101,16 +106,6 @@
       "currency": "USD",
       "timestamp": "2026-09-19T08:59:48.000+09:00"
     },
-    "NVO": {
-      "price": 43.26,
-      "currency": "USD",
-      "timestamp": "2026-09-19T08:59:54.000+09:00"
-    },
-    "OKLO": {
-      "price": 38.11,
-      "currency": "USD",
-      "timestamp": "2026-09-19T08:59:44.000+09:00"
-    },
     "PFE": {
       "price": 27.62,
       "currency": "USD",
@@ -125,11 +120,6 @@
       "price": 13.52,
       "currency": "USD",
       "timestamp": "2026-09-19T08:59:30.000+09:00"
-    },
-    "SMR": {
-      "price": 8.32,
-      "currency": "USD",
-      "timestamp": "2026-09-19T08:59:37.000+09:00"
     },
     "SNDK": {
       "price": 1798.0,
@@ -166,15 +156,25 @@
       "currency": "USD",
       "timestamp": "2026-09-19T08:59:09.000+09:00"
     },
+    "SMR": {
+      "price": 8.32,
+      "currency": "USD",
+      "timestamp": "2026-09-19T08:59:37.000+09:00"
+    },
     "MRNA": {
       "price": 153.9,
       "currency": "USD",
       "timestamp": "2026-09-19T08:59:21.000+09:00"
     },
-    "AMAT": {
-      "price": 443.55,
+    "NVO": {
+      "price": 43.26,
       "currency": "USD",
-      "timestamp": "2026-09-19T08:59:57.000+09:00"
+      "timestamp": "2026-09-19T08:59:54.000+09:00"
+    },
+    "OKLO": {
+      "price": 38.11,
+      "currency": "USD",
+      "timestamp": "2026-09-19T08:59:44.000+09:00"
     }
   },
   "fx": {
@@ -182,7 +182,7 @@
       "rate": 1391.6,
       "mid_rate": 1391.1,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-20T20:55:01+09:00"
+      "fetched_at": "2026-09-20T20:56:02+09:00"
     }
   }
 }
