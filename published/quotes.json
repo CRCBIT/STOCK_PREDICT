@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-09-26T19:34:01+09:00",
+  "fetched_at": "2026-09-26T19:35:01+09:00",
   "quotes": {
     "000660": {
       "price": 1863000.0,
@@ -81,6 +81,11 @@
       "currency": "USD",
       "timestamp": "2026-09-26T08:58:08.000+09:00"
     },
+    "MRK": {
+      "price": 148.88,
+      "currency": "USD",
+      "timestamp": "2026-09-26T08:58:23.000+09:00"
+    },
     "MRNA": {
       "price": 197.8183,
       "currency": "USD",
@@ -136,6 +141,11 @@
       "currency": "USD",
       "timestamp": "2026-09-26T08:59:56.000+09:00"
     },
+    "SPCX": {
+      "price": 148.78,
+      "currency": "USD",
+      "timestamp": "2026-09-26T08:59:53.000+09:00"
+    },
     "STX": {
       "price": 915.2328,
       "currency": "USD",
@@ -156,20 +166,10 @@
       "currency": "USD",
       "timestamp": "2026-09-26T08:59:29.000+09:00"
     },
-    "SPCX": {
-      "price": 148.78,
-      "currency": "USD",
-      "timestamp": "2026-09-26T08:59:53.000+09:00"
-    },
     "VST": {
       "price": 138.7586,
       "currency": "USD",
       "timestamp": "2026-09-26T08:59:42.000+09:00"
-    },
-    "MRK": {
-      "price": 148.88,
-      "currency": "USD",
-      "timestamp": "2026-09-26T08:58:23.000+09:00"
     },
     "KLAC": {
       "price": 188.21,
@@ -182,7 +182,7 @@
       "rate": 1362.6,
       "mid_rate": 1362.1,
       "basis_point": 4.0,
-      "fetched_at": "2026-09-26T19:34:01+09:00"
+      "fetched_at": "2026-09-26T19:35:01+09:00"
     }
   }
 }
