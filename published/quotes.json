@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-03T11:51:02+09:00",
+  "fetched_at": "2026-10-03T11:52:02+09:00",
   "quotes": {
     "000660": {
       "price": 1841000.0,
@@ -81,15 +81,15 @@
       "currency": "USD",
       "timestamp": "2026-10-03T08:59:57.000+09:00"
     },
+    "IBIT": {
+      "price": 47.83,
+      "currency": "USD",
+      "timestamp": "2026-10-03T08:59:40.000+09:00"
+    },
     "KLAC": {
       "price": 207.35,
       "currency": "USD",
       "timestamp": "2026-10-03T08:55:09.000+09:00"
-    },
-    "LLY": {
-      "price": 1144.475,
-      "currency": "USD",
-      "timestamp": "2026-10-03T08:59:59.000+09:00"
     },
     "MRK": {
       "price": 144.19,
@@ -141,11 +141,6 @@
       "currency": "USD",
       "timestamp": "2026-10-03T08:59:29.000+09:00"
     },
-    "SMR": {
-      "price": 7.79,
-      "currency": "USD",
-      "timestamp": "2026-10-03T08:59:55.000+09:00"
-    },
     "SNDK": {
       "price": 1717.27,
       "currency": "USD",
@@ -181,15 +176,20 @@
       "currency": "USD",
       "timestamp": "2026-10-03T08:59:59.000+09:00"
     },
+    "SMR": {
+      "price": 7.79,
+      "currency": "USD",
+      "timestamp": "2026-10-03T08:59:55.000+09:00"
+    },
     "ETHA": {
       "price": 20.1195,
       "currency": "USD",
       "timestamp": "2026-10-03T08:59:50.000+09:00"
     },
-    "IBIT": {
-      "price": 47.83,
+    "LLY": {
+      "price": 1144.475,
       "currency": "USD",
-      "timestamp": "2026-10-03T08:59:40.000+09:00"
+      "timestamp": "2026-10-03T08:59:59.000+09:00"
     }
   },
   "fx": {
@@ -197,7 +197,7 @@
       "rate": 1349.0,
       "mid_rate": 1348.5,
       "basis_point": 4.0,
-      "fetched_at": "2026-10-03T11:51:02+09:00"
+      "fetched_at": "2026-10-03T11:52:02+09:00"
     }
   }
 }
