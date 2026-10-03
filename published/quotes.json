@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-04T02:33:02+09:00",
+  "fetched_at": "2026-10-04T02:34:02+09:00",
   "quotes": {
     "000660": {
       "price": 1841000.0,
@@ -126,11 +126,6 @@
       "currency": "USD",
       "timestamp": "2026-10-03T08:59:59.000+09:00"
     },
-    "PFE": {
-      "price": 27.81,
-      "currency": "USD",
-      "timestamp": "2026-10-03T08:59:53.000+09:00"
-    },
     "PLTR": {
       "price": 188.9,
       "currency": "USD",
@@ -166,11 +161,6 @@
       "currency": "USD",
       "timestamp": "2026-10-03T08:59:59.000+09:00"
     },
-    "TSM": {
-      "price": 473.06,
-      "currency": "USD",
-      "timestamp": "2026-10-03T08:59:52.000+09:00"
-    },
     "VST": {
       "price": 143.92,
       "currency": "USD",
@@ -190,6 +180,16 @@
       "price": 144.19,
       "currency": "USD",
       "timestamp": "2026-10-03T08:47:36.000+09:00"
+    },
+    "TSM": {
+      "price": 473.06,
+      "currency": "USD",
+      "timestamp": "2026-10-03T08:59:52.000+09:00"
+    },
+    "PFE": {
+      "price": 27.81,
+      "currency": "USD",
+      "timestamp": "2026-10-03T08:59:53.000+09:00"
     }
   },
   "fx": {
@@ -197,7 +197,7 @@
       "rate": 1351.0,
       "mid_rate": 1350.5,
       "basis_point": 4.0,
-      "fetched_at": "2026-10-04T02:33:02+09:00"
+      "fetched_at": "2026-10-04T02:34:02+09:00"
     }
   }
 }
