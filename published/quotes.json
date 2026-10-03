@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-03T10:48:02+09:00",
+  "fetched_at": "2026-10-03T10:49:01+09:00",
   "quotes": {
     "000660": {
       "price": 1841000.0,
@@ -81,11 +81,6 @@
       "currency": "USD",
       "timestamp": "2026-10-03T08:59:57.000+09:00"
     },
-    "LLY": {
-      "price": 1144.475,
-      "currency": "USD",
-      "timestamp": "2026-10-03T08:59:59.000+09:00"
-    },
     "MRK": {
       "price": 144.19,
       "currency": "USD",
@@ -151,6 +146,16 @@
       "currency": "USD",
       "timestamp": "2026-10-03T08:59:59.000+09:00"
     },
+    "STX": {
+      "price": 846.63,
+      "currency": "USD",
+      "timestamp": "2026-10-03T08:59:59.000+09:00"
+    },
+    "TSLA": {
+      "price": 371.4476,
+      "currency": "USD",
+      "timestamp": "2026-10-03T08:59:59.000+09:00"
+    },
     "TSM": {
       "price": 473.06,
       "currency": "USD",
@@ -171,13 +176,8 @@
       "currency": "USD",
       "timestamp": "2026-10-03T08:59:50.000+09:00"
     },
-    "STX": {
-      "price": 846.63,
-      "currency": "USD",
-      "timestamp": "2026-10-03T08:59:59.000+09:00"
-    },
-    "TSLA": {
-      "price": 371.4476,
+    "LLY": {
+      "price": 1144.475,
       "currency": "USD",
       "timestamp": "2026-10-03T08:59:59.000+09:00"
     },
@@ -197,7 +197,7 @@
       "rate": 1349.0,
       "mid_rate": 1348.5,
       "basis_point": 4.0,
-      "fetched_at": "2026-10-03T10:48:02+09:00"
+      "fetched_at": "2026-10-03T10:49:01+09:00"
     }
   }
 }
