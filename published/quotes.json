@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-04T08:39:01+09:00",
+  "fetched_at": "2026-10-04T08:40:02+09:00",
   "quotes": {
     "000660": {
       "price": 1841000.0,
@@ -81,6 +81,16 @@
       "currency": "USD",
       "timestamp": "2026-10-03T08:59:57.000+09:00"
     },
+    "KLAC": {
+      "price": 207.35,
+      "currency": "USD",
+      "timestamp": "2026-10-03T08:55:09.000+09:00"
+    },
+    "LLY": {
+      "price": 1144.475,
+      "currency": "USD",
+      "timestamp": "2026-10-03T08:59:59.000+09:00"
+    },
     "MRK": {
       "price": 144.19,
       "currency": "USD",
@@ -105,16 +115,6 @@
       "price": 234.2218,
       "currency": "USD",
       "timestamp": "2026-10-03T08:59:58.000+09:00"
-    },
-    "NVO": {
-      "price": 37.26,
-      "currency": "USD",
-      "timestamp": "2026-10-03T08:57:10.000+09:00"
-    },
-    "OKLO": {
-      "price": 35.97,
-      "currency": "USD",
-      "timestamp": "2026-10-03T08:59:59.000+09:00"
     },
     "PFE": {
       "price": 27.81,
@@ -171,13 +171,18 @@
       "currency": "USD",
       "timestamp": "2026-10-03T08:59:59.000+09:00"
     },
+    "NVO": {
+      "price": 37.26,
+      "currency": "USD",
+      "timestamp": "2026-10-03T08:57:10.000+09:00"
+    },
     "ETHA": {
       "price": 20.1195,
       "currency": "USD",
       "timestamp": "2026-10-03T08:59:50.000+09:00"
     },
-    "LLY": {
-      "price": 1144.475,
+    "OKLO": {
+      "price": 35.97,
       "currency": "USD",
       "timestamp": "2026-10-03T08:59:59.000+09:00"
     },
@@ -185,11 +190,6 @@
       "price": 47.83,
       "currency": "USD",
       "timestamp": "2026-10-03T08:59:40.000+09:00"
-    },
-    "KLAC": {
-      "price": 207.35,
-      "currency": "USD",
-      "timestamp": "2026-10-03T08:55:09.000+09:00"
     }
   },
   "fx": {
@@ -197,7 +197,7 @@
       "rate": 1351.0,
       "mid_rate": 1350.5,
       "basis_point": 4.0,
-      "fetched_at": "2026-10-04T08:39:01+09:00"
+      "fetched_at": "2026-10-04T08:40:02+09:00"
     }
   }
 }
