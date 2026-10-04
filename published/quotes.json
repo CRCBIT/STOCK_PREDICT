@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-04T10:21:02+09:00",
+  "fetched_at": "2026-10-04T10:22:01+09:00",
   "quotes": {
     "000660": {
       "price": 1841000.0,
@@ -55,11 +55,6 @@
       "price": 333.54,
       "currency": "USD",
       "timestamp": "2026-10-03T08:59:53.000+09:00"
-    },
-    "AMAT": {
-      "price": 539.6,
-      "currency": "USD",
-      "timestamp": "2026-10-03T08:59:45.000+09:00"
     },
     "AMD": {
       "price": 633.0,
@@ -136,6 +131,11 @@
       "currency": "USD",
       "timestamp": "2026-10-03T08:59:59.000+09:00"
     },
+    "RAM": {
+      "price": 14.21,
+      "currency": "USD",
+      "timestamp": "2026-10-03T08:59:29.000+09:00"
+    },
     "SMR": {
       "price": 7.79,
       "currency": "USD",
@@ -145,6 +145,11 @@
       "price": 1717.27,
       "currency": "USD",
       "timestamp": "2026-10-03T08:59:55.000+09:00"
+    },
+    "SPCX": {
+      "price": 159.12,
+      "currency": "USD",
+      "timestamp": "2026-10-03T08:59:59.000+09:00"
     },
     "STX": {
       "price": 846.63,
@@ -171,20 +176,15 @@
       "currency": "USD",
       "timestamp": "2026-10-03T08:59:59.000+09:00"
     },
-    "SPCX": {
-      "price": 159.12,
-      "currency": "USD",
-      "timestamp": "2026-10-03T08:59:59.000+09:00"
-    },
     "ETHA": {
       "price": 20.1195,
       "currency": "USD",
       "timestamp": "2026-10-03T08:59:50.000+09:00"
     },
-    "RAM": {
-      "price": 14.21,
+    "AMAT": {
+      "price": 539.6,
       "currency": "USD",
-      "timestamp": "2026-10-03T08:59:29.000+09:00"
+      "timestamp": "2026-10-03T08:59:45.000+09:00"
     },
     "IBIT": {
       "price": 47.83,
@@ -197,7 +197,7 @@
       "rate": 1351.0,
       "mid_rate": 1350.5,
       "basis_point": 4.0,
-      "fetched_at": "2026-10-04T10:21:02+09:00"
+      "fetched_at": "2026-10-04T10:22:01+09:00"
     }
   }
 }
