@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-05T07:19:02+09:00",
+  "fetched_at": "2026-10-05T07:20:01+09:00",
   "quotes": {
     "000660": {
       "price": 1841000.0,
@@ -56,15 +56,15 @@
       "currency": "USD",
       "timestamp": "2026-10-03T08:59:53.000+09:00"
     },
-    "AMAT": {
-      "price": 539.6,
-      "currency": "USD",
-      "timestamp": "2026-10-03T08:59:45.000+09:00"
-    },
     "AMD": {
       "price": 633.0,
       "currency": "USD",
       "timestamp": "2026-10-03T08:59:51.000+09:00"
+    },
+    "ASML": {
+      "price": 1865.92,
+      "currency": "USD",
+      "timestamp": "2026-10-03T08:59:13.000+09:00"
     },
     "CAT": {
       "price": 848.01,
@@ -80,11 +80,6 @@
       "price": 207.35,
       "currency": "USD",
       "timestamp": "2026-10-03T08:55:09.000+09:00"
-    },
-    "LLY": {
-      "price": 1144.475,
-      "currency": "USD",
-      "timestamp": "2026-10-03T08:59:59.000+09:00"
     },
     "MRK": {
       "price": 144.19,
@@ -151,11 +146,6 @@
       "currency": "USD",
       "timestamp": "2026-10-03T08:59:59.000+09:00"
     },
-    "STX": {
-      "price": 846.63,
-      "currency": "USD",
-      "timestamp": "2026-10-03T08:59:59.000+09:00"
-    },
     "TSLA": {
       "price": 371.4476,
       "currency": "USD",
@@ -181,10 +171,20 @@
       "currency": "USD",
       "timestamp": "2026-10-03T08:59:50.000+09:00"
     },
-    "ASML": {
-      "price": 1865.92,
+    "STX": {
+      "price": 846.63,
       "currency": "USD",
-      "timestamp": "2026-10-03T08:59:13.000+09:00"
+      "timestamp": "2026-10-03T08:59:59.000+09:00"
+    },
+    "LLY": {
+      "price": 1144.475,
+      "currency": "USD",
+      "timestamp": "2026-10-03T08:59:59.000+09:00"
+    },
+    "AMAT": {
+      "price": 539.6,
+      "currency": "USD",
+      "timestamp": "2026-10-03T08:59:45.000+09:00"
     },
     "IBIT": {
       "price": 47.83,
@@ -197,7 +197,7 @@
       "rate": 1349.0,
       "mid_rate": 1348.5,
       "basis_point": 4.0,
-      "fetched_at": "2026-10-05T07:19:02+09:00"
+      "fetched_at": "2026-10-05T07:20:01+09:00"
     }
   }
 }
