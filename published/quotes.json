@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-04T15:25:01+09:00",
+  "fetched_at": "2026-10-04T15:26:02+09:00",
   "quotes": {
     "000660": {
       "price": 1841000.0,
@@ -76,11 +76,6 @@
       "currency": "USD",
       "timestamp": "2026-10-03T08:59:51.000+09:00"
     },
-    "ETHA": {
-      "price": 20.1195,
-      "currency": "USD",
-      "timestamp": "2026-10-03T08:59:50.000+09:00"
-    },
     "GOOGL": {
       "price": 343.25,
       "currency": "USD",
@@ -91,10 +86,20 @@
       "currency": "USD",
       "timestamp": "2026-10-03T08:59:40.000+09:00"
     },
+    "KLAC": {
+      "price": 207.35,
+      "currency": "USD",
+      "timestamp": "2026-10-03T08:55:09.000+09:00"
+    },
     "LLY": {
       "price": 1144.475,
       "currency": "USD",
       "timestamp": "2026-10-03T08:59:59.000+09:00"
+    },
+    "MRK": {
+      "price": 144.19,
+      "currency": "USD",
+      "timestamp": "2026-10-03T08:47:36.000+09:00"
     },
     "MRNA": {
       "price": 189.4,
@@ -116,10 +121,10 @@
       "currency": "USD",
       "timestamp": "2026-10-03T08:59:58.000+09:00"
     },
-    "OKLO": {
-      "price": 35.97,
+    "NVO": {
+      "price": 37.26,
       "currency": "USD",
-      "timestamp": "2026-10-03T08:59:59.000+09:00"
+      "timestamp": "2026-10-03T08:57:10.000+09:00"
     },
     "PFE": {
       "price": 27.81,
@@ -130,6 +135,11 @@
       "price": 188.9,
       "currency": "USD",
       "timestamp": "2026-10-03T08:59:59.000+09:00"
+    },
+    "RAM": {
+      "price": 14.21,
+      "currency": "USD",
+      "timestamp": "2026-10-03T08:59:29.000+09:00"
     },
     "SMR": {
       "price": 7.79,
@@ -171,25 +181,15 @@
       "currency": "USD",
       "timestamp": "2026-10-03T08:59:59.000+09:00"
     },
-    "NVO": {
-      "price": 37.26,
+    "ETHA": {
+      "price": 20.1195,
       "currency": "USD",
-      "timestamp": "2026-10-03T08:57:10.000+09:00"
+      "timestamp": "2026-10-03T08:59:50.000+09:00"
     },
-    "MRK": {
-      "price": 144.19,
+    "OKLO": {
+      "price": 35.97,
       "currency": "USD",
-      "timestamp": "2026-10-03T08:47:36.000+09:00"
-    },
-    "RAM": {
-      "price": 14.21,
-      "currency": "USD",
-      "timestamp": "2026-10-03T08:59:29.000+09:00"
-    },
-    "KLAC": {
-      "price": 207.35,
-      "currency": "USD",
-      "timestamp": "2026-10-03T08:55:09.000+09:00"
+      "timestamp": "2026-10-03T08:59:59.000+09:00"
     }
   },
   "fx": {
@@ -197,7 +197,7 @@
       "rate": 1351.0,
       "mid_rate": 1350.5,
       "basis_point": 4.0,
-      "fetched_at": "2026-10-04T15:25:01+09:00"
+      "fetched_at": "2026-10-04T15:26:02+09:00"
     }
   }
 }
