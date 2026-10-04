@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-04T10:14:02+09:00",
+  "fetched_at": "2026-10-04T10:15:01+09:00",
   "quotes": {
     "000660": {
       "price": 1841000.0,
@@ -111,6 +111,11 @@
       "currency": "USD",
       "timestamp": "2026-10-03T08:59:59.000+09:00"
     },
+    "NVDA": {
+      "price": 234.2218,
+      "currency": "USD",
+      "timestamp": "2026-10-03T08:59:58.000+09:00"
+    },
     "NVO": {
       "price": 37.26,
       "currency": "USD",
@@ -171,11 +176,6 @@
       "currency": "USD",
       "timestamp": "2026-10-03T08:59:59.000+09:00"
     },
-    "NVDA": {
-      "price": 234.2218,
-      "currency": "USD",
-      "timestamp": "2026-10-03T08:59:58.000+09:00"
-    },
     "ETHA": {
       "price": 20.1195,
       "currency": "USD",
@@ -197,7 +197,7 @@
       "rate": 1351.0,
       "mid_rate": 1350.5,
       "basis_point": 4.0,
-      "fetched_at": "2026-10-04T10:14:02+09:00"
+      "fetched_at": "2026-10-04T10:15:01+09:00"
     }
   }
 }
