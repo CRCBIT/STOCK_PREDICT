@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-04T19:47:02+09:00",
+  "fetched_at": "2026-10-04T19:48:01+09:00",
   "quotes": {
     "000660": {
       "price": 1841000.0,
@@ -111,6 +111,11 @@
       "currency": "USD",
       "timestamp": "2026-10-03T08:59:59.000+09:00"
     },
+    "MU": {
+      "price": 1069.15,
+      "currency": "USD",
+      "timestamp": "2026-10-03T08:59:59.000+09:00"
+    },
     "NVDA": {
       "price": 234.2218,
       "currency": "USD",
@@ -126,20 +131,10 @@
       "currency": "USD",
       "timestamp": "2026-10-03T08:59:59.000+09:00"
     },
-    "PFE": {
-      "price": 27.81,
-      "currency": "USD",
-      "timestamp": "2026-10-03T08:59:53.000+09:00"
-    },
     "PLTR": {
       "price": 188.9,
       "currency": "USD",
       "timestamp": "2026-10-03T08:59:59.000+09:00"
-    },
-    "RAM": {
-      "price": 14.21,
-      "currency": "USD",
-      "timestamp": "2026-10-03T08:59:29.000+09:00"
     },
     "SMR": {
       "price": 7.79,
@@ -186,10 +181,15 @@
       "currency": "USD",
       "timestamp": "2026-10-03T08:59:50.000+09:00"
     },
-    "MU": {
-      "price": 1069.15,
+    "RAM": {
+      "price": 14.21,
       "currency": "USD",
-      "timestamp": "2026-10-03T08:59:59.000+09:00"
+      "timestamp": "2026-10-03T08:59:29.000+09:00"
+    },
+    "PFE": {
+      "price": 27.81,
+      "currency": "USD",
+      "timestamp": "2026-10-03T08:59:53.000+09:00"
     }
   },
   "fx": {
@@ -197,7 +197,7 @@
       "rate": 1351.0,
       "mid_rate": 1350.5,
       "basis_point": 4.0,
-      "fetched_at": "2026-10-04T19:47:02+09:00"
+      "fetched_at": "2026-10-04T19:48:01+09:00"
     }
   }
 }
