@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-04T23:26:02+09:00",
+  "fetched_at": "2026-10-04T23:27:01+09:00",
   "quotes": {
     "000660": {
       "price": 1841000.0,
@@ -50,16 +50,6 @@
       "price": 66200.0,
       "currency": "KRW",
       "timestamp": "2026-10-02T19:59:59.000+09:00"
-    },
-    "AAPL": {
-      "price": 333.54,
-      "currency": "USD",
-      "timestamp": "2026-10-03T08:59:53.000+09:00"
-    },
-    "AMAT": {
-      "price": 539.6,
-      "currency": "USD",
-      "timestamp": "2026-10-03T08:59:45.000+09:00"
     },
     "AMD": {
       "price": 633.0,
@@ -186,6 +176,16 @@
       "currency": "USD",
       "timestamp": "2026-10-03T08:59:50.000+09:00"
     },
+    "AAPL": {
+      "price": 333.54,
+      "currency": "USD",
+      "timestamp": "2026-10-03T08:59:53.000+09:00"
+    },
+    "AMAT": {
+      "price": 539.6,
+      "currency": "USD",
+      "timestamp": "2026-10-03T08:59:45.000+09:00"
+    },
     "PFE": {
       "price": 27.81,
       "currency": "USD",
@@ -197,7 +197,7 @@
       "rate": 1351.0,
       "mid_rate": 1350.5,
       "basis_point": 4.0,
-      "fetched_at": "2026-10-04T23:26:02+09:00"
+      "fetched_at": "2026-10-04T23:27:01+09:00"
     }
   }
 }
