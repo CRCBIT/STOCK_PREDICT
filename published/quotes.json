@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-04T15:37:02+09:00",
+  "fetched_at": "2026-10-04T15:38:02+09:00",
   "quotes": {
     "000660": {
       "price": 1841000.0,
@@ -56,6 +56,11 @@
       "currency": "USD",
       "timestamp": "2026-10-03T08:59:53.000+09:00"
     },
+    "AMAT": {
+      "price": 539.6,
+      "currency": "USD",
+      "timestamp": "2026-10-03T08:59:45.000+09:00"
+    },
     "AMD": {
       "price": 633.0,
       "currency": "USD",
@@ -65,11 +70,6 @@
       "price": 1865.92,
       "currency": "USD",
       "timestamp": "2026-10-03T08:59:13.000+09:00"
-    },
-    "CAT": {
-      "price": 848.01,
-      "currency": "USD",
-      "timestamp": "2026-10-03T08:59:51.000+09:00"
     },
     "GOOGL": {
       "price": 343.25,
@@ -121,6 +121,16 @@
       "currency": "USD",
       "timestamp": "2026-10-03T08:59:59.000+09:00"
     },
+    "RAM": {
+      "price": 14.21,
+      "currency": "USD",
+      "timestamp": "2026-10-03T08:59:29.000+09:00"
+    },
+    "SMR": {
+      "price": 7.79,
+      "currency": "USD",
+      "timestamp": "2026-10-03T08:59:55.000+09:00"
+    },
     "SNDK": {
       "price": 1717.27,
       "currency": "USD",
@@ -146,40 +156,30 @@
       "currency": "USD",
       "timestamp": "2026-10-03T08:59:52.000+09:00"
     },
+    "VST": {
+      "price": 143.92,
+      "currency": "USD",
+      "timestamp": "2026-10-03T08:59:58.000+09:00"
+    },
     "WDC": {
       "price": 415.39,
       "currency": "USD",
       "timestamp": "2026-10-03T08:59:59.000+09:00"
-    },
-    "SMR": {
-      "price": 7.79,
-      "currency": "USD",
-      "timestamp": "2026-10-03T08:59:55.000+09:00"
     },
     "ETHA": {
       "price": 20.1195,
       "currency": "USD",
       "timestamp": "2026-10-03T08:59:50.000+09:00"
     },
-    "VST": {
-      "price": 143.92,
-      "currency": "USD",
-      "timestamp": "2026-10-03T08:59:58.000+09:00"
-    },
     "MRK": {
       "price": 144.19,
       "currency": "USD",
       "timestamp": "2026-10-03T08:47:36.000+09:00"
     },
-    "RAM": {
-      "price": 14.21,
+    "CAT": {
+      "price": 848.01,
       "currency": "USD",
-      "timestamp": "2026-10-03T08:59:29.000+09:00"
-    },
-    "AMAT": {
-      "price": 539.6,
-      "currency": "USD",
-      "timestamp": "2026-10-03T08:59:45.000+09:00"
+      "timestamp": "2026-10-03T08:59:51.000+09:00"
     },
     "IBIT": {
       "price": 47.83,
@@ -197,7 +197,7 @@
       "rate": 1351.0,
       "mid_rate": 1350.5,
       "basis_point": 4.0,
-      "fetched_at": "2026-10-04T15:37:02+09:00"
+      "fetched_at": "2026-10-04T15:38:02+09:00"
     }
   }
 }
