@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-05T01:36:02+09:00",
+  "fetched_at": "2026-10-05T01:37:01+09:00",
   "quotes": {
     "000660": {
       "price": 1841000.0,
@@ -56,10 +56,10 @@
       "currency": "USD",
       "timestamp": "2026-10-03T08:59:53.000+09:00"
     },
-    "AMD": {
-      "price": 633.0,
+    "AMAT": {
+      "price": 539.6,
       "currency": "USD",
-      "timestamp": "2026-10-03T08:59:51.000+09:00"
+      "timestamp": "2026-10-03T08:59:45.000+09:00"
     },
     "ASML": {
       "price": 1865.92,
@@ -71,10 +71,10 @@
       "currency": "USD",
       "timestamp": "2026-10-03T08:59:51.000+09:00"
     },
-    "GOOGL": {
-      "price": 343.25,
+    "LLY": {
+      "price": 1144.475,
       "currency": "USD",
-      "timestamp": "2026-10-03T08:59:57.000+09:00"
+      "timestamp": "2026-10-03T08:59:59.000+09:00"
     },
     "MRK": {
       "price": 144.19,
@@ -156,6 +156,16 @@
       "currency": "USD",
       "timestamp": "2026-10-03T08:59:58.000+09:00"
     },
+    "WDC": {
+      "price": 415.39,
+      "currency": "USD",
+      "timestamp": "2026-10-03T08:59:59.000+09:00"
+    },
+    "GOOGL": {
+      "price": 343.25,
+      "currency": "USD",
+      "timestamp": "2026-10-03T08:59:57.000+09:00"
+    },
     "NVO": {
       "price": 37.26,
       "currency": "USD",
@@ -166,20 +176,10 @@
       "currency": "USD",
       "timestamp": "2026-10-03T08:59:50.000+09:00"
     },
-    "LLY": {
-      "price": 1144.475,
+    "AMD": {
+      "price": 633.0,
       "currency": "USD",
-      "timestamp": "2026-10-03T08:59:59.000+09:00"
-    },
-    "WDC": {
-      "price": 415.39,
-      "currency": "USD",
-      "timestamp": "2026-10-03T08:59:59.000+09:00"
-    },
-    "AMAT": {
-      "price": 539.6,
-      "currency": "USD",
-      "timestamp": "2026-10-03T08:59:45.000+09:00"
+      "timestamp": "2026-10-03T08:59:51.000+09:00"
     },
     "IBIT": {
       "price": 47.83,
@@ -197,7 +197,7 @@
       "rate": 1351.0,
       "mid_rate": 1350.5,
       "basis_point": 4.0,
-      "fetched_at": "2026-10-05T01:36:02+09:00"
+      "fetched_at": "2026-10-05T01:37:01+09:00"
     }
   }
 }
