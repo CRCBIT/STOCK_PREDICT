@@ -1,0 +1,5862 @@
+{
+  "schema_version": 2,
+  "date_kst": "2026-08-23",
+  "generated_at": "2026-08-23T20:48:04+09:00",
+  "previous_date": "2026-08-22",
+  "prediction_count": 63,
+  "rows": [
+    {
+      "symbol": "000660",
+      "name": "SK하이닉스",
+      "horizon": 10,
+      "as_of": "2026-08-23T20:14:57+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:13:41+09:00",
+      "expected_return": 0.07616337477439905,
+      "confidence": 40.835338208240465,
+      "prob_up": 0.6246913580246914,
+      "oos_ic": -0.13231457808403407,
+      "oos_rmse": 0.13540640301726548,
+      "comparison": {
+        "symbol": "000660",
+        "horizon": 10,
+        "name": "SK하이닉스",
+        "previous_as_of": "2026-08-22T17:03:23+09:00",
+        "current_as_of": "2026-08-23T20:14:57+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:02:12+09:00",
+        "current_trained_at": "2026-08-23T20:13:41+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "baseline_moving_avg": -1.0,
+          "catboost": 0.146,
+          "elasticnet": 0.176,
+          "extra_trees": 0.174,
+          "gru": 0.16,
+          "random_forest": 0.17,
+          "ridge": 0.174
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.03895085263560838,
+            "current": 0.07616337477439905,
+            "delta": 0.037212522139
+          },
+          "current_price": {
+            "previous": 1761000.0,
+            "current": 1761000.0,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 1247899.202279647,
+            "current": 1336786.9381276583,
+            "delta": 88887.73584801122
+          },
+          "p50": {
+            "previous": 1829592.4514913063,
+            "current": 1895123.7029777167,
+            "delta": 65531.25148641039
+          },
+          "p90": {
+            "previous": 2556143.0559357186,
+            "current": 2720129.312761197,
+            "delta": 163986.25682547828
+          },
+          "prob_up": {
+            "previous": 0.5129206349206349,
+            "current": 0.6246913580246914,
+            "delta": 0.111770723104
+          },
+          "confidence": {
+            "previous": 25.0,
+            "current": 40.835338208240465,
+            "delta": 15.83533820824
+          },
+          "oos_ic": {
+            "previous": 0.1961687509837333,
+            "current": -0.13231457808403407,
+            "delta": -0.328483329068
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.5952380952380952,
+            "current": 0.5238095238095238,
+            "delta": -0.071428571429
+          },
+          "oos_rmse": {
+            "previous": 0.1299827450467769,
+            "current": 0.13540640301726548,
+            "delta": 0.00542365797
+          },
+          "baseline_rmse": {
+            "previous": 0.1297774915826292,
+            "current": 0.1297774915826292,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.8306878306878307,
+            "current": 0.8624338624338624,
+            "delta": 0.031746031746
+          }
+        }
+      }
+    },
+    {
+      "symbol": "000660",
+      "name": "SK하이닉스",
+      "horizon": 30,
+      "as_of": "2026-08-23T20:14:58+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:14:20+09:00",
+      "expected_return": 0.2924196291801173,
+      "confidence": 37.76244609774872,
+      "prob_up": 0.6339712918660287,
+      "oos_ic": 0.14547811098199792,
+      "oos_rmse": 0.2579789565222575,
+      "comparison": {
+        "symbol": "000660",
+        "horizon": 30,
+        "name": "SK하이닉스",
+        "previous_as_of": "2026-08-22T17:03:23+09:00",
+        "current_as_of": "2026-08-23T20:14:58+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:02:48+09:00",
+        "current_trained_at": "2026-08-23T20:14:20+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "baseline_moving_avg": -1.0,
+          "extra_trees": 0.176,
+          "hist_gbm": 0.163,
+          "lightgbm": 0.165,
+          "random_forest": 0.177,
+          "ridge": 0.161,
+          "xgboost": 0.159
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.18251737162894344,
+            "current": 0.2924196291801173,
+            "delta": 0.109902257551
+          },
+          "current_price": {
+            "previous": 1761000.0,
+            "current": 1761000.0,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 1152658.696364908,
+            "current": 1075731.5170721705,
+            "delta": -76927.1792927375
+          },
+          "p50": {
+            "previous": 2082413.0914385694,
+            "current": 2275950.966986187,
+            "delta": 193537.87554761744
+          },
+          "p90": {
+            "previous": 3825047.50053593,
+            "current": 4060539.612722407,
+            "delta": 235492.11218647705
+          },
+          "prob_up": {
+            "previous": 0.4365079365079365,
+            "current": 0.6339712918660287,
+            "delta": 0.197463355358
+          },
+          "confidence": {
+            "previous": 25.0,
+            "current": 37.76244609774872,
+            "delta": 12.762446097749
+          },
+          "oos_ic": {
+            "previous": 0.12827884766972,
+            "current": 0.14547811098199792,
+            "delta": 0.017199263312
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.7,
+            "current": 0.5206349206349207,
+            "delta": -0.179365079365
+          },
+          "oos_rmse": {
+            "previous": 0.2648758265775957,
+            "current": 0.2579789565222575,
+            "delta": -0.006896870055
+          },
+          "baseline_rmse": {
+            "previous": 0.25906178357228277,
+            "current": 0.25906178357228277,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.8306878306878307,
+            "current": 0.8677248677248677,
+            "delta": 0.037037037037
+          }
+        }
+      }
+    },
+    {
+      "symbol": "000660",
+      "name": "SK하이닉스",
+      "horizon": 5,
+      "as_of": "2026-08-23T20:14:57+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:13:03+09:00",
+      "expected_return": 0.052842875417063784,
+      "confidence": 40.254676901228144,
+      "prob_up": 0.583554376657825,
+      "oos_ic": -0.05113298863864873,
+      "oos_rmse": 0.09315923660318301,
+      "comparison": {
+        "symbol": "000660",
+        "horizon": 5,
+        "name": "SK하이닉스",
+        "previous_as_of": "2026-08-22T17:03:23+09:00",
+        "current_as_of": "2026-08-23T20:14:57+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:01:36+09:00",
+        "current_trained_at": "2026-08-23T20:13:03+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "baseline_moving_avg": -1.0,
+          "catboost": 0.151,
+          "elasticnet": 0.173,
+          "extra_trees": 0.168,
+          "gru": 0.162,
+          "random_forest": 0.165,
+          "ridge": 0.181
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.03094113028976042,
+            "current": 0.052842875417063784,
+            "delta": 0.021901745127
+          },
+          "current_price": {
+            "previous": 1761000.0,
+            "current": 1761000.0,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 1427940.5115895537,
+            "current": 1453653.3328754606,
+            "delta": 25712.821285906946
+          },
+          "p50": {
+            "previous": 1815487.3304402682,
+            "current": 1854056.3036094494,
+            "delta": 38568.97316918126
+          },
+          "p90": {
+            "previous": 2296482.6044726716,
+            "current": 2345015.6278263717,
+            "delta": 48533.02335370006
+          },
+          "prob_up": {
+            "previous": 0.5658914728682171,
+            "current": 0.583554376657825,
+            "delta": 0.01766290379
+          },
+          "confidence": {
+            "previous": 25.0,
+            "current": 40.254676901228144,
+            "delta": 15.254676901228
+          },
+          "oos_ic": {
+            "previous": 0.10598870827266571,
+            "current": -0.05113298863864873,
+            "delta": -0.157121696911
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.573015873015873,
+            "current": 0.5365079365079365,
+            "delta": -0.036507936508
+          },
+          "oos_rmse": {
+            "previous": 0.09164636064847892,
+            "current": 0.09315923660318301,
+            "delta": 0.001512875955
+          },
+          "baseline_rmse": {
+            "previous": 0.09178189514341896,
+            "current": 0.09178189514341896,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.8412698412698413,
+            "current": 0.8465608465608465,
+            "delta": 0.005291005291
+          }
+        }
+      }
+    },
+    {
+      "symbol": "005930",
+      "name": "삼성전자",
+      "horizon": 10,
+      "as_of": "2026-08-23T20:13:03+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:11:47+09:00",
+      "expected_return": 0.06023855867582384,
+      "confidence": 33.105433339827655,
+      "prob_up": 0.5915032679738562,
+      "oos_ic": -0.10045280911773026,
+      "oos_rmse": 0.0949892680675661,
+      "comparison": {
+        "symbol": "005930",
+        "horizon": 10,
+        "name": "삼성전자",
+        "previous_as_of": "2026-08-22T17:01:36+09:00",
+        "current_as_of": "2026-08-23T20:13:03+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:00:17+09:00",
+        "current_trained_at": "2026-08-23T20:11:47+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "baseline_moving_avg": -1.0,
+          "elasticnet": 0.16,
+          "extra_trees": 0.182,
+          "gru": 0.158,
+          "lightgbm": 0.159,
+          "random_forest": 0.17,
+          "ridge": 0.171
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.010916250138534256,
+            "current": 0.06023855867582384,
+            "delta": 0.049322308537
+          },
+          "current_price": {
+            "previous": 270000.0,
+            "current": 270000.0,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 212450.2515533764,
+            "current": 219373.80485541755,
+            "delta": 6923.553302041139
+          },
+          "p50": {
+            "previous": 272947.38753740425,
+            "current": 286264.41084247245,
+            "delta": 13317.0233050682
+          },
+          "p90": {
+            "previous": 360955.47575317696,
+            "current": 389462.801556971,
+            "delta": 28507.325803794025
+          },
+          "prob_up": {
+            "previous": 0.3620689655172414,
+            "current": 0.5915032679738562,
+            "delta": 0.229434302457
+          },
+          "confidence": {
+            "previous": 25.0,
+            "current": 33.105433339827655,
+            "delta": 8.105433339828
+          },
+          "oos_ic": {
+            "previous": 0.33796361729888763,
+            "current": -0.10045280911773026,
+            "delta": -0.438416426417
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.6015873015873016,
+            "current": 0.44126984126984126,
+            "delta": -0.160317460317
+          },
+          "oos_rmse": {
+            "previous": 0.0867995184215562,
+            "current": 0.0949892680675661,
+            "delta": 0.008189749646
+          },
+          "baseline_rmse": {
+            "previous": 0.08723973077334626,
+            "current": 0.08723973077334626,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.8465608465608465,
+            "current": 0.8359788359788359,
+            "delta": -0.010582010582
+          }
+        }
+      }
+    },
+    {
+      "symbol": "005930",
+      "name": "삼성전자",
+      "horizon": 30,
+      "as_of": "2026-08-23T20:13:03+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:12:25+09:00",
+      "expected_return": 0.14746312940869744,
+      "confidence": 24.160817826483928,
+      "prob_up": 0.6367999999999999,
+      "oos_ic": -0.27127378329549484,
+      "oos_rmse": 0.19531233914139062,
+      "comparison": {
+        "symbol": "005930",
+        "horizon": 30,
+        "name": "삼성전자",
+        "previous_as_of": "2026-08-22T17:01:36+09:00",
+        "current_as_of": "2026-08-23T20:13:03+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:00:53+09:00",
+        "current_trained_at": "2026-08-23T20:12:25+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "baseline_hist_mean": -1.0,
+          "catboost": 0.174,
+          "extra_trees": 0.175,
+          "hist_gbm": 0.164,
+          "random_forest": 0.164,
+          "ridge": 0.167,
+          "xgboost": 0.155
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.08972980950837095,
+            "current": 0.14746312940869744,
+            "delta": 0.0577333199
+          },
+          "current_price": {
+            "previous": 270000.0,
+            "current": 270000.0,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 180534.81871304603,
+            "current": 190497.26918454943,
+            "delta": 9962.450471503398
+          },
+          "p50": {
+            "previous": 294227.04856726015,
+            "current": 309815.0449403483,
+            "delta": 15587.996373088157
+          },
+          "p90": {
+            "previous": 613918.9120702203,
+            "current": 730876.5537893112,
+            "delta": 116957.64171909087
+          },
+          "prob_up": {
+            "previous": 0.6396825396825396,
+            "current": 0.6367999999999999,
+            "delta": -0.002882539683
+          },
+          "confidence": {
+            "previous": 22.216677127932687,
+            "current": 24.160817826483928,
+            "delta": 1.944140698551
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.3603174603174603,
+            "current": 0.36666666666666664,
+            "delta": 0.006349206349
+          },
+          "oos_rmse": {
+            "previous": 0.1835578162210173,
+            "current": 0.19531233914139062,
+            "delta": 0.01175452292
+          },
+          "baseline_rmse": {
+            "previous": 0.1819080328721378,
+            "current": 0.1819080328721378,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.8783068783068783,
+            "current": 0.91005291005291,
+            "delta": 0.031746031746
+          }
+        }
+      }
+    },
+    {
+      "symbol": "005930",
+      "name": "삼성전자",
+      "horizon": 5,
+      "as_of": "2026-08-23T20:13:03+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:11:10+09:00",
+      "expected_return": 0.02377743428513801,
+      "confidence": 35.79924456246017,
+      "prob_up": 0.6055045871559633,
+      "oos_ic": 0.02369508165480563,
+      "oos_rmse": 0.06500915782675144,
+      "comparison": {
+        "symbol": "005930",
+        "horizon": 5,
+        "name": "삼성전자",
+        "previous_as_of": "2026-08-22T17:01:36+09:00",
+        "current_as_of": "2026-08-23T20:13:03+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T16:59:38+09:00",
+        "current_trained_at": "2026-08-23T20:11:10+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "extra_trees": -0.821,
+          "gru": 0.155,
+          "hist_gbm": 0.165,
+          "lightgbm": 0.163,
+          "random_forest": 0.174,
+          "ridge": 0.165
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.027391687669301,
+            "current": 0.02377743428513801,
+            "delta": -0.003614253384
+          },
+          "current_price": {
+            "previous": 270000.0,
+            "current": 270000.0,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 232982.4012761196,
+            "current": 230778.83359001807,
+            "delta": -2203.567686101538
+          },
+          "p50": {
+            "previous": 277395.7556707113,
+            "current": 276419.90725698724,
+            "delta": -975.848413724045
+          },
+          "p90": {
+            "previous": 339596.05892410746,
+            "current": 339419.558535537,
+            "delta": -176.500388570479
+          },
+          "prob_up": {
+            "previous": 0.6375,
+            "current": 0.6055045871559633,
+            "delta": -0.031995412844
+          },
+          "confidence": {
+            "previous": 41.77797751884729,
+            "current": 35.79924456246017,
+            "delta": -5.978732956387
+          },
+          "oos_ic": {
+            "previous": 0.12440962223212561,
+            "current": 0.02369508165480563,
+            "delta": -0.100714540577
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.5079365079365079,
+            "current": 0.49206349206349204,
+            "delta": -0.015873015873
+          },
+          "oos_rmse": {
+            "previous": 0.06381302422774844,
+            "current": 0.06500915782675144,
+            "delta": 0.001196133599
+          },
+          "baseline_rmse": {
+            "previous": 0.06320891248716341,
+            "current": 0.06320891248716341,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.8518518518518519,
+            "current": 0.8465608465608465,
+            "delta": -0.005291005291
+          }
+        }
+      }
+    },
+    {
+      "symbol": "034020",
+      "name": "두산에너빌리티",
+      "horizon": 10,
+      "as_of": "2026-08-23T20:44:35+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:43:22+09:00",
+      "expected_return": 0.026100297607034584,
+      "confidence": 26.88460379004662,
+      "prob_up": 0.580568720379147,
+      "oos_ic": -0.02905875871460033,
+      "oos_rmse": 0.12802137704270458,
+      "comparison": {
+        "symbol": "034020",
+        "horizon": 10,
+        "name": "두산에너빌리티",
+        "previous_as_of": "2026-08-22T17:34:13+09:00",
+        "current_as_of": "2026-08-23T20:44:35+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:32:59+09:00",
+        "current_trained_at": "2026-08-23T20:43:22+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "baseline_hist_mean": -1.0,
+          "elasticnet": 0.198,
+          "extra_trees": 0.165,
+          "gru": 0.149,
+          "lightgbm": 0.14,
+          "random_forest": 0.158,
+          "ridge": 0.19
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.025119917342164122,
+            "current": 0.026100297607034584,
+            "delta": 0.000980380265
+          },
+          "current_price": {
+            "previous": 73400.0,
+            "current": 73400.0,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 60468.24944393495,
+            "current": 53742.42720662109,
+            "delta": -6725.822237313856
+          },
+          "p50": {
+            "previous": 75243.80193291485,
+            "current": 75315.76184435634,
+            "delta": 71.959911441489
+          },
+          "p90": {
+            "previous": 95321.31574248904,
+            "current": 96848.40208193447,
+            "delta": 1527.086339445435
+          },
+          "prob_up": {
+            "previous": 0.5746031746031746,
+            "current": 0.580568720379147,
+            "delta": 0.005965545776
+          },
+          "confidence": {
+            "previous": 23.576320097312788,
+            "current": 26.88460379004662,
+            "delta": 3.308283692734
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.4253968253968254,
+            "current": 0.5492063492063493,
+            "delta": 0.12380952381
+          },
+          "oos_rmse": {
+            "previous": 0.12133812140001574,
+            "current": 0.12802137704270458,
+            "delta": 0.006683255643
+          },
+          "baseline_rmse": {
+            "previous": 0.11945749944303197,
+            "current": 0.11945749944303197,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.8994708994708994,
+            "current": 0.9206349206349206,
+            "delta": 0.021164021164
+          }
+        }
+      }
+    },
+    {
+      "symbol": "034020",
+      "name": "두산에너빌리티",
+      "horizon": 30,
+      "as_of": "2026-08-23T20:44:35+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:43:59+09:00",
+      "expected_return": 0.009051683798254828,
+      "confidence": 26.217307440559097,
+      "prob_up": 0.44642857142857145,
+      "oos_ic": 0.09630501165775802,
+      "oos_rmse": 0.25134944084502897,
+      "comparison": {
+        "symbol": "034020",
+        "horizon": 30,
+        "name": "두산에너빌리티",
+        "previous_as_of": "2026-08-22T17:34:13+09:00",
+        "current_as_of": "2026-08-23T20:44:35+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:33:36+09:00",
+        "current_trained_at": "2026-08-23T20:43:59+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "baseline_hist_mean": -1.0,
+          "elasticnet": 0.223,
+          "extra_trees": 0.156,
+          "lightgbm": 0.15,
+          "random_forest": 0.151,
+          "ridge": 0.174,
+          "xgboost": 0.145
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.05639560107856134,
+            "current": 0.009051683798254828,
+            "delta": -0.04734391728
+          },
+          "current_price": {
+            "previous": 73400.0,
+            "current": 73400.0,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 43879.04328003108,
+            "current": 34097.447342993735,
+            "delta": -9781.595937037346
+          },
+          "p50": {
+            "previous": 77539.4371191664,
+            "current": 74064.39359079191,
+            "delta": -3475.043528374488
+          },
+          "p90": {
+            "previous": 116154.97283206458,
+            "current": 113940.36529645896,
+            "delta": -2214.607535605624
+          },
+          "prob_up": {
+            "previous": 0.6142857142857143,
+            "current": 0.44642857142857145,
+            "delta": -0.167857142857
+          },
+          "confidence": {
+            "previous": 25.0,
+            "current": 26.217307440559097,
+            "delta": 1.217307440559
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.38571428571428573,
+            "current": 0.6222222222222222,
+            "delta": 0.236507936508
+          },
+          "oos_rmse": {
+            "previous": 0.236293064973857,
+            "current": 0.25134944084502897,
+            "delta": 0.015056375871
+          },
+          "baseline_rmse": {
+            "previous": 0.2288049382006976,
+            "current": 0.2288049382006976,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.9047619047619048,
+            "current": 0.8095238095238095,
+            "delta": -0.095238095238
+          }
+        }
+      }
+    },
+    {
+      "symbol": "034020",
+      "name": "두산에너빌리티",
+      "horizon": 5,
+      "as_of": "2026-08-23T20:44:35+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:42:45+09:00",
+      "expected_return": 0.014259906675412104,
+      "confidence": 36.038666845300995,
+      "prob_up": 0.5799457994579946,
+      "oos_ic": -0.027702262781580753,
+      "oos_rmse": 0.08721053718349511,
+      "comparison": {
+        "symbol": "034020",
+        "horizon": 5,
+        "name": "두산에너빌리티",
+        "previous_as_of": "2026-08-22T17:34:13+09:00",
+        "current_as_of": "2026-08-23T20:44:35+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:32:23+09:00",
+        "current_trained_at": "2026-08-23T20:42:45+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "baseline_hist_mean": -1.0,
+          "catboost": 0.135,
+          "elasticnet": 0.199,
+          "extra_trees": 0.171,
+          "gru": 0.146,
+          "random_forest": 0.166,
+          "ridge": 0.184
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.012333602141042066,
+            "current": 0.014259906675412104,
+            "delta": 0.001926304534
+          },
+          "current_price": {
+            "previous": 73400.0,
+            "current": 73400.0,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 62207.23508799501,
+            "current": 60049.16693170528,
+            "delta": -2158.06815628973
+          },
+          "p50": {
+            "previous": 74305.2863971525,
+            "current": 74446.67714997525,
+            "delta": 141.390752822757
+          },
+          "p90": {
+            "previous": 86076.3448256925,
+            "current": 86545.33590067149,
+            "delta": 468.991074978985
+          },
+          "prob_up": {
+            "previous": 0.5619047619047619,
+            "current": 0.5799457994579946,
+            "delta": 0.018041037553
+          },
+          "confidence": {
+            "previous": 25.0,
+            "current": 36.038666845300995,
+            "delta": 11.038666845301
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.4380952380952381,
+            "current": 0.5555555555555556,
+            "delta": 0.11746031746
+          },
+          "oos_rmse": {
+            "previous": 0.08520796081479448,
+            "current": 0.08721053718349511,
+            "delta": 0.002002576369
+          },
+          "baseline_rmse": {
+            "previous": 0.08453739375331885,
+            "current": 0.08453739375331885,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.8888888888888888,
+            "current": 0.9047619047619048,
+            "delta": 0.015873015873
+          }
+        }
+      }
+    },
+    {
+      "symbol": "042700",
+      "name": "한미반도체",
+      "horizon": 10,
+      "as_of": "2026-08-23T20:20:16+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:18:54+09:00",
+      "expected_return": -0.01735510027597731,
+      "confidence": 31.21065326492594,
+      "prob_up": 0.5266524520255865,
+      "oos_ic": -0.13565790754021487,
+      "oos_rmse": 0.18383052930261418,
+      "comparison": {
+        "symbol": "042700",
+        "horizon": 10,
+        "name": "한미반도체",
+        "previous_as_of": "2026-08-22T17:08:51+09:00",
+        "current_as_of": "2026-08-23T20:20:16+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:07:20+09:00",
+        "current_trained_at": "2026-08-23T20:18:54+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "baseline_hist_mean": -1.0,
+          "elasticnet": 0.17,
+          "extra_trees": 0.169,
+          "gru": 0.183,
+          "lightgbm": 0.144,
+          "random_forest": 0.159,
+          "ridge": 0.175
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.01303289054570933,
+            "current": -0.01735510027597731,
+            "delta": -0.030387990822
+          },
+          "current_price": {
+            "previous": 214500.0,
+            "current": 214500.0,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 167109.22714280724,
+            "current": 147879.0696319531,
+            "delta": -19230.15751085413
+          },
+          "p50": {
+            "previous": 217295.55502205464,
+            "current": 210777.33099080288,
+            "delta": -6518.224031251768
+          },
+          "p90": {
+            "previous": 363047.094364584,
+            "current": 370424.0330255219,
+            "delta": 7376.938660937885
+          },
+          "prob_up": {
+            "previous": 0.5238095238095238,
+            "current": 0.5266524520255865,
+            "delta": 0.002842928216
+          },
+          "confidence": {
+            "previous": 25.0,
+            "current": 31.21065326492594,
+            "delta": 6.210653264926
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.47619047619047616,
+            "current": 0.5015873015873016,
+            "delta": 0.025396825397
+          },
+          "oos_rmse": {
+            "previous": 0.16247131352981833,
+            "current": 0.18383052930261418,
+            "delta": 0.021359215773
+          },
+          "baseline_rmse": {
+            "previous": 0.1619642972964816,
+            "current": 0.1619642972964816,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.8571428571428571,
+            "current": 0.9047619047619048,
+            "delta": 0.047619047619
+          }
+        }
+      }
+    },
+    {
+      "symbol": "042700",
+      "name": "한미반도체",
+      "horizon": 30,
+      "as_of": "2026-08-23T20:20:16+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:19:33+09:00",
+      "expected_return": -0.0973861983288391,
+      "confidence": 41.82889529110805,
+      "prob_up": 0.4772727272727273,
+      "oos_ic": 0.15597361962808182,
+      "oos_rmse": 0.2837644743197692,
+      "comparison": {
+        "symbol": "042700",
+        "horizon": 30,
+        "name": "한미반도체",
+        "previous_as_of": "2026-08-22T17:08:51+09:00",
+        "current_as_of": "2026-08-23T20:20:16+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:08:06+09:00",
+        "current_trained_at": "2026-08-23T20:19:33+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "extra_trees": 0.181,
+          "gru": -0.839,
+          "hist_gbm": 0.157,
+          "random_forest": 0.176,
+          "ridge": 0.154,
+          "xgboost": 0.17
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": -0.0387971205126304,
+            "current": -0.0973861983288391,
+            "delta": -0.058589077816
+          },
+          "current_price": {
+            "previous": 214500.0,
+            "current": 214500.0,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 122002.66584712881,
+            "current": 110139.90805122114,
+            "delta": -11862.757795907673
+          },
+          "p50": {
+            "previous": 206178.01765004077,
+            "current": 193610.660458464,
+            "delta": -12567.357191576768
+          },
+          "p90": {
+            "previous": 614294.6616199431,
+            "current": 536844.6691976022,
+            "delta": -77449.9924223409
+          },
+          "prob_up": {
+            "previous": 0.6255411255411265,
+            "current": 0.4772727272727273,
+            "delta": -0.148268398268
+          },
+          "confidence": {
+            "previous": 42.479067541865476,
+            "current": 41.82889529110805,
+            "delta": -0.650172250757
+          },
+          "oos_ic": {
+            "previous": 0.05644618982114364,
+            "current": 0.15597361962808182,
+            "delta": 0.099527429807
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.47023809523809523,
+            "current": 0.5365079365079365,
+            "delta": 0.06626984127
+          },
+          "oos_rmse": {
+            "previous": 0.27802991876266536,
+            "current": 0.2837644743197692,
+            "delta": 0.005734555557
+          },
+          "baseline_rmse": {
+            "previous": 0.2865804531435073,
+            "current": 0.2865804531435073,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.8947368421052632,
+            "current": 0.9047619047619048,
+            "delta": 0.010025062657
+          }
+        }
+      }
+    },
+    {
+      "symbol": "042700",
+      "name": "한미반도체",
+      "horizon": 5,
+      "as_of": "2026-08-23T20:20:16+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:18:18+09:00",
+      "expected_return": 0.009088732144035827,
+      "confidence": 36.43825296036082,
+      "prob_up": 0.5366379310344828,
+      "oos_ic": 0.018781988301780055,
+      "oos_rmse": 0.12262148261194333,
+      "comparison": {
+        "symbol": "042700",
+        "horizon": 5,
+        "name": "한미반도체",
+        "previous_as_of": "2026-08-22T17:08:51+09:00",
+        "current_as_of": "2026-08-23T20:20:16+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:06:44+09:00",
+        "current_trained_at": "2026-08-23T20:18:18+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "baseline_hist_mean": -1.0,
+          "elasticnet": 0.178,
+          "extra_trees": 0.165,
+          "gru": 0.19,
+          "random_forest": 0.16,
+          "ridge": 0.171,
+          "xgboost": 0.137
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.004454689572296999,
+            "current": 0.009088732144035827,
+            "delta": 0.004634042572
+          },
+          "current_price": {
+            "previous": 214500.0,
+            "current": 214500.0,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 180548.17832103014,
+            "current": 172483.18750529527,
+            "delta": -8064.990815734869
+          },
+          "p50": {
+            "previous": 215455.5309132577,
+            "current": 216449.53304489568,
+            "delta": 994.002131637972
+          },
+          "p90": {
+            "previous": 289352.6237252213,
+            "current": 283274.8932653753,
+            "delta": -6077.730459846032
+          },
+          "prob_up": {
+            "previous": 0.5126984126984127,
+            "current": 0.5366379310344828,
+            "delta": 0.023939518336
+          },
+          "confidence": {
+            "previous": 25.0,
+            "current": 36.43825296036082,
+            "delta": 11.438252960361
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.4873015873015873,
+            "current": 0.5158730158730159,
+            "delta": 0.028571428571
+          },
+          "oos_rmse": {
+            "previous": 0.1152979868913246,
+            "current": 0.12262148261194333,
+            "delta": 0.007323495721
+          },
+          "baseline_rmse": {
+            "previous": 0.11511815554423502,
+            "current": 0.11511815554423502,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.8412698412698413,
+            "current": 0.8835978835978836,
+            "delta": 0.042328042328
+          }
+        }
+      }
+    },
+    {
+      "symbol": "403870",
+      "name": "HPSP",
+      "horizon": 10,
+      "as_of": "2026-08-23T20:18:18+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:17:27+09:00",
+      "expected_return": 0.05025970034128058,
+      "confidence": 42.96823986804552,
+      "prob_up": 0.4879356568364611,
+      "oos_ic": 0.09535700165654867,
+      "oos_rmse": 0.14031994945997983,
+      "comparison": {
+        "symbol": "403870",
+        "horizon": 10,
+        "name": "HPSP",
+        "previous_as_of": "2026-08-22T17:06:44+09:00",
+        "current_as_of": "2026-08-23T20:18:18+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:05:55+09:00",
+        "current_trained_at": "2026-08-23T20:17:27+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "baseline_zero": -1.0,
+          "catboost": 0.154,
+          "elasticnet": 0.149,
+          "extra_trees": 0.181,
+          "random_forest": 0.174,
+          "ridge": 0.197,
+          "xgboost": 0.145
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": -0.008719626662421098,
+            "current": 0.05025970034128058,
+            "delta": 0.058979327004
+          },
+          "current_price": {
+            "previous": 44900.0,
+            "current": 44900.0,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 33853.97518545329,
+            "current": 34416.601886573575,
+            "delta": 562.626701120287
+          },
+          "p50": {
+            "previous": 44508.48876285729,
+            "current": 47156.660545323495,
+            "delta": 2648.171782466205
+          },
+          "p90": {
+            "previous": 67213.29699370523,
+            "current": 65556.60563194,
+            "delta": -1656.691361765232
+          },
+          "prob_up": {
+            "previous": 0.47619047619047616,
+            "current": 0.4879356568364611,
+            "delta": 0.011745180646
+          },
+          "confidence": {
+            "previous": 25.0,
+            "current": 42.96823986804552,
+            "delta": 17.968239868046
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.5238095238095238,
+            "current": 0.5412698412698412,
+            "delta": 0.01746031746
+          },
+          "oos_rmse": {
+            "previous": 0.13380500853413868,
+            "current": 0.14031994945997983,
+            "delta": 0.006514940926
+          },
+          "baseline_rmse": {
+            "previous": 0.13380500853413868,
+            "current": 0.13380500853413868,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.8677248677248677,
+            "current": 0.8148148148148148,
+            "delta": -0.05291005291
+          }
+        }
+      }
+    },
+    {
+      "symbol": "403870",
+      "name": "HPSP",
+      "horizon": 30,
+      "as_of": "2026-08-23T20:18:18+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:17:53+09:00",
+      "expected_return": -0.05099331328846679,
+      "confidence": 26.659106506316878,
+      "prob_up": 0.49155405405405417,
+      "oos_ic": -0.1578576975315788,
+      "oos_rmse": 0.23586279465146398,
+      "comparison": {
+        "symbol": "403870",
+        "horizon": 30,
+        "name": "HPSP",
+        "previous_as_of": "2026-08-22T17:06:44+09:00",
+        "current_as_of": "2026-08-23T20:18:18+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:06:20+09:00",
+        "current_trained_at": "2026-08-23T20:17:53+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "baseline_zero": -1.0,
+          "catboost": 0.172,
+          "extra_trees": 0.194,
+          "lightgbm": 0.127,
+          "random_forest": 0.191,
+          "ridge": 0.164,
+          "xgboost": 0.153
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": -0.01433813796236072,
+            "current": -0.05099331328846679,
+            "delta": -0.036655175326
+          },
+          "current_price": {
+            "previous": 44900.0,
+            "current": 44900.0,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 27671.146658785095,
+            "current": 23679.513318971338,
+            "delta": -3991.633339813758
+          },
+          "p50": {
+            "previous": 44256.217605490005,
+            "current": 42610.40023334784,
+            "delta": -1645.817372142163
+          },
+          "p90": {
+            "previous": 78136.99289365471,
+            "current": 78702.54249989249,
+            "delta": 565.549606237779
+          },
+          "prob_up": {
+            "previous": 0.48253968253968255,
+            "current": 0.49155405405405417,
+            "delta": 0.009014371514
+          },
+          "confidence": {
+            "previous": 25.0,
+            "current": 26.659106506316878,
+            "delta": 1.659106506317
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.5174603174603175,
+            "current": 0.46190476190476193,
+            "delta": -0.055555555556
+          },
+          "oos_rmse": {
+            "previous": 0.20399180568101685,
+            "current": 0.23586279465146398,
+            "delta": 0.03187098897
+          },
+          "baseline_rmse": {
+            "previous": 0.20399180568101685,
+            "current": 0.20399180568101685,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.8359788359788359,
+            "current": 0.8994708994708994,
+            "delta": 0.063492063492
+          }
+        }
+      }
+    },
+    {
+      "symbol": "403870",
+      "name": "HPSP",
+      "horizon": 5,
+      "as_of": "2026-08-23T20:18:18+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:17:02+09:00",
+      "expected_return": 0.00877731770988821,
+      "confidence": 45.42306006975746,
+      "prob_up": 0.46825396825396826,
+      "oos_ic": 0.08635305552515492,
+      "oos_rmse": 0.10067773076798552,
+      "comparison": {
+        "symbol": "403870",
+        "horizon": 5,
+        "name": "HPSP",
+        "previous_as_of": "2026-08-22T17:06:44+09:00",
+        "current_as_of": "2026-08-23T20:18:18+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:05:30+09:00",
+        "current_trained_at": "2026-08-23T20:17:02+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "catboost": 0.146,
+          "elasticnet": 0.199,
+          "extra_trees": 0.166,
+          "lightgbm": 0.134,
+          "random_forest": 0.172,
+          "ridge": -0.816
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": -0.02578891273744688,
+            "current": 0.00877731770988821,
+            "delta": 0.034566230447
+          },
+          "current_price": {
+            "previous": 44900.0,
+            "current": 44900.0,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 35717.34604870729,
+            "current": 36699.16566854128,
+            "delta": 981.819619833994
+          },
+          "p50": {
+            "previous": 43742.077818088634,
+            "current": 45294.10156517398,
+            "delta": 1552.023747085346
+          },
+          "p90": {
+            "previous": 56227.244850990704,
+            "current": 56320.869234760416,
+            "delta": 93.624383769711
+          },
+          "prob_up": {
+            "previous": 0.4,
+            "current": 0.46825396825396826,
+            "delta": 0.068253968254
+          },
+          "confidence": {
+            "previous": 41.984613823407976,
+            "current": 45.42306006975746,
+            "delta": 3.438446246349
+          },
+          "oos_ic": {
+            "previous": 0.1006876861139979,
+            "current": 0.08635305552515492,
+            "delta": -0.014334630589
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.5111111111111111,
+            "current": 0.5444444444444444,
+            "delta": 0.033333333333
+          },
+          "oos_rmse": {
+            "previous": 0.10026601919403047,
+            "current": 0.10067773076798552,
+            "delta": 0.000411711574
+          },
+          "baseline_rmse": {
+            "previous": 0.10044328691884911,
+            "current": 0.10044328691884911,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.8677248677248677,
+            "current": 0.8412698412698413,
+            "delta": -0.026455026455
+          }
+        }
+      }
+    },
+    {
+      "symbol": "AAPL",
+      "name": "애플",
+      "horizon": 10,
+      "as_of": "2026-08-23T20:36:29+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:35:06+09:00",
+      "expected_return": 0.009717093511819819,
+      "confidence": 51.27896828143358,
+      "prob_up": 0.5700421866137266,
+      "oos_ic": 0.06326884833653883,
+      "oos_rmse": 0.054061748377981896,
+      "comparison": {
+        "symbol": "AAPL",
+        "horizon": 10,
+        "name": "애플",
+        "previous_as_of": "2026-08-22T17:25:59+09:00",
+        "current_as_of": "2026-08-23T20:36:29+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:24:32+09:00",
+        "current_trained_at": "2026-08-23T20:35:06+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {},
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.00908079556428354,
+            "current": 0.009717093511819819,
+            "delta": 0.000636297948
+          },
+          "current_price": {
+            "previous": 309.65,
+            "current": 309.65,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 285.2947511846393,
+            "current": 282.98321079248757,
+            "delta": -2.311540392152
+          },
+          "p50": {
+            "previous": 312.4618683464804,
+            "current": 312.658898005935,
+            "delta": 0.197029659455
+          },
+          "p90": {
+            "previous": 343.61854284847266,
+            "current": 343.7105730792439,
+            "delta": 0.092030230771
+          },
+          "prob_up": {
+            "previous": 0.5766871165644172,
+            "current": 0.5700421866137266,
+            "delta": -0.006644929951
+          },
+          "confidence": {
+            "previous": 57.121537081744734,
+            "current": 51.27896828143358,
+            "delta": -5.842568800311
+          },
+          "oos_ic": {
+            "previous": 0.12637728754070698,
+            "current": 0.06326884833653883,
+            "delta": -0.063108439204
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.5523809523809524,
+            "current": 0.4857142857142857,
+            "delta": -0.066666666667
+          },
+          "oos_rmse": {
+            "previous": 0.05294236247821121,
+            "current": 0.054061748377981896,
+            "delta": 0.0011193859
+          },
+          "baseline_rmse": {
+            "previous": 0.05307855819213943,
+            "current": 0.05307855819213943,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.8306878306878307,
+            "current": 0.8359788359788359,
+            "delta": 0.005291005291
+          }
+        }
+      }
+    },
+    {
+      "symbol": "AAPL",
+      "name": "애플",
+      "horizon": 30,
+      "as_of": "2026-08-23T20:36:29+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:35:48+09:00",
+      "expected_return": 0.018111212024228385,
+      "confidence": 33.863765042857004,
+      "prob_up": 0.6330275229357798,
+      "oos_ic": 0.022975674397376245,
+      "oos_rmse": 0.08795168225890226,
+      "comparison": {
+        "symbol": "AAPL",
+        "horizon": 30,
+        "name": "애플",
+        "previous_as_of": "2026-08-22T17:25:59+09:00",
+        "current_as_of": "2026-08-23T20:36:29+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:25:16+09:00",
+        "current_trained_at": "2026-08-23T20:35:48+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {},
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.015932801316814738,
+            "current": 0.018111212024228385,
+            "delta": 0.002178410707
+          },
+          "current_price": {
+            "previous": 309.65,
+            "current": 309.65,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 267.0106940231029,
+            "current": 263.2806180745106,
+            "delta": -3.730075948592
+          },
+          "p50": {
+            "previous": 314.5835919277517,
+            "current": 315.2581368033023,
+            "delta": 0.674544875551
+          },
+          "p90": {
+            "previous": 366.22389101934397,
+            "current": 363.95457695192374,
+            "delta": -2.26931406742
+          },
+          "prob_up": {
+            "previous": 0.5808823529411764,
+            "current": 0.6330275229357798,
+            "delta": 0.052145169995
+          },
+          "confidence": {
+            "previous": 37.090056054764965,
+            "current": 33.863765042857004,
+            "delta": -3.226291011908
+          },
+          "oos_ic": {
+            "previous": 0.15533070126153004,
+            "current": 0.022975674397376245,
+            "delta": -0.132355026864
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.5015873015873016,
+            "current": 0.48253968253968255,
+            "delta": -0.019047619048
+          },
+          "oos_rmse": {
+            "previous": 0.0845439051138563,
+            "current": 0.08795168225890226,
+            "delta": 0.003407777145
+          },
+          "baseline_rmse": {
+            "previous": 0.08410930756778003,
+            "current": 0.08410930756778003,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.873015873015873,
+            "current": 0.873015873015873,
+            "delta": 0.0
+          }
+        }
+      }
+    },
+    {
+      "symbol": "AAPL",
+      "name": "애플",
+      "horizon": 5,
+      "as_of": "2026-08-23T20:36:28+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:34:24+09:00",
+      "expected_return": 0.007094098281831274,
+      "confidence": 47.042028620116305,
+      "prob_up": 0.5584642233856894,
+      "oos_ic": 0.03774884936284733,
+      "oos_rmse": 0.040942091013301214,
+      "comparison": {
+        "symbol": "AAPL",
+        "horizon": 5,
+        "name": "애플",
+        "previous_as_of": "2026-08-22T17:25:59+09:00",
+        "current_as_of": "2026-08-23T20:36:28+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:23:46+09:00",
+        "current_trained_at": "2026-08-23T20:34:24+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {},
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.008452595934144602,
+            "current": 0.007094098281831274,
+            "delta": -0.001358497652
+          },
+          "current_price": {
+            "previous": 309.65,
+            "current": 309.65,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 289.44277687192556,
+            "current": 290.83709150061907,
+            "delta": 1.394314628694
+          },
+          "p50": {
+            "previous": 312.26734633100784,
+            "current": 311.84668753296904,
+            "delta": -0.420658798039
+          },
+          "p90": {
+            "previous": 331.84723697941075,
+            "current": 333.10652835953346,
+            "delta": 1.259291380123
+          },
+          "prob_up": {
+            "previous": 0.5840220385674931,
+            "current": 0.5584642233856894,
+            "delta": -0.025557815182
+          },
+          "confidence": {
+            "previous": 67.92142843370108,
+            "current": 47.042028620116305,
+            "delta": -20.879399813585
+          },
+          "oos_ic": {
+            "previous": 0.11954813164711971,
+            "current": 0.03774884936284733,
+            "delta": -0.081799282284
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.5444444444444444,
+            "current": 0.46984126984126984,
+            "delta": -0.074603174603
+          },
+          "oos_rmse": {
+            "previous": 0.0405489574617829,
+            "current": 0.040942091013301214,
+            "delta": 0.000393133552
+          },
+          "baseline_rmse": {
+            "previous": 0.04085067134241105,
+            "current": 0.04085067134241105,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.8148148148148148,
+            "current": 0.8148148148148148,
+            "delta": 0.0
+          }
+        }
+      }
+    },
+    {
+      "symbol": "AMAT",
+      "name": "어플라이드 머티리얼즈",
+      "horizon": 10,
+      "as_of": "2026-08-23T20:26:15+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:24:57+09:00",
+      "expected_return": 0.03814932725307796,
+      "confidence": 32.5943496037644,
+      "prob_up": 0.7040816326530612,
+      "oos_ic": -0.07292292960823588,
+      "oos_rmse": 0.09611469114435436,
+      "comparison": {
+        "symbol": "AMAT",
+        "horizon": 10,
+        "name": "어플라이드 머티리얼즈",
+        "previous_as_of": "2026-08-22T17:15:23+09:00",
+        "current_as_of": "2026-08-23T20:26:15+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:13:55+09:00",
+        "current_trained_at": "2026-08-23T20:24:57+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "baseline_moving_avg": -1.0,
+          "elasticnet": 0.197,
+          "extra_trees": 0.169,
+          "gru": 0.148,
+          "lightgbm": 0.13,
+          "random_forest": 0.159,
+          "ridge": 0.198
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.022795958303313046,
+            "current": 0.03814932725307796,
+            "delta": 0.01535336895
+          },
+          "current_price": {
+            "previous": 492.1,
+            "current": 492.1,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 418.1053032024754,
+            "current": 424.21291930607725,
+            "delta": 6.107616103602
+          },
+          "p50": {
+            "previous": 503.3178910810604,
+            "current": 510.87328394123966,
+            "delta": 7.555392860179
+          },
+          "p90": {
+            "previous": 656.0626720349392,
+            "current": 694.6407391053548,
+            "delta": 38.578067070416
+          },
+          "prob_up": {
+            "previous": 0.4923076923076923,
+            "current": 0.7040816326530612,
+            "delta": 0.211773940345
+          },
+          "confidence": {
+            "previous": 25.0,
+            "current": 32.5943496037644,
+            "delta": 7.594349603764
+          },
+          "oos_ic": {
+            "previous": 0.20543059596566057,
+            "current": -0.07292292960823588,
+            "delta": -0.278353525574
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.5904761904761905,
+            "current": 0.44761904761904764,
+            "delta": -0.142857142857
+          },
+          "oos_rmse": {
+            "previous": 0.08912043408599803,
+            "current": 0.09611469114435436,
+            "delta": 0.006994257058
+          },
+          "baseline_rmse": {
+            "previous": 0.08992998623509031,
+            "current": 0.08992998623509031,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.8783068783068783,
+            "current": 0.8941798941798942,
+            "delta": 0.015873015873
+          }
+        }
+      }
+    },
+    {
+      "symbol": "AMAT",
+      "name": "어플라이드 머티리얼즈",
+      "horizon": 30,
+      "as_of": "2026-08-23T20:26:15+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:25:38+09:00",
+      "expected_return": 0.14273636717811455,
+      "confidence": 33.45687238468792,
+      "prob_up": 0.7326732673267328,
+      "oos_ic": 0.0851695522780484,
+      "oos_rmse": 0.16090103443922565,
+      "comparison": {
+        "symbol": "AMAT",
+        "horizon": 30,
+        "name": "어플라이드 머티리얼즈",
+        "previous_as_of": "2026-08-22T17:15:23+09:00",
+        "current_as_of": "2026-08-23T20:26:15+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:14:39+09:00",
+        "current_trained_at": "2026-08-23T20:25:38+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "elasticnet": 0.189,
+          "extra_trees": 0.184,
+          "gru": 0.159,
+          "lightgbm": 0.142,
+          "random_forest": 0.177,
+          "ridge": -0.85
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.07748811442702741,
+            "current": 0.14273636717811455,
+            "delta": 0.065248252751
+          },
+          "current_price": {
+            "previous": 492.1,
+            "current": 492.1,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 352.18452868677923,
+            "current": 356.90403029620984,
+            "delta": 4.719501609431
+          },
+          "p50": {
+            "previous": 530.2319011095402,
+            "current": 562.3405662883501,
+            "delta": 32.10866517881
+          },
+          "p90": {
+            "previous": 812.5415010305486,
+            "current": 856.5869855103283,
+            "delta": 44.04548447978
+          },
+          "prob_up": {
+            "previous": 0.6587301587301587,
+            "current": 0.7326732673267328,
+            "delta": 0.073943108597
+          },
+          "confidence": {
+            "previous": 20.987713029173776,
+            "current": 33.45687238468792,
+            "delta": 12.469159355514
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.3412698412698413,
+            "current": 0.6396825396825396,
+            "delta": 0.298412698413
+          },
+          "oos_rmse": {
+            "previous": 0.1627942342902819,
+            "current": 0.16090103443922565,
+            "delta": -0.001893199851
+          },
+          "baseline_rmse": {
+            "previous": 0.15637191192984695,
+            "current": 0.15637191192984695,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.9153439153439153,
+            "current": 0.9259259259259259,
+            "delta": 0.010582010582
+          }
+        }
+      }
+    },
+    {
+      "symbol": "AMAT",
+      "name": "어플라이드 머티리얼즈",
+      "horizon": 5,
+      "as_of": "2026-08-23T20:26:15+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:24:18+09:00",
+      "expected_return": 0.014129240710253343,
+      "confidence": 34.089208111854234,
+      "prob_up": 0.5898876404494382,
+      "oos_ic": -0.04431686243019658,
+      "oos_rmse": 0.06696350911718753,
+      "comparison": {
+        "symbol": "AMAT",
+        "horizon": 5,
+        "name": "어플라이드 머티리얼즈",
+        "previous_as_of": "2026-08-22T17:15:23+09:00",
+        "current_as_of": "2026-08-23T20:26:15+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:13:11+09:00",
+        "current_trained_at": "2026-08-23T20:24:18+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "baseline_moving_avg": -1.0,
+          "catboost": 0.14,
+          "elasticnet": 0.188,
+          "extra_trees": 0.166,
+          "gru": 0.164,
+          "random_forest": 0.16,
+          "ridge": 0.182
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.013884572095517411,
+            "current": 0.014129240710253343,
+            "delta": 0.000244668615
+          },
+          "current_price": {
+            "previous": 492.1,
+            "current": 492.1,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 434.7948655864443,
+            "current": 430.86531989378886,
+            "delta": -3.929545692655
+          },
+          "p50": {
+            "previous": 498.93259792820413,
+            "current": 499.0529993535157,
+            "delta": 0.120401425312
+          },
+          "p90": {
+            "previous": 584.0055752332042,
+            "current": 595.3409838136893,
+            "delta": 11.335408580485
+          },
+          "prob_up": {
+            "previous": 0.5369458128078818,
+            "current": 0.5898876404494382,
+            "delta": 0.052941827642
+          },
+          "confidence": {
+            "previous": 25.0,
+            "current": 34.089208111854234,
+            "delta": 9.089208111854
+          },
+          "oos_ic": {
+            "previous": 0.14630421517859704,
+            "current": -0.04431686243019658,
+            "delta": -0.190621077609
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.5793650793650794,
+            "current": 0.4507936507936508,
+            "delta": -0.128571428571
+          },
+          "oos_rmse": {
+            "previous": 0.06457267867697318,
+            "current": 0.06696350911718753,
+            "delta": 0.00239083044
+          },
+          "baseline_rmse": {
+            "previous": 0.06464385564188631,
+            "current": 0.06464385564188631,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.8253968253968254,
+            "current": 0.8571428571428571,
+            "delta": 0.031746031746
+          }
+        }
+      }
+    },
+    {
+      "symbol": "AMD",
+      "name": "AMD",
+      "horizon": 10,
+      "as_of": "2026-08-23T20:32:22+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:31:02+09:00",
+      "expected_return": -0.007528703820630089,
+      "confidence": 34.40713251663824,
+      "prob_up": 0.5212418300653595,
+      "oos_ic": -0.17169487547268772,
+      "oos_rmse": 0.11735183437388341,
+      "comparison": {
+        "symbol": "AMD",
+        "horizon": 10,
+        "name": "AMD",
+        "previous_as_of": "2026-08-22T17:21:41+09:00",
+        "current_as_of": "2026-08-23T20:32:22+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:20:22+09:00",
+        "current_trained_at": "2026-08-23T20:31:02+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "baseline_hist_mean": -1.0,
+          "elasticnet": 0.195,
+          "extra_trees": 0.164,
+          "gru": 0.158,
+          "lightgbm": 0.132,
+          "random_forest": 0.166,
+          "ridge": 0.185
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.006849512936294655,
+            "current": -0.007528703820630089,
+            "delta": -0.014378216757
+          },
+          "current_price": {
+            "previous": 472.361,
+            "current": 472.361,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 400.3444850843736,
+            "current": 392.8829136384742,
+            "delta": -7.461571445899
+          },
+          "p50": {
+            "previous": 475.5964427801011,
+            "current": 468.80473393458334,
+            "delta": -6.791708845518
+          },
+          "p90": {
+            "previous": 659.9932195278568,
+            "current": 683.4956086458059,
+            "delta": 23.502389117949
+          },
+          "prob_up": {
+            "previous": 0.5095238095238095,
+            "current": 0.5212418300653595,
+            "delta": 0.011718020542
+          },
+          "confidence": {
+            "previous": 25.0,
+            "current": 34.40713251663824,
+            "delta": 9.407132516638
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.49047619047619045,
+            "current": 0.4253968253968254,
+            "delta": -0.065079365079
+          },
+          "oos_rmse": {
+            "previous": 0.1145890411003489,
+            "current": 0.11735183437388341,
+            "delta": 0.002762793274
+          },
+          "baseline_rmse": {
+            "previous": 0.11398072040537155,
+            "current": 0.11398072040537155,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.8465608465608465,
+            "current": 0.8624338624338624,
+            "delta": 0.015873015873
+          }
+        }
+      }
+    },
+    {
+      "symbol": "AMD",
+      "name": "AMD",
+      "horizon": 30,
+      "as_of": "2026-08-23T20:32:23+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:31:38+09:00",
+      "expected_return": -0.0356337825271541,
+      "confidence": 31.3319492136646,
+      "prob_up": 0.47754137115839246,
+      "oos_ic": -0.0592891776105897,
+      "oos_rmse": 0.2273934860684832,
+      "comparison": {
+        "symbol": "AMD",
+        "horizon": 30,
+        "name": "AMD",
+        "previous_as_of": "2026-08-22T17:21:41+09:00",
+        "current_as_of": "2026-08-23T20:32:23+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:20:58+09:00",
+        "current_trained_at": "2026-08-23T20:31:38+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "baseline_hist_mean": -1.0,
+          "catboost": 0.145,
+          "elasticnet": 0.197,
+          "extra_trees": 0.167,
+          "gru": 0.14,
+          "random_forest": 0.157,
+          "ridge": 0.194
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.002769645537791021,
+            "current": -0.0356337825271541,
+            "delta": -0.038403428065
+          },
+          "current_price": {
+            "previous": 472.361,
+            "current": 472.361,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 358.1936998973291,
+            "current": 348.36221129687186,
+            "delta": -9.831488600457
+          },
+          "p50": {
+            "previous": 473.6692725358765,
+            "current": 455.52899085169093,
+            "delta": -18.140281684186
+          },
+          "p90": {
+            "previous": 1135.926469252871,
+            "current": 1104.0936604249896,
+            "delta": -31.832808827881
+          },
+          "prob_up": {
+            "previous": 0.5031746031746032,
+            "current": 0.47754137115839246,
+            "delta": -0.025633232016
+          },
+          "confidence": {
+            "previous": 25.0,
+            "current": 31.3319492136646,
+            "delta": 6.331949213665
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.49682539682539684,
+            "current": 0.44761904761904764,
+            "delta": -0.049206349206
+          },
+          "oos_rmse": {
+            "previous": 0.22610933925180662,
+            "current": 0.2273934860684832,
+            "delta": 0.001284146817
+          },
+          "baseline_rmse": {
+            "previous": 0.22332105216106266,
+            "current": 0.22332105216106266,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.8571428571428571,
+            "current": 0.8835978835978836,
+            "delta": 0.026455026455
+          }
+        }
+      }
+    },
+    {
+      "symbol": "AMD",
+      "name": "AMD",
+      "horizon": 5,
+      "as_of": "2026-08-23T20:32:22+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:30:26+09:00",
+      "expected_return": 0.006439657098662233,
+      "confidence": 39.900976713472346,
+      "prob_up": 0.5585738539898133,
+      "oos_ic": -0.07977649550995629,
+      "oos_rmse": 0.08179401380484255,
+      "comparison": {
+        "symbol": "AMD",
+        "horizon": 5,
+        "name": "AMD",
+        "previous_as_of": "2026-08-22T17:21:41+09:00",
+        "current_as_of": "2026-08-23T20:32:22+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:19:46+09:00",
+        "current_trained_at": "2026-08-23T20:30:26+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "baseline_hist_mean": -1.0,
+          "catboost": 0.138,
+          "elasticnet": 0.196,
+          "extra_trees": 0.165,
+          "gru": 0.147,
+          "random_forest": 0.168,
+          "ridge": 0.186
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.00902069638065739,
+            "current": 0.006439657098662233,
+            "delta": -0.002581039282
+          },
+          "current_price": {
+            "previous": 472.361,
+            "current": 472.361,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 417.91703908279084,
+            "current": 414.5178501992547,
+            "delta": -3.399188883536
+          },
+          "p50": {
+            "previous": 476.6220251630637,
+            "current": 475.40284286678116,
+            "delta": -1.219182296283
+          },
+          "p90": {
+            "previous": 559.9967076112224,
+            "current": 556.8185116316206,
+            "delta": -3.178195979602
+          },
+          "prob_up": {
+            "previous": 0.5476190476190477,
+            "current": 0.5585738539898133,
+            "delta": 0.010954806371
+          },
+          "confidence": {
+            "previous": 25.0,
+            "current": 39.900976713472346,
+            "delta": 14.900976713472
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.4523809523809524,
+            "current": 0.4507936507936508,
+            "delta": -0.001587301587
+          },
+          "oos_rmse": {
+            "previous": 0.08136049617353346,
+            "current": 0.08179401380484255,
+            "delta": 0.000433517631
+          },
+          "baseline_rmse": {
+            "previous": 0.08115180276846837,
+            "current": 0.08115180276846837,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.8359788359788359,
+            "current": 0.8465608465608465,
+            "delta": 0.010582010582
+          }
+        }
+      }
+    },
+    {
+      "symbol": "ASML",
+      "name": "ASML 홀딩(ADR)",
+      "horizon": 10,
+      "as_of": "2026-08-23T20:22:11+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:20:58+09:00",
+      "expected_return": 0.01114448533278356,
+      "confidence": 38.110357777183296,
+      "prob_up": 0.5873320537428023,
+      "oos_ic": -0.043234746214219216,
+      "oos_rmse": 0.07766610338167063,
+      "comparison": {
+        "symbol": "ASML",
+        "horizon": 10,
+        "name": "ASML 홀딩(ADR)",
+        "previous_as_of": "2026-08-22T17:10:55+09:00",
+        "current_as_of": "2026-08-23T20:22:11+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:09:34+09:00",
+        "current_trained_at": "2026-08-23T20:20:58+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "baseline_hist_mean": -1.0,
+          "catboost": 0.149,
+          "elasticnet": 0.214,
+          "extra_trees": 0.169,
+          "gru": 0.127,
+          "random_forest": 0.156,
+          "ridge": 0.185
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.012963991915786455,
+            "current": 0.01114448533278356,
+            "delta": -0.001819506583
+          },
+          "current_price": {
+            "previous": 1764.0,
+            "current": 1764.0,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 1601.1191902177027,
+            "current": 1602.2423635895507,
+            "delta": 1.123173371848
+          },
+          "p50": {
+            "previous": 1786.8684817394474,
+            "current": 1783.6588721270302,
+            "delta": -3.209609612417
+          },
+          "p90": {
+            "previous": 2094.6822246779866,
+            "current": 2105.4944278405146,
+            "delta": 10.812203162528
+          },
+          "prob_up": {
+            "previous": 0.5873015873015873,
+            "current": 0.5873320537428023,
+            "delta": 3.0466441e-05
+          },
+          "confidence": {
+            "previous": 25.0,
+            "current": 38.110357777183296,
+            "delta": 13.110357777183
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.4126984126984127,
+            "current": 0.5015873015873016,
+            "delta": 0.088888888889
+          },
+          "oos_rmse": {
+            "previous": 0.07653785243210535,
+            "current": 0.07766610338167063,
+            "delta": 0.00112825095
+          },
+          "baseline_rmse": {
+            "previous": 0.07606065574357199,
+            "current": 0.07606065574357199,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.8783068783068783,
+            "current": 0.8835978835978836,
+            "delta": 0.005291005291
+          }
+        }
+      }
+    },
+    {
+      "symbol": "ASML",
+      "name": "ASML 홀딩(ADR)",
+      "horizon": 30,
+      "as_of": "2026-08-23T20:22:11+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:21:35+09:00",
+      "expected_return": 0.04629383597062886,
+      "confidence": 29.844043410841657,
+      "prob_up": 0.6335740072202166,
+      "oos_ic": 0.06753754419096598,
+      "oos_rmse": 0.14126310890964597,
+      "comparison": {
+        "symbol": "ASML",
+        "horizon": 30,
+        "name": "ASML 홀딩(ADR)",
+        "previous_as_of": "2026-08-22T17:10:55+09:00",
+        "current_as_of": "2026-08-23T20:22:11+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:10:14+09:00",
+        "current_trained_at": "2026-08-23T20:21:35+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "extra_trees": 0.279,
+          "gru": -0.213,
+          "hist_gbm": -0.204,
+          "lightgbm": -0.182,
+          "random_forest": 0.32
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.06594464626614105,
+            "current": 0.04629383597062886,
+            "delta": -0.019650810296
+          },
+          "current_price": {
+            "previous": 1764.0,
+            "current": 1764.0,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 1525.2303808724084,
+            "current": 1478.6725288600292,
+            "delta": -46.557852012379
+          },
+          "p50": {
+            "previous": 1880.3263560134728,
+            "current": 1845.6623266521892,
+            "delta": -34.664029361284
+          },
+          "p90": {
+            "previous": 2450.201003378019,
+            "current": 2399.3627454054617,
+            "delta": -50.838257972557
+          },
+          "prob_up": {
+            "previous": 0.7040816326530612,
+            "current": 0.6335740072202166,
+            "delta": -0.070507625433
+          },
+          "confidence": {
+            "previous": 33.792987163956994,
+            "current": 29.844043410841657,
+            "delta": -3.948943753115
+          },
+          "oos_ic": {
+            "previous": 0.1597495296572392,
+            "current": 0.06753754419096598,
+            "delta": -0.092211985466
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.5380952380952381,
+            "current": 0.5015873015873016,
+            "delta": -0.036507936508
+          },
+          "oos_rmse": {
+            "previous": 0.1327572082962733,
+            "current": 0.14126310890964597,
+            "delta": 0.008505900613
+          },
+          "baseline_rmse": {
+            "previous": 0.13357003071325113,
+            "current": 0.13357003071325113,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.9206349206349206,
+            "current": 0.91005291005291,
+            "delta": -0.010582010582
+          }
+        }
+      }
+    },
+    {
+      "symbol": "ASML",
+      "name": "ASML 홀딩(ADR)",
+      "horizon": 5,
+      "as_of": "2026-08-23T20:22:11+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:20:16+09:00",
+      "expected_return": 0.007293142168393718,
+      "confidence": 41.88692261976055,
+      "prob_up": 0.5557586837294333,
+      "oos_ic": -0.0047111661728982505,
+      "oos_rmse": 0.05674245834064297,
+      "comparison": {
+        "symbol": "ASML",
+        "horizon": 5,
+        "name": "ASML 홀딩(ADR)",
+        "previous_as_of": "2026-08-22T17:10:55+09:00",
+        "current_as_of": "2026-08-23T20:22:11+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:08:51+09:00",
+        "current_trained_at": "2026-08-23T20:20:16+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "catboost": 0.141,
+          "elasticnet": 0.18,
+          "extra_trees": -0.149,
+          "gru": -0.168,
+          "random_forest": -0.176,
+          "ridge": 0.171
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.0072765184556855544,
+            "current": 0.007293142168393718,
+            "delta": 1.6623713e-05
+          },
+          "current_price": {
+            "previous": 1764.0,
+            "current": 1764.0,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 1649.3623115353153,
+            "current": 1648.3280412816607,
+            "delta": -1.034270253655
+          },
+          "p50": {
+            "previous": 1776.8357785558294,
+            "current": 1776.8651027850465,
+            "delta": 0.029324229217
+          },
+          "p90": {
+            "previous": 1962.2480660459585,
+            "current": 1964.3695577119179,
+            "delta": 2.121491665959
+          },
+          "prob_up": {
+            "previous": 0.5423340961098398,
+            "current": 0.5557586837294333,
+            "delta": 0.01342458762
+          },
+          "confidence": {
+            "previous": 45.820787936632776,
+            "current": 41.88692261976055,
+            "delta": -3.933865316872
+          },
+          "oos_ic": {
+            "previous": 0.06602392188296914,
+            "current": -0.0047111661728982505,
+            "delta": -0.070735088056
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.5253968253968254,
+            "current": 0.5126984126984127,
+            "delta": -0.012698412698
+          },
+          "oos_rmse": {
+            "previous": 0.056128198266425934,
+            "current": 0.05674245834064297,
+            "delta": 0.000614260074
+          },
+          "baseline_rmse": {
+            "previous": 0.05630065689422854,
+            "current": 0.05630065689422854,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.8465608465608465,
+            "current": 0.8412698412698413,
+            "delta": -0.005291005291
+          }
+        }
+      }
+    },
+    {
+      "symbol": "CAT",
+      "name": "캐터필러",
+      "horizon": 10,
+      "as_of": "2026-08-23T20:40:40+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:39:22+09:00",
+      "expected_return": 0.011001547197279304,
+      "confidence": 35.05745948822038,
+      "prob_up": 0.574468085106383,
+      "oos_ic": -0.11288272237456762,
+      "oos_rmse": 0.06512206213317122,
+      "comparison": {
+        "symbol": "CAT",
+        "horizon": 10,
+        "name": "캐터필러",
+        "previous_as_of": "2026-08-22T17:30:18+09:00",
+        "current_as_of": "2026-08-23T20:40:40+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:28:57+09:00",
+        "current_trained_at": "2026-08-23T20:39:22+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "baseline_hist_mean": -1.0,
+          "elasticnet": 0.196,
+          "extra_trees": 0.171,
+          "gru": 0.149,
+          "lightgbm": 0.136,
+          "random_forest": 0.165,
+          "ridge": 0.183
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.027504476778686726,
+            "current": 0.011001547197279304,
+            "delta": -0.016502929581
+          },
+          "current_price": {
+            "previous": 827.2,
+            "current": 827.2,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 751.5094163309232,
+            "current": 741.746259854669,
+            "delta": -9.763156476254
+          },
+          "p50": {
+            "previous": 849.9517031913297,
+            "current": 836.3004798415894,
+            "delta": -13.65122334974
+          },
+          "p90": {
+            "previous": 948.3453715055714,
+            "current": 951.0180627557164,
+            "delta": 2.672691250145
+          },
+          "prob_up": {
+            "previous": 0.5888888888888889,
+            "current": 0.574468085106383,
+            "delta": -0.014420803783
+          },
+          "confidence": {
+            "previous": 25.0,
+            "current": 35.05745948822038,
+            "delta": 10.05745948822
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.4111111111111111,
+            "current": 0.526984126984127,
+            "delta": 0.115873015873
+          },
+          "oos_rmse": {
+            "previous": 0.0647702545790975,
+            "current": 0.06512206213317122,
+            "delta": 0.000351807554
+          },
+          "baseline_rmse": {
+            "previous": 0.0633341345643138,
+            "current": 0.0633341345643138,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.9047619047619048,
+            "current": 0.91005291005291,
+            "delta": 0.005291005291
+          }
+        }
+      }
+    },
+    {
+      "symbol": "CAT",
+      "name": "캐터필러",
+      "horizon": 30,
+      "as_of": "2026-08-23T20:40:40+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:39:58+09:00",
+      "expected_return": 0.09651643652091346,
+      "confidence": 28.145451134123807,
+      "prob_up": 0.625,
+      "oos_ic": -0.050043837506898434,
+      "oos_rmse": 0.11449095202176024,
+      "comparison": {
+        "symbol": "CAT",
+        "horizon": 30,
+        "name": "캐터필러",
+        "previous_as_of": "2026-08-22T17:30:18+09:00",
+        "current_as_of": "2026-08-23T20:40:40+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:29:36+09:00",
+        "current_trained_at": "2026-08-23T20:39:58+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "baseline_hist_mean": -1.0,
+          "catboost": 0.119,
+          "elasticnet": 0.241,
+          "extra_trees": 0.168,
+          "lightgbm": 0.126,
+          "random_forest": 0.15,
+          "ridge": 0.196
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.05874127522611006,
+            "current": 0.09651643652091346,
+            "delta": 0.037775161295
+          },
+          "current_price": {
+            "previous": 827.2,
+            "current": 827.2,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 712.0992592466489,
+            "current": 738.6806772827196,
+            "delta": 26.581418036071
+          },
+          "p50": {
+            "previous": 875.7907828670383,
+            "current": 907.0383962900996,
+            "delta": 31.247613423061
+          },
+          "p90": {
+            "previous": 1053.319377314859,
+            "current": 1137.902956999641,
+            "delta": 84.583579684782
+          },
+          "prob_up": {
+            "previous": 0.653968253968254,
+            "current": 0.625,
+            "delta": -0.028968253968
+          },
+          "confidence": {
+            "previous": 25.0,
+            "current": 28.145451134123807,
+            "delta": 3.145451134124
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.346031746031746,
+            "current": 0.5015873015873016,
+            "delta": 0.155555555556
+          },
+          "oos_rmse": {
+            "previous": 0.11701592476527722,
+            "current": 0.11449095202176024,
+            "delta": -0.002524972744
+          },
+          "baseline_rmse": {
+            "previous": 0.10911846891738843,
+            "current": 0.10911846891738843,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.8518518518518519,
+            "current": 0.8518518518518519,
+            "delta": 0.0
+          }
+        }
+      }
+    },
+    {
+      "symbol": "CAT",
+      "name": "캐터필러",
+      "horizon": 5,
+      "as_of": "2026-08-23T20:40:40+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:38:42+09:00",
+      "expected_return": 0.007238807537659486,
+      "confidence": 38.00467164374018,
+      "prob_up": 0.5761904761904761,
+      "oos_ic": -0.04139379902825926,
+      "oos_rmse": 0.04525846837943006,
+      "comparison": {
+        "symbol": "CAT",
+        "horizon": 5,
+        "name": "캐터필러",
+        "previous_as_of": "2026-08-22T17:30:18+09:00",
+        "current_as_of": "2026-08-23T20:40:40+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:28:16+09:00",
+        "current_trained_at": "2026-08-23T20:38:42+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "baseline_hist_mean": -1.0,
+          "elasticnet": 0.182,
+          "extra_trees": 0.171,
+          "gru": 0.155,
+          "random_forest": 0.165,
+          "ridge": 0.177,
+          "xgboost": 0.149
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.009559033578944831,
+            "current": 0.007238807537659486,
+            "delta": -0.002320226041
+          },
+          "current_price": {
+            "previous": 827.2,
+            "current": 827.2,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 775.3135454809966,
+            "current": 771.9184032641643,
+            "delta": -3.395142216832
+          },
+          "p50": {
+            "previous": 835.1072325765032,
+            "current": 833.187941595152,
+            "delta": -1.919290981351
+          },
+          "p90": {
+            "previous": 909.3619160913738,
+            "current": 904.3357069845504,
+            "delta": -5.026209106823
+          },
+          "prob_up": {
+            "previous": 0.5761904761904761,
+            "current": 0.5761904761904761,
+            "delta": 0.0
+          },
+          "confidence": {
+            "previous": 25.0,
+            "current": 38.00467164374018,
+            "delta": 13.00467164374
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.4238095238095238,
+            "current": 0.5174603174603175,
+            "delta": 0.093650793651
+          },
+          "oos_rmse": {
+            "previous": 0.04513045855355272,
+            "current": 0.04525846837943006,
+            "delta": 0.000128009826
+          },
+          "baseline_rmse": {
+            "previous": 0.04458767987679109,
+            "current": 0.04458767987679109,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.8359788359788359,
+            "current": 0.8359788359788359,
+            "delta": 0.0
+          }
+        }
+      }
+    },
+    {
+      "symbol": "GOOGL",
+      "name": "알파벳 A",
+      "horizon": 10,
+      "as_of": "2026-08-23T20:34:23+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:33:04+09:00",
+      "expected_return": 0.030834739429137503,
+      "confidence": 29.520938765079464,
+      "prob_up": 0.6,
+      "oos_ic": -0.13580575074565812,
+      "oos_rmse": 0.06250954803938355,
+      "comparison": {
+        "symbol": "GOOGL",
+        "horizon": 10,
+        "name": "알파벳 A",
+        "previous_as_of": "2026-08-22T17:23:46+09:00",
+        "current_as_of": "2026-08-23T20:34:23+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:22:23+09:00",
+        "current_trained_at": "2026-08-23T20:33:04+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "baseline_hist_mean": -1.0,
+          "catboost": 0.137,
+          "elasticnet": 0.187,
+          "extra_trees": 0.173,
+          "gru": 0.159,
+          "random_forest": 0.158,
+          "ridge": 0.187
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.016017744973294112,
+            "current": 0.030834739429137503,
+            "delta": 0.014816994456
+          },
+          "current_price": {
+            "previous": 345.1,
+            "current": 345.1,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 311.74242195063493,
+            "current": 304.9874768059868,
+            "delta": -6.754945144648
+          },
+          "p50": {
+            "previous": 350.6277237902838,
+            "current": 355.74106857699536,
+            "delta": 5.113344786712
+          },
+          "p90": {
+            "previous": 396.7021930327386,
+            "current": 395.76801475530874,
+            "delta": -0.93417827743
+          },
+          "prob_up": {
+            "previous": 0.6111111111111112,
+            "current": 0.6,
+            "delta": -0.011111111111
+          },
+          "confidence": {
+            "previous": 25.0,
+            "current": 29.520938765079464,
+            "delta": 4.520938765079
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.3888888888888889,
+            "current": 0.3873015873015873,
+            "delta": -0.001587301587
+          },
+          "oos_rmse": {
+            "previous": 0.062114228075234125,
+            "current": 0.06250954803938355,
+            "delta": 0.000395319964
+          },
+          "baseline_rmse": {
+            "previous": 0.06099079011296311,
+            "current": 0.06099079011296311,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.8148148148148148,
+            "current": 0.8253968253968254,
+            "delta": 0.010582010582
+          }
+        }
+      }
+    },
+    {
+      "symbol": "GOOGL",
+      "name": "알파벳 A",
+      "horizon": 30,
+      "as_of": "2026-08-23T20:34:23+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:33:43+09:00",
+      "expected_return": 0.030405227315092764,
+      "confidence": 43.04358773608142,
+      "prob_up": 0.02,
+      "oos_ic": 0.12600283669891704,
+      "oos_rmse": 0.10897578178291997,
+      "comparison": {
+        "symbol": "GOOGL",
+        "horizon": 30,
+        "name": "알파벳 A",
+        "previous_as_of": "2026-08-22T17:23:46+09:00",
+        "current_as_of": "2026-08-23T20:34:23+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:23:03+09:00",
+        "current_trained_at": "2026-08-23T20:33:43+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "baseline_hist_mean": -1.0,
+          "catboost": 0.14,
+          "elasticnet": 0.211,
+          "extra_trees": 0.175,
+          "random_forest": 0.149,
+          "ridge": 0.184,
+          "xgboost": 0.142
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.044912686204856334,
+            "current": 0.030405227315092764,
+            "delta": -0.01450745889
+          },
+          "current_price": {
+            "previous": 345.1,
+            "current": 345.1,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 288.64102944811964,
+            "current": 287.64092582382426,
+            "delta": -1.000103624295
+          },
+          "p50": {
+            "previous": 360.599368009296,
+            "current": 355.59284394643856,
+            "delta": -5.006524062857
+          },
+          "p90": {
+            "previous": 485.5068830757932,
+            "current": 455.9633761407048,
+            "delta": -29.543506935088
+          },
+          "prob_up": {
+            "previous": 0.6777777777777778,
+            "current": 0.02,
+            "delta": -0.657777777778
+          },
+          "confidence": {
+            "previous": 22.160637171686513,
+            "current": 43.04358773608142,
+            "delta": 20.882950564395
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.32222222222222224,
+            "current": 0.6079365079365079,
+            "delta": 0.285714285714
+          },
+          "oos_rmse": {
+            "previous": 0.1158429107791424,
+            "current": 0.10897578178291997,
+            "delta": -0.006867128996
+          },
+          "baseline_rmse": {
+            "previous": 0.11034310046266199,
+            "current": 0.11034310046266199,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.8994708994708994,
+            "current": 0.8888888888888888,
+            "delta": -0.010582010582
+          }
+        }
+      }
+    },
+    {
+      "symbol": "GOOGL",
+      "name": "알파벳 A",
+      "horizon": 5,
+      "as_of": "2026-08-23T20:34:23+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:32:23+09:00",
+      "expected_return": 0.010657124249386252,
+      "confidence": 35.03462417438864,
+      "prob_up": 0.5636942675159236,
+      "oos_ic": -0.10483557697346331,
+      "oos_rmse": 0.044368265345284055,
+      "comparison": {
+        "symbol": "GOOGL",
+        "horizon": 5,
+        "name": "알파벳 A",
+        "previous_as_of": "2026-08-22T17:23:46+09:00",
+        "current_as_of": "2026-08-23T20:34:23+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:21:41+09:00",
+        "current_trained_at": "2026-08-23T20:32:23+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "baseline_hist_mean": -1.0,
+          "catboost": 0.14,
+          "elasticnet": 0.187,
+          "extra_trees": 0.163,
+          "gru": 0.172,
+          "random_forest": 0.156,
+          "ridge": 0.181
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.008373835598809665,
+            "current": 0.010657124249386252,
+            "delta": 0.002283288651
+          },
+          "current_price": {
+            "previous": 345.1,
+            "current": 345.1,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 313.67649385552954,
+            "current": 313.1014202724058,
+            "delta": -0.575073583124
+          },
+          "p50": {
+            "previous": 347.98981066514926,
+            "current": 348.7777735784632,
+            "delta": 0.787962913314
+          },
+          "p90": {
+            "previous": 380.09299775230124,
+            "current": 378.6391671378656,
+            "delta": -1.453830614436
+          },
+          "prob_up": {
+            "previous": 0.5634920634920635,
+            "current": 0.5636942675159236,
+            "delta": 0.000202204024
+          },
+          "confidence": {
+            "previous": 25.0,
+            "current": 35.03462417438864,
+            "delta": 10.034624174389
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.4365079365079365,
+            "current": 0.4888888888888889,
+            "delta": 0.052380952381
+          },
+          "oos_rmse": {
+            "previous": 0.043958716181446915,
+            "current": 0.044368265345284055,
+            "delta": 0.000409549164
+          },
+          "baseline_rmse": {
+            "previous": 0.04357218004117381,
+            "current": 0.04357218004117381,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.8095238095238095,
+            "current": 0.8095238095238095,
+            "delta": 0.0
+          }
+        }
+      }
+    },
+    {
+      "symbol": "KLAC",
+      "name": "KLA",
+      "horizon": 10,
+      "as_of": "2026-08-23T20:24:17+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:22:52+09:00",
+      "expected_return": 0.030937470250328225,
+      "confidence": 38.00211376820719,
+      "prob_up": 0.6067415730337079,
+      "oos_ic": 0.016992328262953788,
+      "oos_rmse": 0.08587127374576246,
+      "comparison": {
+        "symbol": "KLAC",
+        "horizon": 10,
+        "name": "KLA",
+        "previous_as_of": "2026-08-22T17:13:11+09:00",
+        "current_as_of": "2026-08-23T20:24:17+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:11:39+09:00",
+        "current_trained_at": "2026-08-23T20:22:52+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "elasticnet": 0.194,
+          "extra_trees": 0.161,
+          "gru": 0.164,
+          "lightgbm": 0.142,
+          "random_forest": 0.154,
+          "ridge": -0.815
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.03448992902481951,
+            "current": 0.030937470250328225,
+            "delta": -0.003552458774
+          },
+          "current_price": {
+            "previous": 184.26,
+            "current": 184.26,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 161.36040104950908,
+            "current": 160.6636690621976,
+            "delta": -0.696731987311
+          },
+          "p50": {
+            "previous": 190.61511432211324,
+            "current": 189.96053826832548,
+            "delta": -0.654576053788
+          },
+          "p90": {
+            "previous": 231.2028756736731,
+            "current": 230.52184616528208,
+            "delta": -0.681029508391
+          },
+          "prob_up": {
+            "previous": 0.6261859582542695,
+            "current": 0.6067415730337079,
+            "delta": -0.019444385221
+          },
+          "confidence": {
+            "previous": 41.41173426201309,
+            "current": 38.00211376820719,
+            "delta": -3.409620493806
+          },
+          "oos_ic": {
+            "previous": 0.05973713595602288,
+            "current": 0.016992328262953788,
+            "delta": -0.042744807693
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.5555555555555556,
+            "current": 0.526984126984127,
+            "delta": -0.028571428571
+          },
+          "oos_rmse": {
+            "previous": 0.08522430002418138,
+            "current": 0.08587127374576246,
+            "delta": 0.000646973722
+          },
+          "baseline_rmse": {
+            "previous": 0.08449862682408352,
+            "current": 0.08449862682408352,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.8465608465608465,
+            "current": 0.8465608465608465,
+            "delta": 0.0
+          }
+        }
+      }
+    },
+    {
+      "symbol": "KLAC",
+      "name": "KLA",
+      "horizon": 30,
+      "as_of": "2026-08-23T20:24:18+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:23:37+09:00",
+      "expected_return": 0.11389634781079572,
+      "confidence": 24.466129242839667,
+      "prob_up": 0.6756756756756757,
+      "oos_ic": -0.04740351376278122,
+      "oos_rmse": 0.1408859503835349,
+      "comparison": {
+        "symbol": "KLAC",
+        "horizon": 30,
+        "name": "KLA",
+        "previous_as_of": "2026-08-22T17:13:11+09:00",
+        "current_as_of": "2026-08-23T20:24:18+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:12:25+09:00",
+        "current_trained_at": "2026-08-23T20:23:37+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "baseline_moving_avg": -1.0,
+          "catboost": 0.165,
+          "elasticnet": 0.174,
+          "extra_trees": 0.171,
+          "lightgbm": 0.157,
+          "random_forest": 0.173,
+          "xgboost": 0.159
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.06554439602889972,
+            "current": 0.11389634781079572,
+            "delta": 0.048351951782
+          },
+          "current_price": {
+            "previous": 184.26,
+            "current": 184.26,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 151.27487597119358,
+            "current": 151.16650438420248,
+            "delta": -0.108371586991
+          },
+          "p50": {
+            "previous": 196.33721041228506,
+            "current": 205.2465410476172,
+            "delta": 8.909330635332
+          },
+          "p90": {
+            "previous": 272.3610785134336,
+            "current": 292.2143871039303,
+            "delta": 19.853308590497
+          },
+          "prob_up": {
+            "previous": 0.5502392344497608,
+            "current": 0.6756756756756757,
+            "delta": 0.125436441226
+          },
+          "confidence": {
+            "previous": 25.0,
+            "current": 24.466129242839667,
+            "delta": -0.53387075716
+          },
+          "oos_ic": {
+            "previous": 0.16113594837942224,
+            "current": -0.04740351376278122,
+            "delta": -0.208539462142
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.7,
+            "current": 0.5253968253968254,
+            "delta": -0.174603174603
+          },
+          "oos_rmse": {
+            "previous": 0.13481863280390788,
+            "current": 0.1408859503835349,
+            "delta": 0.00606731758
+          },
+          "baseline_rmse": {
+            "previous": 0.13308951242276365,
+            "current": 0.13308951242276365,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.8201058201058201,
+            "current": 0.8465608465608465,
+            "delta": 0.026455026455
+          }
+        }
+      }
+    },
+    {
+      "symbol": "KLAC",
+      "name": "KLA",
+      "horizon": 5,
+      "as_of": "2026-08-23T20:24:17+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:22:11+09:00",
+      "expected_return": 0.020934544430119884,
+      "confidence": 43.953539682042944,
+      "prob_up": 0.654320987654321,
+      "oos_ic": 0.06001303678193769,
+      "oos_rmse": 0.06546131945080114,
+      "comparison": {
+        "symbol": "KLAC",
+        "horizon": 5,
+        "name": "KLA",
+        "previous_as_of": "2026-08-22T17:13:11+09:00",
+        "current_as_of": "2026-08-23T20:24:17+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:10:55+09:00",
+        "current_trained_at": "2026-08-23T20:22:11+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "elasticnet": 0.176,
+          "hist_gbm": -0.343,
+          "ridge": 0.167
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.019951225965802788,
+            "current": 0.020934544430119884,
+            "delta": 0.000983318464
+          },
+          "current_price": {
+            "previous": 184.26,
+            "current": 184.26,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 165.65412506009315,
+            "current": 166.17000767107908,
+            "delta": 0.515882610986
+          },
+          "p50": {
+            "previous": 187.9362128964588,
+            "current": 188.1173991566939,
+            "delta": 0.181186260235
+          },
+          "p90": {
+            "previous": 213.92827218375726,
+            "current": 216.85270703442137,
+            "delta": 2.924434850664
+          },
+          "prob_up": {
+            "previous": 0.6595092024539877,
+            "current": 0.654320987654321,
+            "delta": -0.0051882148
+          },
+          "confidence": {
+            "previous": 68.36034282144836,
+            "current": 43.953539682042944,
+            "delta": -24.406803139405
+          },
+          "oos_ic": {
+            "previous": 0.17450002573522666,
+            "current": 0.06001303678193769,
+            "delta": -0.114486988953
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.5920634920634921,
+            "current": 0.5777777777777777,
+            "delta": -0.014285714286
+          },
+          "oos_rmse": {
+            "previous": 0.06495600093486238,
+            "current": 0.06546131945080114,
+            "delta": 0.000505318516
+          },
+          "baseline_rmse": {
+            "previous": 0.0656010559525953,
+            "current": 0.0656010559525953,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.8148148148148148,
+            "current": 0.8412698412698413,
+            "delta": 0.026455026455
+          }
+        }
+      }
+    },
+    {
+      "symbol": "MU",
+      "name": "마이크론 테크놀로지",
+      "horizon": 10,
+      "as_of": "2026-08-23T20:16:53+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:15:35+09:00",
+      "expected_return": 0.09292789089039455,
+      "confidence": 35.9284145215667,
+      "prob_up": 0.634920634920635,
+      "oos_ic": -0.10194424536531706,
+      "oos_rmse": 0.1434971875711016,
+      "comparison": {
+        "symbol": "MU",
+        "horizon": 10,
+        "name": "마이크론 테크놀로지",
+        "previous_as_of": "2026-08-22T17:05:21+09:00",
+        "current_as_of": "2026-08-23T20:16:53+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:04:01+09:00",
+        "current_trained_at": "2026-08-23T20:15:35+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "catboost": 0.132,
+          "elasticnet": -0.801,
+          "extra_trees": 0.186,
+          "lightgbm": 0.127,
+          "random_forest": 0.162,
+          "ridge": 0.195
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.09364506995370481,
+            "current": 0.09292789089039455,
+            "delta": -0.000717179063
+          },
+          "current_price": {
+            "previous": 963.51,
+            "current": 963.51,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 787.3154231395549,
+            "current": 792.2040184412473,
+            "delta": 4.888595301692
+          },
+          "p50": {
+            "previous": 1053.737961351094,
+            "current": 1053.0469521518041,
+            "delta": -0.69100919929
+          },
+          "p90": {
+            "previous": 1334.6103688631472,
+            "current": 1391.3025014954053,
+            "delta": 56.692132632258
+          },
+          "prob_up": {
+            "previous": 0.5333333333333333,
+            "current": 0.634920634920635,
+            "delta": 0.101587301587
+          },
+          "confidence": {
+            "previous": 54.309690916800726,
+            "current": 35.9284145215667,
+            "delta": -18.381276395234
+          },
+          "oos_ic": {
+            "previous": 0.1796993209114633,
+            "current": -0.10194424536531706,
+            "delta": -0.281643566277
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.5777777777777777,
+            "current": 0.44126984126984126,
+            "delta": -0.136507936508
+          },
+          "oos_rmse": {
+            "previous": 0.1392431170950406,
+            "current": 0.1434971875711016,
+            "delta": 0.004254070476
+          },
+          "baseline_rmse": {
+            "previous": 0.13296369013264514,
+            "current": 0.13296369013264514,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.873015873015873,
+            "current": 0.8941798941798942,
+            "delta": 0.021164021164
+          }
+        }
+      }
+    },
+    {
+      "symbol": "MU",
+      "name": "마이크론 테크놀로지",
+      "horizon": 30,
+      "as_of": "2026-08-23T20:16:53+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:16:14+09:00",
+      "expected_return": 0.655814571405162,
+      "confidence": 31.216819090982,
+      "prob_up": 0.98,
+      "oos_ic": 0.1473854653868598,
+      "oos_rmse": 0.255030353830835,
+      "comparison": {
+        "symbol": "MU",
+        "horizon": 30,
+        "name": "마이크론 테크놀로지",
+        "previous_as_of": "2026-08-22T17:05:21+09:00",
+        "current_as_of": "2026-08-23T20:16:53+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:04:41+09:00",
+        "current_trained_at": "2026-08-23T20:16:14+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "baseline_moving_avg": -1.0,
+          "hist_gbm": 0.534,
+          "random_forest": 0.466
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.15909593862479143,
+            "current": 0.655814571405162,
+            "delta": 0.49671863278
+          },
+          "current_price": {
+            "previous": 963.51,
+            "current": 963.51,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 721.9195804008941,
+            "current": 967.8327184935047,
+            "delta": 245.913138092611
+          },
+          "p50": {
+            "previous": 1116.8005278243727,
+            "current": 1595.3938976945876,
+            "delta": 478.593369870215
+          },
+          "p90": {
+            "previous": 2241.612328203209,
+            "current": 2694.657476888892,
+            "delta": 453.045148685683
+          },
+          "prob_up": {
+            "previous": 0.7654320987654321,
+            "current": 0.98,
+            "delta": 0.214567901235
+          },
+          "confidence": {
+            "previous": 25.0,
+            "current": 31.216819090982,
+            "delta": 6.216819090982
+          },
+          "oos_ic": {
+            "previous": 0.16704615552459848,
+            "current": 0.1473854653868598,
+            "delta": -0.019660690138
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.6587301587301587,
+            "current": 0.5349206349206349,
+            "delta": -0.12380952381
+          },
+          "oos_rmse": {
+            "previous": 0.2530417785759897,
+            "current": 0.255030353830835,
+            "delta": 0.001988575255
+          },
+          "baseline_rmse": {
+            "previous": 0.24909099724345363,
+            "current": 0.24909099724345363,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.9153439153439153,
+            "current": 0.8941798941798942,
+            "delta": -0.021164021164
+          }
+        }
+      }
+    },
+    {
+      "symbol": "MU",
+      "name": "마이크론 테크놀로지",
+      "horizon": 5,
+      "as_of": "2026-08-23T20:16:53+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:14:58+09:00",
+      "expected_return": 0.06160699942966996,
+      "confidence": 47.03010615981146,
+      "prob_up": 0.6060606060606061,
+      "oos_ic": 0.08089716654221675,
+      "oos_rmse": 0.09838618394216468,
+      "comparison": {
+        "symbol": "MU",
+        "horizon": 5,
+        "name": "마이크론 테크놀로지",
+        "previous_as_of": "2026-08-22T17:05:21+09:00",
+        "current_as_of": "2026-08-23T20:16:53+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:03:23+09:00",
+        "current_trained_at": "2026-08-23T20:14:58+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {},
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.038775422602002285,
+            "current": 0.06160699942966996,
+            "delta": 0.022831576828
+          },
+          "current_price": {
+            "previous": 963.51,
+            "current": 963.51,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 822.9417047578545,
+            "current": 822.1995392610717,
+            "delta": -0.742165496783
+          },
+          "p50": {
+            "previous": 1000.8705074312552,
+            "current": 1022.8689600204813,
+            "delta": 21.998452589226
+          },
+          "p90": {
+            "previous": 1218.8564288468792,
+            "current": 1238.1720162739946,
+            "delta": 19.315587427115
+          },
+          "prob_up": {
+            "previous": 0.6428571428571429,
+            "current": 0.6060606060606061,
+            "delta": -0.036796536797
+          },
+          "confidence": {
+            "previous": 51.97084546000516,
+            "current": 47.03010615981146,
+            "delta": -4.940739300194
+          },
+          "oos_ic": {
+            "previous": 0.06264074789710397,
+            "current": 0.08089716654221675,
+            "delta": 0.018256418645
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.5888888888888889,
+            "current": 0.4603174603174603,
+            "delta": -0.128571428571
+          },
+          "oos_rmse": {
+            "previous": 0.09883723871885883,
+            "current": 0.09838618394216468,
+            "delta": -0.000451054777
+          },
+          "baseline_rmse": {
+            "previous": 0.09679048094119831,
+            "current": 0.09679048094119831,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.8306878306878307,
+            "current": 0.8359788359788359,
+            "delta": 0.005291005291
+          }
+        }
+      }
+    },
+    {
+      "symbol": "NVDA",
+      "name": "엔비디아",
+      "horizon": 10,
+      "as_of": "2026-08-23T20:30:25+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:28:55+09:00",
+      "expected_return": 0.024927713483500202,
+      "confidence": 38.40074416330784,
+      "prob_up": 0.5868167202572347,
+      "oos_ic": -0.18464701667484926,
+      "oos_rmse": 0.08704434600160285,
+      "comparison": {
+        "symbol": "NVDA",
+        "horizon": 10,
+        "name": "엔비디아",
+        "previous_as_of": "2026-08-22T17:19:46+09:00",
+        "current_as_of": "2026-08-23T20:30:25+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:18:16+09:00",
+        "current_trained_at": "2026-08-23T20:28:55+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "baseline_hist_mean": -1.0,
+          "catboost": 0.149,
+          "elasticnet": 0.182,
+          "extra_trees": 0.18,
+          "gru": 0.133,
+          "random_forest": 0.167,
+          "ridge": 0.19
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.011836058426896612,
+            "current": 0.024927713483500202,
+            "delta": 0.013091655057
+          },
+          "current_price": {
+            "previous": 215.38,
+            "current": 215.38,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 201.64288334733828,
+            "current": 202.30951158671564,
+            "delta": 0.666628239377
+          },
+          "p50": {
+            "previous": 217.92925026398498,
+            "current": 220.74893093007626,
+            "delta": 2.819680666091
+          },
+          "p90": {
+            "previous": 237.86042236617618,
+            "current": 239.69712501596914,
+            "delta": 1.836702649793
+          },
+          "prob_up": {
+            "previous": 0.5841269841269842,
+            "current": 0.5868167202572347,
+            "delta": 0.00268973613
+          },
+          "confidence": {
+            "previous": 25.0,
+            "current": 38.40074416330784,
+            "delta": 13.400744163308
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.4158730158730159,
+            "current": 0.44126984126984126,
+            "delta": 0.025396825397
+          },
+          "oos_rmse": {
+            "previous": 0.08516457461677511,
+            "current": 0.08704434600160285,
+            "delta": 0.001879771385
+          },
+          "baseline_rmse": {
+            "previous": 0.08352758377610806,
+            "current": 0.08352758377610806,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.8835978835978836,
+            "current": 0.8677248677248677,
+            "delta": -0.015873015873
+          }
+        }
+      }
+    },
+    {
+      "symbol": "NVDA",
+      "name": "엔비디아",
+      "horizon": 30,
+      "as_of": "2026-08-23T20:30:25+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:29:38+09:00",
+      "expected_return": -0.018500176205534014,
+      "confidence": 31.279351875240902,
+      "prob_up": 0.576086956521739,
+      "oos_ic": -0.06052460156749238,
+      "oos_rmse": 0.15801146497370103,
+      "comparison": {
+        "symbol": "NVDA",
+        "horizon": 30,
+        "name": "엔비디아",
+        "previous_as_of": "2026-08-22T17:19:46+09:00",
+        "current_as_of": "2026-08-23T20:30:25+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:18:58+09:00",
+        "current_trained_at": "2026-08-23T20:29:38+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "baseline_hist_mean": -1.0,
+          "elasticnet": 0.237,
+          "extra_trees": 0.157,
+          "gru": 0.157,
+          "lightgbm": 0.115,
+          "random_forest": 0.115,
+          "ridge": 0.218
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.01599145490649545,
+            "current": -0.018500176205534014,
+            "delta": -0.034491631112
+          },
+          "current_price": {
+            "previous": 215.38,
+            "current": 215.38,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 190.12965179021668,
+            "current": 155.25778134187982,
+            "delta": -34.871870448337
+          },
+          "p50": {
+            "previous": 218.824239557761,
+            "current": 211.3954320488521,
+            "delta": -7.428807508909
+          },
+          "p90": {
+            "previous": 263.4732155789634,
+            "current": 256.02972307116113,
+            "delta": -7.443492507802
+          },
+          "prob_up": {
+            "previous": 0.5936507936507937,
+            "current": 0.576086956521739,
+            "delta": -0.017563837129
+          },
+          "confidence": {
+            "previous": 25.0,
+            "current": 31.279351875240902,
+            "delta": 6.279351875241
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.40634920634920635,
+            "current": 0.5158730158730159,
+            "delta": 0.109523809524
+          },
+          "oos_rmse": {
+            "previous": 0.15625676807841535,
+            "current": 0.15801146497370103,
+            "delta": 0.001754696895
+          },
+          "baseline_rmse": {
+            "previous": 0.14632640906516406,
+            "current": 0.14632640906516406,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.8994708994708994,
+            "current": 0.9153439153439153,
+            "delta": 0.015873015873
+          }
+        }
+      }
+    },
+    {
+      "symbol": "NVDA",
+      "name": "엔비디아",
+      "horizon": 5,
+      "as_of": "2026-08-23T20:30:25+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:28:15+09:00",
+      "expected_return": 0.0028775532647118407,
+      "confidence": 44.0,
+      "prob_up": 0.5732899022801302,
+      "oos_ic": -0.020306263414035235,
+      "oos_rmse": 0.06463520908450622,
+      "comparison": {
+        "symbol": "NVDA",
+        "horizon": 5,
+        "name": "엔비디아",
+        "previous_as_of": "2026-08-22T17:19:46+09:00",
+        "current_as_of": "2026-08-23T20:30:25+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:17:33+09:00",
+        "current_trained_at": "2026-08-23T20:28:15+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {},
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.006740949589294498,
+            "current": 0.0028775532647118407,
+            "delta": -0.003863396325
+          },
+          "current_price": {
+            "previous": 215.38,
+            "current": 215.38,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 203.69450331781476,
+            "current": 201.8688965675422,
+            "delta": -1.825606750273
+          },
+          "p50": {
+            "previous": 216.83186572254223,
+            "current": 215.99976742215364,
+            "delta": -0.832098300389
+          },
+          "p90": {
+            "previous": 231.45528376338743,
+            "current": 232.61247002884008,
+            "delta": 1.157186265453
+          },
+          "prob_up": {
+            "previous": 0.5707964601769911,
+            "current": 0.5732899022801302,
+            "delta": 0.002493442103
+          },
+          "confidence": {
+            "previous": 44.96126749615347,
+            "current": 44.0,
+            "delta": -0.961267496153
+          },
+          "oos_ic": {
+            "previous": 0.008778171824689956,
+            "current": -0.020306263414035235,
+            "delta": -0.029084435239
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.546031746031746,
+            "current": 0.4650793650793651,
+            "delta": -0.080952380952
+          },
+          "oos_rmse": {
+            "previous": 0.06346816480333364,
+            "current": 0.06463520908450622,
+            "delta": 0.001167044281
+          },
+          "baseline_rmse": {
+            "previous": 0.06308547242078105,
+            "current": 0.06308547242078105,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.8095238095238095,
+            "current": 0.8571428571428571,
+            "delta": 0.047619047619
+          }
+        }
+      }
+    },
+    {
+      "symbol": "OKLO",
+      "name": "오클로",
+      "horizon": 10,
+      "as_of": "2026-08-23T20:46:01+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:45:04+09:00",
+      "expected_return": -0.0013897001414285848,
+      "confidence": 39.202526003392265,
+      "prob_up": 0.4746450304259635,
+      "oos_ic": 0.05253569083220599,
+      "oos_rmse": 0.23982082119899437,
+      "comparison": {
+        "symbol": "OKLO",
+        "horizon": 10,
+        "name": "오클로",
+        "previous_as_of": "2026-08-22T17:35:43+09:00",
+        "current_as_of": "2026-08-23T20:46:01+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:34:43+09:00",
+        "current_trained_at": "2026-08-23T20:45:04+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "baseline_zero": -1.0,
+          "catboost": 0.114,
+          "extra_trees": 0.204,
+          "gru": 0.218,
+          "lightgbm": 0.1,
+          "random_forest": 0.155,
+          "ridge": 0.209
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.0024623923552808957,
+            "current": -0.0013897001414285848,
+            "delta": -0.003852092497
+          },
+          "current_price": {
+            "previous": 42.1,
+            "current": 42.1,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 33.73694996541581,
+            "current": 34.85349518752478,
+            "delta": 1.116545222109
+          },
+          "p50": {
+            "previous": 42.20366671815733,
+            "current": 42.041493624045856,
+            "delta": -0.162173094111
+          },
+          "p90": {
+            "previous": 55.425623459522214,
+            "current": 56.74907504030693,
+            "delta": 1.323451580785
+          },
+          "prob_up": {
+            "previous": 0.5047619047619047,
+            "current": 0.4746450304259635,
+            "delta": -0.030116874336
+          },
+          "confidence": {
+            "previous": 25.0,
+            "current": 39.202526003392265,
+            "delta": 14.202526003392
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.49523809523809526,
+            "current": 0.5015873015873016,
+            "delta": 0.006349206349
+          },
+          "oos_rmse": {
+            "previous": 0.22881956839983192,
+            "current": 0.23982082119899437,
+            "delta": 0.011001252799
+          },
+          "baseline_rmse": {
+            "previous": 0.22881956839983192,
+            "current": 0.22881956839983192,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.873015873015873,
+            "current": 0.8941798941798942,
+            "delta": 0.021164021164
+          }
+        }
+      }
+    },
+    {
+      "symbol": "OKLO",
+      "name": "오클로",
+      "horizon": 30,
+      "as_of": "2026-08-23T20:46:02+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:45:33+09:00",
+      "expected_return": -0.021063852916745285,
+      "confidence": 28.252427475998353,
+      "prob_up": 0.46706586826347307,
+      "oos_ic": -0.025343176607615165,
+      "oos_rmse": 0.4462041566476993,
+      "comparison": {
+        "symbol": "OKLO",
+        "horizon": 30,
+        "name": "오클로",
+        "previous_as_of": "2026-08-22T17:35:43+09:00",
+        "current_as_of": "2026-08-23T20:46:02+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:35:14+09:00",
+        "current_trained_at": "2026-08-23T20:45:33+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "baseline_zero": -1.0,
+          "catboost": 0.167,
+          "extra_trees": 0.174,
+          "gru": 0.275,
+          "lightgbm": 0.108,
+          "random_forest": 0.129,
+          "xgboost": 0.147
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": -0.0010870023455674671,
+            "current": -0.021063852916745285,
+            "delta": -0.019976850571
+          },
+          "current_price": {
+            "previous": 42.1,
+            "current": 42.1,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 27.324769810227235,
+            "current": 26.956952882713495,
+            "delta": -0.367816927514
+          },
+          "p50": {
+            "previous": 42.05423720125161,
+            "current": 41.21321179220502,
+            "delta": -0.841025409047
+          },
+          "p90": {
+            "previous": 85.72670158661442,
+            "current": 85.59072200903562,
+            "delta": -0.135979577579
+          },
+          "prob_up": {
+            "previous": 0.49523809523809526,
+            "current": 0.46706586826347307,
+            "delta": -0.028172226975
+          },
+          "confidence": {
+            "previous": 25.0,
+            "current": 28.252427475998353,
+            "delta": 3.252427475998
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.5047619047619047,
+            "current": 0.48412698412698413,
+            "delta": -0.020634920635
+          },
+          "oos_rmse": {
+            "previous": 0.42891244344991175,
+            "current": 0.4462041566476993,
+            "delta": 0.017291713198
+          },
+          "baseline_rmse": {
+            "previous": 0.42891244344991175,
+            "current": 0.42891244344991175,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.9259259259259259,
+            "current": 0.9259259259259259,
+            "delta": 0.0
+          }
+        }
+      }
+    },
+    {
+      "symbol": "OKLO",
+      "name": "오클로",
+      "horizon": 5,
+      "as_of": "2026-08-23T20:46:01+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:44:35+09:00",
+      "expected_return": -0.03089282604217225,
+      "confidence": 37.432194039924006,
+      "prob_up": 0.5181818181818182,
+      "oos_ic": 0.052429882679440376,
+      "oos_rmse": 0.16499366781088118,
+      "comparison": {
+        "symbol": "OKLO",
+        "horizon": 5,
+        "name": "오클로",
+        "previous_as_of": "2026-08-22T17:35:43+09:00",
+        "current_as_of": "2026-08-23T20:46:01+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:34:13+09:00",
+        "current_trained_at": "2026-08-23T20:44:35+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {},
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": -0.01931416019600707,
+            "current": -0.03089282604217225,
+            "delta": -0.011578665846
+          },
+          "current_price": {
+            "previous": 42.1,
+            "current": 42.1,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 37.08439837484606,
+            "current": 34.29469885513652,
+            "delta": -2.78969951971
+          },
+          "p50": {
+            "previous": 41.286873855748105,
+            "current": 40.79941202362455,
+            "delta": -0.487461832124
+          },
+          "p90": {
+            "previous": 50.31437116996686,
+            "current": 50.078529882613196,
+            "delta": -0.235841287354
+          },
+          "prob_up": {
+            "previous": 0.4380952380952381,
+            "current": 0.5181818181818182,
+            "delta": 0.080086580087
+          },
+          "confidence": {
+            "previous": 61.12641487411887,
+            "current": 37.432194039924006,
+            "delta": -23.694220834195
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.5619047619047619,
+            "current": 0.5777777777777777,
+            "delta": 0.015873015873
+          },
+          "oos_rmse": {
+            "previous": 0.1426776393507011,
+            "current": 0.16499366781088118,
+            "delta": 0.02231602846
+          },
+          "baseline_rmse": {
+            "previous": 0.16444645002310662,
+            "current": 0.16444645002310662,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.8421052631578947,
+            "current": 0.8842105263157894,
+            "delta": 0.042105263158
+          }
+        }
+      }
+    },
+    {
+      "symbol": "PLTR",
+      "name": "팔란티어",
+      "horizon": 10,
+      "as_of": "2026-08-23T20:38:41+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:37:14+09:00",
+      "expected_return": 0.029687769631233207,
+      "confidence": 26.145945801128573,
+      "prob_up": 0.5856,
+      "oos_ic": -0.052724918785673806,
+      "oos_rmse": 0.13155609087724485,
+      "comparison": {
+        "symbol": "PLTR",
+        "horizon": 10,
+        "name": "팔란티어",
+        "previous_as_of": "2026-08-22T17:28:16+09:00",
+        "current_as_of": "2026-08-23T20:38:41+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:26:46+09:00",
+        "current_trained_at": "2026-08-23T20:37:14+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "baseline_moving_avg": -1.0,
+          "catboost": 0.141,
+          "elasticnet": 0.208,
+          "extra_trees": 0.155,
+          "random_forest": 0.154,
+          "ridge": 0.206,
+          "xgboost": 0.136
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.03183005712480891,
+            "current": 0.029687769631233207,
+            "delta": -0.002142287494
+          },
+          "current_price": {
+            "previous": 179.84,
+            "current": 179.84,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 136.2366968911703,
+            "current": 128.07525546905157,
+            "delta": -8.161441422119
+          },
+          "p50": {
+            "previous": 185.56431747332564,
+            "current": 185.179048490481,
+            "delta": -0.385268982845
+          },
+          "p90": {
+            "previous": 228.0433711206014,
+            "current": 232.7510724628552,
+            "delta": 4.707701342254
+          },
+          "prob_up": {
+            "previous": 0.43506493506493504,
+            "current": 0.5856,
+            "delta": 0.150535064935
+          },
+          "confidence": {
+            "previous": 25.0,
+            "current": 26.145945801128573,
+            "delta": 1.145945801129
+          },
+          "oos_ic": {
+            "previous": 0.20657617339174356,
+            "current": -0.052724918785673806,
+            "delta": -0.259301092177
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.6,
+            "current": 0.473015873015873,
+            "delta": -0.126984126984
+          },
+          "oos_rmse": {
+            "previous": 0.12417341717787618,
+            "current": 0.13155609087724485,
+            "delta": 0.007382673699
+          },
+          "baseline_rmse": {
+            "previous": 0.12427728325021195,
+            "current": 0.12427728325021195,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.8201058201058201,
+            "current": 0.8412698412698413,
+            "delta": 0.021164021164
+          }
+        }
+      }
+    },
+    {
+      "symbol": "PLTR",
+      "name": "팔란티어",
+      "horizon": 30,
+      "as_of": "2026-08-23T20:38:42+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:38:00+09:00",
+      "expected_return": 0.07273444221383607,
+      "confidence": 24.67613796913126,
+      "prob_up": 0.6633825944170771,
+      "oos_ic": -0.3099658802630904,
+      "oos_rmse": 0.23084724421734074,
+      "comparison": {
+        "symbol": "PLTR",
+        "horizon": 30,
+        "name": "팔란티어",
+        "previous_as_of": "2026-08-22T17:28:16+09:00",
+        "current_as_of": "2026-08-23T20:38:42+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:27:35+09:00",
+        "current_trained_at": "2026-08-23T20:38:00+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "baseline_hist_mean": -1.0,
+          "elasticnet": 0.215,
+          "extra_trees": 0.127,
+          "gru": 0.16,
+          "random_forest": 0.15,
+          "ridge": 0.197,
+          "xgboost": 0.15
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.08849154920459568,
+            "current": 0.07273444221383607,
+            "delta": -0.015757106991
+          },
+          "current_price": {
+            "previous": 179.84,
+            "current": 179.84,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 91.78109808926953,
+            "current": 79.19154914955426,
+            "delta": -12.589548939715
+          },
+          "p50": {
+            "previous": 195.75432020895448,
+            "current": 192.92056208773627,
+            "delta": -2.833758121218
+          },
+          "p90": {
+            "previous": 298.1249198598598,
+            "current": 302.0595558777961,
+            "delta": 3.934636017936
+          },
+          "prob_up": {
+            "previous": 0.6714285714285714,
+            "current": 0.6633825944170771,
+            "delta": -0.008045977011
+          },
+          "confidence": {
+            "previous": 25.0,
+            "current": 24.67613796913126,
+            "delta": -0.323862030869
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.32857142857142857,
+            "current": 0.6523809523809524,
+            "delta": 0.32380952381
+          },
+          "oos_rmse": {
+            "previous": 0.21576029615677975,
+            "current": 0.23084724421734074,
+            "delta": 0.015086948061
+          },
+          "baseline_rmse": {
+            "previous": 0.20489842819514184,
+            "current": 0.20489842819514184,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.7777777777777778,
+            "current": 0.9047619047619048,
+            "delta": 0.126984126984
+          }
+        }
+      }
+    },
+    {
+      "symbol": "PLTR",
+      "name": "팔란티어",
+      "horizon": 5,
+      "as_of": "2026-08-23T20:38:41+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:36:29+09:00",
+      "expected_return": 0.004606802294767398,
+      "confidence": 27.59637603099842,
+      "prob_up": 0.5664,
+      "oos_ic": -0.030585583871302155,
+      "oos_rmse": 0.0897865880639776,
+      "comparison": {
+        "symbol": "PLTR",
+        "horizon": 5,
+        "name": "팔란티어",
+        "previous_as_of": "2026-08-22T17:28:16+09:00",
+        "current_as_of": "2026-08-23T20:38:41+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:25:59+09:00",
+        "current_trained_at": "2026-08-23T20:36:29+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "baseline_hist_mean": -1.0,
+          "catboost": 0.136,
+          "elasticnet": 0.195,
+          "extra_trees": 0.155,
+          "gru": 0.167,
+          "random_forest": 0.157,
+          "ridge": 0.189
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.01640517338974079,
+            "current": 0.004606802294767398,
+            "delta": -0.011798371095
+          },
+          "current_price": {
+            "previous": 179.84,
+            "current": 179.84,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 145.69145855709849,
+            "current": 144.3680319543892,
+            "delta": -1.323426602709
+          },
+          "p50": {
+            "previous": 182.790306382411,
+            "current": 180.66848732469097,
+            "delta": -2.12181905772
+          },
+          "p90": {
+            "previous": 210.67131868099085,
+            "current": 209.88336525537505,
+            "delta": -0.787953425616
+          },
+          "prob_up": {
+            "previous": 0.5682539682539682,
+            "current": 0.5664,
+            "delta": -0.001853968254
+          },
+          "confidence": {
+            "previous": 25.0,
+            "current": 27.59637603099842,
+            "delta": 2.596376030998
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.43174603174603177,
+            "current": 0.5190476190476191,
+            "delta": 0.087301587302
+          },
+          "oos_rmse": {
+            "previous": 0.08861215310327107,
+            "current": 0.0897865880639776,
+            "delta": 0.001174434961
+          },
+          "baseline_rmse": {
+            "previous": 0.08785605364999198,
+            "current": 0.08785605364999198,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.8148148148148148,
+            "current": 0.8201058201058201,
+            "delta": 0.005291005291
+          }
+        }
+      }
+    },
+    {
+      "symbol": "SMR",
+      "name": "뉴스케일파워",
+      "horizon": 10,
+      "as_of": "2026-08-23T20:48:03+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:46:44+09:00",
+      "expected_return": -0.03469611957692975,
+      "confidence": 37.93261699156891,
+      "prob_up": 0.4855769230769231,
+      "oos_ic": 0.010855858485448419,
+      "oos_rmse": 0.33803071796126705,
+      "comparison": {
+        "symbol": "SMR",
+        "horizon": 10,
+        "name": "뉴스케일파워",
+        "previous_as_of": "2026-08-22T17:37:44+09:00",
+        "current_as_of": "2026-08-23T20:48:03+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:36:25+09:00",
+        "current_trained_at": "2026-08-23T20:46:44+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "baseline_zero": -1.0,
+          "catboost": 0.137,
+          "elasticnet": 0.157,
+          "extra_trees": 0.16,
+          "gru": 0.215,
+          "random_forest": 0.152,
+          "ridge": 0.179
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.0071748111969685,
+            "current": -0.03469611957692975,
+            "delta": -0.041870930774
+          },
+          "current_price": {
+            "previous": 9.4,
+            "current": 9.4,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 7.328439911659736,
+            "current": 6.793306524615079,
+            "delta": -0.535133387045
+          },
+          "p50": {
+            "previous": 9.467443225251504,
+            "current": 9.07385647597686,
+            "delta": -0.393586749275
+          },
+          "p90": {
+            "previous": 11.961409816916772,
+            "current": 11.613380349880206,
+            "delta": -0.348029467037
+          },
+          "prob_up": {
+            "previous": 0.5190476190476191,
+            "current": 0.4855769230769231,
+            "delta": -0.033470695971
+          },
+          "confidence": {
+            "previous": 25.0,
+            "current": 37.93261699156891,
+            "delta": 12.932616991569
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.48095238095238096,
+            "current": 0.526984126984127,
+            "delta": 0.046031746032
+          },
+          "oos_rmse": {
+            "previous": 0.227080022781667,
+            "current": 0.33803071796126705,
+            "delta": 0.11095069518
+          },
+          "baseline_rmse": {
+            "previous": 0.227080022781667,
+            "current": 0.227080022781667,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.8677248677248677,
+            "current": 0.9259259259259259,
+            "delta": 0.058201058201
+          }
+        }
+      }
+    },
+    {
+      "symbol": "SMR",
+      "name": "뉴스케일파워",
+      "horizon": 30,
+      "as_of": "2026-08-23T20:48:04+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:47:23+09:00",
+      "expected_return": -0.0596242228971533,
+      "confidence": 36.190546990130905,
+      "prob_up": 0.5026362038664324,
+      "oos_ic": -0.1991876374274211,
+      "oos_rmse": 0.4672441844672003,
+      "comparison": {
+        "symbol": "SMR",
+        "horizon": 30,
+        "name": "뉴스케일파워",
+        "previous_as_of": "2026-08-22T17:37:44+09:00",
+        "current_as_of": "2026-08-23T20:48:04+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:37:04+09:00",
+        "current_trained_at": "2026-08-23T20:47:23+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "baseline_zero": -1.0,
+          "elasticnet": 0.185,
+          "extra_trees": 0.152,
+          "gru": 0.197,
+          "random_forest": 0.159,
+          "ridge": 0.163,
+          "xgboost": 0.143
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.014133205472582677,
+            "current": -0.0596242228971533,
+            "delta": -0.07375742837
+          },
+          "current_price": {
+            "previous": 9.4,
+            "current": 9.4,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 4.537639624384946,
+            "current": 5.283292517597141,
+            "delta": 0.745652893212
+          },
+          "p50": {
+            "previous": 9.532852131442278,
+            "current": 8.83953230476676,
+            "delta": -0.693319826676
+          },
+          "p90": {
+            "previous": 16.080949423120718,
+            "current": 16.85229281806506,
+            "delta": 0.771343394944
+          },
+          "prob_up": {
+            "previous": 0.5380952380952381,
+            "current": 0.5026362038664324,
+            "delta": -0.035459034229
+          },
+          "confidence": {
+            "previous": 25.0,
+            "current": 36.190546990130905,
+            "delta": 11.190546990131
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.46190476190476193,
+            "current": 0.5190476190476191,
+            "delta": 0.057142857143
+          },
+          "oos_rmse": {
+            "previous": 0.40747404970040946,
+            "current": 0.4672441844672003,
+            "delta": 0.059770134767
+          },
+          "baseline_rmse": {
+            "previous": 0.40747404970040946,
+            "current": 0.40747404970040946,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.91005291005291,
+            "current": 0.9047619047619048,
+            "delta": -0.005291005291
+          }
+        }
+      }
+    },
+    {
+      "symbol": "SMR",
+      "name": "뉴스케일파워",
+      "horizon": 5,
+      "as_of": "2026-08-23T20:48:03+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:46:02+09:00",
+      "expected_return": -0.015284440446464265,
+      "confidence": 39.07018037682901,
+      "prob_up": 0.4799054373522459,
+      "oos_ic": -0.03961376698153618,
+      "oos_rmse": 0.17818272617130795,
+      "comparison": {
+        "symbol": "SMR",
+        "horizon": 5,
+        "name": "뉴스케일파워",
+        "previous_as_of": "2026-08-22T17:37:44+09:00",
+        "current_as_of": "2026-08-23T20:48:03+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:35:43+09:00",
+        "current_trained_at": "2026-08-23T20:46:02+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "baseline_zero": -1.0,
+          "catboost": 0.137,
+          "elasticnet": 0.17,
+          "extra_trees": 0.151,
+          "gru": 0.219,
+          "random_forest": 0.151,
+          "ridge": 0.173
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.003606564675108448,
+            "current": -0.015284440446464265,
+            "delta": -0.018891005122
+          },
+          "current_price": {
+            "previous": 9.4,
+            "current": 9.4,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 8.002611637402433,
+            "current": 7.964093032522842,
+            "delta": -0.03851860488
+          },
+          "p50": {
+            "previous": 9.43390170794602,
+            "current": 9.256326259803236,
+            "delta": -0.177575448143
+          },
+          "p90": {
+            "previous": 11.112856596849907,
+            "current": 10.962701917709085,
+            "delta": -0.150154679141
+          },
+          "prob_up": {
+            "previous": 0.5111111111111111,
+            "current": 0.4799054373522459,
+            "delta": -0.031205673759
+          },
+          "confidence": {
+            "previous": 25.0,
+            "current": 39.07018037682901,
+            "delta": 14.070180376829
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.4888888888888889,
+            "current": 0.5206349206349207,
+            "delta": 0.031746031746
+          },
+          "oos_rmse": {
+            "previous": 0.16510186100215662,
+            "current": 0.17818272617130795,
+            "delta": 0.013080865169
+          },
+          "baseline_rmse": {
+            "previous": 0.16510186100215662,
+            "current": 0.16510186100215662,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.8783068783068783,
+            "current": 0.9047619047619048,
+            "delta": 0.026455026455
+          }
+        }
+      }
+    },
+    {
+      "symbol": "SNDK",
+      "name": "샌디스크",
+      "horizon": 10,
+      "as_of": "2026-08-23T20:17:02+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:16:57+09:00",
+      "expected_return": 0.1250841048341964,
+      "confidence": 23.72193900075604,
+      "prob_up": 0.7957439386010813,
+      "oos_ic": 0.35551075268817206,
+      "oos_rmse": 0.2103117525573604,
+      "comparison": {
+        "symbol": "SNDK",
+        "horizon": 10,
+        "name": "샌디스크",
+        "previous_as_of": "2026-08-22T17:05:30+09:00",
+        "current_as_of": "2026-08-23T20:17:02+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:05:24+09:00",
+        "current_trained_at": "2026-08-23T20:16:57+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "elasticnet": 0.045,
+          "ridge": -0.045
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.09999522908682956,
+            "current": 0.1250841048341964,
+            "delta": 0.025088875747
+          },
+          "current_price": {
+            "previous": 1593.2,
+            "current": 1593.2,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 1267.9754079662355,
+            "current": 1321.2967317528648,
+            "delta": 53.321323786629
+          },
+          "p50": {
+            "previous": 1752.5123989811368,
+            "current": 1792.4839958218417,
+            "delta": 39.971596840705
+          },
+          "p90": {
+            "previous": 2273.164347030001,
+            "current": 2344.2016164161196,
+            "delta": 71.037269386119
+          },
+          "prob_up": {
+            "previous": 0.7151515151515158,
+            "current": 0.7957439386010813,
+            "delta": 0.08059242345
+          },
+          "confidence": {
+            "previous": 55.96137078218103,
+            "current": 23.72193900075604,
+            "delta": -32.239431781425
+          },
+          "oos_ic": {
+            "previous": 0.47719854070660533,
+            "current": 0.35551075268817206,
+            "delta": -0.121687788018
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.6190476190476191,
+            "current": 0.6031746031746031,
+            "delta": -0.015873015873
+          },
+          "oos_rmse": {
+            "previous": 0.20199407729083532,
+            "current": 0.2103117525573604,
+            "delta": 0.008317675267
+          },
+          "baseline_rmse": {
+            "previous": 0.2098131936935792,
+            "current": 0.2098131936935792,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.8,
+            "current": 0.8,
+            "delta": 0.0
+          }
+        }
+      }
+    },
+    {
+      "symbol": "SNDK",
+      "name": "샌디스크",
+      "horizon": 30,
+      "as_of": "2026-08-23T20:17:02+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:16:59+09:00",
+      "expected_return": 0.2941745846223258,
+      "confidence": 16.436420822448486,
+      "prob_up": 0.98,
+      "oos_ic": 0.7061310782241014,
+      "oos_rmse": 0.4417676799795388,
+      "comparison": {
+        "symbol": "SNDK",
+        "horizon": 30,
+        "name": "샌디스크",
+        "previous_as_of": "2026-08-22T17:05:30+09:00",
+        "current_as_of": "2026-08-23T20:17:02+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:05:28+09:00",
+        "current_trained_at": "2026-08-23T20:16:59+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "elasticnet": -0.866,
+          "extra_trees": 0.142,
+          "hist_gbm": 0.134,
+          "lightgbm": 0.147,
+          "ridge": 0.25,
+          "xgboost": 0.193
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.0954285741527725,
+            "current": 0.2941745846223258,
+            "delta": 0.19874601047
+          },
+          "current_price": {
+            "previous": 1593.2,
+            "current": 1593.2,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 989.9474848835679,
+            "current": 1351.6960317855724,
+            "delta": 361.748546902004
+          },
+          "p50": {
+            "previous": 1745.2368043401973,
+            "current": 2061.8789482202897,
+            "delta": 316.642143880092
+          },
+          "p90": {
+            "previous": 3259.216599286125,
+            "current": 3883.631603243608,
+            "delta": 624.415003957483
+          },
+          "prob_up": {
+            "previous": 0.8888888888888888,
+            "current": 0.98,
+            "delta": 0.091111111111
+          },
+          "confidence": {
+            "previous": 25.866666666666667,
+            "current": 16.436420822448486,
+            "delta": -9.430245844218
+          },
+          "oos_ic": {
+            "previous": 0.8350951374207188,
+            "current": 0.7061310782241014,
+            "delta": -0.128964059197
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.5909090909090909,
+            "current": 0.4318181818181818,
+            "delta": -0.159090909091
+          },
+          "oos_rmse": {
+            "previous": 0.3367721187128815,
+            "current": 0.4417676799795388,
+            "delta": 0.104995561267
+          },
+          "baseline_rmse": {
+            "previous": 0.34811501313002635,
+            "current": 0.34811501313002635,
+            "delta": 0.0
+          }
+        }
+      }
+    },
+    {
+      "symbol": "SNDK",
+      "name": "샌디스크",
+      "horizon": 5,
+      "as_of": "2026-08-23T20:17:02+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:16:53+09:00",
+      "expected_return": -0.020591048704027948,
+      "confidence": 19.259638577427896,
+      "prob_up": 0.2857142857142857,
+      "oos_ic": 0.11919162826420891,
+      "oos_rmse": 0.18725586663109417,
+      "comparison": {
+        "symbol": "SNDK",
+        "horizon": 5,
+        "name": "샌디스크",
+        "previous_as_of": "2026-08-22T17:05:30+09:00",
+        "current_as_of": "2026-08-23T20:17:02+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:05:21+09:00",
+        "current_trained_at": "2026-08-23T20:16:53+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "catboost": 0.141,
+          "elasticnet": -0.314,
+          "extra_trees": 0.166,
+          "hist_gbm": 0.14,
+          "lightgbm": 0.164,
+          "ridge": -0.297
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.042924619470020575,
+            "current": -0.020591048704027948,
+            "delta": -0.063515668174
+          },
+          "current_price": {
+            "previous": 1593.2,
+            "current": 1593.2,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 1244.834440656994,
+            "current": 1187.443971626906,
+            "delta": -57.390469030088
+          },
+          "p50": {
+            "previous": 1661.5875037396368,
+            "current": 1560.3943412047427,
+            "delta": -101.193162534894
+          },
+          "p90": {
+            "previous": 2144.0159995961544,
+            "current": 2021.4205701276167,
+            "delta": -122.595429468538
+          },
+          "prob_up": {
+            "previous": 0.6666666666666666,
+            "current": 0.2857142857142857,
+            "delta": -0.380952380952
+          },
+          "confidence": {
+            "previous": 24.418707962199544,
+            "current": 19.259638577427896,
+            "delta": -5.159069384772
+          },
+          "oos_ic": {
+            "previous": 0.14789746543778803,
+            "current": 0.11919162826420891,
+            "delta": -0.028705837174
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.5079365079365079,
+            "current": 0.5079365079365079,
+            "delta": 0.0
+          },
+          "oos_rmse": {
+            "previous": 0.17706072440768253,
+            "current": 0.18725586663109417,
+            "delta": 0.010195142223
+          },
+          "baseline_rmse": {
+            "previous": 0.1769850520627672,
+            "current": 0.1769850520627672,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.7,
+            "current": 0.7,
+            "delta": 0.0
+          }
+        }
+      }
+    },
+    {
+      "symbol": "SPCX",
+      "name": "스페이스X",
+      "horizon": 10,
+      "as_of": "2026-08-23T20:46:02+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:46:02+09:00",
+      "expected_return": -0.01740029741903415,
+      "confidence": 15.0,
+      "prob_up": 0.41025641025641024,
+      "oos_ic": null,
+      "oos_rmse": 0.17006193939787367,
+      "comparison": {
+        "symbol": "SPCX",
+        "horizon": 10,
+        "name": "스페이스X",
+        "previous_as_of": "2026-08-22T17:35:43+09:00",
+        "current_as_of": "2026-08-23T20:46:02+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:35:43+09:00",
+        "current_trained_at": "2026-08-23T20:46:02+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {},
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": -0.01740029741903415,
+            "current": -0.01740029741903415,
+            "delta": 0.0
+          },
+          "current_price": {
+            "previous": 136.75,
+            "current": 136.75,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 111.17477236794761,
+            "current": 111.17477236794761,
+            "delta": 0.0
+          },
+          "p50": {
+            "previous": 134.37050932794708,
+            "current": 134.37050932794708,
+            "delta": 0.0
+          },
+          "p90": {
+            "previous": 182.78111462920077,
+            "current": 182.78111462920077,
+            "delta": 0.0
+          },
+          "prob_up": {
+            "previous": 0.41025641025641024,
+            "current": 0.41025641025641024,
+            "delta": 0.0
+          },
+          "confidence": {
+            "previous": 15.0,
+            "current": 15.0,
+            "delta": 0.0
+          },
+          "oos_rmse": {
+            "previous": 0.17006193939787367,
+            "current": 0.17006193939787367,
+            "delta": 0.0
+          }
+        }
+      }
+    },
+    {
+      "symbol": "SPCX",
+      "name": "스페이스X",
+      "horizon": 30,
+      "as_of": "2026-08-23T20:46:02+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:46:02+09:00",
+      "expected_return": -0.009260955157121886,
+      "confidence": 15.0,
+      "prob_up": 0.47368421052631576,
+      "oos_ic": null,
+      "oos_rmse": 0.17844999054620583,
+      "comparison": {
+        "symbol": "SPCX",
+        "horizon": 30,
+        "name": "스페이스X",
+        "previous_as_of": "2026-08-22T17:35:43+09:00",
+        "current_as_of": "2026-08-23T20:46:02+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:35:43+09:00",
+        "current_trained_at": "2026-08-23T20:46:02+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {},
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": -0.009260955157121886,
+            "current": -0.009260955157121886,
+            "delta": 0.0
+          },
+          "current_price": {
+            "previous": 136.75,
+            "current": 136.75,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 89.40832029594048,
+            "current": 89.40832029594048,
+            "delta": 0.0
+          },
+          "p50": {
+            "previous": 135.48356438226358,
+            "current": 135.48356438226358,
+            "delta": 0.0
+          },
+          "p90": {
+            "previous": 149.44463488892183,
+            "current": 149.44463488892183,
+            "delta": 0.0
+          },
+          "prob_up": {
+            "previous": 0.47368421052631576,
+            "current": 0.47368421052631576,
+            "delta": 0.0
+          },
+          "confidence": {
+            "previous": 15.0,
+            "current": 15.0,
+            "delta": 0.0
+          },
+          "oos_rmse": {
+            "previous": 0.17844999054620583,
+            "current": 0.17844999054620583,
+            "delta": 0.0
+          }
+        }
+      }
+    },
+    {
+      "symbol": "SPCX",
+      "name": "스페이스X",
+      "horizon": 5,
+      "as_of": "2026-08-23T20:46:02+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:46:02+09:00",
+      "expected_return": -0.02265858965528067,
+      "confidence": 15.0,
+      "prob_up": 0.4090909090909091,
+      "oos_ic": null,
+      "oos_rmse": 0.11945929019722751,
+      "comparison": {
+        "symbol": "SPCX",
+        "horizon": 5,
+        "name": "스페이스X",
+        "previous_as_of": "2026-08-22T17:35:43+09:00",
+        "current_as_of": "2026-08-23T20:46:02+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:35:43+09:00",
+        "current_trained_at": "2026-08-23T20:46:02+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {},
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": -0.02265858965528067,
+            "current": -0.02265858965528067,
+            "delta": 0.0
+          },
+          "current_price": {
+            "previous": 136.75,
+            "current": 136.75,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 116.08739377359687,
+            "current": 116.08739377359687,
+            "delta": 0.0
+          },
+          "p50": {
+            "previous": 133.65143786464037,
+            "current": 133.65143786464037,
+            "delta": 0.0
+          },
+          "p90": {
+            "previous": 170.18888202903764,
+            "current": 170.18888202903764,
+            "delta": 0.0
+          },
+          "prob_up": {
+            "previous": 0.4090909090909091,
+            "current": 0.4090909090909091,
+            "delta": 0.0
+          },
+          "confidence": {
+            "previous": 15.0,
+            "current": 15.0,
+            "delta": 0.0
+          },
+          "oos_rmse": {
+            "previous": 0.11945929019722751,
+            "current": 0.11945929019722751,
+            "delta": 0.0
+          }
+        }
+      }
+    },
+    {
+      "symbol": "TSM",
+      "name": "TSMC(ADR)",
+      "horizon": 10,
+      "as_of": "2026-08-23T20:28:15+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:26:57+09:00",
+      "expected_return": 0.02791630165302994,
+      "confidence": 50.247806436790086,
+      "prob_up": 0.660377358490566,
+      "oos_ic": 0.07276974266812992,
+      "oos_rmse": 0.06659564674888908,
+      "comparison": {
+        "symbol": "TSM",
+        "horizon": 10,
+        "name": "TSMC(ADR)",
+        "previous_as_of": "2026-08-22T17:17:33+09:00",
+        "current_as_of": "2026-08-23T20:28:15+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:16:06+09:00",
+        "current_trained_at": "2026-08-23T20:26:57+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "catboost": -0.208,
+          "extra_trees": 0.111,
+          "gru": -0.008,
+          "random_forest": 0.31,
+          "ridge": -0.205
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.03706021967256046,
+            "current": 0.02791630165302994,
+            "delta": -0.00914391802
+          },
+          "current_price": {
+            "previous": 419.68,
+            "current": 419.68,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 399.73173653109836,
+            "current": 395.7277210689015,
+            "delta": -4.004015462197
+          },
+          "p50": {
+            "previous": 435.23343299218016,
+            "current": 431.3959134777436,
+            "delta": -3.837519514437
+          },
+          "p90": {
+            "previous": 472.1357221331251,
+            "current": 468.2453046381585,
+            "delta": -3.890417494967
+          },
+          "prob_up": {
+            "previous": 0.683753315649867,
+            "current": 0.660377358490566,
+            "delta": -0.023375957159
+          },
+          "confidence": {
+            "previous": 79.65177050651823,
+            "current": 50.247806436790086,
+            "delta": -29.403964069728
+          },
+          "oos_ic": {
+            "previous": 0.1853344481665541,
+            "current": 0.07276974266812992,
+            "delta": -0.112564705498
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.6158730158730159,
+            "current": 0.5746031746031746,
+            "delta": -0.04126984127
+          },
+          "oos_rmse": {
+            "previous": 0.0647704464228045,
+            "current": 0.06659564674888908,
+            "delta": 0.001825200326
+          },
+          "baseline_rmse": {
+            "previous": 0.0663578090656667,
+            "current": 0.0663578090656667,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.8518518518518519,
+            "current": 0.8571428571428571,
+            "delta": 0.005291005291
+          }
+        }
+      }
+    },
+    {
+      "symbol": "TSM",
+      "name": "TSMC(ADR)",
+      "horizon": 30,
+      "as_of": "2026-08-23T20:28:15+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:27:34+09:00",
+      "expected_return": 0.04960891343581064,
+      "confidence": 32.967397600055484,
+      "prob_up": 0.7194805194805195,
+      "oos_ic": -0.09750468424349837,
+      "oos_rmse": 0.12818539196176504,
+      "comparison": {
+        "symbol": "TSM",
+        "horizon": 30,
+        "name": "TSMC(ADR)",
+        "previous_as_of": "2026-08-22T17:17:33+09:00",
+        "current_as_of": "2026-08-23T20:28:15+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:16:49+09:00",
+        "current_trained_at": "2026-08-23T20:27:34+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "catboost": 0.166,
+          "extra_trees": -0.121,
+          "gru": -0.419,
+          "hist_gbm": 0.17,
+          "lightgbm": 0.167,
+          "random_forest": 0.155,
+          "ridge": -0.281,
+          "xgboost": 0.163
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.07823675819187237,
+            "current": 0.04960891343581064,
+            "delta": -0.028627844756
+          },
+          "current_price": {
+            "previous": 419.68,
+            "current": 419.68,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 386.9209487328206,
+            "current": 372.8608488291049,
+            "delta": -14.060099903716
+          },
+          "p50": {
+            "previous": 452.514402677965,
+            "current": 440.499868790741,
+            "delta": -12.014533887224
+          },
+          "p90": {
+            "previous": 522.165455364172,
+            "current": 512.7630155544432,
+            "delta": -9.402439809729
+          },
+          "prob_up": {
+            "previous": 0.7102803738317757,
+            "current": 0.7194805194805195,
+            "delta": 0.009200145649
+          },
+          "confidence": {
+            "previous": 42.03857069261337,
+            "current": 32.967397600055484,
+            "delta": -9.071173092558
+          },
+          "oos_ic": {
+            "previous": 0.15740631627645704,
+            "current": -0.09750468424349837,
+            "delta": -0.25491100052
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.6317460317460317,
+            "current": 0.7,
+            "delta": 0.068253968254
+          },
+          "oos_rmse": {
+            "previous": 0.12137012251453698,
+            "current": 0.12818539196176504,
+            "delta": 0.006815269447
+          },
+          "baseline_rmse": {
+            "previous": 0.11983829088843384,
+            "current": 0.11983829088843384,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.9417989417989417,
+            "current": 0.9312169312169312,
+            "delta": -0.010582010582
+          }
+        }
+      }
+    },
+    {
+      "symbol": "TSM",
+      "name": "TSMC(ADR)",
+      "horizon": 5,
+      "as_of": "2026-08-23T20:28:14+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:26:15+09:00",
+      "expected_return": 0.00907634417949521,
+      "confidence": 53.9031377184626,
+      "prob_up": 0.5678496868475992,
+      "oos_ic": 0.05259284507909474,
+      "oos_rmse": 0.04999339257472924,
+      "comparison": {
+        "symbol": "TSM",
+        "horizon": 5,
+        "name": "TSMC(ADR)",
+        "previous_as_of": "2026-08-22T17:17:33+09:00",
+        "current_as_of": "2026-08-23T20:28:14+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:15:23+09:00",
+        "current_trained_at": "2026-08-23T20:26:15+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "catboost": 0.109,
+          "extra_trees": 0.071,
+          "hist_gbm": -0.17,
+          "lightgbm": 0.087,
+          "random_forest": 0.059,
+          "xgboost": -0.155
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.008685399131793003,
+            "current": 0.00907634417949521,
+            "delta": 0.000390945048
+          },
+          "current_price": {
+            "previous": 419.68,
+            "current": 419.68,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 395.36273134039106,
+            "current": 393.9837154160178,
+            "delta": -1.379015924373
+          },
+          "p50": {
+            "previous": 423.3250883076309,
+            "current": 423.4891601252506,
+            "delta": 0.16407181762
+          },
+          "p90": {
+            "previous": 452.4187039153203,
+            "current": 451.0516515948525,
+            "delta": -1.367052320468
+          },
+          "prob_up": {
+            "previous": 0.549618320610687,
+            "current": 0.5678496868475992,
+            "delta": 0.018231366237
+          },
+          "confidence": {
+            "previous": 55.396676362263584,
+            "current": 53.9031377184626,
+            "delta": -1.493538643801
+          },
+          "oos_ic": {
+            "previous": 0.08698149067310995,
+            "current": 0.05259284507909474,
+            "delta": -0.034388645594
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.5253968253968254,
+            "current": 0.5253968253968254,
+            "delta": 0.0
+          },
+          "oos_rmse": {
+            "previous": 0.0497278206136979,
+            "current": 0.04999339257472924,
+            "delta": 0.000265571961
+          },
+          "baseline_rmse": {
+            "previous": 0.0497895765319105,
+            "current": 0.0497895765319105,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.8359788359788359,
+            "current": 0.8412698412698413,
+            "delta": 0.005291005291
+          }
+        }
+      }
+    },
+    {
+      "symbol": "VST",
+      "name": "비스트라 에너지",
+      "horizon": 10,
+      "as_of": "2026-08-23T20:42:45+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:41:23+09:00",
+      "expected_return": -0.026238870738244158,
+      "confidence": 33.774823853554224,
+      "prob_up": 0.5301587301587302,
+      "oos_ic": -0.24312297765504026,
+      "oos_rmse": 0.13431457693962587,
+      "comparison": {
+        "symbol": "VST",
+        "horizon": 10,
+        "name": "비스트라 에너지",
+        "previous_as_of": "2026-08-22T17:32:23+09:00",
+        "current_as_of": "2026-08-23T20:42:45+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:31:00+09:00",
+        "current_trained_at": "2026-08-23T20:41:23+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "baseline_hist_mean": -1.0,
+          "catboost": 0.126,
+          "elasticnet": 0.202,
+          "extra_trees": 0.166,
+          "gru": 0.187,
+          "random_forest": 0.142,
+          "ridge": 0.176
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.005918751024655444,
+            "current": -0.026238870738244158,
+            "delta": -0.032157621763
+          },
+          "current_price": {
+            "previous": 137.55,
+            "current": 137.55,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 124.82299378556549,
+            "current": 119.99363061562954,
+            "delta": -4.829363169936
+          },
+          "p50": {
+            "previous": 138.36412420344138,
+            "current": 133.94084332995453,
+            "delta": -4.423280873487
+          },
+          "p90": {
+            "previous": 158.04008258641358,
+            "current": 157.532077922819,
+            "delta": -0.508004663595
+          },
+          "prob_up": {
+            "previous": 0.5301587301587302,
+            "current": 0.5301587301587302,
+            "delta": 0.0
+          },
+          "confidence": {
+            "previous": 25.0,
+            "current": 33.774823853554224,
+            "delta": 8.774823853554
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.46984126984126984,
+            "current": 0.45714285714285713,
+            "delta": -0.012698412698
+          },
+          "oos_rmse": {
+            "previous": 0.11439411422549542,
+            "current": 0.13431457693962587,
+            "delta": 0.019920462714
+          },
+          "baseline_rmse": {
+            "previous": 0.11378308568044879,
+            "current": 0.11378308568044879,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.91005291005291,
+            "current": 0.9470899470899471,
+            "delta": 0.037037037037
+          }
+        }
+      }
+    },
+    {
+      "symbol": "VST",
+      "name": "비스트라 에너지",
+      "horizon": 30,
+      "as_of": "2026-08-23T20:42:45+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:42:03+09:00",
+      "expected_return": 0.03519988056604384,
+      "confidence": 30.3883347776173,
+      "prob_up": 0.5592105263157894,
+      "oos_ic": -0.10618585284889741,
+      "oos_rmse": 0.23269876156639407,
+      "comparison": {
+        "symbol": "VST",
+        "horizon": 30,
+        "name": "비스트라 에너지",
+        "previous_as_of": "2026-08-22T17:32:23+09:00",
+        "current_as_of": "2026-08-23T20:42:45+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:31:41+09:00",
+        "current_trained_at": "2026-08-23T20:42:03+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "baseline_hist_mean": -1.0,
+          "catboost": 0.158,
+          "elasticnet": 0.224,
+          "extra_trees": 0.16,
+          "random_forest": 0.135,
+          "ridge": 0.178,
+          "xgboost": 0.144
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.017704203378524408,
+            "current": 0.03519988056604384,
+            "delta": 0.017495677188
+          },
+          "current_price": {
+            "previous": 137.55,
+            "current": 137.55,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 117.60632420913167,
+            "current": 122.43642549970522,
+            "delta": 4.830101290574
+          },
+          "p50": {
+            "previous": 139.98521317471605,
+            "current": 142.39174357185934,
+            "delta": 2.406530397143
+          },
+          "p90": {
+            "previous": 186.33569925639935,
+            "current": 205.197446150815,
+            "delta": 18.861746894416
+          },
+          "prob_up": {
+            "previous": 0.5714285714285714,
+            "current": 0.5592105263157894,
+            "delta": -0.012218045113
+          },
+          "confidence": {
+            "previous": 25.0,
+            "current": 30.3883347776173,
+            "delta": 5.388334777617
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.42857142857142855,
+            "current": 0.5206349206349207,
+            "delta": 0.092063492063
+          },
+          "oos_rmse": {
+            "previous": 0.20280456893243026,
+            "current": 0.23269876156639407,
+            "delta": 0.029894192634
+          },
+          "baseline_rmse": {
+            "previous": 0.1981867938933732,
+            "current": 0.1981867938933732,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.9047619047619048,
+            "current": 0.9365079365079365,
+            "delta": 0.031746031746
+          }
+        }
+      }
+    },
+    {
+      "symbol": "VST",
+      "name": "비스트라 에너지",
+      "horizon": 5,
+      "as_of": "2026-08-23T20:42:45+09:00",
+      "last_data_time": "2026-08-21",
+      "trained_at": "2026-08-23T20:40:40+09:00",
+      "expected_return": -0.015245164887757512,
+      "confidence": 39.93773809901846,
+      "prob_up": 0.5451977401129944,
+      "oos_ic": -0.07828084846822612,
+      "oos_rmse": 0.08475503885098812,
+      "comparison": {
+        "symbol": "VST",
+        "horizon": 5,
+        "name": "비스트라 에너지",
+        "previous_as_of": "2026-08-22T17:32:23+09:00",
+        "current_as_of": "2026-08-23T20:42:45+09:00",
+        "previous_data": "2026-08-21",
+        "current_data": "2026-08-21",
+        "previous_trained_at": "2026-08-22T17:30:18+09:00",
+        "current_trained_at": "2026-08-23T20:40:40+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "baseline_hist_mean": -1.0,
+          "catboost": 0.105,
+          "elasticnet": 0.217,
+          "extra_trees": 0.153,
+          "gru": 0.196,
+          "random_forest": 0.136,
+          "ridge": 0.192
+        },
+        "data_stale": true,
+        "changes": {
+          "expected_return": {
+            "previous": 0.005623436343297872,
+            "current": -0.015245164887757512,
+            "delta": -0.020868601231
+          },
+          "current_price": {
+            "previous": 137.55,
+            "current": 137.55,
+            "delta": 0.0
+          },
+          "p10": {
+            "previous": 126.15049550685607,
+            "current": 124.27061438700498,
+            "delta": -1.879881119851
+          },
+          "p50": {
+            "previous": 138.32350366902062,
+            "current": 135.45302756968897,
+            "delta": -2.870476099332
+          },
+          "p90": {
+            "previous": 151.4885268776768,
+            "current": 150.02894296199682,
+            "delta": -1.45958391568
+          },
+          "prob_up": {
+            "previous": 0.5476190476190477,
+            "current": 0.5451977401129944,
+            "delta": -0.002421307506
+          },
+          "confidence": {
+            "previous": 25.0,
+            "current": 39.93773809901846,
+            "delta": 14.937738099018
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.4523809523809524,
+            "current": 0.49523809523809526,
+            "delta": 0.042857142857
+          },
+          "oos_rmse": {
+            "previous": 0.07885219851649747,
+            "current": 0.08475503885098812,
+            "delta": 0.005902840334
+          },
+          "baseline_rmse": {
+            "previous": 0.07865093242964209,
+            "current": 0.07865093242964209,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.8677248677248677,
+            "current": 0.8835978835978836,
+            "delta": 0.015873015873
+          }
+        }
+      }
+    }
+  ],
+  "llm_report": "",
+  "llm_generated": false
+}
