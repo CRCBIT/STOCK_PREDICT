@@ -5526,6 +5526,49 @@ _emit_raw_html("""
 </style>
 """)
 
+
+_emit_raw_html("""
+<style>
+/* v8.1 · PC에서도 AI 리서치 코멘트를 항상 카드형으로 유지한다.
+   초기 boot 때만 들어가던 CSS에 의존하지 않도록 전역 late override로 고정. */
+@media (min-width: 761px) {
+  .ai-chart-comment-compact {
+    display: block !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    border: 1.5px solid rgba(65,135,255,.48) !important;
+    background: linear-gradient(135deg, rgba(12,23,39,.97), rgba(7,14,24,.985)) !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.035), 0 8px 24px rgba(0,0,0,.18) !important;
+    border-radius: 13px !important;
+    padding: 12px 14px !important;
+    margin: 7px 0 9px 0 !important;
+  }
+  .ai-chart-comment-head {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 8px !important;
+    margin-bottom: 7px !important;
+    flex-wrap: wrap !important;
+  }
+  .ai-chart-comment-kicker {
+    color: #6ea8ff !important;
+    font-size: .72rem !important;
+    font-weight: 850 !important;
+    letter-spacing: .03em !important;
+  }
+  .ai-chart-comment-model { display: none !important; }
+  .ai-chart-comment-text {
+    color: #edf3f9 !important;
+    font-size: .86rem !important;
+    font-weight: 730 !important;
+    line-height: 1.52 !important;
+    letter-spacing: -.01em !important;
+  }
+}
+</style>
+""")
+
 # ======================================================================================
 # 데이터 로딩
 # ======================================================================================
@@ -6010,38 +6053,42 @@ def _model_decision_from_score(p: Dict, score: Dict | None, maturity: Dict | Non
 
 def _decision_comment(horizon: int, p: Dict, decision: Dict[str, object]) -> str:
     currency = str(p.get("currency") or "KRW")
-    current = price(p.get("current_price"), currency)
     target = price(p.get("p50"), currency)
     exp = ret_of(p)
     label = str(decision.get("label") or "관망")
-    recent = decision.get("recent_window") or {}
+    method = str(decision.get("method") or "")
+    recent = decision.get("recent_window") or decision.get("recent_validation") or {}
     rn = int(recent.get("n") or 0)
     rw = recent.get("wins")
-    rh = num(recent.get("direction_hit"))
     re = num(recent.get("mae"))
 
-    if rn:
-        if rw is not None:
-            history = f"최근 {rn}개 {int(horizon)}일 예측 방향 {int(rw)}/{rn} 적중"
-        elif rh is not None:
-            history = f"최근 {rn}개 {int(horizon)}일 예측 방향 적중 {rh*100:.0f}%"
-        else:
-            history = f"최근 {rn}개 {int(horizon)}일 예측 검증"
+    if rn and rw is not None:
+        history = f"최근 {rn}개 {int(horizon)}일 예측은 방향 {int(rw)}/{rn} 적중"
         if re is not None:
-            history += f", 평균 오차 {re*100:.1f}%"
+            history += f" · 평균 오차 {re*100:.1f}%"
+    elif rn:
+        history = f"최근 {rn}개 {int(horizon)}일 예측을 검증"
     else:
-        history = f"최근 {int(horizon)}일 예측의 실제 검증 표본이 아직 부족"
+        history = f"{int(horizon)}일 LIVE 예측 이력이 아직 충분하지 않음"
 
-    current_line = f"현재 {int(horizon)}일 예상가 {target}"
+    current_line = f"현재 예상가 {target}"
     if exp is not None:
         current_line += f"({exp*100:+.1f}%)"
 
-    if label == "매수 우위":
-        conclusion = "최근 검증이 현재 상승 전망을 뒷받침해 매수 우위입니다."
-    elif label == "매도 우위":
-        conclusion = "최근 검증이 현재 하락 전망을 뒷받침해 매도 우위입니다."
+    if method == "meta_model":
+        if label == "매수 우위":
+            conclusion = "메타 모델이 과거 방향 적중 패턴과 예상 오차를 보정한 뒤 매수 우위로 판단했습니다."
+        elif label == "매도 우위":
+            conclusion = "메타 모델이 과거 방향 적중 패턴과 예상 오차를 보정한 뒤 매도 우위로 판단했습니다."
+        else:
+            conclusion = "메타 모델의 방향 적중 가능성과 오차 보정 결과가 학습된 매수·매도 기준에 못 미쳐 관망으로 판단했습니다."
     else:
-        conclusion = "최근 검증이 약해 관망이 우세합니다."
+        if label == "매수 우위":
+            conclusion = "최근 검증이 현재 상승 전망을 뒷받침해 매수 우위입니다."
+        elif label == "매도 우위":
+            conclusion = "최근 검증이 현재 하락 전망을 뒷받침해 매도 우위입니다."
+        else:
+            conclusion = "검증 근거가 아직 약해 관망이 우세합니다."
     return f"{history}. {current_line}. {conclusion}"
 
 
@@ -6062,7 +6109,21 @@ def render_ai_chart_comment(symbol: str, horizon: int, p: Dict) -> bool:
     as_of = str(p.get("last_data_time") or p.get("as_of") or "")[:10]
     maturity = _matured_forecast_for_asof(g, int(horizon), as_of) if not g.empty else {}
     recent_window = _recent_matured_window(g, int(horizon), as_of, limit=5) if not g.empty else {}
-    decision = _model_decision_from_score(p, score, maturity, recent_window)
+
+    # research_journal.py가 매일 LIVE 만기 예측으로 학습한 Decision Meta Model의
+    # 최종 판정을 우선 사용한다. 메타 모델을 학습할 표본이 부족한 구버전/초기 상태에서만
+    # 기존 로컬 안전 판정을 fallback으로 사용한다.
+    meta_map = (doc.get("meta_decisions") or {}) if isinstance(doc, dict) else {}
+    symbol_meta = meta_map.get(str(symbol)) if isinstance(meta_map, dict) else None
+    meta_decision = symbol_meta.get(str(int(horizon))) if isinstance(symbol_meta, dict) else None
+    if isinstance(meta_decision, dict) and meta_decision.get("method") == "meta_model":
+        decision = dict(meta_decision)
+        decision["recent_window"] = recent_window
+        decision["maturity"] = maturity
+    else:
+        decision = _model_decision_from_score(p, score, maturity, recent_window)
+        decision["method"] = "legacy_fallback"
+
     decision_text = _decision_comment(int(horizon), p, decision)
 
     headline = str(insight.get("headline") or "").strip()
