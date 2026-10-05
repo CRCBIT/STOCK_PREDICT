@@ -25065,6 +25065,8 @@
     "generated_at": "2026-10-05T17:23:47+09:00",
     "symbol_count": 38,
     "fact_schema_version": 2,
-    "requested_model": "gpt-6-luna"
+    "requested_model": "gpt-6-luna",
+    "cached_after_error": true,
+    "last_error": "JSONDecodeError"
   }
 }
