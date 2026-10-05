@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-05T20:44:28+09:00",
+  "generated_at": "2026-10-05T20:57:11+09:00",
   "n_versions": 10,
   "latest_version": "0.9.14",
   "latest_date": "2026-09-12",
@@ -296,7 +296,7 @@
       "use_panel": true,
       "use_nnls_stacking": true,
       "use_garch_sigma": true,
-      "n_symbols": 38
+      "n_symbols": 39
     }
   }
 }

@@ -577,6 +577,27 @@ st.markdown("""
     font-size: 0.86rem;
   }
 
+  /* 상세 종목명: 종목명은 또렷하게, 티커는 보조 정보로 한 단계 낮춘다. */
+  .forecast-symbol-compact {
+    display: flex;
+    align-items: baseline;
+    gap: 7px;
+    margin: 4px 0 7px;
+    line-height: 1.15;
+  }
+  .forecast-symbol-name {
+    color: #f2f6fb;
+    font-size: 1.03rem;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+  }
+  .forecast-symbol-ticker {
+    color: #7f8b99;
+    font-size: 0.70rem;
+    font-weight: 650;
+    letter-spacing: 0.01em;
+  }
+
   /* 종목 선택: 메모리 단가 패널과 같은 어두운 톤으로 통일 */
   div[data-testid="stSelectbox"] {
     background: transparent !important;
@@ -9584,13 +9605,19 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
     # 상세 화면 첫 진입에서는 핵심 정보(AI 코멘트 → 예상가격 → 차트)가
     # 최대한 빨리 보이도록 제목/조작부를 압축한다.
     st.markdown(
-        f"<div class='forecast-symbol-compact'>{html.escape(stock_name)} · {html.escape(symbol)}</div>",
+        (
+            "<div class='forecast-symbol-compact'>"
+            f"<span class='forecast-symbol-name'>{html.escape(stock_name)}</span>"
+            f"<span class='forecast-symbol-ticker'>· {html.escape(symbol)}</span>"
+            "</div>"
+        ),
         unsafe_allow_html=True,
     )
 
     horizon = st.radio(
         "예측 기간", horizons, horizontal=True, key=f"h_{symbol}",
         format_func=lambda h: f"{h}일",
+        label_visibility="collapsed",
     )
 
     chart_windows = {
