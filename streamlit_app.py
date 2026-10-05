@@ -6638,7 +6638,15 @@ def render_market_overview(df: pd.DataFrame, quotes: Dict) -> None:
         "<div class='home-guide'>기간을 고르면 전체 종목을 같은 기준으로 비교합니다. 예상가는 P50 기준입니다.</div>",
         unsafe_allow_html=True,
     )
-    default_h = 10 if 10 in horizons else horizons[0]
+    _stored_home_h = st.session_state.get("_cf_home_horizon")
+    try:
+        _stored_home_h = int(_stored_home_h)
+    except (TypeError, ValueError):
+        _stored_home_h = None
+    default_h = (_stored_home_h if _stored_home_h in horizons
+                 else (10 if 10 in horizons else horizons[0]))
+    if st.session_state.get("overview_horizon") not in horizons:
+        st.session_state["overview_horizon"] = int(default_h)
     selected_h = st.radio(
         "비교 기간",
         horizons,
@@ -6647,6 +6655,9 @@ def render_market_overview(df: pd.DataFrame, quotes: Dict) -> None:
         format_func=lambda h: f"{h}일",
         key="overview_horizon",
     )
+    # overview_horizon은 홈에서만 존재하는 widget key라 상세 화면으로 가면
+    # Streamlit이 정리할 수 있다. 별도의 비-widget 상태에 선택 기간을 보존한다.
+    st.session_state["_cf_home_horizon"] = int(selected_h)
 
     qmap = (quotes.get("quotes") or {}) if isinstance(quotes, dict) else {}
     selected_rows: List[Dict] = []
@@ -9593,7 +9604,9 @@ def equity_chart(bt: pd.DataFrame) -> Optional[go.Figure]:
 # 종목 화면
 # ======================================================================================
 def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
-                  quotes: Optional[Dict] = None) -> None:
+                  quotes: Optional[Dict] = None,
+                  available_symbols: Optional[List[str]] = None,
+                  name_map: Optional[Dict[str, str]] = None) -> None:
     horizon_values = pd.to_numeric(sub["horizon"], errors="coerce")
     horizons = sorted({int(h) for h in horizon_values.dropna()})
     stock_name = str(sub["name"].iloc[0]) if "name" in sub.columns and len(sub) else symbol
@@ -9602,23 +9615,37 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
         st.warning("이 종목에는 표시할 수 있는 예측 기간이 없습니다.")
         return
 
-    # 상세 화면 첫 진입에서는 핵심 정보(AI 코멘트 → 예상가격 → 차트)가
-    # 최대한 빨리 보이도록 제목/조작부를 압축한다.
-    st.markdown(
-        (
-            "<div class='forecast-symbol-compact'>"
-            f"<span class='forecast-symbol-name'>{html.escape(stock_name)}</span>"
-            f"<span class='forecast-symbol-ticker'>· {html.escape(symbol)}</span>"
-            "</div>"
-        ),
-        unsafe_allow_html=True,
-    )
+    # 예측기간 상태는 radio widget key와 분리해 보존한다.
+    # 탭을 바꾸거나 다른 컨트롤이 rerun을 일으켜도 선택 기간이 사라지지 않는다.
+    _h_state_key = f"_cf_horizon_{symbol}"
+    _h_widget_key = f"h_{symbol}"
+    _stored_h = st.session_state.get(_h_state_key, st.session_state.get(_h_widget_key))
+    try:
+        _stored_h = int(_stored_h)
+    except (TypeError, ValueError):
+        _stored_h = None
+    if _stored_h not in horizons:
+        _stored_h = 10 if 10 in horizons else horizons[0]
+    if st.session_state.get(_h_widget_key) not in horizons:
+        st.session_state[_h_widget_key] = int(_stored_h)
+
+    def _cf_forecast_horizon_changed() -> None:
+        _value = st.session_state.get(_h_widget_key)
+        try:
+            _value = int(_value)
+        except (TypeError, ValueError):
+            return
+        if _value in horizons:
+            st.session_state[_h_state_key] = _value
 
     horizon = st.radio(
-        "예측 기간", horizons, horizontal=True, key=f"h_{symbol}",
+        "예측 기간", horizons, horizontal=True, key=_h_widget_key,
+        index=horizons.index(int(_stored_h)),
         format_func=lambda h: f"{h}일",
         label_visibility="collapsed",
+        on_change=_cf_forecast_horizon_changed,
     )
+    st.session_state[_h_state_key] = int(horizon)
 
     chart_windows = {
         "1개월": 22,
@@ -11219,6 +11246,91 @@ def main() -> None:
     div[data-testid="stPlotlyChart"] { margin-top: 0 !important; margin-bottom: 2px !important; }
   }
 
+  /* 상세 종목명 = 직접 종목 선택기. 한 번 클릭하면 바로 목록이 열린다.
+     일반 selectbox처럼 보이지 않게 배경/테두리를 모두 제거하고 제목 타이포만 남긴다. */
+  [class*="st-key-forecast_symbol_picker_wrap_"] {
+    margin: 3px 0 7px !important;
+    width: fit-content !important;
+    max-width: 100% !important;
+  }
+  [class*="st-key-forecast_symbol_picker_wrap_"] div[data-testid="stSelectbox"] {
+    display: inline-block !important;
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: min(360px, 100%) !important;
+    margin: 0 !important;
+  }
+  [class*="st-key-forecast_symbol_picker_wrap_"] div[data-testid="stSelectbox"] > div,
+  [class*="st-key-forecast_symbol_picker_wrap_"] div[data-testid="stSelectbox"] [data-baseweb="select"],
+  [class*="st-key-forecast_symbol_picker_wrap_"] div[data-testid="stSelectbox"] [data-baseweb="select"] > div,
+  [class*="st-key-forecast_symbol_picker_wrap_"] div[data-testid="stSelectbox"] div[role="combobox"] {
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: min(360px, 100%) !important;
+    min-height: 30px !important;
+    padding: 0 !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    border: 0 !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+    border-radius: 7px !important;
+  }
+  [class*="st-key-forecast_symbol_picker_wrap_"] div[data-testid="stSelectbox"] [data-baseweb="select"] > div {
+    padding: 2px 4px 2px 0 !important;
+  }
+  /* 선택된 종목명은 제목처럼 굵고 밝게. */
+  [class*="st-key-forecast_symbol_picker_wrap_"] div[data-testid="stSelectbox"] [data-baseweb="select"] span,
+  [class*="st-key-forecast_symbol_picker_wrap_"] div[data-testid="stSelectbox"] div[role="combobox"] span,
+  [class*="st-key-forecast_symbol_picker_wrap_"] div[data-testid="stSelectbox"] input {
+    color: #f2f6fb !important;
+    -webkit-text-fill-color: #f2f6fb !important;
+    font-size: 1.03rem !important;
+    font-weight: 800 !important;
+    line-height: 1.15 !important;
+    letter-spacing: -.025em !important;
+    opacity: 1 !important;
+  }
+  /* 기본 화살표는 작고 은은하게 유지한다. */
+  [class*="st-key-forecast_symbol_picker_wrap_"] div[data-testid="stSelectbox"] [data-baseweb="select"] > div > div:last-child,
+  [class*="st-key-forecast_symbol_picker_wrap_"] div[data-testid="stSelectbox"] [data-baseweb="select"] svg {
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+  [class*="st-key-forecast_symbol_picker_wrap_"] div[data-testid="stSelectbox"] svg,
+  [class*="st-key-forecast_symbol_picker_wrap_"] div[data-testid="stSelectbox"] svg path {
+    color: #7f8b99 !important;
+    fill: #7f8b99 !important;
+  }
+  [class*="st-key-forecast_symbol_picker_wrap_"] div[data-testid="stSelectbox"] [data-baseweb="select"]:hover,
+  [class*="st-key-forecast_symbol_picker_wrap_"] div[data-testid="stSelectbox"] div[role="combobox"]:hover {
+    background: rgba(255,255,255,.028) !important;
+  }
+  [class*="st-key-forecast_symbol_picker_wrap_"] div[data-testid="stSelectbox"] *:focus,
+  [class*="st-key-forecast_symbol_picker_wrap_"] div[data-testid="stSelectbox"] *:focus-visible {
+    border: 0 !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+  }
+
+  @media (max-width: 760px) {
+    [class*="st-key-forecast_symbol_picker_wrap_"] {
+      margin: 0 0 3px !important;
+    }
+    [class*="st-key-forecast_symbol_picker_wrap_"] div[data-testid="stSelectbox"],
+    [class*="st-key-forecast_symbol_picker_wrap_"] div[data-testid="stSelectbox"] [data-baseweb="select"],
+    [class*="st-key-forecast_symbol_picker_wrap_"] div[data-testid="stSelectbox"] [data-baseweb="select"] > div,
+    [class*="st-key-forecast_symbol_picker_wrap_"] div[data-testid="stSelectbox"] div[role="combobox"] {
+      max-width: min(300px, 100%) !important;
+      min-height: 27px !important;
+    }
+    [class*="st-key-forecast_symbol_picker_wrap_"] div[data-testid="stSelectbox"] [data-baseweb="select"] span,
+    [class*="st-key-forecast_symbol_picker_wrap_"] div[data-testid="stSelectbox"] div[role="combobox"] span,
+    [class*="st-key-forecast_symbol_picker_wrap_"] div[data-testid="stSelectbox"] input {
+      font-size: .91rem !important;
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .cf-loading-surface {
       transition: none !important;
@@ -11327,42 +11439,341 @@ def main() -> None:
     def _render_interactive_view() -> None:
         # fragment는 widget 변경 시 이 함수만 다시 실행된다.
         name_of = {sym: str(df[df["symbol"] == sym]["name"].iloc[0]) for sym in symbols}
+        _active_symbol_key = "_cf_active_symbol"
 
-        # 홈 전체종목 그래프에서 클릭한 종목은 selectbox 생성 전에 주입한다.
+        def _symbol_horizons(sym: str) -> List[int]:
+            if sym not in symbols:
+                return []
+            vals = pd.to_numeric(df.loc[df["symbol"].eq(sym), "horizon"], errors="coerce")
+            return sorted({int(v) for v in vals.dropna()})
+
+        def _remember_symbol_horizon(sym: str, preferred=None) -> Optional[int]:
+            hs = _symbol_horizons(sym)
+            if not hs:
+                return None
+            try:
+                h = int(preferred)
+            except (TypeError, ValueError):
+                h = None
+            if h not in hs:
+                h = 10 if 10 in hs else hs[0]
+            # 실제 radio key와 별도 영속 상태를 함께 맞춘다.
+            st.session_state[f"_cf_horizon_{sym}"] = int(h)
+            st.session_state[f"h_{sym}"] = int(h)
+            return int(h)
+
+        # 구버전에서 symbol_select를 내비게이션 상태로 쓰던 세션도 자연스럽게 승계한다.
+        _active_symbol = st.session_state.get(_active_symbol_key)
+        if _active_symbol not in symbols:
+            _legacy_symbol = st.session_state.get("symbol_select")
+            if _legacy_symbol in symbols:
+                _active_symbol = _legacy_symbol
+                st.session_state[_active_symbol_key] = _legacy_symbol
+
+        # 홈 전체종목 그래프에서 클릭한 종목은 상세 화면의 영속 상태로 주입한다.
         _pending_symbol = st.session_state.pop("_cf_home_clicked_symbol", None)
         _pending_horizon = st.session_state.pop("_cf_home_clicked_horizon", None)
         if _pending_symbol in symbols:
-            st.session_state["symbol_select"] = _pending_symbol
-            try:
-                if _pending_horizon is not None:
-                    st.session_state[f"h_{_pending_symbol}"] = int(_pending_horizon)
-            except (TypeError, ValueError):
-                pass
+            _remember_symbol_horizon(_pending_symbol, _pending_horizon)
+            st.session_state[_active_symbol_key] = _pending_symbol
+            st.session_state["detail_symbol_select"] = _pending_symbol
+            st.session_state["_cf_detail_tab"] = "종목 전망"
+            _active_symbol = _pending_symbol
 
-        _detail_preselected = st.session_state.get("symbol_select") in symbols
-        if not _detail_preselected:
-            st.markdown(
-                """
-                <div class="section-head home-section-head">
-                  <div>
-                    <div class="section-kicker">MARKET OVERVIEW</div>
-                    <div class="section-title">전체 종목 개요</div>
-                  </div>
-                  <div class="section-note">기간 하나를 골라 전체 종목을 비교하고, 종목을 누르면 상세 화면으로 이동합니다.</div>
-                </div>
-                """,
-                unsafe_allow_html=True,
-            )
+        _detail_preselected = _active_symbol in symbols
 
-        symbol = st.selectbox(
-            "종목 선택" if not _detail_preselected else "종목 변경",
-            symbols,
-            index=None,
-            placeholder="종목명 또는 티커를 선택하세요",
-            key="symbol_select",
-            format_func=lambda sym: f"{name_of.get(sym, sym)}  ·  {sym}",
-            label_visibility="visible" if not _detail_preselected else "collapsed",
+        # ------------------------------------------------------------------
+        # 종목 선택 UI
+        # - 홈/상세 모두 같은 검색 가능한 selectbox를 사용한다.
+        # - 홈/상세 모두 일반 검색 가능한 selectbox처럼 즉시 타이핑할 수 있다.
+        # - 입력 글자를 16px 이상으로 고정해 iOS Safari의 input focus 자동 확대를 막는다.
+        # - clear(X)만 UI/JS 양쪽에서 제거한다.
+        # ------------------------------------------------------------------
+        _emit_raw_html(
+            '''
+<style>
+  /* 홈 종목 선택 — 상단 설명 제목/라벨은 완전히 제거 */
+  .home-section-head,
+  [class*='st-key-home_symbol_picker'] .cf-home-symbol-label,
+  [class*='st-key-home_symbol_picker'] div[data-testid='stSelectbox'] > label {
+    display: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    min-height: 0 !important;
+    height: 0 !important;
+  }
+  [class*='st-key-home_symbol_picker'] {
+    margin-top: 0 !important;
+    margin-bottom: 4px !important;
+  }
+
+  /* 홈/상세 공통: iPhone input 자동 zoom + 더블탭 텍스트 선택 메뉴 방지 */
+  [class*='st-key-home_symbol_select'] div[data-testid='stSelectbox'] [data-baseweb='select'],
+  [class*='st-key-home_symbol_select'] div[data-testid='stSelectbox'] [data-baseweb='select'] > div,
+  [class*='st-key-home_symbol_select'] div[data-testid='stSelectbox'] div[role='combobox'],
+  [class*='st-key-detail_symbol_select'] div[data-testid='stSelectbox'] [data-baseweb='select'],
+  [class*='st-key-detail_symbol_select'] div[data-testid='stSelectbox'] [data-baseweb='select'] > div,
+  [class*='st-key-detail_symbol_select'] div[data-testid='stSelectbox'] div[role='combobox'] {
+    touch-action: manipulation !important;
+    -webkit-tap-highlight-color: transparent !important;
+    -webkit-touch-callout: default !important;
+    -webkit-user-select: text !important;
+    user-select: text !important;
+    -webkit-text-size-adjust: 100% !important;
+    text-size-adjust: 100% !important;
+  }
+
+  [class*='st-key-home_symbol_select'] div[data-testid='stSelectbox'] input,
+  [class*='st-key-home_symbol_select'] div[data-testid='stSelectbox'] input::placeholder,
+  [class*='st-key-home_symbol_select'] div[data-testid='stSelectbox'] span,
+  [class*='st-key-home_symbol_select'] div[data-testid='stSelectbox'] div[role='combobox'],
+  [class*='st-key-detail_symbol_select'] div[data-testid='stSelectbox'] input,
+  [class*='st-key-detail_symbol_select'] div[data-testid='stSelectbox'] input::placeholder,
+  [class*='st-key-detail_symbol_select'] div[data-testid='stSelectbox'] span,
+  [class*='st-key-detail_symbol_select'] div[data-testid='stSelectbox'] div[role='combobox'] {
+    font-size: 16px !important;
+    line-height: 1.25 !important;
+    -webkit-touch-callout: default !important;
+    -webkit-user-select: text !important;
+    user-select: text !important;
+    -webkit-text-size-adjust: 100% !important;
+    text-size-adjust: 100% !important;
+  }
+
+  /* 홈: 기존 다크 셀렉트 톤 유지 */
+  [class*='st-key-home_symbol_select'] div[data-testid='stSelectbox'] [data-baseweb='select'],
+  [class*='st-key-home_symbol_select'] div[data-testid='stSelectbox'] [data-baseweb='select'] > div,
+  [class*='st-key-home_symbol_select'] div[data-testid='stSelectbox'] div[role='combobox'] {
+    min-height: 46px !important;
+    background: #0d1117 !important;
+    border: 1px solid rgba(120,132,148,.18) !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+    border-radius: 11px !important;
+  }
+  [class*='st-key-home_symbol_select'] div[data-testid='stSelectbox'] input,
+  [class*='st-key-home_symbol_select'] div[data-testid='stSelectbox'] input::placeholder,
+  [class*='st-key-home_symbol_select'] div[data-testid='stSelectbox'] span,
+  [class*='st-key-home_symbol_select'] div[data-testid='stSelectbox'] div[role='combobox'] {
+    color: #d7dee8 !important;
+    -webkit-text-fill-color: #d7dee8 !important;
+    font-weight: 600 !important;
+  }
+  [class*='st-key-home_symbol_select'] div[data-testid='stSelectbox'] [data-baseweb='select']:hover,
+  [class*='st-key-home_symbol_select'] div[data-testid='stSelectbox'] div[role='combobox']:hover,
+  [class*='st-key-home_symbol_select'] div[data-testid='stSelectbox'] div[role='combobox']:focus-within {
+    background: #111720 !important;
+    border-color: rgba(120,132,148,.28) !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+  }
+
+  /* 상세: selectbox이지만 기존의 굵은 종목명 한 줄처럼 보이게 한다. */
+  [class*='st-key-detail_symbol_select'] {
+    width: min(460px, 100%) !important;
+    margin: 2px 0 8px 0 !important;
+  }
+  [class*='st-key-detail_symbol_select'] div[data-testid='stSelectbox'] {
+    width: 100% !important;
+  }
+  [class*='st-key-detail_symbol_select'] div[data-testid='stSelectbox'] [data-baseweb='select'],
+  [class*='st-key-detail_symbol_select'] div[data-testid='stSelectbox'] [data-baseweb='select'] > div,
+  [class*='st-key-detail_symbol_select'] div[data-testid='stSelectbox'] div[role='combobox'] {
+    min-height: 40px !important;
+    background: transparent !important;
+    border: 0 !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+    border-radius: 8px !important;
+  }
+  [class*='st-key-detail_symbol_select'] div[data-testid='stSelectbox'] input,
+  [class*='st-key-detail_symbol_select'] div[data-testid='stSelectbox'] span,
+  [class*='st-key-detail_symbol_select'] div[data-testid='stSelectbox'] div[role='combobox'] {
+    color: #f2f6fb !important;
+    -webkit-text-fill-color: #f2f6fb !important;
+    font-weight: 820 !important;
+    letter-spacing: -.025em !important;
+  }
+  [class*='st-key-detail_symbol_select'] div[data-testid='stSelectbox'] [data-baseweb='select']:hover,
+  [class*='st-key-detail_symbol_select'] div[data-testid='stSelectbox'] div[role='combobox']:hover,
+  [class*='st-key-detail_symbol_select'] div[data-testid='stSelectbox'] div[role='combobox']:focus-within {
+    background: rgba(255,255,255,.025) !important;
+    border: 0 !important;
+    outline: 0 !important;
+    box-shadow: none !important;
+  }
+
+  /* BaseWeb clear(X) / divider 제거: 우측에는 마지막 dropdown chevron만 남긴다. */
+  [class*='st-key-home_symbol_select'] button[aria-label*='clear' i],
+  [class*='st-key-home_symbol_select'] button[title*='clear' i],
+  [class*='st-key-home_symbol_select'] [aria-label='Clear'],
+  [class*='st-key-home_symbol_select'] [title='Clear'],
+  [class*='st-key-detail_symbol_select'] button[aria-label*='clear' i],
+  [class*='st-key-detail_symbol_select'] button[title*='clear' i],
+  [class*='st-key-detail_symbol_select'] [aria-label='Clear'],
+  [class*='st-key-detail_symbol_select'] [title='Clear'] {
+    display: none !important;
+  }
+  [class*='st-key-home_symbol_select'] [data-baseweb='select'] > div > div:last-child > *:not(:last-child),
+  [class*='st-key-detail_symbol_select'] [data-baseweb='select'] > div > div:last-child > *:not(:last-child) {
+    display: none !important;
+  }
+
+  /* 드롭다운 메뉴: 모바일에서 읽기 좋게, 검색 input은 16px 유지 */
+  div[data-baseweb='popover'] input,
+  div[data-baseweb='popover'] input::placeholder {
+    font-size: 16px !important;
+    line-height: 1.25 !important;
+    -webkit-text-size-adjust: 100% !important;
+    text-size-adjust: 100% !important;
+  }
+
+  @media (max-width:760px) {
+    [class*='st-key-detail_symbol_select'] {
+      margin-bottom: 5px !important;
+    }
+    [class*='st-key-detail_symbol_select'] div[data-testid='stSelectbox'] [data-baseweb='select'],
+    [class*='st-key-detail_symbol_select'] div[data-testid='stSelectbox'] [data-baseweb='select'] > div,
+    [class*='st-key-detail_symbol_select'] div[data-testid='stSelectbox'] div[role='combobox'] {
+      min-height: 44px !important;
+    }
+  }
+</style>
+            '''
         )
+
+        def _cf_choose_symbol(_new_symbol: str, *, from_home: bool) -> None:
+            if _new_symbol not in symbols:
+                return
+            _old_symbol = st.session_state.get(_active_symbol_key)
+            _preferred_h = None
+            if not from_home and _old_symbol in symbols:
+                _preferred_h = st.session_state.get(
+                    f"_cf_horizon_{_old_symbol}", st.session_state.get(f"h_{_old_symbol}")
+                )
+            if _preferred_h is None:
+                _preferred_h = st.session_state.get(
+                    "_cf_home_horizon", st.session_state.get("overview_horizon")
+                )
+            _remember_symbol_horizon(_new_symbol, _preferred_h)
+            st.session_state[_active_symbol_key] = _new_symbol
+            st.session_state["_cf_last_non_null_symbol"] = _new_symbol
+            st.session_state["_cf_detail_tab"] = "종목 전망"
+
+        if _detail_preselected:
+            _current_symbol = str(_active_symbol)
+            symbol = _current_symbol
+
+            # 상세 화면도 홈과 동일한 2-tap searchable selectbox를 사용한다.
+            # 현재 종목을 강제로 유효한 값으로 유지해 clear(X)로 None이 되는 경로를 막는다.
+            _detail_widget_key = "detail_symbol_select_v2"
+            if st.session_state.get(_detail_widget_key) not in symbols:
+                st.session_state[_detail_widget_key] = symbol
+            elif st.session_state.get(_detail_widget_key) != symbol:
+                st.session_state[_detail_widget_key] = symbol
+
+            def _detail_symbol_changed() -> None:
+                _picked = st.session_state.get(_detail_widget_key)
+                if _picked in symbols and _picked != st.session_state.get(_active_symbol_key):
+                    _cf_choose_symbol(str(_picked), from_home=False)
+
+            with st.container(key="detail_symbol_select"):
+                st.selectbox(
+                    "종목 변경",
+                    list(symbols),
+                    key=_detail_widget_key,
+                    label_visibility="collapsed",
+                    format_func=lambda x: f"{name_of.get(x, x)}  ·  {x}",
+                    placeholder="종목명 또는 티커 검색",
+                    on_change=_detail_symbol_changed,
+                )
+        else:
+            symbol = None
+
+            # 홈은 비선택 상태(index=None)를 그대로 사용한다.
+            # placeholder가 메뉴 option으로 섞이지 않으므로 iPhone에서 'Choose an option'이
+            # 뜨거나 placeholder가 첫 번째 가짜 종목처럼 보이는 문제를 없앤다.
+            _home_widget_key = "home_symbol_select_v2"
+            if st.session_state.get(_home_widget_key) not in symbols:
+                st.session_state[_home_widget_key] = None
+
+            def _home_symbol_changed() -> None:
+                _picked = st.session_state.get(_home_widget_key)
+                if _picked in symbols:
+                    _cf_choose_symbol(str(_picked), from_home=True)
+
+            with st.container(key="home_symbol_picker"):
+                st.selectbox(
+                    "종목 선택",
+                    list(symbols),
+                    index=None,
+                    key=_home_widget_key,
+                    label_visibility="collapsed",
+                    format_func=lambda x: f"{name_of.get(x, x)}  ·  {x}",
+                    placeholder="종목명 또는 티커를 선택하세요",
+                    on_change=_home_symbol_changed,
+                )
+
+        # 홈/상세 종목 선택기: 즉시 검색/타이핑 가능.
+        # iPhone 자동 확대 방지를 위해 input은 16px을 유지하고,
+        # clear(X)만 동적으로 제거한다. readonly/2-tap 제어는 사용하지 않는다.
+        _cf_selector_script = r'''<script>
+(() => {
+  const win = window.parent;
+  const doc = win.document;
+  const ROOTS = [
+    "[class*='st-key-home_symbol_select']",
+    "[class*='st-key-detail_symbol_select']"
+  ];
+
+  function configure(root) {
+    if (!root) return;
+
+    const input = root.querySelector('input');
+    if (input) {
+      input.readOnly = false;
+      input.removeAttribute('readonly');
+      input.style.setProperty('font-size', '16px', 'important');
+      input.style.setProperty('line-height', '1.25', 'important');
+      input.style.setProperty('-webkit-text-size-adjust', '100%', 'important');
+      input.style.setProperty('touch-action', 'manipulation', 'important');
+      input.style.setProperty('-webkit-user-select', 'text', 'important');
+      input.style.setProperty('user-select', 'text', 'important');
+      input.style.setProperty('-webkit-touch-callout', 'default', 'important');
+      input.setAttribute('inputmode', 'search');
+      input.setAttribute('autocomplete', 'off');
+      input.setAttribute('autocorrect', 'off');
+      input.setAttribute('autocapitalize', 'none');
+      input.setAttribute('spellcheck', 'false');
+      input.setAttribute('enterkeyhint', 'search');
+    }
+
+    // BaseWeb clear(X)만 제거한다. dropdown chevron은 그대로 둔다.
+    root.querySelectorAll("button, [role='button'], [aria-label], [title]").forEach((node) => {
+      const label = [
+        node.getAttribute && node.getAttribute('aria-label'),
+        node.getAttribute && node.getAttribute('title')
+      ].filter(Boolean).join(' ').toLowerCase();
+      if (/\b(clear|remove|reset)\b|지우기|초기화/.test(label) &&
+          !/dropdown|open|menu|chevron|arrow/.test(label)) {
+        node.style.setProperty('display', 'none', 'important');
+        node.style.setProperty('pointer-events', 'none', 'important');
+      }
+    });
+  }
+
+  function install() {
+    ROOTS.forEach((sel) => configure(doc.querySelector(sel)));
+  }
+
+  install();
+  const obs = new MutationObserver(install);
+  obs.observe(doc.body, { childList: true, subtree: true });
+  win.setTimeout(() => obs.disconnect(), 20000);
+})();
+</script>'''
+        components.html(_cf_selector_script, height=0, width=0)
+
 
         # 실제 화면이 바뀐 경우(None↔종목, 종목A↔종목B)에만 큰 전환을 재생한다.
         # 예측기간/차트기간/체크박스 변경에는 큰 전환을 반복하지 않는다.
@@ -11429,47 +11840,140 @@ def main() -> None:
                     selected_name = str(df[df["symbol"] == symbol]["name"].iloc[0])
 
                     # 상세 화면에서도 초기화면과 같은 CHIP-FORECAST 헤더를 유지한다.
-                    # 모바일에서는 헤더 자체가 홈 버튼 역할을 하므로 종목 selectbox/메타칩/별도 뒤로가기는 숨겨
-                    # AI 코멘트 → 예상가 → 차트가 한 화면에 최대한 들어오게 한다.
+                    # 정보 구조는 '종목 선택 → 해당 종목의 탭 → 탭 내부 컨트롤' 순서로 둔다.
+                    # 종목 선택 UI는 위의 2-tap searchable selectbox로 렌더링되며, 16px 입력 크기로 iPhone 자동 줌을 피한다.
+                    # st.tabs는 내부 widget 조작으로 rerun될 때 첫 탭으로 돌아갈 수 있다.
+                    # 상태를 가진 radio를 탭처럼 스타일링해 현재 탭을 확실히 보존한다.
+                    _is_owner = owner_mode()
+                    _tab_labels = ["종목 전망", "AI 리서치"]
+                    if _is_owner:
+                        _tab_labels.append("내 자산")
+                    _tab_labels.extend(["메모리 업황", "업데이트"])
+
+                    _saved_tab = st.session_state.get("_cf_detail_tab")
+                    if _saved_tab not in _tab_labels:
+                        st.session_state["_cf_detail_tab"] = "종목 전망"
+
                     _emit_raw_html(
-                        "<style>@media (max-width:760px){"
-                        ".dashboard-facts{display:none!important;}"
-                        "[class*='st-key-symbol_select']{display:none!important;}"
-                        ".detail-nav-line{display:none!important;}"
-                        "}</style>"
+                        """
+<style>
+  [class*='st-key-detail_tab_nav'] { margin: 1px 0 7px !important; }
+  [class*='st-key-detail_tab_nav'] > label { display:none !important; }
+  [class*='st-key-detail_tab_nav'] div[role='radiogroup'] {
+    display:flex !important;
+    flex-wrap:nowrap !important;
+    align-items:stretch !important;
+    justify-content:flex-start !important;
+    gap:0 !important;
+    width:100% !important;
+    max-width:100% !important;
+    overflow-x:auto !important;
+    overflow-y:hidden !important;
+    scrollbar-width:none !important;
+    border-bottom:1px solid rgba(120,132,148,.18) !important;
+  }
+  [class*='st-key-detail_tab_nav'] div[role='radiogroup']::-webkit-scrollbar { display:none !important; }
+  [class*='st-key-detail_tab_nav'] div[role='radiogroup'] label {
+    position:relative !important;
+    flex:1 1 0 !important;
+    min-width:max-content !important;
+    min-height:38px !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    padding:7px 13px !important;
+    margin:0 !important;
+    border:0 !important;
+    border-radius:0 !important;
+    background:transparent !important;
+    color:#8f9baa !important;
+    box-shadow:none !important;
+    cursor:pointer !important;
+  }
+  [class*='st-key-detail_tab_nav'] div[role='radiogroup'] label > div:first-child { display:none !important; }
+  [class*='st-key-detail_tab_nav'] div[role='radiogroup'] label p,
+  [class*='st-key-detail_tab_nav'] div[role='radiogroup'] label span {
+    margin:0 !important;
+    color:#8f9baa !important;
+    font-size:.77rem !important;
+    font-weight:670 !important;
+    line-height:1 !important;
+    white-space:nowrap !important;
+  }
+  [class*='st-key-detail_tab_nav'] div[role='radiogroup'] label:has(input:checked) {
+    background:rgba(240,185,11,.055) !important;
+  }
+  [class*='st-key-detail_tab_nav'] div[role='radiogroup'] label:has(input:checked)::after {
+    content:'';
+    position:absolute;
+    left:11px; right:11px; bottom:-1px;
+    height:2px;
+    border-radius:999px;
+    background:#f0b90b;
+  }
+  [class*='st-key-detail_tab_nav'] div[role='radiogroup'] label:has(input:checked) p,
+  [class*='st-key-detail_tab_nav'] div[role='radiogroup'] label:has(input:checked) span {
+    color:#edf2f7 !important;
+    font-weight:760 !important;
+  }
+  @media (max-width:760px){
+    [class*='st-key-detail_tab_nav'] {
+      margin-bottom:5px !important;
+      width:100% !important;
+      overflow:hidden !important;
+    }
+    [class*='st-key-detail_tab_nav'] div[role='radiogroup'] {
+      flex-wrap:nowrap !important;
+      white-space:nowrap !important;
+      overflow-x:auto !important;
+      overflow-y:hidden !important;
+    }
+    [class*='st-key-detail_tab_nav'] div[role='radiogroup'] label {
+      flex:0 0 auto !important;
+      min-width:max-content !important;
+      min-height:34px !important;
+      padding:6px 7px !important;
+      white-space:nowrap !important;
+    }
+    [class*='st-key-detail_tab_nav'] div[role='radiogroup'] label p,
+    [class*='st-key-detail_tab_nav'] div[role='radiogroup'] label span {
+      font-size:.66rem !important;
+      white-space:nowrap !important;
+    }
+  }
+</style>
+                        """
                     )
-                    if owner_mode():
-                        forecast_tab, journal_tab, owner_tab, cycle_tab, notes_tab = st.tabs([
-                            "종목 전망",
-                            "AI 리서치",
-                            "내 자산",
-                            "메모리 업황",
-                            "업데이트",
-                        ])
-                    else:
-                        forecast_tab, journal_tab, cycle_tab, notes_tab = st.tabs([
-                            "종목 전망",
-                            "AI 리서치",
-                            "메모리 업황",
-                            "업데이트",
-                        ])
-                        owner_tab = None
+                    with st.container(key="detail_tab_nav"):
+                        _detail_tab = st.radio(
+                            "상세 탭",
+                            _tab_labels,
+                            horizontal=True,
+                            key="_cf_detail_tab",
+                            label_visibility="collapsed",
+                        )
 
-                    with forecast_tab:
-                        render_symbol(symbol, df[df["symbol"] == symbol], payload, quotes)
+                    if _detail_tab == "종목 전망":
+                        render_symbol(
+                            symbol,
+                            df[df["symbol"] == symbol],
+                            payload,
+                            quotes,
+                            available_symbols=symbols,
+                            name_map=name_of,
+                        )
 
-                    with journal_tab:
+                    elif _detail_tab == "AI 리서치":
                         try:
                             render_research_journal(symbol)
                         except Exception as exc:
                             # AI Research Journal는 비필수 확장; 앱 전체를 중단하면 안 된다.
                             st.caption(f"연구 저널 표시 생략: {type(exc).__name__}")
 
-                    if owner_tab is not None:
-                        with owner_tab:
-                            render_owner_portfolio(df, quotes)
+                    elif _detail_tab == "내 자산" and _is_owner:
+                        render_owner_portfolio(df, quotes)
 
-                    with cycle_tab:
+                    elif _detail_tab == "메모리 업황":
                         # Streamlit Cloud에서는 외부 API를 직접 호출하지 않고 게시된 월별 스냅샷만 읽는다.
                         kcs_memory = load_kcs_memory()
                         if kcs_memory is None or kcs_memory.empty:
@@ -11481,8 +11985,7 @@ def main() -> None:
                         else:
                             render_kcs_memory(kcs_memory)
 
-                    with notes_tab:
-                        # 업데이트 탭도 동일한 제목 계층을 사용하고, 상세 노트만 아래에 쌓는다.
+                    elif _detail_tab == "업데이트":
                         section_head(
                             "UPDATES",
                             "업데이트",
@@ -11491,7 +11994,6 @@ def main() -> None:
                         try:
                             from devnotes_view import render_devnotes
 
-                            # devnotes_view 내부의 큰 섹션 헤더는 2차 제목으로 낮춰 탭 전체 계층을 통일한다.
                             def _devnote_head(_kicker: str, title: str, note: str = "") -> None:
                                 subsection_head(title, note)
 
@@ -11503,7 +12005,6 @@ def main() -> None:
                             )
                         except Exception as exc:
                             st.caption(f"업데이트 기록 표시 실패: {type(exc).__name__}: {exc}")
-
 
                 # 모든 결과 요소가 생성된 뒤 잠깐 유지하고 자연스럽게 걷는다.
                 if _cf_analysis_loading:
