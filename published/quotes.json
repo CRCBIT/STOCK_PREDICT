@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-10T13:20:01+09:00",
+  "fetched_at": "2026-10-10T13:21:01+09:00",
   "quotes": {
     "000660": {
       "price": 1686000.0,
@@ -76,15 +76,15 @@
       "currency": "USD",
       "timestamp": "2026-10-10T08:59:41.000+09:00"
     },
-    "CAT": {
-      "price": 801.0,
-      "currency": "USD",
-      "timestamp": "2026-10-10T08:59:31.000+09:00"
-    },
     "GOOGL": {
       "price": 351.61,
       "currency": "USD",
       "timestamp": "2026-10-10T08:59:52.000+09:00"
+    },
+    "IBIT": {
+      "price": 46.75,
+      "currency": "USD",
+      "timestamp": "2026-10-10T08:59:59.000+09:00"
     },
     "KLAC": {
       "price": 195.58,
@@ -161,6 +161,11 @@
       "currency": "USD",
       "timestamp": "2026-10-10T08:59:58.000+09:00"
     },
+    "STX": {
+      "price": 781.56,
+      "currency": "USD",
+      "timestamp": "2026-10-10T08:59:43.000+09:00"
+    },
     "TSLA": {
       "price": 382.76,
       "currency": "USD",
@@ -170,6 +175,11 @@
       "price": 453.2998,
       "currency": "USD",
       "timestamp": "2026-10-10T08:59:57.000+09:00"
+    },
+    "VST": {
+      "price": 161.0,
+      "currency": "USD",
+      "timestamp": "2026-10-10T08:59:58.000+09:00"
     },
     "WDC": {
       "price": 395.7296,
@@ -181,20 +191,10 @@
       "currency": "USD",
       "timestamp": "2026-10-10T08:59:47.000+09:00"
     },
-    "VST": {
-      "price": 161.0,
+    "CAT": {
+      "price": 801.0,
       "currency": "USD",
-      "timestamp": "2026-10-10T08:59:58.000+09:00"
-    },
-    "STX": {
-      "price": 781.56,
-      "currency": "USD",
-      "timestamp": "2026-10-10T08:59:43.000+09:00"
-    },
-    "IBIT": {
-      "price": 46.75,
-      "currency": "USD",
-      "timestamp": "2026-10-10T08:59:59.000+09:00"
+      "timestamp": "2026-10-10T08:59:31.000+09:00"
     }
   },
   "fx": {
@@ -202,7 +202,7 @@
       "rate": 1345.1,
       "mid_rate": 1344.6,
       "basis_point": 4.0,
-      "fetched_at": "2026-10-10T13:20:01+09:00"
+      "fetched_at": "2026-10-10T13:21:01+09:00"
     }
   }
 }
