@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-10T18:19:01+09:00",
+  "fetched_at": "2026-10-10T18:20:02+09:00",
   "quotes": {
     "000660": {
       "price": 1686000.0,
@@ -141,6 +141,16 @@
       "currency": "USD",
       "timestamp": "2026-10-10T08:59:58.000+09:00"
     },
+    "RAM": {
+      "price": 12.1853,
+      "currency": "USD",
+      "timestamp": "2026-10-10T08:59:10.000+09:00"
+    },
+    "SMR": {
+      "price": 7.19,
+      "currency": "USD",
+      "timestamp": "2026-10-10T08:59:58.000+09:00"
+    },
     "SNDK": {
       "price": 1581.0,
       "currency": "USD",
@@ -150,11 +160,6 @@
       "price": 162.76,
       "currency": "USD",
       "timestamp": "2026-10-10T08:59:58.000+09:00"
-    },
-    "STX": {
-      "price": 781.56,
-      "currency": "USD",
-      "timestamp": "2026-10-10T08:59:43.000+09:00"
     },
     "TSLA": {
       "price": 382.76,
@@ -176,20 +181,15 @@
       "currency": "USD",
       "timestamp": "2026-10-10T08:59:53.000+09:00"
     },
-    "SMR": {
-      "price": 7.19,
-      "currency": "USD",
-      "timestamp": "2026-10-10T08:59:58.000+09:00"
-    },
     "ETHA": {
       "price": 56.3,
       "currency": "USD",
       "timestamp": "2026-10-10T08:59:47.000+09:00"
     },
-    "RAM": {
-      "price": 12.1853,
+    "STX": {
+      "price": 781.56,
       "currency": "USD",
-      "timestamp": "2026-10-10T08:59:10.000+09:00"
+      "timestamp": "2026-10-10T08:59:43.000+09:00"
     },
     "IBIT": {
       "price": 46.75,
@@ -202,7 +202,7 @@
       "rate": 1346.6,
       "mid_rate": 1346.1,
       "basis_point": 4.0,
-      "fetched_at": "2026-10-10T18:19:01+09:00"
+      "fetched_at": "2026-10-10T18:20:02+09:00"
     }
   }
 }
