@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-10T21:46:08+09:00",
+  "fetched_at": "2026-10-10T21:47:01+09:00",
   "quotes": {
     "000660": {
       "price": 1686000.0,
@@ -76,11 +76,6 @@
       "currency": "USD",
       "timestamp": "2026-10-10T08:59:41.000+09:00"
     },
-    "CAT": {
-      "price": 801.0,
-      "currency": "USD",
-      "timestamp": "2026-10-10T08:59:31.000+09:00"
-    },
     "GOOGL": {
       "price": 351.61,
       "currency": "USD",
@@ -90,6 +85,11 @@
       "price": 195.58,
       "currency": "USD",
       "timestamp": "2026-10-10T08:55:37.000+09:00"
+    },
+    "LLY": {
+      "price": 1177.0474,
+      "currency": "USD",
+      "timestamp": "2026-10-10T08:59:16.000+09:00"
     },
     "MRNA": {
       "price": 225.44,
@@ -110,6 +110,11 @@
       "price": 229.3182,
       "currency": "USD",
       "timestamp": "2026-10-10T08:59:59.000+09:00"
+    },
+    "NVO": {
+      "price": 38.62,
+      "currency": "USD",
+      "timestamp": "2026-10-10T08:59:44.000+09:00"
     },
     "OKLO": {
       "price": 34.68,
@@ -166,16 +171,6 @@
       "currency": "USD",
       "timestamp": "2026-10-10T08:59:58.000+09:00"
     },
-    "WDC": {
-      "price": 395.7296,
-      "currency": "USD",
-      "timestamp": "2026-10-10T08:59:53.000+09:00"
-    },
-    "NVO": {
-      "price": 38.62,
-      "currency": "USD",
-      "timestamp": "2026-10-10T08:59:44.000+09:00"
-    },
     "ETHA": {
       "price": 56.3,
       "currency": "USD",
@@ -186,10 +181,15 @@
       "currency": "USD",
       "timestamp": "2026-10-10T08:57:31.000+09:00"
     },
-    "LLY": {
-      "price": 1177.0474,
+    "WDC": {
+      "price": 395.7296,
       "currency": "USD",
-      "timestamp": "2026-10-10T08:59:16.000+09:00"
+      "timestamp": "2026-10-10T08:59:53.000+09:00"
+    },
+    "CAT": {
+      "price": 801.0,
+      "currency": "USD",
+      "timestamp": "2026-10-10T08:59:31.000+09:00"
     },
     "IBIT": {
       "price": 46.75,
@@ -202,7 +202,7 @@
       "rate": 1346.6,
       "mid_rate": 1346.1,
       "basis_point": 4.0,
-      "fetched_at": "2026-10-10T21:46:08+09:00"
+      "fetched_at": "2026-10-10T21:47:01+09:00"
     }
   }
 }
