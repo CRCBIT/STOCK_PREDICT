@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-10T22:25:01+09:00",
+  "fetched_at": "2026-10-10T22:26:02+09:00",
   "quotes": {
     "000660": {
       "price": 1686000.0,
@@ -61,11 +61,6 @@
       "currency": "USD",
       "timestamp": "2026-10-10T08:59:46.000+09:00"
     },
-    "AMAT": {
-      "price": 507.16,
-      "currency": "USD",
-      "timestamp": "2026-10-10T08:59:45.000+09:00"
-    },
     "AMD": {
       "price": 608.4,
       "currency": "USD",
@@ -85,6 +80,16 @@
       "price": 351.61,
       "currency": "USD",
       "timestamp": "2026-10-10T08:59:52.000+09:00"
+    },
+    "IBIT": {
+      "price": 46.75,
+      "currency": "USD",
+      "timestamp": "2026-10-10T08:59:59.000+09:00"
+    },
+    "KLAC": {
+      "price": 195.58,
+      "currency": "USD",
+      "timestamp": "2026-10-10T08:55:37.000+09:00"
     },
     "LLY": {
       "price": 1177.0474,
@@ -141,6 +146,11 @@
       "currency": "USD",
       "timestamp": "2026-10-10T08:59:10.000+09:00"
     },
+    "SMR": {
+      "price": 7.19,
+      "currency": "USD",
+      "timestamp": "2026-10-10T08:59:58.000+09:00"
+    },
     "SNDK": {
       "price": 1581.0,
       "currency": "USD",
@@ -176,25 +186,15 @@
       "currency": "USD",
       "timestamp": "2026-10-10T08:59:53.000+09:00"
     },
-    "SMR": {
-      "price": 7.19,
-      "currency": "USD",
-      "timestamp": "2026-10-10T08:59:58.000+09:00"
-    },
     "ETHA": {
       "price": 56.3,
       "currency": "USD",
       "timestamp": "2026-10-10T08:59:47.000+09:00"
     },
-    "IBIT": {
-      "price": 46.75,
+    "AMAT": {
+      "price": 507.16,
       "currency": "USD",
-      "timestamp": "2026-10-10T08:59:59.000+09:00"
-    },
-    "KLAC": {
-      "price": 195.58,
-      "currency": "USD",
-      "timestamp": "2026-10-10T08:55:37.000+09:00"
+      "timestamp": "2026-10-10T08:59:45.000+09:00"
     }
   },
   "fx": {
@@ -202,7 +202,7 @@
       "rate": 1346.6,
       "mid_rate": 1346.1,
       "basis_point": 4.0,
-      "fetched_at": "2026-10-10T22:25:01+09:00"
+      "fetched_at": "2026-10-10T22:26:02+09:00"
     }
   }
 }
