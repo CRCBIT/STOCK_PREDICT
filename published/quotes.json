@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-10T20:56:02+09:00",
+  "fetched_at": "2026-10-10T20:57:02+09:00",
   "quotes": {
     "000660": {
       "price": 1686000.0,
@@ -61,10 +61,20 @@
       "currency": "USD",
       "timestamp": "2026-10-10T08:59:46.000+09:00"
     },
+    "AMAT": {
+      "price": 507.16,
+      "currency": "USD",
+      "timestamp": "2026-10-10T08:59:45.000+09:00"
+    },
     "AMD": {
       "price": 608.4,
       "currency": "USD",
       "timestamp": "2026-10-10T08:59:57.000+09:00"
+    },
+    "ASML": {
+      "price": 1780.4875,
+      "currency": "USD",
+      "timestamp": "2026-10-10T08:59:41.000+09:00"
     },
     "CAT": {
       "price": 801.0,
@@ -76,15 +86,20 @@
       "currency": "USD",
       "timestamp": "2026-10-10T08:59:52.000+09:00"
     },
-    "IBIT": {
-      "price": 46.75,
+    "KLAC": {
+      "price": 195.58,
       "currency": "USD",
-      "timestamp": "2026-10-10T08:59:59.000+09:00"
+      "timestamp": "2026-10-10T08:55:37.000+09:00"
     },
     "LLY": {
       "price": 1177.0474,
       "currency": "USD",
       "timestamp": "2026-10-10T08:59:16.000+09:00"
+    },
+    "MRK": {
+      "price": 146.25,
+      "currency": "USD",
+      "timestamp": "2026-10-10T08:57:31.000+09:00"
     },
     "MRNA": {
       "price": 225.44,
@@ -105,11 +120,6 @@
       "price": 229.3182,
       "currency": "USD",
       "timestamp": "2026-10-10T08:59:59.000+09:00"
-    },
-    "NVO": {
-      "price": 38.62,
-      "currency": "USD",
-      "timestamp": "2026-10-10T08:59:44.000+09:00"
     },
     "OKLO": {
       "price": 34.68,
@@ -171,30 +181,20 @@
       "currency": "USD",
       "timestamp": "2026-10-10T08:59:53.000+09:00"
     },
+    "NVO": {
+      "price": 38.62,
+      "currency": "USD",
+      "timestamp": "2026-10-10T08:59:44.000+09:00"
+    },
     "ETHA": {
       "price": 56.3,
       "currency": "USD",
       "timestamp": "2026-10-10T08:59:47.000+09:00"
     },
-    "MRK": {
-      "price": 146.25,
+    "IBIT": {
+      "price": 46.75,
       "currency": "USD",
-      "timestamp": "2026-10-10T08:57:31.000+09:00"
-    },
-    "ASML": {
-      "price": 1780.4875,
-      "currency": "USD",
-      "timestamp": "2026-10-10T08:59:41.000+09:00"
-    },
-    "AMAT": {
-      "price": 507.16,
-      "currency": "USD",
-      "timestamp": "2026-10-10T08:59:45.000+09:00"
-    },
-    "KLAC": {
-      "price": 195.58,
-      "currency": "USD",
-      "timestamp": "2026-10-10T08:55:37.000+09:00"
+      "timestamp": "2026-10-10T08:59:59.000+09:00"
     }
   },
   "fx": {
@@ -202,7 +202,7 @@
       "rate": 1346.6,
       "mid_rate": 1346.1,
       "basis_point": 4.0,
-      "fetched_at": "2026-10-10T20:56:02+09:00"
+      "fetched_at": "2026-10-10T20:57:02+09:00"
     }
   }
 }
