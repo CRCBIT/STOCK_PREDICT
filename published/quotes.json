@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-10T13:32:01+09:00",
+  "fetched_at": "2026-10-10T13:33:02+09:00",
   "quotes": {
     "000660": {
       "price": 1686000.0,
@@ -101,6 +101,11 @@
       "currency": "USD",
       "timestamp": "2026-10-10T08:59:57.000+09:00"
     },
+    "MSFT": {
+      "price": 534.9969,
+      "currency": "USD",
+      "timestamp": "2026-10-10T08:59:56.000+09:00"
+    },
     "MU": {
       "price": 1028.45,
       "currency": "USD",
@@ -115,11 +120,6 @@
       "price": 38.62,
       "currency": "USD",
       "timestamp": "2026-10-10T08:59:44.000+09:00"
-    },
-    "OKLO": {
-      "price": 34.68,
-      "currency": "USD",
-      "timestamp": "2026-10-10T08:59:55.000+09:00"
     },
     "PFE": {
       "price": 28.2667,
@@ -166,11 +166,6 @@
       "currency": "USD",
       "timestamp": "2026-10-10T08:59:57.000+09:00"
     },
-    "VST": {
-      "price": 161.0,
-      "currency": "USD",
-      "timestamp": "2026-10-10T08:59:58.000+09:00"
-    },
     "WDC": {
       "price": 395.7296,
       "currency": "USD",
@@ -181,10 +176,15 @@
       "currency": "USD",
       "timestamp": "2026-10-10T08:59:47.000+09:00"
     },
-    "MSFT": {
-      "price": 534.9969,
+    "OKLO": {
+      "price": 34.68,
       "currency": "USD",
-      "timestamp": "2026-10-10T08:59:56.000+09:00"
+      "timestamp": "2026-10-10T08:59:55.000+09:00"
+    },
+    "VST": {
+      "price": 161.0,
+      "currency": "USD",
+      "timestamp": "2026-10-10T08:59:58.000+09:00"
     },
     "IBIT": {
       "price": 46.75,
@@ -202,7 +202,7 @@
       "rate": 1345.9,
       "mid_rate": 1345.4,
       "basis_point": 4.0,
-      "fetched_at": "2026-10-10T13:32:01+09:00"
+      "fetched_at": "2026-10-10T13:33:02+09:00"
     }
   }
 }
