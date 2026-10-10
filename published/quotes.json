@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-10T23:42:01+09:00",
+  "fetched_at": "2026-10-10T23:43:02+09:00",
   "quotes": {
     "000660": {
       "price": 1686000.0,
@@ -86,11 +86,6 @@
       "currency": "USD",
       "timestamp": "2026-10-10T08:59:52.000+09:00"
     },
-    "IBIT": {
-      "price": 46.75,
-      "currency": "USD",
-      "timestamp": "2026-10-10T08:59:59.000+09:00"
-    },
     "KLAC": {
       "price": 195.58,
       "currency": "USD",
@@ -136,11 +131,6 @@
       "currency": "USD",
       "timestamp": "2026-10-10T08:59:55.000+09:00"
     },
-    "PFE": {
-      "price": 28.2667,
-      "currency": "USD",
-      "timestamp": "2026-10-10T08:59:48.000+09:00"
-    },
     "PLTR": {
       "price": 208.75,
       "currency": "USD",
@@ -171,6 +161,11 @@
       "currency": "USD",
       "timestamp": "2026-10-10T08:59:43.000+09:00"
     },
+    "TSLA": {
+      "price": 382.76,
+      "currency": "USD",
+      "timestamp": "2026-10-10T08:59:58.000+09:00"
+    },
     "TSM": {
       "price": 453.2998,
       "currency": "USD",
@@ -191,10 +186,15 @@
       "currency": "USD",
       "timestamp": "2026-10-10T08:59:47.000+09:00"
     },
-    "TSLA": {
-      "price": 382.76,
+    "PFE": {
+      "price": 28.2667,
       "currency": "USD",
-      "timestamp": "2026-10-10T08:59:58.000+09:00"
+      "timestamp": "2026-10-10T08:59:48.000+09:00"
+    },
+    "IBIT": {
+      "price": 46.75,
+      "currency": "USD",
+      "timestamp": "2026-10-10T08:59:59.000+09:00"
     }
   },
   "fx": {
@@ -202,7 +202,7 @@
       "rate": 1346.6,
       "mid_rate": 1346.1,
       "basis_point": 4.0,
-      "fetched_at": "2026-10-10T23:42:01+09:00"
+      "fetched_at": "2026-10-10T23:43:02+09:00"
     }
   }
 }
