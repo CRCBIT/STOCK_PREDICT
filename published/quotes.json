@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-10T15:19:01+09:00",
+  "fetched_at": "2026-10-10T15:20:02+09:00",
   "quotes": {
     "000660": {
       "price": 1686000.0,
@@ -61,15 +61,15 @@
       "currency": "USD",
       "timestamp": "2026-10-10T08:59:46.000+09:00"
     },
+    "AMAT": {
+      "price": 507.16,
+      "currency": "USD",
+      "timestamp": "2026-10-10T08:59:45.000+09:00"
+    },
     "AMD": {
       "price": 608.4,
       "currency": "USD",
       "timestamp": "2026-10-10T08:59:57.000+09:00"
-    },
-    "ASML": {
-      "price": 1780.4875,
-      "currency": "USD",
-      "timestamp": "2026-10-10T08:59:41.000+09:00"
     },
     "CAT": {
       "price": 801.0,
@@ -120,11 +120,6 @@
       "price": 38.62,
       "currency": "USD",
       "timestamp": "2026-10-10T08:59:44.000+09:00"
-    },
-    "OKLO": {
-      "price": 34.68,
-      "currency": "USD",
-      "timestamp": "2026-10-10T08:59:55.000+09:00"
     },
     "PFE": {
       "price": 28.2667,
@@ -186,10 +181,15 @@
       "currency": "USD",
       "timestamp": "2026-10-10T08:59:47.000+09:00"
     },
-    "AMAT": {
-      "price": 507.16,
+    "OKLO": {
+      "price": 34.68,
       "currency": "USD",
-      "timestamp": "2026-10-10T08:59:45.000+09:00"
+      "timestamp": "2026-10-10T08:59:55.000+09:00"
+    },
+    "ASML": {
+      "price": 1780.4875,
+      "currency": "USD",
+      "timestamp": "2026-10-10T08:59:41.000+09:00"
     },
     "IBIT": {
       "price": 46.75,
@@ -202,7 +202,7 @@
       "rate": 1346.6,
       "mid_rate": 1346.1,
       "basis_point": 4.0,
-      "fetched_at": "2026-10-10T15:19:01+09:00"
+      "fetched_at": "2026-10-10T15:20:02+09:00"
     }
   }
 }
