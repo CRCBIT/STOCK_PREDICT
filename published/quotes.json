@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-10T19:23:02+09:00",
+  "fetched_at": "2026-10-10T19:24:02+09:00",
   "quotes": {
     "000660": {
       "price": 1686000.0,
@@ -86,11 +86,6 @@
       "currency": "USD",
       "timestamp": "2026-10-10T08:59:52.000+09:00"
     },
-    "IBIT": {
-      "price": 46.75,
-      "currency": "USD",
-      "timestamp": "2026-10-10T08:59:59.000+09:00"
-    },
     "KLAC": {
       "price": 195.58,
       "currency": "USD",
@@ -116,6 +111,11 @@
       "currency": "USD",
       "timestamp": "2026-10-10T08:59:56.000+09:00"
     },
+    "MU": {
+      "price": 1028.45,
+      "currency": "USD",
+      "timestamp": "2026-10-10T08:59:53.000+09:00"
+    },
     "NVDA": {
       "price": 229.3182,
       "currency": "USD",
@@ -125,16 +125,6 @@
       "price": 38.62,
       "currency": "USD",
       "timestamp": "2026-10-10T08:59:44.000+09:00"
-    },
-    "OKLO": {
-      "price": 34.68,
-      "currency": "USD",
-      "timestamp": "2026-10-10T08:59:55.000+09:00"
-    },
-    "PFE": {
-      "price": 28.2667,
-      "currency": "USD",
-      "timestamp": "2026-10-10T08:59:48.000+09:00"
     },
     "PLTR": {
       "price": 208.75,
@@ -191,10 +181,20 @@
       "currency": "USD",
       "timestamp": "2026-10-10T08:59:47.000+09:00"
     },
-    "MU": {
-      "price": 1028.45,
+    "OKLO": {
+      "price": 34.68,
       "currency": "USD",
-      "timestamp": "2026-10-10T08:59:53.000+09:00"
+      "timestamp": "2026-10-10T08:59:55.000+09:00"
+    },
+    "PFE": {
+      "price": 28.2667,
+      "currency": "USD",
+      "timestamp": "2026-10-10T08:59:48.000+09:00"
+    },
+    "IBIT": {
+      "price": 46.75,
+      "currency": "USD",
+      "timestamp": "2026-10-10T08:59:59.000+09:00"
     }
   },
   "fx": {
@@ -202,7 +202,7 @@
       "rate": 1346.6,
       "mid_rate": 1346.1,
       "basis_point": 4.0,
-      "fetched_at": "2026-10-10T19:23:02+09:00"
+      "fetched_at": "2026-10-10T19:24:02+09:00"
     }
   }
 }
