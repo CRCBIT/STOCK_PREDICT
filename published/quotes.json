@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-12T08:51:02+09:00",
+  "fetched_at": "2026-10-12T08:52:02+09:00",
   "quotes": {
     "000660": {
       "price": 1647000.0,
@@ -86,11 +86,6 @@
       "currency": "USD",
       "timestamp": "2026-10-10T08:59:52.000+09:00"
     },
-    "IBIT": {
-      "price": 46.75,
-      "currency": "USD",
-      "timestamp": "2026-10-10T08:59:59.000+09:00"
-    },
     "KLAC": {
       "price": 195.58,
       "currency": "USD",
@@ -146,11 +141,6 @@
       "currency": "USD",
       "timestamp": "2026-10-10T08:59:58.000+09:00"
     },
-    "RAM": {
-      "price": 12.1853,
-      "currency": "USD",
-      "timestamp": "2026-10-10T08:59:10.000+09:00"
-    },
     "SMR": {
       "price": 7.19,
       "currency": "USD",
@@ -195,14 +185,24 @@
       "price": 56.3,
       "currency": "USD",
       "timestamp": "2026-10-10T08:59:47.000+09:00"
+    },
+    "RAM": {
+      "price": 12.1853,
+      "currency": "USD",
+      "timestamp": "2026-10-10T08:59:10.000+09:00"
+    },
+    "IBIT": {
+      "price": 46.75,
+      "currency": "USD",
+      "timestamp": "2026-10-10T08:59:59.000+09:00"
     }
   },
   "fx": {
     "usdkrw": {
-      "rate": 1340.7,
-      "mid_rate": 1340.4,
-      "basis_point": 2.0,
-      "fetched_at": "2026-10-12T08:51:02+09:00"
+      "rate": 1341.3,
+      "mid_rate": 1340.8,
+      "basis_point": 4.0,
+      "fetched_at": "2026-10-12T08:52:02+09:00"
     }
   }
 }
