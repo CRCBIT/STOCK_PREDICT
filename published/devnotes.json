@@ -1,10 +1,26 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-12T06:17:54+09:00",
-  "n_versions": 10,
-  "latest_version": "0.9.14",
-  "latest_date": "2026-09-12",
+  "generated_at": "2026-10-13T23:06:04+09:00",
+  "n_versions": 11,
+  "latest_version": "0.9.17",
+  "latest_date": "2026-10-13",
   "notes": [
+    {
+      "version": "0.9.17",
+      "date": "2026-10-13",
+      "sections": {
+        "Changed": [
+          "P50 중심을 장기 drift(20년 평균 일간 로그수익률, t²/(1+t²) 축소, 연 ±30% 상한)로 교체 — config.point_forecast='drift'/'model'. 라이브 8주 방향 edge 전부 음수(−9~−23%p)라 ML 방향 신호 미사용. 구간 폭은 그대로, ML 점예측·확률은 ml_p50/ml_prob_up 로 기록해 트래커에서 'ML edge' 로 계속 채점",
+          "P50 중심을 장기 drift(20년 평균 일간 로그수익률, t²/(1+t²) 축소, 연 ±30% 상한)로 교체 — config.point_forecast='drift'/'model'. 라이브 8주 방향 edge 전부 음수(−9~−23%p)라 ML 방향 신호 미사용. 구간 폭은 그대로, ML 점예측·확률은 ml_p50/ml_prob_up 로 기록해 트래커에서 'ML edge' 로 계속 채점"
+        ]
+      },
+      "tags": [
+        "forecast",
+        "measurement"
+      ],
+      "impact": "high",
+      "author": ""
+    },
     {
       "version": "0.9.14",
       "date": "2026-09-12",

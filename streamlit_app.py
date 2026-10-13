@@ -8984,12 +8984,14 @@ def render_forecast_summary(p: Dict, hist: Optional[pd.DataFrame],
         unsafe_allow_html=True,
     )
 
-def _direction_evidence_note(horizon: int) -> str:
+def _direction_evidence_note(horizon: int, p: Optional[Dict] = None) -> str:
     """
     상승확률 밑 한 줄: 라이브 검증에서 방향 신호에 근거가 있는지. 앵커 20일 이상 쌓인 horizon 의
     edge(다수방향 대비)가 0 이하이면 '방향 정보 없음' 으로 못박는다 — 확률 숫자가 실제보다
     믿음직해 보이는 것을 막기 위함 (2026-09-27, LIVE h5 edge −7.6%p 확정).
     """
+    if p and str(p.get("point_source") or "") == "drift":
+        return "중심 = 장기 평균 추세(drift) · ML 방향 신호는 라이브 edge 음수로 미사용"
     try:
         track = load_track()
         aggs = [a for a in (track.get("aggregates") or [])
@@ -9048,7 +9050,7 @@ def render_forecast_secondary_metrics(p: Dict) -> None:
         "<div class='snapshot-detail'>"
         "<div class='snapshot-detail-label'>상승 가능성</div>"
         f"<div class='snapshot-detail-value {prob_tone}'>{html.escape(pct(prob_up, signed=False))}</div>"
-        f"<div class='snapshot-detail-sub'>{html.escape(_direction_evidence_note(int(p.get('horizon') or 0)))}</div>"
+        f"<div class='snapshot-detail-sub'>{html.escape(_direction_evidence_note(int(p.get('horizon') or 0), p))}</div>"
         "</div>"
 
         "<div class='snapshot-detail'>"
@@ -10182,12 +10184,15 @@ def render_symbol(symbol: str, sub: pd.DataFrame, payload: Dict,
                                                  + (f" ({pct(cia[0], signed=False)}~{pct(cia[1], signed=False)})" if cia else " (구간 없음)")),
                                     "방향 적중 / 기준": f"{pct(a.get('direction_hit'), signed=False)} / {pct(a.get('direction_base_rate'), signed=False)}",
                                     "edge": (f"{a['direction_edge'] * 100:+.1f}%p" if a.get("direction_edge") is not None else "-"),
+                                    "ML edge": (f"{a['ml_direction_edge'] * 100:+.1f}%p" if a.get("ml_direction_edge") is not None else "-"),
+                                    "중심": "/".join(a.get("point_sources") or ["model"]),
                                     "상승예측 적중": pct(a.get("up_pred_hit"), signed=False) if a.get("up_pred_hit") is not None else "-",
                                     "하락예측 적중": pct(a.get("down_pred_hit"), signed=False) if a.get("down_pred_hit") is not None else "-",
                                     "판정": a.get("verdict", ""),
                                 })
                             st.dataframe(pd.DataFrame(rows), hide_index=True, use_container_width=True)
-                            st.caption("신뢰구간(괄호)은 기준일을 단위로 계산 — 같은 날 종목들은 같이 움직여 독립 표본이 아닙니다.")
+                            st.caption("신뢰구간(괄호)은 기준일을 단위로 계산 — 같은 날 종목들은 같이 움직여 독립 표본이 아닙니다. "
+                                       "'edge' 는 게시된 중심(drift 또는 model), 'ML edge' 는 ML 앙상블 점예측의 방향을 같은 행에서 채점한 값입니다.")
                         st.caption(
                             "백테스트와 달리 예측을 먼저 남기고 나중에 결과를 채우므로 "
                             "사후 조정이 불가능한 검증입니다. 대신 표본이 쌓이는 데 시간이 걸립니다."
