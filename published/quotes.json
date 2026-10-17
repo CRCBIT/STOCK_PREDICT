@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-17T23:50:01+09:00",
+  "fetched_at": "2026-10-17T23:51:02+09:00",
   "quotes": {
     "000660": {
       "price": 1265000.0,
@@ -76,11 +76,6 @@
       "currency": "USD",
       "timestamp": "2026-10-17T08:59:31.000+09:00"
     },
-    "CAT": {
-      "price": 728.28,
-      "currency": "USD",
-      "timestamp": "2026-10-17T08:59:54.000+09:00"
-    },
     "GOOGL": {
       "price": 339.6,
       "currency": "USD",
@@ -115,11 +110,6 @@
       "price": 213.66,
       "currency": "USD",
       "timestamp": "2026-10-17T08:59:59.000+09:00"
-    },
-    "NVO": {
-      "price": 38.73,
-      "currency": "USD",
-      "timestamp": "2026-10-17T08:59:20.000+09:00"
     },
     "OKLO": {
       "price": 27.87,
@@ -181,6 +171,11 @@
       "currency": "USD",
       "timestamp": "2026-10-17T08:59:55.000+09:00"
     },
+    "NVO": {
+      "price": 38.73,
+      "currency": "USD",
+      "timestamp": "2026-10-17T08:59:20.000+09:00"
+    },
     "ETHA": {
       "price": 54.63,
       "currency": "USD",
@@ -190,6 +185,11 @@
       "price": 145.85,
       "currency": "USD",
       "timestamp": "2026-10-17T08:58:39.000+09:00"
+    },
+    "CAT": {
+      "price": 728.28,
+      "currency": "USD",
+      "timestamp": "2026-10-17T08:59:54.000+09:00"
     },
     "IBIT": {
       "price": 46.1423,
@@ -202,7 +202,7 @@
       "rate": 1341.3,
       "mid_rate": 1340.8,
       "basis_point": 4.0,
-      "fetched_at": "2026-10-17T23:50:01+09:00"
+      "fetched_at": "2026-10-17T23:51:02+09:00"
     }
   }
 }
