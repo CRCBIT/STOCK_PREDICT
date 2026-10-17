@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-17T20:07:07+09:00",
+  "fetched_at": "2026-10-17T20:08:03+09:00",
   "quotes": {
     "000660": {
       "price": 1265000.0,
@@ -91,6 +91,11 @@
       "currency": "USD",
       "timestamp": "2026-10-17T08:59:37.000+09:00"
     },
+    "MRK": {
+      "price": 145.85,
+      "currency": "USD",
+      "timestamp": "2026-10-17T08:58:39.000+09:00"
+    },
     "MRNA": {
       "price": 216.0,
       "currency": "USD",
@@ -161,6 +166,11 @@
       "currency": "USD",
       "timestamp": "2026-10-17T08:59:59.000+09:00"
     },
+    "TSM": {
+      "price": 412.46,
+      "currency": "USD",
+      "timestamp": "2026-10-17T08:59:52.000+09:00"
+    },
     "VST": {
       "price": 151.09,
       "currency": "USD",
@@ -175,16 +185,6 @@
       "price": 54.63,
       "currency": "USD",
       "timestamp": "2026-10-17T08:54:26.000+09:00"
-    },
-    "MRK": {
-      "price": 145.85,
-      "currency": "USD",
-      "timestamp": "2026-10-17T08:58:39.000+09:00"
-    },
-    "TSM": {
-      "price": 412.46,
-      "currency": "USD",
-      "timestamp": "2026-10-17T08:59:52.000+09:00"
     },
     "AMAT": {
       "price": 409.75,
@@ -202,7 +202,7 @@
       "rate": 1341.3,
       "mid_rate": 1340.8,
       "basis_point": 4.0,
-      "fetched_at": "2026-10-17T20:07:07+09:00"
+      "fetched_at": "2026-10-17T20:08:03+09:00"
     }
   }
 }
