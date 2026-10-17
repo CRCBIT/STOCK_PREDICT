@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-18T06:40:01+09:00",
+  "fetched_at": "2026-10-18T06:41:02+09:00",
   "quotes": {
     "000660": {
       "price": 1265000.0,
@@ -56,10 +56,10 @@
       "currency": "KRW",
       "timestamp": "2026-10-16T19:59:58.000+09:00"
     },
-    "AMAT": {
-      "price": 409.75,
+    "AAPL": {
+      "price": 342.812,
       "currency": "USD",
-      "timestamp": "2026-10-17T08:59:54.000+09:00"
+      "timestamp": "2026-10-17T08:59:51.000+09:00"
     },
     "AMD": {
       "price": 527.35,
@@ -121,11 +121,6 @@
       "currency": "USD",
       "timestamp": "2026-10-17T08:59:20.000+09:00"
     },
-    "OKLO": {
-      "price": 27.87,
-      "currency": "USD",
-      "timestamp": "2026-10-17T08:59:51.000+09:00"
-    },
     "PFE": {
       "price": 29.6,
       "currency": "USD",
@@ -171,11 +166,6 @@
       "currency": "USD",
       "timestamp": "2026-10-17T08:59:52.000+09:00"
     },
-    "VST": {
-      "price": 151.09,
-      "currency": "USD",
-      "timestamp": "2026-10-17T08:59:52.000+09:00"
-    },
     "WDC": {
       "price": 327.35,
       "currency": "USD",
@@ -186,10 +176,20 @@
       "currency": "USD",
       "timestamp": "2026-10-17T08:54:26.000+09:00"
     },
-    "AAPL": {
-      "price": 342.812,
+    "OKLO": {
+      "price": 27.87,
       "currency": "USD",
       "timestamp": "2026-10-17T08:59:51.000+09:00"
+    },
+    "VST": {
+      "price": 151.09,
+      "currency": "USD",
+      "timestamp": "2026-10-17T08:59:52.000+09:00"
+    },
+    "AMAT": {
+      "price": 409.75,
+      "currency": "USD",
+      "timestamp": "2026-10-17T08:59:54.000+09:00"
     },
     "IBIT": {
       "price": 46.1423,
@@ -202,7 +202,7 @@
       "rate": 1341.3,
       "mid_rate": 1340.8,
       "basis_point": 4.0,
-      "fetched_at": "2026-10-18T06:40:01+09:00"
+      "fetched_at": "2026-10-18T06:41:02+09:00"
     }
   }
 }
