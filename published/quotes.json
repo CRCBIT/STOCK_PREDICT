@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-18T03:24:02+09:00",
+  "fetched_at": "2026-10-18T03:25:01+09:00",
   "quotes": {
     "000660": {
       "price": 1265000.0,
@@ -56,11 +56,6 @@
       "currency": "KRW",
       "timestamp": "2026-10-16T19:59:58.000+09:00"
     },
-    "AAPL": {
-      "price": 342.812,
-      "currency": "USD",
-      "timestamp": "2026-10-17T08:59:51.000+09:00"
-    },
     "AMAT": {
       "price": 409.75,
       "currency": "USD",
@@ -116,6 +111,11 @@
       "currency": "USD",
       "timestamp": "2026-10-17T08:59:59.000+09:00"
     },
+    "NVO": {
+      "price": 38.73,
+      "currency": "USD",
+      "timestamp": "2026-10-17T08:59:20.000+09:00"
+    },
     "OKLO": {
       "price": 27.87,
       "currency": "USD",
@@ -135,11 +135,6 @@
       "price": 7.8616,
       "currency": "USD",
       "timestamp": "2026-10-17T08:59:59.000+09:00"
-    },
-    "SMR": {
-      "price": 5.7785,
-      "currency": "USD",
-      "timestamp": "2026-10-17T08:59:55.000+09:00"
     },
     "SNDK": {
       "price": 1291.57,
@@ -176,10 +171,10 @@
       "currency": "USD",
       "timestamp": "2026-10-17T08:59:55.000+09:00"
     },
-    "NVO": {
-      "price": 38.73,
+    "SMR": {
+      "price": 5.7785,
       "currency": "USD",
-      "timestamp": "2026-10-17T08:59:20.000+09:00"
+      "timestamp": "2026-10-17T08:59:55.000+09:00"
     },
     "ETHA": {
       "price": 54.63,
@@ -190,6 +185,11 @@
       "price": 145.85,
       "currency": "USD",
       "timestamp": "2026-10-17T08:58:39.000+09:00"
+    },
+    "AAPL": {
+      "price": 342.812,
+      "currency": "USD",
+      "timestamp": "2026-10-17T08:59:51.000+09:00"
     },
     "IBIT": {
       "price": 46.1423,
@@ -202,7 +202,7 @@
       "rate": 1341.3,
       "mid_rate": 1340.8,
       "basis_point": 4.0,
-      "fetched_at": "2026-10-18T03:24:02+09:00"
+      "fetched_at": "2026-10-18T03:25:01+09:00"
     }
   }
 }
