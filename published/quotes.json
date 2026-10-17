@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-18T06:20:02+09:00",
+  "fetched_at": "2026-10-18T06:21:01+09:00",
   "quotes": {
     "000660": {
       "price": 1265000.0,
@@ -71,10 +71,10 @@
       "currency": "USD",
       "timestamp": "2026-10-17T08:59:55.000+09:00"
     },
-    "ASML": {
-      "price": 1640.4141,
+    "CAT": {
+      "price": 728.28,
       "currency": "USD",
-      "timestamp": "2026-10-17T08:59:31.000+09:00"
+      "timestamp": "2026-10-17T08:59:54.000+09:00"
     },
     "GOOGL": {
       "price": 339.6,
@@ -90,6 +90,11 @@
       "price": 1256.01,
       "currency": "USD",
       "timestamp": "2026-10-17T08:59:37.000+09:00"
+    },
+    "MRK": {
+      "price": 145.85,
+      "currency": "USD",
+      "timestamp": "2026-10-17T08:58:39.000+09:00"
     },
     "MRNA": {
       "price": 216.0,
@@ -151,6 +156,11 @@
       "currency": "USD",
       "timestamp": "2026-10-17T08:59:59.000+09:00"
     },
+    "STX": {
+      "price": 631.39,
+      "currency": "USD",
+      "timestamp": "2026-10-17T08:59:36.000+09:00"
+    },
     "TSLA": {
       "price": 352.46,
       "currency": "USD",
@@ -161,35 +171,25 @@
       "currency": "USD",
       "timestamp": "2026-10-17T08:59:52.000+09:00"
     },
-    "ETHA": {
-      "price": 54.63,
-      "currency": "USD",
-      "timestamp": "2026-10-17T08:54:26.000+09:00"
-    },
     "VST": {
       "price": 151.09,
       "currency": "USD",
       "timestamp": "2026-10-17T08:59:52.000+09:00"
-    },
-    "STX": {
-      "price": 631.39,
-      "currency": "USD",
-      "timestamp": "2026-10-17T08:59:36.000+09:00"
-    },
-    "MRK": {
-      "price": 145.85,
-      "currency": "USD",
-      "timestamp": "2026-10-17T08:58:39.000+09:00"
     },
     "WDC": {
       "price": 327.35,
       "currency": "USD",
       "timestamp": "2026-10-17T08:59:55.000+09:00"
     },
-    "CAT": {
-      "price": 728.28,
+    "ETHA": {
+      "price": 54.63,
       "currency": "USD",
-      "timestamp": "2026-10-17T08:59:54.000+09:00"
+      "timestamp": "2026-10-17T08:54:26.000+09:00"
+    },
+    "ASML": {
+      "price": 1640.4141,
+      "currency": "USD",
+      "timestamp": "2026-10-17T08:59:31.000+09:00"
     },
     "IBIT": {
       "price": 46.1423,
@@ -202,7 +202,7 @@
       "rate": 1341.3,
       "mid_rate": 1340.8,
       "basis_point": 4.0,
-      "fetched_at": "2026-10-18T06:20:02+09:00"
+      "fetched_at": "2026-10-18T06:21:01+09:00"
     }
   }
 }
