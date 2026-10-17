@@ -11850,7 +11850,7 @@ def main() -> None:
                     # st.tabs는 내부 widget 조작으로 rerun될 때 첫 탭으로 돌아갈 수 있다.
                     # 상태를 가진 radio를 탭처럼 스타일링해 현재 탭을 확실히 보존한다.
                     _is_owner = owner_mode()
-                    _tab_labels = ["종목 전망", "AI 리서치"]
+                    _tab_labels = ["종목 전망", "AI 리서치", "AI 챗봇"]
                     if _is_owner:
                         _tab_labels.append("내 자산")
                     _tab_labels.extend(["메모리 업황", "업데이트"])
@@ -11974,6 +11974,13 @@ def main() -> None:
                         except Exception as exc:
                             # AI Research Journal는 비필수 확장; 앱 전체를 중단하면 안 된다.
                             st.caption(f"연구 저널 표시 생략: {type(exc).__name__}")
+
+                    elif _detail_tab == "AI 챗봇":
+                        try:
+                            from chat_widget import render_chat
+                            render_chat(symbol, selected_name, section_head=section_head)
+                        except Exception as exc:
+                            st.caption(f"AI 챗봇 표시 생략: {type(exc).__name__}")
 
                     elif _detail_tab == "내 자산" and _is_owner:
                         render_owner_portfolio(df, quotes)
