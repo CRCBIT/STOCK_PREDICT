@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-18T15:04:01+09:00",
+  "fetched_at": "2026-10-18T15:05:02+09:00",
   "quotes": {
     "000660": {
       "price": 1265000.0,
@@ -66,20 +66,10 @@
       "currency": "USD",
       "timestamp": "2026-10-17T08:59:54.000+09:00"
     },
-    "AMD": {
-      "price": 527.35,
-      "currency": "USD",
-      "timestamp": "2026-10-17T08:59:55.000+09:00"
-    },
     "ASML": {
       "price": 1640.4141,
       "currency": "USD",
       "timestamp": "2026-10-17T08:59:31.000+09:00"
-    },
-    "CAT": {
-      "price": 728.28,
-      "currency": "USD",
-      "timestamp": "2026-10-17T08:59:54.000+09:00"
     },
     "GOOGL": {
       "price": 339.6,
@@ -111,15 +101,15 @@
       "currency": "USD",
       "timestamp": "2026-10-17T08:59:30.000+09:00"
     },
-    "MU": {
-      "price": 876.0,
-      "currency": "USD",
-      "timestamp": "2026-10-17T08:59:59.000+09:00"
-    },
     "NVDA": {
       "price": 213.66,
       "currency": "USD",
       "timestamp": "2026-10-17T08:59:59.000+09:00"
+    },
+    "NVO": {
+      "price": 38.73,
+      "currency": "USD",
+      "timestamp": "2026-10-17T08:59:20.000+09:00"
     },
     "OKLO": {
       "price": 27.87,
@@ -146,11 +136,6 @@
       "currency": "USD",
       "timestamp": "2026-10-17T08:59:55.000+09:00"
     },
-    "SNDK": {
-      "price": 1291.57,
-      "currency": "USD",
-      "timestamp": "2026-10-17T08:59:59.000+09:00"
-    },
     "SPCX": {
       "price": 145.49,
       "currency": "USD",
@@ -160,6 +145,11 @@
       "price": 631.39,
       "currency": "USD",
       "timestamp": "2026-10-17T08:59:36.000+09:00"
+    },
+    "TSLA": {
+      "price": 352.46,
+      "currency": "USD",
+      "timestamp": "2026-10-17T08:59:59.000+09:00"
     },
     "TSM": {
       "price": 412.46,
@@ -176,18 +166,28 @@
       "currency": "USD",
       "timestamp": "2026-10-17T08:59:55.000+09:00"
     },
-    "NVO": {
-      "price": 38.73,
-      "currency": "USD",
-      "timestamp": "2026-10-17T08:59:20.000+09:00"
-    },
     "ETHA": {
       "price": 54.63,
       "currency": "USD",
       "timestamp": "2026-10-17T08:54:26.000+09:00"
     },
-    "TSLA": {
-      "price": 352.46,
+    "AMD": {
+      "price": 527.35,
+      "currency": "USD",
+      "timestamp": "2026-10-17T08:59:55.000+09:00"
+    },
+    "CAT": {
+      "price": 728.28,
+      "currency": "USD",
+      "timestamp": "2026-10-17T08:59:54.000+09:00"
+    },
+    "SNDK": {
+      "price": 1291.57,
+      "currency": "USD",
+      "timestamp": "2026-10-17T08:59:59.000+09:00"
+    },
+    "MU": {
+      "price": 876.0,
       "currency": "USD",
       "timestamp": "2026-10-17T08:59:59.000+09:00"
     },
@@ -202,7 +202,7 @@
       "rate": 1341.3,
       "mid_rate": 1340.8,
       "basis_point": 4.0,
-      "fetched_at": "2026-10-18T15:04:01+09:00"
+      "fetched_at": "2026-10-18T15:05:02+09:00"
     }
   }
 }
