@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-19T06:51:02+09:00",
+  "fetched_at": "2026-10-19T06:52:01+09:00",
   "quotes": {
     "000660": {
       "price": 1265000.0,
@@ -56,11 +56,6 @@
       "currency": "KRW",
       "timestamp": "2026-10-16T19:59:58.000+09:00"
     },
-    "AAPL": {
-      "price": 342.812,
-      "currency": "USD",
-      "timestamp": "2026-10-17T08:59:51.000+09:00"
-    },
     "AMAT": {
       "price": 409.75,
       "currency": "USD",
@@ -76,15 +71,15 @@
       "currency": "USD",
       "timestamp": "2026-10-17T08:59:31.000+09:00"
     },
+    "CAT": {
+      "price": 728.28,
+      "currency": "USD",
+      "timestamp": "2026-10-17T08:59:54.000+09:00"
+    },
     "GOOGL": {
       "price": 339.6,
       "currency": "USD",
       "timestamp": "2026-10-17T08:59:58.000+09:00"
-    },
-    "IBIT": {
-      "price": 46.1423,
-      "currency": "USD",
-      "timestamp": "2026-10-17T08:59:35.000+09:00"
     },
     "KLAC": {
       "price": 166.9365,
@@ -105,11 +100,6 @@
       "price": 216.0,
       "currency": "USD",
       "timestamp": "2026-10-17T08:59:55.000+09:00"
-    },
-    "MSFT": {
-      "price": 527.0,
-      "currency": "USD",
-      "timestamp": "2026-10-17T08:59:30.000+09:00"
     },
     "MU": {
       "price": 876.0,
@@ -171,16 +161,6 @@
       "currency": "USD",
       "timestamp": "2026-10-17T08:59:59.000+09:00"
     },
-    "TSM": {
-      "price": 412.46,
-      "currency": "USD",
-      "timestamp": "2026-10-17T08:59:52.000+09:00"
-    },
-    "VST": {
-      "price": 151.09,
-      "currency": "USD",
-      "timestamp": "2026-10-17T08:59:52.000+09:00"
-    },
     "WDC": {
       "price": 327.35,
       "currency": "USD",
@@ -191,10 +171,30 @@
       "currency": "USD",
       "timestamp": "2026-10-17T08:54:26.000+09:00"
     },
-    "CAT": {
-      "price": 728.28,
+    "VST": {
+      "price": 151.09,
       "currency": "USD",
-      "timestamp": "2026-10-17T08:59:54.000+09:00"
+      "timestamp": "2026-10-17T08:59:52.000+09:00"
+    },
+    "MSFT": {
+      "price": 527.0,
+      "currency": "USD",
+      "timestamp": "2026-10-17T08:59:30.000+09:00"
+    },
+    "TSM": {
+      "price": 412.46,
+      "currency": "USD",
+      "timestamp": "2026-10-17T08:59:52.000+09:00"
+    },
+    "AAPL": {
+      "price": 342.812,
+      "currency": "USD",
+      "timestamp": "2026-10-17T08:59:51.000+09:00"
+    },
+    "IBIT": {
+      "price": 46.1423,
+      "currency": "USD",
+      "timestamp": "2026-10-17T08:59:35.000+09:00"
     }
   },
   "fx": {
@@ -202,7 +202,7 @@
       "rate": 1339.8,
       "mid_rate": 1339.3,
       "basis_point": 4.0,
-      "fetched_at": "2026-10-19T06:51:02+09:00"
+      "fetched_at": "2026-10-19T06:52:01+09:00"
     }
   }
 }
