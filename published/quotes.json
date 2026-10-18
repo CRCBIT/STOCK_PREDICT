@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-18T17:28:01+09:00",
+  "fetched_at": "2026-10-18T17:29:02+09:00",
   "quotes": {
     "000660": {
       "price": 1265000.0,
@@ -91,6 +91,11 @@
       "currency": "USD",
       "timestamp": "2026-10-17T08:59:58.000+09:00"
     },
+    "IBIT": {
+      "price": 46.1423,
+      "currency": "USD",
+      "timestamp": "2026-10-17T08:59:35.000+09:00"
+    },
     "KLAC": {
       "price": 166.9365,
       "currency": "USD",
@@ -101,11 +106,6 @@
       "currency": "USD",
       "timestamp": "2026-10-17T08:59:37.000+09:00"
     },
-    "MRK": {
-      "price": 145.85,
-      "currency": "USD",
-      "timestamp": "2026-10-17T08:58:39.000+09:00"
-    },
     "MRNA": {
       "price": 216.0,
       "currency": "USD",
@@ -115,6 +115,11 @@
       "price": 527.0,
       "currency": "USD",
       "timestamp": "2026-10-17T08:59:30.000+09:00"
+    },
+    "MU": {
+      "price": 876.0,
+      "currency": "USD",
+      "timestamp": "2026-10-17T08:59:59.000+09:00"
     },
     "NVDA": {
       "price": 213.66,
@@ -186,15 +191,10 @@
       "currency": "USD",
       "timestamp": "2026-10-17T08:59:55.000+09:00"
     },
-    "MU": {
-      "price": 876.0,
+    "MRK": {
+      "price": 145.85,
       "currency": "USD",
-      "timestamp": "2026-10-17T08:59:59.000+09:00"
-    },
-    "IBIT": {
-      "price": 46.1423,
-      "currency": "USD",
-      "timestamp": "2026-10-17T08:59:35.000+09:00"
+      "timestamp": "2026-10-17T08:58:39.000+09:00"
     }
   },
   "fx": {
@@ -202,7 +202,7 @@
       "rate": 1341.3,
       "mid_rate": 1340.8,
       "basis_point": 4.0,
-      "fetched_at": "2026-10-18T17:28:01+09:00"
+      "fetched_at": "2026-10-18T17:29:02+09:00"
     }
   }
 }
