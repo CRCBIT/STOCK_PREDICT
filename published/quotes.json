@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-19T07:12:02+09:00",
+  "fetched_at": "2026-10-19T07:13:02+09:00",
   "quotes": {
     "000660": {
       "price": 1265000.0,
@@ -66,11 +66,6 @@
       "currency": "USD",
       "timestamp": "2026-10-17T08:59:54.000+09:00"
     },
-    "AMD": {
-      "price": 527.35,
-      "currency": "USD",
-      "timestamp": "2026-10-17T08:59:55.000+09:00"
-    },
     "ASML": {
       "price": 1640.4141,
       "currency": "USD",
@@ -120,6 +115,16 @@
       "price": 213.66,
       "currency": "USD",
       "timestamp": "2026-10-17T08:59:59.000+09:00"
+    },
+    "NVO": {
+      "price": 38.73,
+      "currency": "USD",
+      "timestamp": "2026-10-17T08:59:20.000+09:00"
+    },
+    "OKLO": {
+      "price": 27.87,
+      "currency": "USD",
+      "timestamp": "2026-10-17T08:59:51.000+09:00"
     },
     "PFE": {
       "price": 29.6,
@@ -176,20 +181,15 @@
       "currency": "USD",
       "timestamp": "2026-10-17T08:59:55.000+09:00"
     },
-    "NVO": {
-      "price": 38.73,
-      "currency": "USD",
-      "timestamp": "2026-10-17T08:59:20.000+09:00"
-    },
     "ETHA": {
       "price": 54.63,
       "currency": "USD",
       "timestamp": "2026-10-17T08:54:26.000+09:00"
     },
-    "OKLO": {
-      "price": 27.87,
+    "AMD": {
+      "price": 527.35,
       "currency": "USD",
-      "timestamp": "2026-10-17T08:59:51.000+09:00"
+      "timestamp": "2026-10-17T08:59:55.000+09:00"
     },
     "IBIT": {
       "price": 46.1423,
@@ -199,10 +199,10 @@
   },
   "fx": {
     "usdkrw": {
-      "rate": 1337.5,
-      "mid_rate": 1337.0,
+      "rate": 1337.1,
+      "mid_rate": 1336.6,
       "basis_point": 4.0,
-      "fetched_at": "2026-10-19T07:12:02+09:00"
+      "fetched_at": "2026-10-19T07:13:02+09:00"
     }
   }
 }
