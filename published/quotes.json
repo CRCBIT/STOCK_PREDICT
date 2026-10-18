@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-19T08:51:01+09:00",
+  "fetched_at": "2026-10-19T08:52:02+09:00",
   "quotes": {
     "000660": {
       "price": 1200000.0,
@@ -61,11 +61,6 @@
       "currency": "USD",
       "timestamp": "2026-10-17T08:59:51.000+09:00"
     },
-    "AMAT": {
-      "price": 409.75,
-      "currency": "USD",
-      "timestamp": "2026-10-17T08:59:54.000+09:00"
-    },
     "AMD": {
       "price": 527.35,
       "currency": "USD",
@@ -81,20 +76,10 @@
       "currency": "USD",
       "timestamp": "2026-10-17T08:59:54.000+09:00"
     },
-    "ETHA": {
-      "price": 54.63,
-      "currency": "USD",
-      "timestamp": "2026-10-17T08:54:26.000+09:00"
-    },
     "GOOGL": {
       "price": 339.6,
       "currency": "USD",
       "timestamp": "2026-10-17T08:59:58.000+09:00"
-    },
-    "IBIT": {
-      "price": 46.1423,
-      "currency": "USD",
-      "timestamp": "2026-10-17T08:59:35.000+09:00"
     },
     "KLAC": {
       "price": 166.9365,
@@ -105,6 +90,11 @@
       "price": 1256.01,
       "currency": "USD",
       "timestamp": "2026-10-17T08:59:37.000+09:00"
+    },
+    "MRK": {
+      "price": 145.85,
+      "currency": "USD",
+      "timestamp": "2026-10-17T08:58:39.000+09:00"
     },
     "MRNA": {
       "price": 216.0,
@@ -191,18 +181,28 @@
       "currency": "USD",
       "timestamp": "2026-10-17T08:59:55.000+09:00"
     },
-    "MRK": {
-      "price": 145.85,
+    "ETHA": {
+      "price": 54.63,
       "currency": "USD",
-      "timestamp": "2026-10-17T08:58:39.000+09:00"
+      "timestamp": "2026-10-17T08:54:26.000+09:00"
+    },
+    "AMAT": {
+      "price": 409.75,
+      "currency": "USD",
+      "timestamp": "2026-10-17T08:59:54.000+09:00"
+    },
+    "IBIT": {
+      "price": 46.1423,
+      "currency": "USD",
+      "timestamp": "2026-10-17T08:59:35.000+09:00"
     }
   },
   "fx": {
     "usdkrw": {
-      "rate": 1334.6,
-      "mid_rate": 1334.1,
-      "basis_point": 4.0,
-      "fetched_at": "2026-10-19T08:51:01+09:00"
+      "rate": 1333.1,
+      "mid_rate": 1332.65,
+      "basis_point": 3.0,
+      "fetched_at": "2026-10-19T08:52:02+09:00"
     }
   }
 }
