@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-19T08:56:01+09:00",
+  "fetched_at": "2026-10-19T08:57:02+09:00",
   "quotes": {
     "000660": {
       "price": 1200000.0,
@@ -101,6 +101,11 @@
       "currency": "USD",
       "timestamp": "2026-10-17T08:59:37.000+09:00"
     },
+    "MRK": {
+      "price": 145.85,
+      "currency": "USD",
+      "timestamp": "2026-10-17T08:58:39.000+09:00"
+    },
     "MRNA": {
       "price": 216.0,
       "currency": "USD",
@@ -181,28 +186,23 @@
       "currency": "USD",
       "timestamp": "2026-10-17T08:59:52.000+09:00"
     },
-    "WDC": {
-      "price": 327.35,
-      "currency": "USD",
-      "timestamp": "2026-10-17T08:59:55.000+09:00"
-    },
     "ETHA": {
       "price": 54.63,
       "currency": "USD",
       "timestamp": "2026-10-17T08:54:26.000+09:00"
     },
-    "MRK": {
-      "price": 145.85,
+    "WDC": {
+      "price": 327.35,
       "currency": "USD",
-      "timestamp": "2026-10-17T08:58:39.000+09:00"
+      "timestamp": "2026-10-17T08:59:55.000+09:00"
     }
   },
   "fx": {
     "usdkrw": {
-      "rate": 1334.3,
-      "mid_rate": 1333.85,
+      "rate": 1334.7,
+      "mid_rate": 1334.3,
       "basis_point": 3.0,
-      "fetched_at": "2026-10-19T08:56:01+09:00"
+      "fetched_at": "2026-10-19T08:57:02+09:00"
     }
   }
 }
