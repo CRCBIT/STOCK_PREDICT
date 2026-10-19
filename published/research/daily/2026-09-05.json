@@ -1,0 +1,476 @@
+{
+  "schema_version": 2,
+  "date_kst": "2026-09-05",
+  "generated_at": "2026-09-05T20:15:43+09:00",
+  "previous_date": "2026-09-04",
+  "prediction_count": 4,
+  "rows": [
+    {
+      "symbol": "000660",
+      "name": "000660",
+      "horizon": 30,
+      "as_of": "2026-09-05T20:14:21+09:00",
+      "last_data_time": "2026-09-04",
+      "trained_at": "2026-09-05T20:13:11+09:00",
+      "expected_return": 0.33839188058964376,
+      "confidence": 29.437508645206783,
+      "prob_up": 0.6641074856046065,
+      "oos_ic": 0.029432221971028825,
+      "oos_rmse": 0.27205760451950456,
+      "comparison": {
+        "symbol": "000660",
+        "horizon": 30,
+        "name": "000660",
+        "previous_as_of": "2026-09-04T06:19:50+09:00",
+        "current_as_of": "2026-09-05T20:14:21+09:00",
+        "previous_data": "2026-09-03",
+        "current_data": "2026-09-04",
+        "previous_trained_at": "2026-09-04T06:19:14+09:00",
+        "current_trained_at": "2026-09-05T20:13:11+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "elasticnet": -0.25,
+          "gru": 0.085,
+          "huber": -0.082,
+          "lgbm_linear": 0.055,
+          "panel": 0.148,
+          "pls": 0.044
+        },
+        "data_stale": false,
+        "changes": {
+          "expected_return": {
+            "previous": 0.35721058986165377,
+            "current": 0.33839188058964376,
+            "delta": -0.018818709272
+          },
+          "current_price": {
+            "previous": 1580000.0,
+            "current": 1662000.0,
+            "delta": 82000.0
+          },
+          "p10": {
+            "previous": 1188032.5325298347,
+            "current": 1201670.8516760194,
+            "delta": 13638.319146184716
+          },
+          "p50": {
+            "previous": 2144392.731981413,
+            "current": 2224407.305539988,
+            "delta": 80014.57355857501
+          },
+          "p90": {
+            "previous": 3932379.610697547,
+            "current": 3801915.511333848,
+            "delta": -130464.09936369909
+          },
+          "prob_up": {
+            "previous": 0.6222222222222222,
+            "current": 0.6641074856046065,
+            "delta": 0.041885263382
+          },
+          "confidence": {
+            "previous": 31.425790846573637,
+            "current": 29.437508645206783,
+            "delta": -1.988282201367
+          },
+          "oos_ic": {
+            "previous": 0.19777828320404967,
+            "current": 0.029432221971028825,
+            "delta": -0.168346061233
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.5476190476190477,
+            "current": 0.5238095238095238,
+            "delta": -0.02380952381
+          },
+          "oos_rmse": {
+            "previous": 0.2718063531930415,
+            "current": 0.27205760451950456,
+            "delta": 0.000251251326
+          },
+          "baseline_rmse": {
+            "previous": 0.25444661154888015,
+            "current": 0.2537887565794563,
+            "delta": -0.000657854969
+          },
+          "baseline_improvement": {
+            "previous": -0.06822547778682653,
+            "current": -0.07198446529418501,
+            "delta": -0.003758987507
+          },
+          "oos_samples": {
+            "previous": 630.0,
+            "current": 630.0,
+            "delta": 0.0
+          },
+          "effective_oos_samples": {
+            "previous": 21.0,
+            "current": 21.0,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.9153439153439153,
+            "current": 0.8571428571428571,
+            "delta": -0.058201058201
+          },
+          "coverage_90": {
+            "previous": 0.9523809523809523,
+            "current": 0.9841269841269841,
+            "delta": 0.031746031746
+          }
+        }
+      }
+    },
+    {
+      "symbol": "005930",
+      "name": "005930",
+      "horizon": 30,
+      "as_of": "2026-09-05T20:13:10+09:00",
+      "last_data_time": "2026-09-04",
+      "trained_at": "2026-09-05T20:11:57+09:00",
+      "expected_return": 0.040716270569241875,
+      "confidence": 25.73953947861845,
+      "prob_up": 0.6385737439222041,
+      "oos_ic": -0.19504714538000176,
+      "oos_rmse": 0.19481037757790776,
+      "comparison": {
+        "symbol": "005930",
+        "horizon": 30,
+        "name": "005930",
+        "previous_as_of": "2026-09-04T06:17:53+09:00",
+        "current_as_of": "2026-09-05T20:13:10+09:00",
+        "previous_data": "2026-09-03",
+        "current_data": "2026-09-04",
+        "previous_trained_at": "2026-09-04T06:17:13+09:00",
+        "current_trained_at": "2026-09-05T20:11:57+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "catboost": 0.025,
+          "extra_trees": 0.287,
+          "hist_gbm": 0.121,
+          "lgbm_linear": 0.025,
+          "panel": -0.468,
+          "ridge": 0.011
+        },
+        "data_stale": false,
+        "changes": {
+          "expected_return": {
+            "previous": 0.018433714143446966,
+            "current": 0.040716270569241875,
+            "delta": 0.022282556426
+          },
+          "current_price": {
+            "previous": 248000.0,
+            "current": 257000.0,
+            "delta": 9000.0
+          },
+          "p10": {
+            "previous": 166028.74317266737,
+            "current": 160388.31781838267,
+            "delta": -5640.4253542847
+          },
+          "p50": {
+            "previous": 252571.56110757485,
+            "current": 267464.0815362952,
+            "delta": 14892.520428720338
+          },
+          "p90": {
+            "previous": 429655.1656436552,
+            "current": 460550.86135520093,
+            "delta": 30895.695711545763
+          },
+          "prob_up": {
+            "previous": 0.5852272727272727,
+            "current": 0.6385737439222041,
+            "delta": 0.053346471195
+          },
+          "confidence": {
+            "previous": 50.33880836159311,
+            "current": 25.73953947861845,
+            "delta": -24.599268882975
+          },
+          "oos_ic": {
+            "previous": 0.20976570479458334,
+            "current": -0.19504714538000176,
+            "delta": -0.404812850175
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.5396825396825397,
+            "current": 0.553968253968254,
+            "delta": 0.014285714286
+          },
+          "oos_rmse": {
+            "previous": 0.17028518108616922,
+            "current": 0.19481037757790776,
+            "delta": 0.024525196492
+          },
+          "baseline_rmse": {
+            "previous": 0.1823203419792742,
+            "current": 0.182338557344654,
+            "delta": 1.8215365e-05
+          },
+          "baseline_improvement": {
+            "previous": 0.06601107019902974,
+            "current": -0.06839924816164733,
+            "delta": -0.134410318361
+          },
+          "oos_samples": {
+            "previous": 630.0,
+            "current": 630.0,
+            "delta": 0.0
+          },
+          "effective_oos_samples": {
+            "previous": 21.0,
+            "current": 21.0,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.873015873015873,
+            "current": 0.7248677248677249,
+            "delta": -0.148148148148
+          },
+          "coverage_90": {
+            "previous": 0.9576719576719577,
+            "current": 0.8412698412698413,
+            "delta": -0.116402116402
+          }
+        }
+      }
+    },
+    {
+      "symbol": "MU",
+      "name": "MU",
+      "horizon": 30,
+      "as_of": "2026-09-05T20:15:42+09:00",
+      "last_data_time": "2026-09-04",
+      "trained_at": "2026-09-05T20:14:22+09:00",
+      "expected_return": 0.2191605844970126,
+      "confidence": 26.298491680262586,
+      "prob_up": 0.6767676767676768,
+      "oos_ic": 0.023955644707019743,
+      "oos_rmse": 0.3009761574571689,
+      "comparison": {
+        "symbol": "MU",
+        "horizon": 30,
+        "name": "MU",
+        "previous_as_of": "2026-09-04T06:21:56+09:00",
+        "current_as_of": "2026-09-05T20:15:42+09:00",
+        "previous_data": "2026-09-03",
+        "current_data": "2026-09-04",
+        "previous_trained_at": "2026-09-04T06:21:14+09:00",
+        "current_trained_at": "2026-09-05T20:14:22+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "elasticnet": 0.081,
+          "hist_gbm": -0.025,
+          "huber": -0.047,
+          "lgbm_linear": 0.085,
+          "panel": -0.203,
+          "quantile_gbm": -0.069,
+          "random_forest": 0.177
+        },
+        "data_stale": false,
+        "changes": {
+          "expected_return": {
+            "previous": 0.12398335540896888,
+            "current": 0.2191605844970126,
+            "delta": 0.095177229088
+          },
+          "current_price": {
+            "previous": 954.35,
+            "current": 1016.59,
+            "delta": 62.24
+          },
+          "p10": {
+            "previous": 712.463666948823,
+            "current": 806.5804813038794,
+            "delta": 94.116814355056
+          },
+          "p50": {
+            "previous": 1072.6735152345495,
+            "current": 1239.3864585938181,
+            "delta": 166.712943359269
+          },
+          "p90": {
+            "previous": 1879.9696090391583,
+            "current": 2210.2039160129398,
+            "delta": 330.234306973781
+          },
+          "prob_up": {
+            "previous": 0.56,
+            "current": 0.6767676767676768,
+            "delta": 0.116767676768
+          },
+          "confidence": {
+            "previous": 41.429988089124976,
+            "current": 26.298491680262586,
+            "delta": -15.131496408862
+          },
+          "oos_ic": {
+            "previous": 0.30464151909103904,
+            "current": 0.023955644707019743,
+            "delta": -0.280685874384
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.6555555555555556,
+            "current": 0.5142857142857142,
+            "delta": -0.14126984127
+          },
+          "oos_rmse": {
+            "previous": 0.25622584048230895,
+            "current": 0.3009761574571689,
+            "delta": 0.044750316975
+          },
+          "baseline_rmse": {
+            "previous": 0.2409337221347818,
+            "current": 0.24006979061174283,
+            "delta": -0.000863931523
+          },
+          "baseline_improvement": {
+            "previous": -0.06347022829362392,
+            "current": -0.2537027532294889,
+            "delta": -0.190232524936
+          },
+          "oos_samples": {
+            "previous": 630.0,
+            "current": 630.0,
+            "delta": 0.0
+          },
+          "effective_oos_samples": {
+            "previous": 21.0,
+            "current": 21.0,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.9153439153439153,
+            "current": 0.7142857142857143,
+            "delta": -0.201058201058
+          },
+          "coverage_90": {
+            "previous": 0.9788359788359788,
+            "current": 0.8888888888888888,
+            "delta": -0.089947089947
+          }
+        }
+      }
+    },
+    {
+      "symbol": "SNDK",
+      "name": "SNDK",
+      "horizon": 30,
+      "as_of": "2026-09-05T20:15:43+09:00",
+      "last_data_time": "2026-09-04",
+      "trained_at": "2026-09-05T20:15:42+09:00",
+      "expected_return": 0.13570570594932962,
+      "confidence": 18.80764270270282,
+      "prob_up": 0.8338705738705741,
+      "oos_ic": 0.5711405529953918,
+      "oos_rmse": 0.3645499901320137,
+      "comparison": {
+        "symbol": "SNDK",
+        "horizon": 30,
+        "name": "SNDK",
+        "previous_as_of": "2026-09-04T06:22:04+09:00",
+        "current_as_of": "2026-09-05T20:15:43+09:00",
+        "previous_data": "2026-09-03",
+        "current_data": "2026-09-04",
+        "previous_trained_at": "2026-09-04T06:22:02+09:00",
+        "current_trained_at": "2026-09-05T20:15:42+09:00",
+        "training_timestamp_changed": true,
+        "training_status": "재학습 시점 변경",
+        "model_weight_delta": {
+          "elasticnet": -1.0,
+          "pls": 1.0
+        },
+        "data_stale": false,
+        "changes": {
+          "expected_return": {
+            "previous": 0.37234742164139156,
+            "current": 0.13570570594932962,
+            "delta": -0.236641715692
+          },
+          "current_price": {
+            "previous": 1547.7396,
+            "current": 1740.0,
+            "delta": 192.2604
+          },
+          "p10": {
+            "previous": 1506.2629682635516,
+            "current": 1324.0320708409158,
+            "delta": -182.230897422636
+          },
+          "p50": {
+            "previous": 2124.036449432279,
+            "current": 1976.1279283518336,
+            "delta": -147.908521080445
+          },
+          "p90": {
+            "previous": 3290.82924945007,
+            "current": 3417.169088148597,
+            "delta": 126.339838698527
+          },
+          "prob_up": {
+            "previous": 0.98,
+            "current": 0.8338705738705741,
+            "delta": -0.146129426129
+          },
+          "confidence": {
+            "previous": 27.856904027314716,
+            "current": 18.80764270270282,
+            "delta": -9.049261324612
+          },
+          "oos_ic": {
+            "previous": 0.8678475422427036,
+            "current": 0.5711405529953918,
+            "delta": -0.296706989247
+          },
+          "oos_directional_accuracy": {
+            "previous": 0.5873015873015873,
+            "current": 0.5079365079365079,
+            "delta": -0.079365079365
+          },
+          "oos_rmse": {
+            "previous": 0.31326341324403323,
+            "current": 0.3645499901320137,
+            "delta": 0.051286576888
+          },
+          "baseline_rmse": {
+            "previous": 0.3535963719154716,
+            "current": 0.34844844411877235,
+            "delta": -0.005147927797
+          },
+          "baseline_improvement": {
+            "previous": 0.11406496750221207,
+            "current": -0.046209263622807306,
+            "delta": -0.160274231125
+          },
+          "oos_samples": {
+            "previous": 63.0,
+            "current": 63.0,
+            "delta": 0.0
+          },
+          "effective_oos_samples": {
+            "previous": 2.1,
+            "current": 2.1,
+            "delta": 0.0
+          },
+          "coverage_80": {
+            "previous": 0.95,
+            "current": 1.0,
+            "delta": 0.05
+          },
+          "coverage_90": {
+            "previous": 1.0,
+            "current": 1.0,
+            "delta": 0.0
+          }
+        }
+      }
+    }
+  ],
+  "llm_report": "",
+  "llm_generated": false
+}
