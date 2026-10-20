@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-20T21:09:01+09:00",
+  "fetched_at": "2026-10-20T21:10:01+09:00",
   "quotes": {
     "000660": {
       "price": 1190000.0,
@@ -57,39 +57,54 @@
       "timestamp": "2026-10-20T19:59:58.000+09:00"
     },
     "AAPL": {
-      "price": 338.74,
+      "price": 338.32,
       "currency": "USD",
-      "timestamp": "2026-10-20T21:08:54.000+09:00"
+      "timestamp": "2026-10-20T21:10:01.000+09:00"
     },
     "AMAT": {
-      "price": 405.23,
+      "price": 404.4,
       "currency": "USD",
-      "timestamp": "2026-10-20T21:08:36.000+09:00"
+      "timestamp": "2026-10-20T21:09:54.000+09:00"
     },
     "AMD": {
-      "price": 525.69,
+      "price": 525.6,
       "currency": "USD",
-      "timestamp": "2026-10-20T21:08:57.000+09:00"
+      "timestamp": "2026-10-20T21:10:00.000+09:00"
+    },
+    "ASML": {
+      "price": 1626.34,
+      "currency": "USD",
+      "timestamp": "2026-10-20T21:09:44.000+09:00"
     },
     "CAT": {
       "price": 709.63,
       "currency": "USD",
       "timestamp": "2026-10-20T21:06:34.000+09:00"
     },
-    "GOOGL": {
-      "price": 342.875,
+    "ETHA": {
+      "price": 53.8,
       "currency": "USD",
-      "timestamp": "2026-10-20T21:09:01.000+09:00"
+      "timestamp": "2026-10-20T21:09:14.000+09:00"
+    },
+    "GOOGL": {
+      "price": 342.75,
+      "currency": "USD",
+      "timestamp": "2026-10-20T21:10:00.000+09:00"
+    },
+    "IBIT": {
+      "price": 45.99,
+      "currency": "USD",
+      "timestamp": "2026-10-20T21:09:14.000+09:00"
     },
     "KLAC": {
-      "price": 162.7,
+      "price": 162.5,
       "currency": "USD",
-      "timestamp": "2026-10-20T21:06:48.000+09:00"
+      "timestamp": "2026-10-20T21:09:55.000+09:00"
     },
     "LLY": {
-      "price": 1258.2,
+      "price": 1258.58,
       "currency": "USD",
-      "timestamp": "2026-10-20T21:08:52.000+09:00"
+      "timestamp": "2026-10-20T21:09:42.000+09:00"
     },
     "MRK": {
       "price": 144.84,
@@ -97,9 +112,9 @@
       "timestamp": "2026-10-20T21:07:50.000+09:00"
     },
     "MRNA": {
-      "price": 226.0535,
+      "price": 226.1,
       "currency": "USD",
-      "timestamp": "2026-10-20T21:08:22.000+09:00"
+      "timestamp": "2026-10-20T21:09:09.000+09:00"
     },
     "MSFT": {
       "price": 534.67,
@@ -107,64 +122,69 @@
       "timestamp": "2026-10-20T21:08:15.000+09:00"
     },
     "MU": {
-      "price": 879.01,
+      "price": 878.48,
       "currency": "USD",
-      "timestamp": "2026-10-20T21:09:00.000+09:00"
+      "timestamp": "2026-10-20T21:09:59.000+09:00"
     },
     "NVDA": {
-      "price": 215.27,
+      "price": 215.2,
       "currency": "USD",
-      "timestamp": "2026-10-20T21:09:00.000+09:00"
+      "timestamp": "2026-10-20T21:09:58.000+09:00"
     },
     "NVO": {
       "price": 38.8442,
       "currency": "USD",
       "timestamp": "2026-10-20T21:03:40.000+09:00"
     },
-    "PFE": {
-      "price": 29.6823,
+    "OKLO": {
+      "price": 26.01,
       "currency": "USD",
-      "timestamp": "2026-10-20T21:08:43.000+09:00"
+      "timestamp": "2026-10-20T21:09:54.000+09:00"
+    },
+    "PFE": {
+      "price": 29.68,
+      "currency": "USD",
+      "timestamp": "2026-10-20T21:09:39.000+09:00"
     },
     "PLTR": {
-      "price": 192.4,
+      "price": 192.45,
       "currency": "USD",
-      "timestamp": "2026-10-20T21:08:31.000+09:00"
+      "timestamp": "2026-10-20T21:09:50.000+09:00"
     },
     "RAM": {
-      "price": 7.85,
+      "price": 7.84,
       "currency": "USD",
-      "timestamp": "2026-10-20T21:08:57.000+09:00"
+      "timestamp": "2026-10-20T21:09:59.000+09:00"
     },
     "SMR": {
-      "price": 5.21,
+      "price": 5.19,
       "currency": "USD",
-      "timestamp": "2026-10-20T21:09:00.000+09:00"
+      "timestamp": "2026-10-20T21:09:51.000+09:00"
     },
     "SNDK": {
-      "price": 1324.705,
+      "price": 1322.63,
       "currency": "USD",
-      "timestamp": "2026-10-20T21:09:00.000+09:00"
+      "timestamp": "2026-10-20T21:09:57.000+09:00"
     },
     "SPCX": {
-      "price": 146.2505,
+      "price": 145.99,
       "currency": "USD",
-      "timestamp": "2026-10-20T21:09:00.000+09:00"
+      "timestamp": "2026-10-20T21:10:00.000+09:00"
     },
     "STX": {
-      "price": 646.96,
+      "price": 645.29,
       "currency": "USD",
-      "timestamp": "2026-10-20T21:08:53.000+09:00"
+      "timestamp": "2026-10-20T21:10:00.000+09:00"
     },
     "TSLA": {
-      "price": 366.88,
+      "price": 366.86,
       "currency": "USD",
-      "timestamp": "2026-10-20T21:08:59.000+09:00"
+      "timestamp": "2026-10-20T21:09:58.000+09:00"
     },
     "TSM": {
-      "price": 413.88,
+      "price": 413.67,
       "currency": "USD",
-      "timestamp": "2026-10-20T21:08:59.000+09:00"
+      "timestamp": "2026-10-20T21:10:00.000+09:00"
     },
     "VST": {
       "price": 146.69,
@@ -172,37 +192,17 @@
       "timestamp": "2026-10-20T21:07:35.000+09:00"
     },
     "WDC": {
-      "price": 341.98,
+      "price": 341.77,
       "currency": "USD",
-      "timestamp": "2026-10-20T21:08:59.000+09:00"
-    },
-    "ETHA": {
-      "price": 53.83,
-      "currency": "USD",
-      "timestamp": "2026-10-20T20:47:27.000+09:00"
-    },
-    "OKLO": {
-      "price": 26.01,
-      "currency": "USD",
-      "timestamp": "2026-10-20T21:08:55.000+09:00"
-    },
-    "ASML": {
-      "price": 1626.86,
-      "currency": "USD",
-      "timestamp": "2026-10-20T21:08:59.000+09:00"
-    },
-    "IBIT": {
-      "price": 46.01,
-      "currency": "USD",
-      "timestamp": "2026-10-20T21:08:59.000+09:00"
+      "timestamp": "2026-10-20T21:09:59.000+09:00"
     }
   },
   "fx": {
     "usdkrw": {
-      "rate": 1331.67,
-      "mid_rate": 1331.17,
+      "rate": 1331.7,
+      "mid_rate": 1331.2,
       "basis_point": 4.0,
-      "fetched_at": "2026-10-20T21:09:01+09:00"
+      "fetched_at": "2026-10-20T21:10:01+09:00"
     }
   }
 }
