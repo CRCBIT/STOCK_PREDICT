@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-24T20:13:02+09:00",
+  "fetched_at": "2026-10-24T20:14:02+09:00",
   "quotes": {
     "000660": {
       "price": 1263000.0,
@@ -76,20 +76,10 @@
       "currency": "USD",
       "timestamp": "2026-10-24T08:59:28.000+09:00"
     },
-    "CAT": {
-      "price": 685.7,
-      "currency": "USD",
-      "timestamp": "2026-10-24T08:46:48.000+09:00"
-    },
     "GOOGL": {
       "price": 321.14,
       "currency": "USD",
       "timestamp": "2026-10-24T08:59:58.000+09:00"
-    },
-    "KLAC": {
-      "price": 146.1855,
-      "currency": "USD",
-      "timestamp": "2026-10-24T08:50:51.000+09:00"
     },
     "LLY": {
       "price": 1278.0,
@@ -105,11 +95,6 @@
       "price": 201.3,
       "currency": "USD",
       "timestamp": "2026-10-24T08:59:56.000+09:00"
-    },
-    "MSFT": {
-      "price": 524.83,
-      "currency": "USD",
-      "timestamp": "2026-10-24T08:59:39.000+09:00"
     },
     "MU": {
       "price": 879.79,
@@ -191,10 +176,25 @@
       "currency": "USD",
       "timestamp": "2026-10-24T08:59:52.000+09:00"
     },
+    "MSFT": {
+      "price": 524.83,
+      "currency": "USD",
+      "timestamp": "2026-10-24T08:59:39.000+09:00"
+    },
+    "CAT": {
+      "price": 685.7,
+      "currency": "USD",
+      "timestamp": "2026-10-24T08:46:48.000+09:00"
+    },
     "IBIT": {
       "price": 45.88,
       "currency": "USD",
       "timestamp": "2026-10-24T08:59:48.000+09:00"
+    },
+    "KLAC": {
+      "price": 146.1855,
+      "currency": "USD",
+      "timestamp": "2026-10-24T08:50:51.000+09:00"
     }
   },
   "fx": {
@@ -202,7 +202,7 @@
       "rate": 1329.8,
       "mid_rate": 1329.3,
       "basis_point": 4.0,
-      "fetched_at": "2026-10-24T20:13:02+09:00"
+      "fetched_at": "2026-10-24T20:14:02+09:00"
     }
   }
 }
