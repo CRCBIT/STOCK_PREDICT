@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-24T16:26:02+09:00",
+  "fetched_at": "2026-10-24T16:27:02+09:00",
   "quotes": {
     "000660": {
       "price": 1263000.0,
@@ -71,16 +71,6 @@
       "currency": "USD",
       "timestamp": "2026-10-24T08:59:54.000+09:00"
     },
-    "ASML": {
-      "price": 1568.5201,
-      "currency": "USD",
-      "timestamp": "2026-10-24T08:59:28.000+09:00"
-    },
-    "CAT": {
-      "price": 685.7,
-      "currency": "USD",
-      "timestamp": "2026-10-24T08:46:48.000+09:00"
-    },
     "GOOGL": {
       "price": 321.14,
       "currency": "USD",
@@ -90,6 +80,11 @@
       "price": 146.1855,
       "currency": "USD",
       "timestamp": "2026-10-24T08:50:51.000+09:00"
+    },
+    "LLY": {
+      "price": 1278.0,
+      "currency": "USD",
+      "timestamp": "2026-10-24T08:54:24.000+09:00"
     },
     "MRK": {
       "price": 145.11,
@@ -186,10 +181,15 @@
       "currency": "USD",
       "timestamp": "2026-10-24T08:59:52.000+09:00"
     },
-    "LLY": {
-      "price": 1278.0,
+    "ASML": {
+      "price": 1568.5201,
       "currency": "USD",
-      "timestamp": "2026-10-24T08:54:24.000+09:00"
+      "timestamp": "2026-10-24T08:59:28.000+09:00"
+    },
+    "CAT": {
+      "price": 685.7,
+      "currency": "USD",
+      "timestamp": "2026-10-24T08:46:48.000+09:00"
     },
     "IBIT": {
       "price": 45.88,
@@ -202,7 +202,7 @@
       "rate": 1329.8,
       "mid_rate": 1329.3,
       "basis_point": 4.0,
-      "fetched_at": "2026-10-24T16:26:02+09:00"
+      "fetched_at": "2026-10-24T16:27:02+09:00"
     }
   }
 }
