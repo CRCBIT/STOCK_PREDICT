@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-24T17:18:02+09:00",
+  "fetched_at": "2026-10-24T17:19:01+09:00",
   "quotes": {
     "000660": {
       "price": 1263000.0,
@@ -86,11 +86,6 @@
       "currency": "USD",
       "timestamp": "2026-10-24T08:59:58.000+09:00"
     },
-    "IBIT": {
-      "price": 45.88,
-      "currency": "USD",
-      "timestamp": "2026-10-24T08:59:48.000+09:00"
-    },
     "KLAC": {
       "price": 146.1855,
       "currency": "USD",
@@ -100,6 +95,11 @@
       "price": 1278.0,
       "currency": "USD",
       "timestamp": "2026-10-24T08:54:24.000+09:00"
+    },
+    "MRK": {
+      "price": 145.11,
+      "currency": "USD",
+      "timestamp": "2026-10-24T08:55:15.000+09:00"
     },
     "MRNA": {
       "price": 201.3,
@@ -141,6 +141,11 @@
       "currency": "USD",
       "timestamp": "2026-10-24T08:59:46.000+09:00"
     },
+    "RAM": {
+      "price": 8.07,
+      "currency": "USD",
+      "timestamp": "2026-10-24T08:58:37.000+09:00"
+    },
     "SMR": {
       "price": 5.32,
       "currency": "USD",
@@ -155,6 +160,11 @@
       "price": 147.575,
       "currency": "USD",
       "timestamp": "2026-10-24T08:59:56.000+09:00"
+    },
+    "STX": {
+      "price": 631.0,
+      "currency": "USD",
+      "timestamp": "2026-10-24T08:59:51.000+09:00"
     },
     "TSLA": {
       "price": 372.45,
@@ -181,20 +191,10 @@
       "currency": "USD",
       "timestamp": "2026-10-24T08:59:52.000+09:00"
     },
-    "STX": {
-      "price": 631.0,
+    "IBIT": {
+      "price": 45.88,
       "currency": "USD",
-      "timestamp": "2026-10-24T08:59:51.000+09:00"
-    },
-    "MRK": {
-      "price": 145.11,
-      "currency": "USD",
-      "timestamp": "2026-10-24T08:55:15.000+09:00"
-    },
-    "RAM": {
-      "price": 8.07,
-      "currency": "USD",
-      "timestamp": "2026-10-24T08:58:37.000+09:00"
+      "timestamp": "2026-10-24T08:59:48.000+09:00"
     }
   },
   "fx": {
@@ -202,7 +202,7 @@
       "rate": 1329.8,
       "mid_rate": 1329.3,
       "basis_point": 4.0,
-      "fetched_at": "2026-10-24T17:18:02+09:00"
+      "fetched_at": "2026-10-24T17:19:01+09:00"
     }
   }
 }
