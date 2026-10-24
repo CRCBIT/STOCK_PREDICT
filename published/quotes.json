@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-24T12:40:01+09:00",
+  "fetched_at": "2026-10-24T12:41:02+09:00",
   "quotes": {
     "000660": {
       "price": 1263000.0,
@@ -81,6 +81,11 @@
       "currency": "USD",
       "timestamp": "2026-10-24T08:46:48.000+09:00"
     },
+    "ETHA": {
+      "price": 53.94,
+      "currency": "USD",
+      "timestamp": "2026-10-24T08:59:52.000+09:00"
+    },
     "GOOGL": {
       "price": 321.14,
       "currency": "USD",
@@ -100,11 +105,6 @@
       "price": 145.11,
       "currency": "USD",
       "timestamp": "2026-10-24T08:55:15.000+09:00"
-    },
-    "MRNA": {
-      "price": 201.3,
-      "currency": "USD",
-      "timestamp": "2026-10-24T08:59:56.000+09:00"
     },
     "MSFT": {
       "price": 524.83,
@@ -171,6 +171,16 @@
       "currency": "USD",
       "timestamp": "2026-10-24T08:59:56.000+09:00"
     },
+    "TSM": {
+      "price": 417.4961,
+      "currency": "USD",
+      "timestamp": "2026-10-24T08:58:51.000+09:00"
+    },
+    "MRNA": {
+      "price": 201.3,
+      "currency": "USD",
+      "timestamp": "2026-10-24T08:59:56.000+09:00"
+    },
     "VST": {
       "price": 140.2211,
       "currency": "USD",
@@ -180,16 +190,6 @@
       "price": 341.755,
       "currency": "USD",
       "timestamp": "2026-10-24T08:59:30.000+09:00"
-    },
-    "ETHA": {
-      "price": 53.94,
-      "currency": "USD",
-      "timestamp": "2026-10-24T08:59:52.000+09:00"
-    },
-    "TSM": {
-      "price": 417.4961,
-      "currency": "USD",
-      "timestamp": "2026-10-24T08:58:51.000+09:00"
     },
     "IBIT": {
       "price": 45.88,
@@ -202,7 +202,7 @@
       "rate": 1329.8,
       "mid_rate": 1329.3,
       "basis_point": 4.0,
-      "fetched_at": "2026-10-24T12:40:01+09:00"
+      "fetched_at": "2026-10-24T12:41:02+09:00"
     }
   }
 }
