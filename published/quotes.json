@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-26T07:49:02+09:00",
+  "fetched_at": "2026-10-26T07:50:02+09:00",
   "quotes": {
     "000660": {
       "price": 1263000.0,
@@ -61,16 +61,6 @@
       "currency": "USD",
       "timestamp": "2026-10-24T08:59:12.000+09:00"
     },
-    "AMAT": {
-      "price": 377.3782,
-      "currency": "USD",
-      "timestamp": "2026-10-24T08:59:54.000+09:00"
-    },
-    "AMD": {
-      "price": 516.77,
-      "currency": "USD",
-      "timestamp": "2026-10-24T08:59:54.000+09:00"
-    },
     "ASML": {
       "price": 1568.5201,
       "currency": "USD",
@@ -100,6 +90,11 @@
       "price": 1278.0,
       "currency": "USD",
       "timestamp": "2026-10-24T08:54:24.000+09:00"
+    },
+    "MRK": {
+      "price": 145.11,
+      "currency": "USD",
+      "timestamp": "2026-10-24T08:55:15.000+09:00"
     },
     "MRNA": {
       "price": 201.3,
@@ -176,6 +171,11 @@
       "currency": "USD",
       "timestamp": "2026-10-24T08:58:51.000+09:00"
     },
+    "VST": {
+      "price": 140.2211,
+      "currency": "USD",
+      "timestamp": "2026-10-24T08:59:59.000+09:00"
+    },
     "WDC": {
       "price": 341.755,
       "currency": "USD",
@@ -186,15 +186,15 @@
       "currency": "USD",
       "timestamp": "2026-10-24T08:59:52.000+09:00"
     },
-    "VST": {
-      "price": 140.2211,
+    "AMD": {
+      "price": 516.77,
       "currency": "USD",
-      "timestamp": "2026-10-24T08:59:59.000+09:00"
+      "timestamp": "2026-10-24T08:59:54.000+09:00"
     },
-    "MRK": {
-      "price": 145.11,
+    "AMAT": {
+      "price": 377.3782,
       "currency": "USD",
-      "timestamp": "2026-10-24T08:55:15.000+09:00"
+      "timestamp": "2026-10-24T08:59:54.000+09:00"
     }
   },
   "fx": {
@@ -202,7 +202,7 @@
       "rate": 1322.9,
       "mid_rate": 1322.4,
       "basis_point": 4.0,
-      "fetched_at": "2026-10-26T07:49:02+09:00"
+      "fetched_at": "2026-10-26T07:50:02+09:00"
     }
   }
 }
