@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-26T07:38:02+09:00",
+  "fetched_at": "2026-10-26T07:39:01+09:00",
   "quotes": {
     "000660": {
       "price": 1263000.0,
@@ -61,15 +61,30 @@
       "currency": "USD",
       "timestamp": "2026-10-24T08:59:12.000+09:00"
     },
+    "AMAT": {
+      "price": 377.3782,
+      "currency": "USD",
+      "timestamp": "2026-10-24T08:59:54.000+09:00"
+    },
     "AMD": {
       "price": 516.77,
       "currency": "USD",
       "timestamp": "2026-10-24T08:59:54.000+09:00"
     },
+    "ASML": {
+      "price": 1568.5201,
+      "currency": "USD",
+      "timestamp": "2026-10-24T08:59:28.000+09:00"
+    },
     "CAT": {
       "price": 685.7,
       "currency": "USD",
       "timestamp": "2026-10-24T08:46:48.000+09:00"
+    },
+    "ETHA": {
+      "price": 53.94,
+      "currency": "USD",
+      "timestamp": "2026-10-24T08:59:52.000+09:00"
     },
     "GOOGL": {
       "price": 321.14,
@@ -156,6 +171,11 @@
       "currency": "USD",
       "timestamp": "2026-10-24T08:59:56.000+09:00"
     },
+    "STX": {
+      "price": 631.0,
+      "currency": "USD",
+      "timestamp": "2026-10-24T08:59:51.000+09:00"
+    },
     "TSLA": {
       "price": 372.45,
       "currency": "USD",
@@ -175,26 +195,6 @@
       "price": 341.755,
       "currency": "USD",
       "timestamp": "2026-10-24T08:59:30.000+09:00"
-    },
-    "ETHA": {
-      "price": 53.94,
-      "currency": "USD",
-      "timestamp": "2026-10-24T08:59:52.000+09:00"
-    },
-    "STX": {
-      "price": 631.0,
-      "currency": "USD",
-      "timestamp": "2026-10-24T08:59:51.000+09:00"
-    },
-    "ASML": {
-      "price": 1568.5201,
-      "currency": "USD",
-      "timestamp": "2026-10-24T08:59:28.000+09:00"
-    },
-    "AMAT": {
-      "price": 377.3782,
-      "currency": "USD",
-      "timestamp": "2026-10-24T08:59:54.000+09:00"
     }
   },
   "fx": {
@@ -202,7 +202,7 @@
       "rate": 1323.4,
       "mid_rate": 1322.9,
       "basis_point": 4.0,
-      "fetched_at": "2026-10-26T07:38:02+09:00"
+      "fetched_at": "2026-10-26T07:39:01+09:00"
     }
   }
 }
