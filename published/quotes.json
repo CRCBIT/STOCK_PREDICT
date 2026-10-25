@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-25T22:32:01+09:00",
+  "fetched_at": "2026-10-25T22:33:02+09:00",
   "quotes": {
     "000660": {
       "price": 1263000.0,
@@ -71,11 +71,6 @@
       "currency": "USD",
       "timestamp": "2026-10-24T08:59:54.000+09:00"
     },
-    "ASML": {
-      "price": 1568.5201,
-      "currency": "USD",
-      "timestamp": "2026-10-24T08:59:28.000+09:00"
-    },
     "CAT": {
       "price": 685.7,
       "currency": "USD",
@@ -86,11 +81,6 @@
       "currency": "USD",
       "timestamp": "2026-10-24T08:59:58.000+09:00"
     },
-    "KLAC": {
-      "price": 146.1855,
-      "currency": "USD",
-      "timestamp": "2026-10-24T08:50:51.000+09:00"
-    },
     "LLY": {
       "price": 1278.0,
       "currency": "USD",
@@ -100,6 +90,11 @@
       "price": 145.11,
       "currency": "USD",
       "timestamp": "2026-10-24T08:55:15.000+09:00"
+    },
+    "MRNA": {
+      "price": 201.3,
+      "currency": "USD",
+      "timestamp": "2026-10-24T08:59:56.000+09:00"
     },
     "MSFT": {
       "price": 524.83,
@@ -125,11 +120,6 @@
       "price": 26.3,
       "currency": "USD",
       "timestamp": "2026-10-24T08:59:38.000+09:00"
-    },
-    "PFE": {
-      "price": 30.02,
-      "currency": "USD",
-      "timestamp": "2026-10-24T08:56:15.000+09:00"
     },
     "PLTR": {
       "price": 197.4359,
@@ -176,25 +166,35 @@
       "currency": "USD",
       "timestamp": "2026-10-24T08:59:59.000+09:00"
     },
-    "WDC": {
-      "price": 341.755,
-      "currency": "USD",
-      "timestamp": "2026-10-24T08:59:30.000+09:00"
-    },
-    "MRNA": {
-      "price": 201.3,
-      "currency": "USD",
-      "timestamp": "2026-10-24T08:59:56.000+09:00"
-    },
     "ETHA": {
       "price": 53.94,
       "currency": "USD",
       "timestamp": "2026-10-24T08:59:52.000+09:00"
     },
+    "ASML": {
+      "price": 1568.5201,
+      "currency": "USD",
+      "timestamp": "2026-10-24T08:59:28.000+09:00"
+    },
+    "WDC": {
+      "price": 341.755,
+      "currency": "USD",
+      "timestamp": "2026-10-24T08:59:30.000+09:00"
+    },
+    "PFE": {
+      "price": 30.02,
+      "currency": "USD",
+      "timestamp": "2026-10-24T08:56:15.000+09:00"
+    },
     "IBIT": {
       "price": 45.88,
       "currency": "USD",
       "timestamp": "2026-10-24T08:59:48.000+09:00"
+    },
+    "KLAC": {
+      "price": 146.1855,
+      "currency": "USD",
+      "timestamp": "2026-10-24T08:50:51.000+09:00"
     }
   },
   "fx": {
@@ -202,7 +202,7 @@
       "rate": 1329.8,
       "mid_rate": 1329.3,
       "basis_point": 4.0,
-      "fetched_at": "2026-10-25T22:32:01+09:00"
+      "fetched_at": "2026-10-25T22:33:02+09:00"
     }
   }
 }
