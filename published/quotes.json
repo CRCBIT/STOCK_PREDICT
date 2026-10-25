@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-26T06:46:01+09:00",
+  "fetched_at": "2026-10-26T06:47:02+09:00",
   "quotes": {
     "000660": {
       "price": 1263000.0,
@@ -76,11 +76,6 @@
       "currency": "USD",
       "timestamp": "2026-10-24T08:46:48.000+09:00"
     },
-    "ETHA": {
-      "price": 53.94,
-      "currency": "USD",
-      "timestamp": "2026-10-24T08:59:52.000+09:00"
-    },
     "GOOGL": {
       "price": 321.14,
       "currency": "USD",
@@ -96,15 +91,15 @@
       "currency": "USD",
       "timestamp": "2026-10-24T08:50:51.000+09:00"
     },
+    "LLY": {
+      "price": 1278.0,
+      "currency": "USD",
+      "timestamp": "2026-10-24T08:54:24.000+09:00"
+    },
     "MRK": {
       "price": 145.11,
       "currency": "USD",
       "timestamp": "2026-10-24T08:55:15.000+09:00"
-    },
-    "MRNA": {
-      "price": 201.3,
-      "currency": "USD",
-      "timestamp": "2026-10-24T08:59:56.000+09:00"
     },
     "MSFT": {
       "price": 524.83,
@@ -125,16 +120,6 @@
       "price": 26.3,
       "currency": "USD",
       "timestamp": "2026-10-24T08:59:38.000+09:00"
-    },
-    "PFE": {
-      "price": 30.02,
-      "currency": "USD",
-      "timestamp": "2026-10-24T08:56:15.000+09:00"
-    },
-    "PLTR": {
-      "price": 197.4359,
-      "currency": "USD",
-      "timestamp": "2026-10-24T08:59:46.000+09:00"
     },
     "RAM": {
       "price": 8.07,
@@ -176,25 +161,40 @@
       "currency": "USD",
       "timestamp": "2026-10-24T08:59:59.000+09:00"
     },
-    "NVO": {
-      "price": 39.03,
-      "currency": "USD",
-      "timestamp": "2026-10-24T08:49:25.000+09:00"
-    },
-    "LLY": {
-      "price": 1278.0,
-      "currency": "USD",
-      "timestamp": "2026-10-24T08:54:24.000+09:00"
-    },
     "WDC": {
       "price": 341.755,
       "currency": "USD",
       "timestamp": "2026-10-24T08:59:30.000+09:00"
     },
+    "MRNA": {
+      "price": 201.3,
+      "currency": "USD",
+      "timestamp": "2026-10-24T08:59:56.000+09:00"
+    },
+    "NVO": {
+      "price": 39.03,
+      "currency": "USD",
+      "timestamp": "2026-10-24T08:49:25.000+09:00"
+    },
+    "ETHA": {
+      "price": 53.94,
+      "currency": "USD",
+      "timestamp": "2026-10-24T08:59:52.000+09:00"
+    },
+    "PLTR": {
+      "price": 197.4359,
+      "currency": "USD",
+      "timestamp": "2026-10-24T08:59:46.000+09:00"
+    },
     "AMAT": {
       "price": 377.3782,
       "currency": "USD",
       "timestamp": "2026-10-24T08:59:54.000+09:00"
+    },
+    "PFE": {
+      "price": 30.02,
+      "currency": "USD",
+      "timestamp": "2026-10-24T08:56:15.000+09:00"
     }
   },
   "fx": {
@@ -202,7 +202,7 @@
       "rate": 1327.8,
       "mid_rate": 1327.3,
       "basis_point": 4.0,
-      "fetched_at": "2026-10-26T06:46:01+09:00"
+      "fetched_at": "2026-10-26T06:47:02+09:00"
     }
   }
 }
