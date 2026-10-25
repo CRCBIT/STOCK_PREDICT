@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-26T07:50:02+09:00",
+  "fetched_at": "2026-10-26T07:51:01+09:00",
   "quotes": {
     "000660": {
       "price": 1263000.0,
@@ -61,6 +61,16 @@
       "currency": "USD",
       "timestamp": "2026-10-24T08:59:12.000+09:00"
     },
+    "AMAT": {
+      "price": 377.3782,
+      "currency": "USD",
+      "timestamp": "2026-10-24T08:59:54.000+09:00"
+    },
+    "AMD": {
+      "price": 516.77,
+      "currency": "USD",
+      "timestamp": "2026-10-24T08:59:54.000+09:00"
+    },
     "ASML": {
       "price": 1568.5201,
       "currency": "USD",
@@ -75,11 +85,6 @@
       "price": 321.14,
       "currency": "USD",
       "timestamp": "2026-10-24T08:59:58.000+09:00"
-    },
-    "IBIT": {
-      "price": 45.88,
-      "currency": "USD",
-      "timestamp": "2026-10-24T08:59:48.000+09:00"
     },
     "KLAC": {
       "price": 146.1855,
@@ -115,11 +120,6 @@
       "price": 211.1726,
       "currency": "USD",
       "timestamp": "2026-10-24T08:59:58.000+09:00"
-    },
-    "NVO": {
-      "price": 39.03,
-      "currency": "USD",
-      "timestamp": "2026-10-24T08:49:25.000+09:00"
     },
     "OKLO": {
       "price": 26.3,
@@ -171,30 +171,30 @@
       "currency": "USD",
       "timestamp": "2026-10-24T08:58:51.000+09:00"
     },
-    "VST": {
-      "price": 140.2211,
-      "currency": "USD",
-      "timestamp": "2026-10-24T08:59:59.000+09:00"
-    },
     "WDC": {
       "price": 341.755,
       "currency": "USD",
       "timestamp": "2026-10-24T08:59:30.000+09:00"
+    },
+    "NVO": {
+      "price": 39.03,
+      "currency": "USD",
+      "timestamp": "2026-10-24T08:49:25.000+09:00"
     },
     "ETHA": {
       "price": 53.94,
       "currency": "USD",
       "timestamp": "2026-10-24T08:59:52.000+09:00"
     },
-    "AMD": {
-      "price": 516.77,
+    "VST": {
+      "price": 140.2211,
       "currency": "USD",
-      "timestamp": "2026-10-24T08:59:54.000+09:00"
+      "timestamp": "2026-10-24T08:59:59.000+09:00"
     },
-    "AMAT": {
-      "price": 377.3782,
+    "IBIT": {
+      "price": 45.88,
       "currency": "USD",
-      "timestamp": "2026-10-24T08:59:54.000+09:00"
+      "timestamp": "2026-10-24T08:59:48.000+09:00"
     }
   },
   "fx": {
@@ -202,7 +202,7 @@
       "rate": 1322.9,
       "mid_rate": 1322.4,
       "basis_point": 4.0,
-      "fetched_at": "2026-10-26T07:50:02+09:00"
+      "fetched_at": "2026-10-26T07:51:01+09:00"
     }
   }
 }
