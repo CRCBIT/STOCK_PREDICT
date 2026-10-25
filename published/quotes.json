@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-26T07:09:02+09:00",
+  "fetched_at": "2026-10-26T07:10:01+09:00",
   "quotes": {
     "000660": {
       "price": 1263000.0,
@@ -66,11 +66,6 @@
       "currency": "USD",
       "timestamp": "2026-10-24T08:59:54.000+09:00"
     },
-    "AMD": {
-      "price": 516.77,
-      "currency": "USD",
-      "timestamp": "2026-10-24T08:59:54.000+09:00"
-    },
     "ASML": {
       "price": 1568.5201,
       "currency": "USD",
@@ -86,11 +81,6 @@
       "currency": "USD",
       "timestamp": "2026-10-24T08:59:58.000+09:00"
     },
-    "IBIT": {
-      "price": 45.88,
-      "currency": "USD",
-      "timestamp": "2026-10-24T08:59:48.000+09:00"
-    },
     "KLAC": {
       "price": 146.1855,
       "currency": "USD",
@@ -101,20 +91,10 @@
       "currency": "USD",
       "timestamp": "2026-10-24T08:54:24.000+09:00"
     },
-    "MRK": {
-      "price": 145.11,
-      "currency": "USD",
-      "timestamp": "2026-10-24T08:55:15.000+09:00"
-    },
     "MRNA": {
       "price": 201.3,
       "currency": "USD",
       "timestamp": "2026-10-24T08:59:56.000+09:00"
-    },
-    "MSFT": {
-      "price": 524.83,
-      "currency": "USD",
-      "timestamp": "2026-10-24T08:59:39.000+09:00"
     },
     "MU": {
       "price": 879.79,
@@ -195,14 +175,34 @@
       "price": 53.94,
       "currency": "USD",
       "timestamp": "2026-10-24T08:59:52.000+09:00"
+    },
+    "MRK": {
+      "price": 145.11,
+      "currency": "USD",
+      "timestamp": "2026-10-24T08:55:15.000+09:00"
+    },
+    "MSFT": {
+      "price": 524.83,
+      "currency": "USD",
+      "timestamp": "2026-10-24T08:59:39.000+09:00"
+    },
+    "AMD": {
+      "price": 516.77,
+      "currency": "USD",
+      "timestamp": "2026-10-24T08:59:54.000+09:00"
+    },
+    "IBIT": {
+      "price": 45.88,
+      "currency": "USD",
+      "timestamp": "2026-10-24T08:59:48.000+09:00"
     }
   },
   "fx": {
     "usdkrw": {
-      "rate": 1326.8,
-      "mid_rate": 1326.3,
+      "rate": 1325.6,
+      "mid_rate": 1325.1,
       "basis_point": 4.0,
-      "fetched_at": "2026-10-26T07:09:02+09:00"
+      "fetched_at": "2026-10-26T07:10:01+09:00"
     }
   }
 }
