@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-31T14:22:02+09:00",
+  "fetched_at": "2026-10-31T14:23:01+09:00",
   "quotes": {
     "000660": {
       "price": 1391000.0,
@@ -61,11 +61,6 @@
       "currency": "USD",
       "timestamp": "2026-10-31T08:59:55.000+09:00"
     },
-    "AMAT": {
-      "price": 393.0,
-      "currency": "USD",
-      "timestamp": "2026-10-31T08:59:59.000+09:00"
-    },
     "AMD": {
       "price": 508.5,
       "currency": "USD",
@@ -91,11 +86,6 @@
       "currency": "USD",
       "timestamp": "2026-10-31T08:59:58.000+09:00"
     },
-    "IBIT": {
-      "price": 43.6613,
-      "currency": "USD",
-      "timestamp": "2026-10-31T08:59:21.000+09:00"
-    },
     "KLAC": {
       "price": 158.6854,
       "currency": "USD",
@@ -110,11 +100,6 @@
       "price": 149.55,
       "currency": "USD",
       "timestamp": "2026-10-31T08:59:56.000+09:00"
-    },
-    "MRNA": {
-      "price": 221.28,
-      "currency": "USD",
-      "timestamp": "2026-10-31T08:57:56.000+09:00"
     },
     "MSFT": {
       "price": 523.0,
@@ -171,11 +156,6 @@
       "currency": "USD",
       "timestamp": "2026-10-31T08:59:58.000+09:00"
     },
-    "STX": {
-      "price": 648.99,
-      "currency": "USD",
-      "timestamp": "2026-10-31T08:59:54.000+09:00"
-    },
     "TSLA": {
       "price": 400.22,
       "currency": "USD",
@@ -186,15 +166,35 @@
       "currency": "USD",
       "timestamp": "2026-10-31T08:59:44.000+09:00"
     },
+    "WDC": {
+      "price": 368.0,
+      "currency": "USD",
+      "timestamp": "2026-10-31T08:59:23.000+09:00"
+    },
+    "MRNA": {
+      "price": 221.28,
+      "currency": "USD",
+      "timestamp": "2026-10-31T08:57:56.000+09:00"
+    },
     "VST": {
       "price": 138.88,
       "currency": "USD",
       "timestamp": "2026-10-31T08:59:44.000+09:00"
     },
-    "WDC": {
-      "price": 368.0,
+    "STX": {
+      "price": 648.99,
       "currency": "USD",
-      "timestamp": "2026-10-31T08:59:23.000+09:00"
+      "timestamp": "2026-10-31T08:59:54.000+09:00"
+    },
+    "AMAT": {
+      "price": 393.0,
+      "currency": "USD",
+      "timestamp": "2026-10-31T08:59:59.000+09:00"
+    },
+    "IBIT": {
+      "price": 43.6613,
+      "currency": "USD",
+      "timestamp": "2026-10-31T08:59:21.000+09:00"
     }
   },
   "fx": {
@@ -202,7 +202,7 @@
       "rate": 1338.9,
       "mid_rate": 1338.4,
       "basis_point": 4.0,
-      "fetched_at": "2026-10-31T14:22:02+09:00"
+      "fetched_at": "2026-10-31T14:23:01+09:00"
     }
   }
 }
