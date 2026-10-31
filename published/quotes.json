@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-31T13:54:02+09:00",
+  "fetched_at": "2026-10-31T13:55:01+09:00",
   "quotes": {
     "000660": {
       "price": 1391000.0,
@@ -101,11 +101,6 @@
       "currency": "USD",
       "timestamp": "2026-10-31T08:59:56.000+09:00"
     },
-    "MRNA": {
-      "price": 221.28,
-      "currency": "USD",
-      "timestamp": "2026-10-31T08:57:56.000+09:00"
-    },
     "MSFT": {
       "price": 523.0,
       "currency": "USD",
@@ -121,15 +116,15 @@
       "currency": "USD",
       "timestamp": "2026-10-31T08:59:53.000+09:00"
     },
-    "NVO": {
-      "price": 39.97,
-      "currency": "USD",
-      "timestamp": "2026-10-31T08:57:10.000+09:00"
-    },
     "OKLO": {
       "price": 25.24,
       "currency": "USD",
       "timestamp": "2026-10-31T08:59:23.000+09:00"
+    },
+    "PFE": {
+      "price": 30.46,
+      "currency": "USD",
+      "timestamp": "2026-10-31T08:46:52.000+09:00"
     },
     "PLTR": {
       "price": 184.74,
@@ -181,15 +176,20 @@
       "currency": "USD",
       "timestamp": "2026-10-31T08:59:23.000+09:00"
     },
+    "MRNA": {
+      "price": 221.28,
+      "currency": "USD",
+      "timestamp": "2026-10-31T08:57:56.000+09:00"
+    },
+    "NVO": {
+      "price": 39.97,
+      "currency": "USD",
+      "timestamp": "2026-10-31T08:57:10.000+09:00"
+    },
     "ETHA": {
       "price": 50.7,
       "currency": "USD",
       "timestamp": "2026-10-31T08:59:10.000+09:00"
-    },
-    "PFE": {
-      "price": 30.46,
-      "currency": "USD",
-      "timestamp": "2026-10-31T08:46:52.000+09:00"
     },
     "IBIT": {
       "price": 43.6613,
@@ -202,7 +202,7 @@
       "rate": 1338.9,
       "mid_rate": 1338.4,
       "basis_point": 4.0,
-      "fetched_at": "2026-10-31T13:54:02+09:00"
+      "fetched_at": "2026-10-31T13:55:01+09:00"
     }
   }
 }
