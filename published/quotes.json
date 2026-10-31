@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-10-31T17:17:01+09:00",
+  "fetched_at": "2026-10-31T17:18:01+09:00",
   "quotes": {
     "000660": {
       "price": 1391000.0,
@@ -96,11 +96,6 @@
       "currency": "USD",
       "timestamp": "2026-10-31T08:59:21.000+09:00"
     },
-    "KLAC": {
-      "price": 158.6854,
-      "currency": "USD",
-      "timestamp": "2026-10-31T08:57:34.000+09:00"
-    },
     "LLY": {
       "price": 1416.29,
       "currency": "USD",
@@ -151,11 +146,6 @@
       "currency": "USD",
       "timestamp": "2026-10-31T08:59:52.000+09:00"
     },
-    "RAM": {
-      "price": 8.35,
-      "currency": "USD",
-      "timestamp": "2026-10-31T08:58:42.000+09:00"
-    },
     "SMR": {
       "price": 5.63,
       "currency": "USD",
@@ -195,6 +185,16 @@
       "price": 368.0,
       "currency": "USD",
       "timestamp": "2026-10-31T08:59:23.000+09:00"
+    },
+    "RAM": {
+      "price": 8.35,
+      "currency": "USD",
+      "timestamp": "2026-10-31T08:58:42.000+09:00"
+    },
+    "KLAC": {
+      "price": 158.6854,
+      "currency": "USD",
+      "timestamp": "2026-10-31T08:57:34.000+09:00"
     }
   },
   "fx": {
@@ -202,7 +202,7 @@
       "rate": 1338.9,
       "mid_rate": 1338.4,
       "basis_point": 4.0,
-      "fetched_at": "2026-10-31T17:17:01+09:00"
+      "fetched_at": "2026-10-31T17:18:01+09:00"
     }
   }
 }
