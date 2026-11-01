@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-01T09:33:02+09:00",
+  "fetched_at": "2026-11-01T09:34:01+09:00",
   "quotes": {
     "000660": {
       "price": 1391000.0,
@@ -141,15 +141,15 @@
       "currency": "USD",
       "timestamp": "2026-10-31T08:59:52.000+09:00"
     },
+    "RAM": {
+      "price": 8.35,
+      "currency": "USD",
+      "timestamp": "2026-10-31T08:58:42.000+09:00"
+    },
     "SMR": {
       "price": 5.63,
       "currency": "USD",
       "timestamp": "2026-10-31T08:59:57.000+09:00"
-    },
-    "SNDK": {
-      "price": 1157.4,
-      "currency": "USD",
-      "timestamp": "2026-10-31T08:59:53.000+09:00"
     },
     "SPCX": {
       "price": 136.05,
@@ -166,6 +166,11 @@
       "currency": "USD",
       "timestamp": "2026-10-31T08:59:57.000+09:00"
     },
+    "TSM": {
+      "price": 408.77,
+      "currency": "USD",
+      "timestamp": "2026-10-31T08:59:44.000+09:00"
+    },
     "VST": {
       "price": 138.88,
       "currency": "USD",
@@ -181,15 +186,10 @@
       "currency": "USD",
       "timestamp": "2026-10-31T08:59:10.000+09:00"
     },
-    "TSM": {
-      "price": 408.77,
+    "SNDK": {
+      "price": 1157.4,
       "currency": "USD",
-      "timestamp": "2026-10-31T08:59:44.000+09:00"
-    },
-    "RAM": {
-      "price": 8.35,
-      "currency": "USD",
-      "timestamp": "2026-10-31T08:58:42.000+09:00"
+      "timestamp": "2026-10-31T08:59:53.000+09:00"
     },
     "IBIT": {
       "price": 43.6613,
@@ -202,7 +202,7 @@
       "rate": 1338.9,
       "mid_rate": 1338.4,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-01T09:33:02+09:00"
+      "fetched_at": "2026-11-01T09:34:01+09:00"
     }
   }
 }
