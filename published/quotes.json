@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-08T03:10:02+09:00",
+  "fetched_at": "2026-11-08T03:11:01+09:00",
   "quotes": {
     "000660": {
       "price": 1176000.0,
@@ -116,11 +116,6 @@
       "currency": "USD",
       "timestamp": "2026-11-07T09:59:59.000+09:00"
     },
-    "NVO": {
-      "price": 40.3,
-      "currency": "USD",
-      "timestamp": "2026-11-07T09:59:39.000+09:00"
-    },
     "OKLO": {
       "price": 23.7014,
       "currency": "USD",
@@ -140,11 +135,6 @@
       "price": 5.21,
       "currency": "USD",
       "timestamp": "2026-11-07T09:59:57.000+09:00"
-    },
-    "SMR": {
-      "price": 5.05,
-      "currency": "USD",
-      "timestamp": "2026-11-07T09:58:36.000+09:00"
     },
     "SNDK": {
       "price": 840.67,
@@ -176,6 +166,16 @@
       "currency": "USD",
       "timestamp": "2026-11-07T09:59:40.000+09:00"
     },
+    "SMR": {
+      "price": 5.05,
+      "currency": "USD",
+      "timestamp": "2026-11-07T09:58:36.000+09:00"
+    },
+    "NVO": {
+      "price": 40.3,
+      "currency": "USD",
+      "timestamp": "2026-11-07T09:59:39.000+09:00"
+    },
     "ETHA": {
       "price": 50.55,
       "currency": "USD",
@@ -202,7 +202,7 @@
       "rate": 1366.0,
       "mid_rate": 1365.5,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-08T03:10:02+09:00"
+      "fetched_at": "2026-11-08T03:11:01+09:00"
     }
   }
 }
