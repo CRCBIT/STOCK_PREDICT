@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-08T06:50:02+09:00",
+  "fetched_at": "2026-11-08T06:51:01+09:00",
   "quotes": {
     "000660": {
       "price": 1176000.0,
@@ -76,6 +76,16 @@
       "currency": "USD",
       "timestamp": "2026-11-07T09:59:54.000+09:00"
     },
+    "CAT": {
+      "price": 560.0,
+      "currency": "USD",
+      "timestamp": "2026-11-07T09:59:38.000+09:00"
+    },
+    "ETHA": {
+      "price": 50.55,
+      "currency": "USD",
+      "timestamp": "2026-11-07T09:17:46.000+09:00"
+    },
     "GOOGL": {
       "price": 285.48,
       "currency": "USD",
@@ -90,6 +100,16 @@
       "price": 1358.58,
       "currency": "USD",
       "timestamp": "2026-11-07T09:59:52.000+09:00"
+    },
+    "MRK": {
+      "price": 146.71,
+      "currency": "USD",
+      "timestamp": "2026-11-07T09:30:48.000+09:00"
+    },
+    "MRNA": {
+      "price": 256.9,
+      "currency": "USD",
+      "timestamp": "2026-11-07T09:59:44.000+09:00"
     },
     "MSFT": {
       "price": 531.3,
@@ -156,40 +176,20 @@
       "currency": "USD",
       "timestamp": "2026-11-07T09:59:57.000+09:00"
     },
-    "WDC": {
-      "price": 266.0,
-      "currency": "USD",
-      "timestamp": "2026-11-07T09:59:40.000+09:00"
-    },
-    "MRNA": {
-      "price": 256.9,
-      "currency": "USD",
-      "timestamp": "2026-11-07T09:59:44.000+09:00"
-    },
-    "NVO": {
-      "price": 40.3,
-      "currency": "USD",
-      "timestamp": "2026-11-07T09:59:39.000+09:00"
-    },
-    "ETHA": {
-      "price": 50.55,
-      "currency": "USD",
-      "timestamp": "2026-11-07T09:17:46.000+09:00"
-    },
     "VST": {
       "price": 125.0,
       "currency": "USD",
       "timestamp": "2026-11-07T09:59:22.000+09:00"
     },
-    "MRK": {
-      "price": 146.71,
+    "WDC": {
+      "price": 266.0,
       "currency": "USD",
-      "timestamp": "2026-11-07T09:30:48.000+09:00"
+      "timestamp": "2026-11-07T09:59:40.000+09:00"
     },
-    "CAT": {
-      "price": 560.0,
+    "NVO": {
+      "price": 40.3,
       "currency": "USD",
-      "timestamp": "2026-11-07T09:59:38.000+09:00"
+      "timestamp": "2026-11-07T09:59:39.000+09:00"
     },
     "IBIT": {
       "price": 42.8984,
@@ -202,7 +202,7 @@
       "rate": 1366.0,
       "mid_rate": 1365.5,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-08T06:50:02+09:00"
+      "fetched_at": "2026-11-08T06:51:01+09:00"
     }
   }
 }
