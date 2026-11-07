@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-07T13:02:02+09:00",
+  "fetched_at": "2026-11-07T13:03:02+09:00",
   "quotes": {
     "000660": {
       "price": 1176000.0,
@@ -76,15 +76,30 @@
       "currency": "USD",
       "timestamp": "2026-11-07T09:59:54.000+09:00"
     },
+    "CAT": {
+      "price": 560.0,
+      "currency": "USD",
+      "timestamp": "2026-11-07T09:59:38.000+09:00"
+    },
+    "ETHA": {
+      "price": 50.55,
+      "currency": "USD",
+      "timestamp": "2026-11-07T09:17:46.000+09:00"
+    },
     "GOOGL": {
       "price": 285.48,
       "currency": "USD",
       "timestamp": "2026-11-07T09:59:59.000+09:00"
     },
-    "KLAC": {
-      "price": 139.44,
+    "IBIT": {
+      "price": 42.8984,
       "currency": "USD",
-      "timestamp": "2026-11-07T09:59:28.000+09:00"
+      "timestamp": "2026-11-07T09:55:06.000+09:00"
+    },
+    "LLY": {
+      "price": 1358.58,
+      "currency": "USD",
+      "timestamp": "2026-11-07T09:59:52.000+09:00"
     },
     "MRK": {
       "price": 146.71,
@@ -176,25 +191,10 @@
       "currency": "USD",
       "timestamp": "2026-11-07T09:59:40.000+09:00"
     },
-    "ETHA": {
-      "price": 50.55,
+    "KLAC": {
+      "price": 139.44,
       "currency": "USD",
-      "timestamp": "2026-11-07T09:17:46.000+09:00"
-    },
-    "LLY": {
-      "price": 1358.58,
-      "currency": "USD",
-      "timestamp": "2026-11-07T09:59:52.000+09:00"
-    },
-    "CAT": {
-      "price": 560.0,
-      "currency": "USD",
-      "timestamp": "2026-11-07T09:59:38.000+09:00"
-    },
-    "IBIT": {
-      "price": 42.8984,
-      "currency": "USD",
-      "timestamp": "2026-11-07T09:55:06.000+09:00"
+      "timestamp": "2026-11-07T09:59:28.000+09:00"
     }
   },
   "fx": {
@@ -202,7 +202,7 @@
       "rate": 1366.0,
       "mid_rate": 1365.5,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-07T13:02:02+09:00"
+      "fetched_at": "2026-11-07T13:03:02+09:00"
     }
   }
 }
