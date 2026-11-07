@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-07T19:39:01+09:00",
+  "fetched_at": "2026-11-07T19:40:02+09:00",
   "quotes": {
     "000660": {
       "price": 1176000.0,
@@ -86,6 +86,11 @@
       "currency": "USD",
       "timestamp": "2026-11-07T09:59:59.000+09:00"
     },
+    "IBIT": {
+      "price": 42.8984,
+      "currency": "USD",
+      "timestamp": "2026-11-07T09:55:06.000+09:00"
+    },
     "KLAC": {
       "price": 139.44,
       "currency": "USD",
@@ -100,6 +105,11 @@
       "price": 146.71,
       "currency": "USD",
       "timestamp": "2026-11-07T09:30:48.000+09:00"
+    },
+    "MRNA": {
+      "price": 256.9,
+      "currency": "USD",
+      "timestamp": "2026-11-07T09:59:44.000+09:00"
     },
     "MSFT": {
       "price": 531.3,
@@ -121,11 +131,6 @@
       "currency": "USD",
       "timestamp": "2026-11-07T09:59:39.000+09:00"
     },
-    "OKLO": {
-      "price": 23.7014,
-      "currency": "USD",
-      "timestamp": "2026-11-07T09:59:37.000+09:00"
-    },
     "PFE": {
       "price": 29.36,
       "currency": "USD",
@@ -136,10 +141,10 @@
       "currency": "USD",
       "timestamp": "2026-11-07T09:59:29.000+09:00"
     },
-    "RAM": {
-      "price": 5.21,
+    "SMR": {
+      "price": 5.05,
       "currency": "USD",
-      "timestamp": "2026-11-07T09:59:57.000+09:00"
+      "timestamp": "2026-11-07T09:58:36.000+09:00"
     },
     "SNDK": {
       "price": 840.67,
@@ -171,30 +176,25 @@
       "currency": "USD",
       "timestamp": "2026-11-07T09:59:22.000+09:00"
     },
-    "SMR": {
-      "price": 5.05,
+    "WDC": {
+      "price": 266.0,
       "currency": "USD",
-      "timestamp": "2026-11-07T09:58:36.000+09:00"
-    },
-    "MRNA": {
-      "price": 256.9,
-      "currency": "USD",
-      "timestamp": "2026-11-07T09:59:44.000+09:00"
+      "timestamp": "2026-11-07T09:59:40.000+09:00"
     },
     "ETHA": {
       "price": 50.55,
       "currency": "USD",
       "timestamp": "2026-11-07T09:17:46.000+09:00"
     },
-    "WDC": {
-      "price": 266.0,
+    "OKLO": {
+      "price": 23.7014,
       "currency": "USD",
-      "timestamp": "2026-11-07T09:59:40.000+09:00"
+      "timestamp": "2026-11-07T09:59:37.000+09:00"
     },
-    "IBIT": {
-      "price": 42.8984,
+    "RAM": {
+      "price": 5.21,
       "currency": "USD",
-      "timestamp": "2026-11-07T09:55:06.000+09:00"
+      "timestamp": "2026-11-07T09:59:57.000+09:00"
     }
   },
   "fx": {
@@ -202,7 +202,7 @@
       "rate": 1366.0,
       "mid_rate": 1365.5,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-07T19:39:01+09:00"
+      "fetched_at": "2026-11-07T19:40:02+09:00"
     }
   }
 }
