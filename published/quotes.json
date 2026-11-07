@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-07T17:43:02+09:00",
+  "fetched_at": "2026-11-07T17:44:02+09:00",
   "quotes": {
     "000660": {
       "price": 1176000.0,
@@ -96,6 +96,11 @@
       "currency": "USD",
       "timestamp": "2026-11-07T09:59:52.000+09:00"
     },
+    "MRK": {
+      "price": 146.71,
+      "currency": "USD",
+      "timestamp": "2026-11-07T09:30:48.000+09:00"
+    },
     "MRNA": {
       "price": 256.9,
       "currency": "USD",
@@ -186,11 +191,6 @@
       "currency": "USD",
       "timestamp": "2026-11-07T09:17:46.000+09:00"
     },
-    "MRK": {
-      "price": 146.71,
-      "currency": "USD",
-      "timestamp": "2026-11-07T09:30:48.000+09:00"
-    },
     "IBIT": {
       "price": 42.8984,
       "currency": "USD",
@@ -202,7 +202,7 @@
       "rate": 1366.0,
       "mid_rate": 1365.5,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-07T17:43:02+09:00"
+      "fetched_at": "2026-11-07T17:44:02+09:00"
     }
   }
 }
