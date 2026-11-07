@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-07T16:11:01+09:00",
+  "fetched_at": "2026-11-07T16:12:02+09:00",
   "quotes": {
     "000660": {
       "price": 1176000.0,
@@ -56,10 +56,10 @@
       "currency": "KRW",
       "timestamp": "2026-11-06T19:59:59.000+09:00"
     },
-    "AAPL": {
-      "price": 342.76,
+    "AMAT": {
+      "price": 334.06,
       "currency": "USD",
-      "timestamp": "2026-11-07T09:59:47.000+09:00"
+      "timestamp": "2026-11-07T09:59:36.000+09:00"
     },
     "AMD": {
       "price": 448.13,
@@ -115,11 +115,6 @@
       "price": 694.8,
       "currency": "USD",
       "timestamp": "2026-11-07T09:59:56.000+09:00"
-    },
-    "NVDA": {
-      "price": 188.72,
-      "currency": "USD",
-      "timestamp": "2026-11-07T09:59:59.000+09:00"
     },
     "NVO": {
       "price": 40.3,
@@ -181,20 +176,25 @@
       "currency": "USD",
       "timestamp": "2026-11-07T09:59:22.000+09:00"
     },
-    "ETHA": {
-      "price": 50.55,
-      "currency": "USD",
-      "timestamp": "2026-11-07T09:17:46.000+09:00"
-    },
     "WDC": {
       "price": 266.0,
       "currency": "USD",
       "timestamp": "2026-11-07T09:59:40.000+09:00"
     },
-    "AMAT": {
-      "price": 334.06,
+    "NVDA": {
+      "price": 188.72,
       "currency": "USD",
-      "timestamp": "2026-11-07T09:59:36.000+09:00"
+      "timestamp": "2026-11-07T09:59:59.000+09:00"
+    },
+    "ETHA": {
+      "price": 50.55,
+      "currency": "USD",
+      "timestamp": "2026-11-07T09:17:46.000+09:00"
+    },
+    "AAPL": {
+      "price": 342.76,
+      "currency": "USD",
+      "timestamp": "2026-11-07T09:59:47.000+09:00"
     }
   },
   "fx": {
@@ -202,7 +202,7 @@
       "rate": 1366.0,
       "mid_rate": 1365.5,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-07T16:11:01+09:00"
+      "fetched_at": "2026-11-07T16:12:02+09:00"
     }
   }
 }
