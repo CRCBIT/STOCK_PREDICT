@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-07T16:24:02+09:00",
+  "fetched_at": "2026-11-07T16:25:01+09:00",
   "quotes": {
     "000660": {
       "price": 1176000.0,
@@ -70,6 +70,21 @@
       "price": 448.13,
       "currency": "USD",
       "timestamp": "2026-11-07T09:59:55.000+09:00"
+    },
+    "ASML": {
+      "price": 1427.09,
+      "currency": "USD",
+      "timestamp": "2026-11-07T09:59:54.000+09:00"
+    },
+    "CAT": {
+      "price": 560.0,
+      "currency": "USD",
+      "timestamp": "2026-11-07T09:59:38.000+09:00"
+    },
+    "ETHA": {
+      "price": 50.55,
+      "currency": "USD",
+      "timestamp": "2026-11-07T09:17:46.000+09:00"
     },
     "GOOGL": {
       "price": 285.48,
@@ -180,21 +195,6 @@
       "price": 266.0,
       "currency": "USD",
       "timestamp": "2026-11-07T09:59:40.000+09:00"
-    },
-    "ETHA": {
-      "price": 50.55,
-      "currency": "USD",
-      "timestamp": "2026-11-07T09:17:46.000+09:00"
-    },
-    "ASML": {
-      "price": 1427.09,
-      "currency": "USD",
-      "timestamp": "2026-11-07T09:59:54.000+09:00"
-    },
-    "CAT": {
-      "price": 560.0,
-      "currency": "USD",
-      "timestamp": "2026-11-07T09:59:38.000+09:00"
     }
   },
   "fx": {
@@ -202,7 +202,7 @@
       "rate": 1366.0,
       "mid_rate": 1365.5,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-07T16:24:02+09:00"
+      "fetched_at": "2026-11-07T16:25:01+09:00"
     }
   }
 }
