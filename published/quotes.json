@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-07T12:48:02+09:00",
+  "fetched_at": "2026-11-07T12:49:02+09:00",
   "quotes": {
     "000660": {
       "price": 1176000.0,
@@ -101,11 +101,6 @@
       "currency": "USD",
       "timestamp": "2026-11-07T09:30:48.000+09:00"
     },
-    "MRNA": {
-      "price": 256.9,
-      "currency": "USD",
-      "timestamp": "2026-11-07T09:59:44.000+09:00"
-    },
     "MSFT": {
       "price": 531.3,
       "currency": "USD",
@@ -186,6 +181,11 @@
       "currency": "USD",
       "timestamp": "2026-11-07T09:59:40.000+09:00"
     },
+    "MRNA": {
+      "price": 256.9,
+      "currency": "USD",
+      "timestamp": "2026-11-07T09:59:44.000+09:00"
+    },
     "ETHA": {
       "price": 50.55,
       "currency": "USD",
@@ -202,7 +202,7 @@
       "rate": 1366.0,
       "mid_rate": 1365.5,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-07T12:48:02+09:00"
+      "fetched_at": "2026-11-07T12:49:02+09:00"
     }
   }
 }
