@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-07T10:10:02+09:00",
+  "fetched_at": "2026-11-07T10:11:02+09:00",
   "quotes": {
     "000660": {
       "price": 1176000.0,
@@ -161,11 +161,6 @@
       "currency": "USD",
       "timestamp": "2026-11-07T09:59:55.000+09:00"
     },
-    "STX": {
-      "price": 462.5,
-      "currency": "USD",
-      "timestamp": "2026-11-07T09:59:15.000+09:00"
-    },
     "TSLA": {
       "price": 359.4,
       "currency": "USD",
@@ -191,6 +186,11 @@
       "currency": "USD",
       "timestamp": "2026-11-07T09:17:46.000+09:00"
     },
+    "STX": {
+      "price": 462.5,
+      "currency": "USD",
+      "timestamp": "2026-11-07T09:59:15.000+09:00"
+    },
     "IBIT": {
       "price": 42.8984,
       "currency": "USD",
@@ -202,7 +202,7 @@
       "rate": 1366.0,
       "mid_rate": 1365.5,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-07T10:10:02+09:00"
+      "fetched_at": "2026-11-07T10:11:02+09:00"
     }
   }
 }
