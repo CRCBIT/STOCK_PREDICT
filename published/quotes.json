@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-07T10:08:02+09:00",
+  "fetched_at": "2026-11-07T10:09:01+09:00",
   "quotes": {
     "000660": {
       "price": 1176000.0,
@@ -81,11 +81,6 @@
       "currency": "USD",
       "timestamp": "2026-11-07T09:59:38.000+09:00"
     },
-    "ETHA": {
-      "price": 50.55,
-      "currency": "USD",
-      "timestamp": "2026-11-07T09:17:46.000+09:00"
-    },
     "GOOGL": {
       "price": 285.48,
       "currency": "USD",
@@ -161,11 +156,6 @@
       "currency": "USD",
       "timestamp": "2026-11-07T09:59:55.000+09:00"
     },
-    "STX": {
-      "price": 462.5,
-      "currency": "USD",
-      "timestamp": "2026-11-07T09:59:15.000+09:00"
-    },
     "TSLA": {
       "price": 359.4,
       "currency": "USD",
@@ -186,6 +176,16 @@
       "currency": "USD",
       "timestamp": "2026-11-07T09:59:40.000+09:00"
     },
+    "ETHA": {
+      "price": 50.55,
+      "currency": "USD",
+      "timestamp": "2026-11-07T09:17:46.000+09:00"
+    },
+    "STX": {
+      "price": 462.5,
+      "currency": "USD",
+      "timestamp": "2026-11-07T09:59:15.000+09:00"
+    },
     "MRK": {
       "price": 146.71,
       "currency": "USD",
@@ -202,7 +202,7 @@
       "rate": 1366.0,
       "mid_rate": 1365.5,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-07T10:08:02+09:00"
+      "fetched_at": "2026-11-07T10:09:01+09:00"
     }
   }
 }
