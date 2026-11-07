@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-07T12:28:02+09:00",
+  "fetched_at": "2026-11-07T12:29:01+09:00",
   "quotes": {
     "000660": {
       "price": 1176000.0,
@@ -61,6 +61,11 @@
       "currency": "USD",
       "timestamp": "2026-11-07T09:59:47.000+09:00"
     },
+    "AMAT": {
+      "price": 334.06,
+      "currency": "USD",
+      "timestamp": "2026-11-07T09:59:36.000+09:00"
+    },
     "AMD": {
       "price": 448.13,
       "currency": "USD",
@@ -91,10 +96,20 @@
       "currency": "USD",
       "timestamp": "2026-11-07T09:59:52.000+09:00"
     },
+    "MRK": {
+      "price": 146.71,
+      "currency": "USD",
+      "timestamp": "2026-11-07T09:30:48.000+09:00"
+    },
     "MRNA": {
       "price": 256.9,
       "currency": "USD",
       "timestamp": "2026-11-07T09:59:44.000+09:00"
+    },
+    "MSFT": {
+      "price": 531.3,
+      "currency": "USD",
+      "timestamp": "2026-11-07T09:59:58.000+09:00"
     },
     "MU": {
       "price": 694.8,
@@ -176,21 +191,6 @@
       "currency": "USD",
       "timestamp": "2026-11-07T09:17:46.000+09:00"
     },
-    "MRK": {
-      "price": 146.71,
-      "currency": "USD",
-      "timestamp": "2026-11-07T09:30:48.000+09:00"
-    },
-    "MSFT": {
-      "price": 531.3,
-      "currency": "USD",
-      "timestamp": "2026-11-07T09:59:58.000+09:00"
-    },
-    "AMAT": {
-      "price": 334.06,
-      "currency": "USD",
-      "timestamp": "2026-11-07T09:59:36.000+09:00"
-    },
     "IBIT": {
       "price": 42.8984,
       "currency": "USD",
@@ -202,7 +202,7 @@
       "rate": 1366.0,
       "mid_rate": 1365.5,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-07T12:28:02+09:00"
+      "fetched_at": "2026-11-07T12:29:01+09:00"
     }
   }
 }
