@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-15T02:51:02+09:00",
+  "fetched_at": "2026-11-15T02:52:01+09:00",
   "quotes": {
     "000660": {
       "price": 1233000.0,
@@ -96,6 +96,11 @@
       "currency": "USD",
       "timestamp": "2026-11-14T09:59:14.000+09:00"
     },
+    "MRK": {
+      "price": 147.68,
+      "currency": "USD",
+      "timestamp": "2026-11-14T09:54:56.000+09:00"
+    },
     "MRNA": {
       "price": 217.81,
       "currency": "USD",
@@ -125,6 +130,11 @@
       "price": 23.29,
       "currency": "USD",
       "timestamp": "2026-11-14T09:59:11.000+09:00"
+    },
+    "PFE": {
+      "price": 28.91,
+      "currency": "USD",
+      "timestamp": "2026-11-14T09:59:44.000+09:00"
     },
     "PLTR": {
       "price": 165.4376,
@@ -181,16 +191,6 @@
       "currency": "USD",
       "timestamp": "2026-11-14T09:59:46.000+09:00"
     },
-    "MRK": {
-      "price": 147.68,
-      "currency": "USD",
-      "timestamp": "2026-11-14T09:54:56.000+09:00"
-    },
-    "PFE": {
-      "price": 28.91,
-      "currency": "USD",
-      "timestamp": "2026-11-14T09:59:44.000+09:00"
-    },
     "IBIT": {
       "price": 38.5845,
       "currency": "USD",
@@ -202,7 +202,7 @@
       "rate": 1341.0,
       "mid_rate": 1340.5,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-15T02:51:02+09:00"
+      "fetched_at": "2026-11-15T02:52:01+09:00"
     }
   }
 }
