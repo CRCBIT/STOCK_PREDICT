@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-15T00:41:02+09:00",
+  "fetched_at": "2026-11-15T00:42:01+09:00",
   "quotes": {
     "000660": {
       "price": 1233000.0,
@@ -81,6 +81,11 @@
       "currency": "USD",
       "timestamp": "2026-11-14T09:59:08.000+09:00"
     },
+    "ETHA": {
+      "price": 43.71,
+      "currency": "USD",
+      "timestamp": "2026-11-14T09:59:46.000+09:00"
+    },
     "GOOGL": {
       "price": 294.0028,
       "currency": "USD",
@@ -111,6 +116,11 @@
       "currency": "USD",
       "timestamp": "2026-11-14T09:59:59.000+09:00"
     },
+    "MU": {
+      "price": 761.2,
+      "currency": "USD",
+      "timestamp": "2026-11-14T09:59:59.000+09:00"
+    },
     "NVDA": {
       "price": 161.04,
       "currency": "USD",
@@ -125,11 +135,6 @@
       "price": 23.29,
       "currency": "USD",
       "timestamp": "2026-11-14T09:59:11.000+09:00"
-    },
-    "PFE": {
-      "price": 28.91,
-      "currency": "USD",
-      "timestamp": "2026-11-14T09:59:44.000+09:00"
     },
     "PLTR": {
       "price": 165.4376,
@@ -176,20 +181,15 @@
       "currency": "USD",
       "timestamp": "2026-11-14T09:59:57.000+09:00"
     },
-    "ETHA": {
-      "price": 43.71,
-      "currency": "USD",
-      "timestamp": "2026-11-14T09:59:46.000+09:00"
-    },
     "WDC": {
       "price": 290.0,
       "currency": "USD",
       "timestamp": "2026-11-14T09:59:29.000+09:00"
     },
-    "MU": {
-      "price": 761.2,
+    "PFE": {
+      "price": 28.91,
       "currency": "USD",
-      "timestamp": "2026-11-14T09:59:59.000+09:00"
+      "timestamp": "2026-11-14T09:59:44.000+09:00"
     },
     "IBIT": {
       "price": 38.5845,
@@ -202,7 +202,7 @@
       "rate": 1341.0,
       "mid_rate": 1340.5,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-15T00:41:02+09:00"
+      "fetched_at": "2026-11-15T00:42:01+09:00"
     }
   }
 }
