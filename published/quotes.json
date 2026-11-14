@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-14T23:47:02+09:00",
+  "fetched_at": "2026-11-14T23:48:01+09:00",
   "quotes": {
     "000660": {
       "price": 1233000.0,
@@ -76,11 +76,6 @@
       "currency": "USD",
       "timestamp": "2026-11-14T09:54:33.000+09:00"
     },
-    "CAT": {
-      "price": 595.6,
-      "currency": "USD",
-      "timestamp": "2026-11-14T09:59:08.000+09:00"
-    },
     "GOOGL": {
       "price": 294.0028,
       "currency": "USD",
@@ -101,11 +96,6 @@
       "currency": "USD",
       "timestamp": "2026-11-14T09:59:14.000+09:00"
     },
-    "MRK": {
-      "price": 147.68,
-      "currency": "USD",
-      "timestamp": "2026-11-14T09:54:56.000+09:00"
-    },
     "MRNA": {
       "price": 217.81,
       "currency": "USD",
@@ -113,11 +103,6 @@
     },
     "MSFT": {
       "price": 522.462,
-      "currency": "USD",
-      "timestamp": "2026-11-14T09:59:59.000+09:00"
-    },
-    "MU": {
-      "price": 761.2,
       "currency": "USD",
       "timestamp": "2026-11-14T09:59:59.000+09:00"
     },
@@ -195,6 +180,21 @@
       "price": 43.71,
       "currency": "USD",
       "timestamp": "2026-11-14T09:59:46.000+09:00"
+    },
+    "MRK": {
+      "price": 147.68,
+      "currency": "USD",
+      "timestamp": "2026-11-14T09:54:56.000+09:00"
+    },
+    "CAT": {
+      "price": 595.6,
+      "currency": "USD",
+      "timestamp": "2026-11-14T09:59:08.000+09:00"
+    },
+    "MU": {
+      "price": 761.2,
+      "currency": "USD",
+      "timestamp": "2026-11-14T09:59:59.000+09:00"
     }
   },
   "fx": {
@@ -202,7 +202,7 @@
       "rate": 1341.0,
       "mid_rate": 1340.5,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-14T23:47:02+09:00"
+      "fetched_at": "2026-11-14T23:48:01+09:00"
     }
   }
 }
