@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-14T20:19:02+09:00",
+  "fetched_at": "2026-11-14T20:20:02+09:00",
   "quotes": {
     "000660": {
       "price": 1233000.0,
@@ -86,11 +86,6 @@
       "currency": "USD",
       "timestamp": "2026-11-14T09:59:57.000+09:00"
     },
-    "IBIT": {
-      "price": 38.5845,
-      "currency": "USD",
-      "timestamp": "2026-11-14T09:59:58.000+09:00"
-    },
     "KLAC": {
       "price": 150.69,
       "currency": "USD",
@@ -111,11 +106,6 @@
       "currency": "USD",
       "timestamp": "2026-11-14T09:59:22.000+09:00"
     },
-    "MSFT": {
-      "price": 522.462,
-      "currency": "USD",
-      "timestamp": "2026-11-14T09:59:59.000+09:00"
-    },
     "MU": {
       "price": 761.2,
       "currency": "USD",
@@ -125,6 +115,11 @@
       "price": 161.04,
       "currency": "USD",
       "timestamp": "2026-11-14T09:59:58.000+09:00"
+    },
+    "NVO": {
+      "price": 41.49,
+      "currency": "USD",
+      "timestamp": "2026-11-14T09:58:31.000+09:00"
     },
     "OKLO": {
       "price": 23.29,
@@ -156,16 +151,6 @@
       "currency": "USD",
       "timestamp": "2026-11-14T09:59:57.000+09:00"
     },
-    "SPCX": {
-      "price": 136.25,
-      "currency": "USD",
-      "timestamp": "2026-11-14T09:59:59.000+09:00"
-    },
-    "STX": {
-      "price": 520.5,
-      "currency": "USD",
-      "timestamp": "2026-11-14T09:59:17.000+09:00"
-    },
     "TSLA": {
       "price": 387.1562,
       "currency": "USD",
@@ -186,15 +171,30 @@
       "currency": "USD",
       "timestamp": "2026-11-14T09:59:29.000+09:00"
     },
-    "NVO": {
-      "price": 41.49,
+    "SPCX": {
+      "price": 136.25,
       "currency": "USD",
-      "timestamp": "2026-11-14T09:58:31.000+09:00"
+      "timestamp": "2026-11-14T09:59:59.000+09:00"
     },
     "ETHA": {
       "price": 43.71,
       "currency": "USD",
       "timestamp": "2026-11-14T09:59:46.000+09:00"
+    },
+    "STX": {
+      "price": 520.5,
+      "currency": "USD",
+      "timestamp": "2026-11-14T09:59:17.000+09:00"
+    },
+    "MSFT": {
+      "price": 522.462,
+      "currency": "USD",
+      "timestamp": "2026-11-14T09:59:59.000+09:00"
+    },
+    "IBIT": {
+      "price": 38.5845,
+      "currency": "USD",
+      "timestamp": "2026-11-14T09:59:58.000+09:00"
     }
   },
   "fx": {
@@ -202,7 +202,7 @@
       "rate": 1341.0,
       "mid_rate": 1340.5,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-14T20:19:02+09:00"
+      "fetched_at": "2026-11-14T20:20:02+09:00"
     }
   }
 }
