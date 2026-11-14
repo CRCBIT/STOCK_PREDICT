@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-15T02:29:01+09:00",
+  "fetched_at": "2026-11-15T02:30:02+09:00",
   "quotes": {
     "000660": {
       "price": 1233000.0,
@@ -66,11 +66,6 @@
       "currency": "USD",
       "timestamp": "2026-11-14T09:59:21.000+09:00"
     },
-    "AMD": {
-      "price": 521.24,
-      "currency": "USD",
-      "timestamp": "2026-11-14T09:59:58.000+09:00"
-    },
     "ASML": {
       "price": 1477.0,
       "currency": "USD",
@@ -85,11 +80,6 @@
       "price": 294.0028,
       "currency": "USD",
       "timestamp": "2026-11-14T09:59:57.000+09:00"
-    },
-    "KLAC": {
-      "price": 150.69,
-      "currency": "USD",
-      "timestamp": "2026-11-14T09:49:20.000+09:00"
     },
     "LLY": {
       "price": 1438.4741,
@@ -161,11 +151,6 @@
       "currency": "USD",
       "timestamp": "2026-11-14T09:59:59.000+09:00"
     },
-    "STX": {
-      "price": 520.5,
-      "currency": "USD",
-      "timestamp": "2026-11-14T09:59:17.000+09:00"
-    },
     "TSLA": {
       "price": 387.1562,
       "currency": "USD",
@@ -191,10 +176,25 @@
       "currency": "USD",
       "timestamp": "2026-11-14T09:59:46.000+09:00"
     },
+    "STX": {
+      "price": 520.5,
+      "currency": "USD",
+      "timestamp": "2026-11-14T09:59:17.000+09:00"
+    },
+    "AMD": {
+      "price": 521.24,
+      "currency": "USD",
+      "timestamp": "2026-11-14T09:59:58.000+09:00"
+    },
     "IBIT": {
       "price": 38.5845,
       "currency": "USD",
       "timestamp": "2026-11-14T09:59:58.000+09:00"
+    },
+    "KLAC": {
+      "price": 150.69,
+      "currency": "USD",
+      "timestamp": "2026-11-14T09:49:20.000+09:00"
     }
   },
   "fx": {
@@ -202,7 +202,7 @@
       "rate": 1341.0,
       "mid_rate": 1340.5,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-15T02:29:01+09:00"
+      "fetched_at": "2026-11-15T02:30:02+09:00"
     }
   }
 }
