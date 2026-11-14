@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-14T21:13:01+09:00",
+  "fetched_at": "2026-11-14T21:14:02+09:00",
   "quotes": {
     "000660": {
       "price": 1233000.0,
@@ -96,6 +96,11 @@
       "currency": "USD",
       "timestamp": "2026-11-14T09:59:14.000+09:00"
     },
+    "MRK": {
+      "price": 147.68,
+      "currency": "USD",
+      "timestamp": "2026-11-14T09:54:56.000+09:00"
+    },
     "MRNA": {
       "price": 217.81,
       "currency": "USD",
@@ -141,6 +146,11 @@
       "currency": "USD",
       "timestamp": "2026-11-14T09:58:45.000+09:00"
     },
+    "SMR": {
+      "price": 4.57,
+      "currency": "USD",
+      "timestamp": "2026-11-14T09:58:40.000+09:00"
+    },
     "SNDK": {
       "price": 865.33,
       "currency": "USD",
@@ -171,25 +181,15 @@
       "currency": "USD",
       "timestamp": "2026-11-14T09:59:57.000+09:00"
     },
-    "SMR": {
-      "price": 4.57,
+    "WDC": {
+      "price": 290.0,
       "currency": "USD",
-      "timestamp": "2026-11-14T09:58:40.000+09:00"
+      "timestamp": "2026-11-14T09:59:29.000+09:00"
     },
     "ETHA": {
       "price": 43.71,
       "currency": "USD",
       "timestamp": "2026-11-14T09:59:46.000+09:00"
-    },
-    "MRK": {
-      "price": 147.68,
-      "currency": "USD",
-      "timestamp": "2026-11-14T09:54:56.000+09:00"
-    },
-    "WDC": {
-      "price": 290.0,
-      "currency": "USD",
-      "timestamp": "2026-11-14T09:59:29.000+09:00"
     },
     "CAT": {
       "price": 595.6,
@@ -202,7 +202,7 @@
       "rate": 1341.0,
       "mid_rate": 1340.5,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-14T21:13:01+09:00"
+      "fetched_at": "2026-11-14T21:14:02+09:00"
     }
   }
 }
