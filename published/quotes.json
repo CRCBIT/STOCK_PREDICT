@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-14T21:33:02+09:00",
+  "fetched_at": "2026-11-14T21:34:01+09:00",
   "quotes": {
     "000660": {
       "price": 1233000.0,
@@ -61,11 +61,6 @@
       "currency": "USD",
       "timestamp": "2026-11-14T09:59:54.000+09:00"
     },
-    "AMAT": {
-      "price": 362.9,
-      "currency": "USD",
-      "timestamp": "2026-11-14T09:59:21.000+09:00"
-    },
     "AMD": {
       "price": 521.24,
       "currency": "USD",
@@ -80,11 +75,6 @@
       "price": 595.6,
       "currency": "USD",
       "timestamp": "2026-11-14T09:59:08.000+09:00"
-    },
-    "ETHA": {
-      "price": 43.71,
-      "currency": "USD",
-      "timestamp": "2026-11-14T09:59:46.000+09:00"
     },
     "GOOGL": {
       "price": 294.0028,
@@ -191,6 +181,16 @@
       "currency": "USD",
       "timestamp": "2026-11-14T09:59:29.000+09:00"
     },
+    "ETHA": {
+      "price": 43.71,
+      "currency": "USD",
+      "timestamp": "2026-11-14T09:59:46.000+09:00"
+    },
+    "AMAT": {
+      "price": 362.9,
+      "currency": "USD",
+      "timestamp": "2026-11-14T09:59:21.000+09:00"
+    },
     "IBIT": {
       "price": 38.5845,
       "currency": "USD",
@@ -202,7 +202,7 @@
       "rate": 1341.0,
       "mid_rate": 1340.5,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-14T21:33:02+09:00"
+      "fetched_at": "2026-11-14T21:34:01+09:00"
     }
   }
 }
