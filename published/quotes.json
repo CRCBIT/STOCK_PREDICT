@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-14T22:12:01+09:00",
+  "fetched_at": "2026-11-14T22:13:02+09:00",
   "quotes": {
     "000660": {
       "price": 1233000.0,
@@ -76,10 +76,10 @@
       "currency": "USD",
       "timestamp": "2026-11-14T09:54:33.000+09:00"
     },
-    "CAT": {
-      "price": 595.6,
+    "ETHA": {
+      "price": 43.71,
       "currency": "USD",
-      "timestamp": "2026-11-14T09:59:08.000+09:00"
+      "timestamp": "2026-11-14T09:59:46.000+09:00"
     },
     "GOOGL": {
       "price": 294.0028,
@@ -136,6 +136,11 @@
       "currency": "USD",
       "timestamp": "2026-11-14T09:59:11.000+09:00"
     },
+    "PFE": {
+      "price": 28.91,
+      "currency": "USD",
+      "timestamp": "2026-11-14T09:59:44.000+09:00"
+    },
     "PLTR": {
       "price": 165.4376,
       "currency": "USD",
@@ -161,6 +166,11 @@
       "currency": "USD",
       "timestamp": "2026-11-14T09:59:59.000+09:00"
     },
+    "STX": {
+      "price": 520.5,
+      "currency": "USD",
+      "timestamp": "2026-11-14T09:59:17.000+09:00"
+    },
     "TSLA": {
       "price": 387.1562,
       "currency": "USD",
@@ -171,30 +181,20 @@
       "currency": "USD",
       "timestamp": "2026-11-14T09:59:59.000+09:00"
     },
-    "VST": {
-      "price": 130.583,
-      "currency": "USD",
-      "timestamp": "2026-11-14T09:59:57.000+09:00"
-    },
     "WDC": {
       "price": 290.0,
       "currency": "USD",
       "timestamp": "2026-11-14T09:59:29.000+09:00"
     },
-    "ETHA": {
-      "price": 43.71,
+    "VST": {
+      "price": 130.583,
       "currency": "USD",
-      "timestamp": "2026-11-14T09:59:46.000+09:00"
+      "timestamp": "2026-11-14T09:59:57.000+09:00"
     },
-    "STX": {
-      "price": 520.5,
+    "CAT": {
+      "price": 595.6,
       "currency": "USD",
-      "timestamp": "2026-11-14T09:59:17.000+09:00"
-    },
-    "PFE": {
-      "price": 28.91,
-      "currency": "USD",
-      "timestamp": "2026-11-14T09:59:44.000+09:00"
+      "timestamp": "2026-11-14T09:59:08.000+09:00"
     }
   },
   "fx": {
@@ -202,7 +202,7 @@
       "rate": 1341.0,
       "mid_rate": 1340.5,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-14T22:12:01+09:00"
+      "fetched_at": "2026-11-14T22:13:02+09:00"
     }
   }
 }
