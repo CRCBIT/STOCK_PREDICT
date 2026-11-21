@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-21T12:07:01+09:00",
+  "fetched_at": "2026-11-21T12:08:01+09:00",
   "quotes": {
     "000660": {
       "price": 1099000.0,
@@ -81,11 +81,6 @@
       "currency": "USD",
       "timestamp": "2026-11-21T09:59:37.000+09:00"
     },
-    "ETHA": {
-      "price": 36.75,
-      "currency": "USD",
-      "timestamp": "2026-11-21T09:55:31.000+09:00"
-    },
     "GOOGL": {
       "price": 270.18,
       "currency": "USD",
@@ -156,6 +151,11 @@
       "currency": "USD",
       "timestamp": "2026-11-21T09:59:52.000+09:00"
     },
+    "SMR": {
+      "price": 3.42,
+      "currency": "USD",
+      "timestamp": "2026-11-21T09:58:46.000+09:00"
+    },
     "SNDK": {
       "price": 81.4,
       "currency": "USD",
@@ -191,10 +191,10 @@
       "currency": "USD",
       "timestamp": "2026-11-21T09:59:55.000+09:00"
     },
-    "SMR": {
-      "price": 3.42,
+    "ETHA": {
+      "price": 36.75,
       "currency": "USD",
-      "timestamp": "2026-11-21T09:58:46.000+09:00"
+      "timestamp": "2026-11-21T09:55:31.000+09:00"
     }
   },
   "fx": {
@@ -202,7 +202,7 @@
       "rate": 1348.5,
       "mid_rate": 1348.0,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-21T12:07:01+09:00"
+      "fetched_at": "2026-11-21T12:08:01+09:00"
     }
   }
 }
