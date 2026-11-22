@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-23T07:48:01+09:00",
+  "fetched_at": "2026-11-23T07:49:02+09:00",
   "quotes": {
     "000660": {
       "price": 1099000.0,
@@ -66,11 +66,6 @@
       "currency": "USD",
       "timestamp": "2026-11-21T09:59:49.000+09:00"
     },
-    "AMD": {
-      "price": 439.47,
-      "currency": "USD",
-      "timestamp": "2026-11-21T09:59:59.000+09:00"
-    },
     "ASML": {
       "price": 1292.0,
       "currency": "USD",
@@ -81,6 +76,11 @@
       "currency": "USD",
       "timestamp": "2026-11-21T09:59:37.000+09:00"
     },
+    "ETHA": {
+      "price": 36.75,
+      "currency": "USD",
+      "timestamp": "2026-11-21T09:55:31.000+09:00"
+    },
     "GOOGL": {
       "price": 270.18,
       "currency": "USD",
@@ -90,6 +90,11 @@
       "price": 130.45,
       "currency": "USD",
       "timestamp": "2026-11-21T09:59:49.000+09:00"
+    },
+    "LLY": {
+      "price": 1347.0,
+      "currency": "USD",
+      "timestamp": "2026-11-21T09:59:45.000+09:00"
     },
     "MRK": {
       "price": 133.75,
@@ -171,25 +176,20 @@
       "currency": "USD",
       "timestamp": "2026-11-21T09:59:47.000+09:00"
     },
-    "WDC": {
-      "price": 268.5,
-      "currency": "USD",
-      "timestamp": "2026-11-21T09:59:55.000+09:00"
-    },
-    "ETHA": {
-      "price": 36.75,
-      "currency": "USD",
-      "timestamp": "2026-11-21T09:55:31.000+09:00"
-    },
     "VST": {
       "price": 117.5,
       "currency": "USD",
       "timestamp": "2026-11-21T09:59:30.000+09:00"
     },
-    "LLY": {
-      "price": 1347.0,
+    "WDC": {
+      "price": 268.5,
       "currency": "USD",
-      "timestamp": "2026-11-21T09:59:45.000+09:00"
+      "timestamp": "2026-11-21T09:59:55.000+09:00"
+    },
+    "AMD": {
+      "price": 439.47,
+      "currency": "USD",
+      "timestamp": "2026-11-21T09:59:59.000+09:00"
     },
     "IBIT": {
       "price": 33.34,
@@ -202,7 +202,7 @@
       "rate": 1347.5,
       "mid_rate": 1347.0,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-23T07:48:01+09:00"
+      "fetched_at": "2026-11-23T07:49:02+09:00"
     }
   }
 }
