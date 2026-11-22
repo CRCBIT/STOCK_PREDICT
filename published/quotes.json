@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-23T07:45:02+09:00",
+  "fetched_at": "2026-11-23T07:46:01+09:00",
   "quotes": {
     "000660": {
       "price": 1099000.0,
@@ -91,11 +91,6 @@
       "currency": "USD",
       "timestamp": "2026-11-21T09:59:42.000+09:00"
     },
-    "KLAC": {
-      "price": 130.45,
-      "currency": "USD",
-      "timestamp": "2026-11-21T09:59:49.000+09:00"
-    },
     "LLY": {
       "price": 1347.0,
       "currency": "USD",
@@ -136,11 +131,6 @@
       "currency": "USD",
       "timestamp": "2026-11-21T09:58:58.000+09:00"
     },
-    "PFE": {
-      "price": 27.43,
-      "currency": "USD",
-      "timestamp": "2026-11-21T09:59:41.000+09:00"
-    },
     "PLTR": {
       "price": 145.74,
       "currency": "USD",
@@ -155,6 +145,11 @@
       "price": 3.42,
       "currency": "USD",
       "timestamp": "2026-11-21T09:58:46.000+09:00"
+    },
+    "SNDK": {
+      "price": 81.4,
+      "currency": "USD",
+      "timestamp": "2026-11-21T09:59:59.000+09:00"
     },
     "SPCX": {
       "price": 129.5557,
@@ -191,10 +186,15 @@
       "currency": "USD",
       "timestamp": "2026-11-21T09:55:31.000+09:00"
     },
-    "SNDK": {
-      "price": 81.4,
+    "PFE": {
+      "price": 27.43,
       "currency": "USD",
-      "timestamp": "2026-11-21T09:59:59.000+09:00"
+      "timestamp": "2026-11-21T09:59:41.000+09:00"
+    },
+    "KLAC": {
+      "price": 130.45,
+      "currency": "USD",
+      "timestamp": "2026-11-21T09:59:49.000+09:00"
     }
   },
   "fx": {
@@ -202,7 +202,7 @@
       "rate": 1347.5,
       "mid_rate": 1347.0,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-23T07:45:02+09:00"
+      "fetched_at": "2026-11-23T07:46:01+09:00"
     }
   }
 }
