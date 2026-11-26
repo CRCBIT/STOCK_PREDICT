@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-26T23:46:02+09:00",
+  "fetched_at": "2026-11-26T23:47:01+09:00",
   "quotes": {
     "000660": {
       "price": 1055000.0,
@@ -131,6 +131,11 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:45.000+09:00"
     },
+    "OKLO": {
+      "price": 19.89,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:59:12.000+09:00"
+    },
     "PFE": {
       "price": 28.48,
       "currency": "USD",
@@ -190,19 +195,14 @@
       "price": 38.3,
       "currency": "USD",
       "timestamp": "2026-11-26T09:58:55.000+09:00"
-    },
-    "OKLO": {
-      "price": 19.89,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:59:12.000+09:00"
     }
   },
   "fx": {
     "usdkrw": {
-      "rate": 1347.4,
-      "mid_rate": 1346.9,
+      "rate": 1347.24,
+      "mid_rate": 1346.74,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-26T23:46:02+09:00"
+      "fetched_at": "2026-11-26T23:47:01+09:00"
     }
   }
 }
