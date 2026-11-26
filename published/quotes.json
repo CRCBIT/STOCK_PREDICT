@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-26T23:06:01+09:00",
+  "fetched_at": "2026-11-26T23:07:01+09:00",
   "quotes": {
     "000660": {
       "price": 1055000.0,
@@ -85,16 +85,6 @@
       "price": 274.99,
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:56.000+09:00"
-    },
-    "IBIT": {
-      "price": 34.25,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:59:37.000+09:00"
-    },
-    "KLAC": {
-      "price": 136.0,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:58:59.000+09:00"
     },
     "LLY": {
       "price": 1395.4267,
@@ -195,14 +185,24 @@
       "price": 38.3,
       "currency": "USD",
       "timestamp": "2026-11-26T09:58:55.000+09:00"
+    },
+    "IBIT": {
+      "price": 34.25,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:59:37.000+09:00"
+    },
+    "KLAC": {
+      "price": 136.0,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:58:59.000+09:00"
     }
   },
   "fx": {
     "usdkrw": {
-      "rate": 1347.13,
-      "mid_rate": 1346.63,
+      "rate": 1347.15,
+      "mid_rate": 1346.65,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-26T23:06:01+09:00"
+      "fetched_at": "2026-11-26T23:07:01+09:00"
     }
   }
 }
