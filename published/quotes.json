@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-26T20:25:02+09:00",
+  "fetched_at": "2026-11-26T20:26:01+09:00",
   "quotes": {
     "000660": {
       "price": 1055000.0,
@@ -151,6 +151,11 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:57.000+09:00"
     },
+    "RAM": {
+      "price": 3.88,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:59:51.000+09:00"
+    },
     "SMR": {
       "price": 3.3,
       "currency": "USD",
@@ -165,11 +170,6 @@
       "price": 128.9594,
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:58.000+09:00"
-    },
-    "STX": {
-      "price": 483.01,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:59:14.000+09:00"
     },
     "TSLA": {
       "price": 383.28,
@@ -191,18 +191,18 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:57.000+09:00"
     },
-    "RAM": {
-      "price": 3.88,
+    "STX": {
+      "price": 483.01,
       "currency": "USD",
-      "timestamp": "2026-11-26T09:59:51.000+09:00"
+      "timestamp": "2026-11-26T09:59:14.000+09:00"
     }
   },
   "fx": {
     "usdkrw": {
-      "rate": 1347.85,
-      "mid_rate": 1347.35,
+      "rate": 1347.87,
+      "mid_rate": 1347.37,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-26T20:25:02+09:00"
+      "fetched_at": "2026-11-26T20:26:01+09:00"
     }
   }
 }
