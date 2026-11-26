@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-27T05:48:02+09:00",
+  "fetched_at": "2026-11-27T05:49:01+09:00",
   "quotes": {
     "000660": {
       "price": 1055000.0,
@@ -61,6 +61,11 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:54.000+09:00"
     },
+    "AMAT": {
+      "price": 315.1411,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:59:55.000+09:00"
+    },
     "AMD": {
       "price": 413.84,
       "currency": "USD",
@@ -71,10 +76,10 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:37.000+09:00"
     },
-    "CAT": {
-      "price": 549.75,
+    "ETHA": {
+      "price": 38.3,
       "currency": "USD",
-      "timestamp": "2026-11-26T09:59:55.000+09:00"
+      "timestamp": "2026-11-26T09:58:55.000+09:00"
     },
     "GOOGL": {
       "price": 274.99,
@@ -125,11 +130,6 @@
       "price": 40.9668,
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:45.000+09:00"
-    },
-    "OKLO": {
-      "price": 19.89,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:59:12.000+09:00"
     },
     "PFE": {
       "price": 28.48,
@@ -186,13 +186,13 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:57.000+09:00"
     },
-    "ETHA": {
-      "price": 38.3,
+    "OKLO": {
+      "price": 19.89,
       "currency": "USD",
-      "timestamp": "2026-11-26T09:58:55.000+09:00"
+      "timestamp": "2026-11-26T09:59:12.000+09:00"
     },
-    "AMAT": {
-      "price": 315.1411,
+    "CAT": {
+      "price": 549.75,
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:55.000+09:00"
     }
@@ -202,7 +202,7 @@
       "rate": 1346.0,
       "mid_rate": 1345.5,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-27T05:48:02+09:00"
+      "fetched_at": "2026-11-27T05:49:01+09:00"
     }
   }
 }
