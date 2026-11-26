@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-26T21:57:02+09:00",
+  "fetched_at": "2026-11-26T21:58:02+09:00",
   "quotes": {
     "000660": {
       "price": 1055000.0,
@@ -101,11 +101,6 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:58:44.000+09:00"
     },
-    "MRNA": {
-      "price": 222.5,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:59:49.000+09:00"
-    },
     "MSFT": {
       "price": 491.59,
       "currency": "USD",
@@ -166,11 +161,6 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:14.000+09:00"
     },
-    "TSLA": {
-      "price": 383.28,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:59:54.000+09:00"
-    },
     "TSM": {
       "price": 347.2,
       "currency": "USD",
@@ -186,10 +176,20 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:57.000+09:00"
     },
+    "MRNA": {
+      "price": 222.5,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:59:49.000+09:00"
+    },
     "ETHA": {
       "price": 38.3,
       "currency": "USD",
       "timestamp": "2026-11-26T09:58:55.000+09:00"
+    },
+    "TSLA": {
+      "price": 383.28,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:59:54.000+09:00"
     },
     "IBIT": {
       "price": 34.25,
@@ -199,10 +199,10 @@
   },
   "fx": {
     "usdkrw": {
-      "rate": 1348.15,
-      "mid_rate": 1347.65,
+      "rate": 1348.17,
+      "mid_rate": 1347.67,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-26T21:57:02+09:00"
+      "fetched_at": "2026-11-26T21:58:02+09:00"
     }
   }
 }
