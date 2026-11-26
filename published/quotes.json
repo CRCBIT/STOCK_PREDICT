@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-26T22:56:02+09:00",
+  "fetched_at": "2026-11-26T22:57:02+09:00",
   "quotes": {
     "000660": {
       "price": 1055000.0,
@@ -96,16 +96,6 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:51.000+09:00"
     },
-    "MRK": {
-      "price": 140.84,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:58:44.000+09:00"
-    },
-    "MRNA": {
-      "price": 222.5,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:59:49.000+09:00"
-    },
     "MSFT": {
       "price": 491.59,
       "currency": "USD",
@@ -181,15 +171,25 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:34.000+09:00"
     },
-    "WDC": {
-      "price": 277.0,
+    "MRNA": {
+      "price": 222.5,
       "currency": "USD",
-      "timestamp": "2026-11-26T09:59:57.000+09:00"
+      "timestamp": "2026-11-26T09:59:49.000+09:00"
     },
     "ETHA": {
       "price": 38.3,
       "currency": "USD",
       "timestamp": "2026-11-26T09:58:55.000+09:00"
+    },
+    "MRK": {
+      "price": 140.84,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:58:44.000+09:00"
+    },
+    "WDC": {
+      "price": 277.0,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:59:57.000+09:00"
     },
     "IBIT": {
       "price": 34.25,
@@ -199,10 +199,10 @@
   },
   "fx": {
     "usdkrw": {
-      "rate": 1347.1,
-      "mid_rate": 1346.6,
+      "rate": 1347.02,
+      "mid_rate": 1346.52,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-26T22:56:02+09:00"
+      "fetched_at": "2026-11-26T22:57:02+09:00"
     }
   }
 }
