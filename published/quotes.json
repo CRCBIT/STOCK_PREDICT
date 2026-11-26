@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-26T22:53:02+09:00",
+  "fetched_at": "2026-11-26T22:54:02+09:00",
   "quotes": {
     "000660": {
       "price": 1055000.0,
@@ -111,11 +111,6 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:58:44.000+09:00"
     },
-    "MRNA": {
-      "price": 222.5,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:59:49.000+09:00"
-    },
     "MSFT": {
       "price": 491.59,
       "currency": "USD",
@@ -191,6 +186,11 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:57.000+09:00"
     },
+    "MRNA": {
+      "price": 222.5,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:59:49.000+09:00"
+    },
     "NVO": {
       "price": 40.9668,
       "currency": "USD",
@@ -199,10 +199,10 @@
   },
   "fx": {
     "usdkrw": {
-      "rate": 1347.03,
-      "mid_rate": 1346.53,
+      "rate": 1346.98,
+      "mid_rate": 1346.48,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-26T22:53:02+09:00"
+      "fetched_at": "2026-11-26T22:54:02+09:00"
     }
   }
 }
