@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-27T07:07:01+09:00",
+  "fetched_at": "2026-11-27T07:08:02+09:00",
   "quotes": {
     "000660": {
       "price": 1055000.0,
@@ -131,6 +131,11 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:59.000+09:00"
     },
+    "NVO": {
+      "price": 40.9668,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:59:45.000+09:00"
+    },
     "OKLO": {
       "price": 19.89,
       "currency": "USD",
@@ -140,6 +145,11 @@
       "price": 28.48,
       "currency": "USD",
       "timestamp": "2026-11-26T09:58:18.000+09:00"
+    },
+    "PLTR": {
+      "price": 165.35,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:59:57.000+09:00"
     },
     "RAM": {
       "price": 3.88,
@@ -166,11 +176,6 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:14.000+09:00"
     },
-    "TSLA": {
-      "price": 383.28,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:59:54.000+09:00"
-    },
     "TSM": {
       "price": 347.2,
       "currency": "USD",
@@ -186,15 +191,10 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:57.000+09:00"
     },
-    "NVO": {
-      "price": 40.9668,
+    "TSLA": {
+      "price": 383.28,
       "currency": "USD",
-      "timestamp": "2026-11-26T09:59:45.000+09:00"
-    },
-    "PLTR": {
-      "price": 165.35,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:59:57.000+09:00"
+      "timestamp": "2026-11-26T09:59:54.000+09:00"
     }
   },
   "fx": {
@@ -202,7 +202,7 @@
       "rate": 1346.0,
       "mid_rate": 1345.5,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-27T07:07:01+09:00"
+      "fetched_at": "2026-11-27T07:08:02+09:00"
     }
   }
 }
