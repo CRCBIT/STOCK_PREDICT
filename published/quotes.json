@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-27T02:09:01+09:00",
+  "fetched_at": "2026-11-27T02:10:01+09:00",
   "quotes": {
     "000660": {
       "price": 1055000.0,
@@ -56,6 +56,11 @@
       "currency": "KRW",
       "timestamp": "2026-11-26T19:59:58.000+09:00"
     },
+    "AAPL": {
+      "price": 355.14,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:59:54.000+09:00"
+    },
     "AMAT": {
       "price": 315.1411,
       "currency": "USD",
@@ -71,25 +76,10 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:37.000+09:00"
     },
-    "CAT": {
-      "price": 549.75,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:59:55.000+09:00"
-    },
-    "ETHA": {
-      "price": 38.3,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:58:55.000+09:00"
-    },
     "GOOGL": {
       "price": 274.99,
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:56.000+09:00"
-    },
-    "IBIT": {
-      "price": 34.25,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:59:37.000+09:00"
     },
     "KLAC": {
       "price": 136.0,
@@ -125,11 +115,6 @@
       "price": 151.23,
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:59.000+09:00"
-    },
-    "NVO": {
-      "price": 40.9668,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:59:45.000+09:00"
     },
     "OKLO": {
       "price": 19.89,
@@ -191,10 +176,25 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:57.000+09:00"
     },
-    "AAPL": {
-      "price": 355.14,
+    "NVO": {
+      "price": 40.9668,
       "currency": "USD",
-      "timestamp": "2026-11-26T09:59:54.000+09:00"
+      "timestamp": "2026-11-26T09:59:45.000+09:00"
+    },
+    "ETHA": {
+      "price": 38.3,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:58:55.000+09:00"
+    },
+    "CAT": {
+      "price": 549.75,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:59:55.000+09:00"
+    },
+    "IBIT": {
+      "price": 34.25,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:59:37.000+09:00"
     }
   },
   "fx": {
@@ -202,7 +202,7 @@
       "rate": 1347.64,
       "mid_rate": 1347.14,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-27T02:09:01+09:00"
+      "fetched_at": "2026-11-27T02:10:01+09:00"
     }
   }
 }
