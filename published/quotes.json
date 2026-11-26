@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-27T02:08:02+09:00",
+  "fetched_at": "2026-11-27T02:09:01+09:00",
   "quotes": {
     "000660": {
       "price": 1055000.0,
@@ -56,10 +56,10 @@
       "currency": "KRW",
       "timestamp": "2026-11-26T19:59:58.000+09:00"
     },
-    "AAPL": {
-      "price": 355.14,
+    "AMAT": {
+      "price": 315.1411,
       "currency": "USD",
-      "timestamp": "2026-11-26T09:59:54.000+09:00"
+      "timestamp": "2026-11-26T09:59:55.000+09:00"
     },
     "AMD": {
       "price": 413.84,
@@ -146,6 +146,16 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:57.000+09:00"
     },
+    "RAM": {
+      "price": 3.88,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:59:51.000+09:00"
+    },
+    "SMR": {
+      "price": 3.3,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:57:34.000+09:00"
+    },
     "SNDK": {
       "price": 76.6789,
       "currency": "USD",
@@ -181,28 +191,18 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:57.000+09:00"
     },
-    "SMR": {
-      "price": 3.3,
+    "AAPL": {
+      "price": 355.14,
       "currency": "USD",
-      "timestamp": "2026-11-26T09:57:34.000+09:00"
-    },
-    "RAM": {
-      "price": 3.88,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:59:51.000+09:00"
-    },
-    "AMAT": {
-      "price": 315.1411,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:59:55.000+09:00"
+      "timestamp": "2026-11-26T09:59:54.000+09:00"
     }
   },
   "fx": {
     "usdkrw": {
-      "rate": 1347.65,
-      "mid_rate": 1347.15,
+      "rate": 1347.64,
+      "mid_rate": 1347.14,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-27T02:08:02+09:00"
+      "fetched_at": "2026-11-27T02:09:01+09:00"
     }
   }
 }
