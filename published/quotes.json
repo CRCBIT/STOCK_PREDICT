@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-27T04:31:01+09:00",
+  "fetched_at": "2026-11-27T04:32:01+09:00",
   "quotes": {
     "000660": {
       "price": 1055000.0,
@@ -71,6 +71,11 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:49.000+09:00"
     },
+    "ASML": {
+      "price": 1313.8793,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:59:37.000+09:00"
+    },
     "CAT": {
       "price": 549.75,
       "currency": "USD",
@@ -121,16 +126,6 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:45.000+09:00"
     },
-    "OKLO": {
-      "price": 19.89,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:59:12.000+09:00"
-    },
-    "PFE": {
-      "price": 28.48,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:58:18.000+09:00"
-    },
     "PLTR": {
       "price": 165.35,
       "currency": "USD",
@@ -176,20 +171,25 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:34.000+09:00"
     },
-    "WDC": {
-      "price": 277.0,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:59:57.000+09:00"
-    },
     "ETHA": {
       "price": 38.3,
       "currency": "USD",
       "timestamp": "2026-11-26T09:58:55.000+09:00"
     },
-    "ASML": {
-      "price": 1313.8793,
+    "OKLO": {
+      "price": 19.89,
       "currency": "USD",
-      "timestamp": "2026-11-26T09:59:37.000+09:00"
+      "timestamp": "2026-11-26T09:59:12.000+09:00"
+    },
+    "WDC": {
+      "price": 277.0,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:59:57.000+09:00"
+    },
+    "PFE": {
+      "price": 28.48,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:58:18.000+09:00"
     },
     "IBIT": {
       "price": 34.25,
@@ -202,7 +202,7 @@
       "rate": 1347.3,
       "mid_rate": 1346.8,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-27T04:31:01+09:00"
+      "fetched_at": "2026-11-27T04:32:01+09:00"
     }
   }
 }
