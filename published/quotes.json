@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-27T03:48:01+09:00",
+  "fetched_at": "2026-11-27T03:49:01+09:00",
   "quotes": {
     "000660": {
       "price": 1055000.0,
@@ -76,20 +76,15 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:37.000+09:00"
     },
-    "ETHA": {
-      "price": 38.3,
+    "CAT": {
+      "price": 549.75,
       "currency": "USD",
-      "timestamp": "2026-11-26T09:58:55.000+09:00"
+      "timestamp": "2026-11-26T09:59:55.000+09:00"
     },
     "GOOGL": {
       "price": 274.99,
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:56.000+09:00"
-    },
-    "IBIT": {
-      "price": 34.25,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:59:37.000+09:00"
     },
     "KLAC": {
       "price": 136.0,
@@ -136,11 +131,6 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:57.000+09:00"
     },
-    "RAM": {
-      "price": 3.88,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:59:51.000+09:00"
-    },
     "SMR": {
       "price": 3.3,
       "currency": "USD",
@@ -171,38 +161,48 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:59.000+09:00"
     },
-    "VST": {
-      "price": 122.6,
+    "WDC": {
+      "price": 277.0,
       "currency": "USD",
-      "timestamp": "2026-11-26T09:59:34.000+09:00"
+      "timestamp": "2026-11-26T09:59:57.000+09:00"
     },
     "NVO": {
       "price": 40.9668,
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:45.000+09:00"
     },
-    "WDC": {
-      "price": 277.0,
+    "ETHA": {
+      "price": 38.3,
       "currency": "USD",
-      "timestamp": "2026-11-26T09:59:57.000+09:00"
+      "timestamp": "2026-11-26T09:58:55.000+09:00"
     },
-    "CAT": {
-      "price": 549.75,
+    "VST": {
+      "price": 122.6,
       "currency": "USD",
-      "timestamp": "2026-11-26T09:59:55.000+09:00"
+      "timestamp": "2026-11-26T09:59:34.000+09:00"
+    },
+    "RAM": {
+      "price": 3.88,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:59:51.000+09:00"
     },
     "PFE": {
       "price": 28.48,
       "currency": "USD",
       "timestamp": "2026-11-26T09:58:18.000+09:00"
+    },
+    "IBIT": {
+      "price": 34.25,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:59:37.000+09:00"
     }
   },
   "fx": {
     "usdkrw": {
-      "rate": 1347.72,
-      "mid_rate": 1347.22,
+      "rate": 1347.7,
+      "mid_rate": 1347.2,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-27T03:48:01+09:00"
+      "fetched_at": "2026-11-27T03:49:01+09:00"
     }
   }
 }
