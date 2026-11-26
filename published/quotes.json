@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-27T04:58:01+09:00",
+  "fetched_at": "2026-11-27T04:59:01+09:00",
   "quotes": {
     "000660": {
       "price": 1055000.0,
@@ -136,6 +136,11 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:57.000+09:00"
     },
+    "RAM": {
+      "price": 3.88,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:59:51.000+09:00"
+    },
     "SMR": {
       "price": 3.3,
       "currency": "USD",
@@ -181,11 +186,6 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:58:55.000+09:00"
     },
-    "RAM": {
-      "price": 3.88,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:59:51.000+09:00"
-    },
     "CAT": {
       "price": 549.75,
       "currency": "USD",
@@ -202,7 +202,7 @@
       "rate": 1347.07,
       "mid_rate": 1346.57,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-27T04:58:01+09:00"
+      "fetched_at": "2026-11-27T04:59:01+09:00"
     }
   }
 }
