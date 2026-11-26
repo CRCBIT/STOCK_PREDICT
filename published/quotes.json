@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-27T03:54:01+09:00",
+  "fetched_at": "2026-11-27T03:55:02+09:00",
   "quotes": {
     "000660": {
       "price": 1055000.0,
@@ -81,11 +81,6 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:55.000+09:00"
     },
-    "ETHA": {
-      "price": 38.3,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:58:55.000+09:00"
-    },
     "GOOGL": {
       "price": 274.99,
       "currency": "USD",
@@ -131,6 +126,11 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:59.000+09:00"
     },
+    "NVO": {
+      "price": 40.9668,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:59:45.000+09:00"
+    },
     "OKLO": {
       "price": 19.89,
       "currency": "USD",
@@ -156,16 +156,6 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:59.000+09:00"
     },
-    "SPCX": {
-      "price": 128.9594,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:59:58.000+09:00"
-    },
-    "STX": {
-      "price": 483.01,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:59:14.000+09:00"
-    },
     "TSLA": {
       "price": 383.28,
       "currency": "USD",
@@ -186,10 +176,20 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:57.000+09:00"
     },
-    "NVO": {
-      "price": 40.9668,
+    "SPCX": {
+      "price": 128.9594,
       "currency": "USD",
-      "timestamp": "2026-11-26T09:59:45.000+09:00"
+      "timestamp": "2026-11-26T09:59:58.000+09:00"
+    },
+    "ETHA": {
+      "price": 38.3,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:58:55.000+09:00"
+    },
+    "STX": {
+      "price": 483.01,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:59:14.000+09:00"
     },
     "PFE": {
       "price": 28.48,
@@ -199,10 +199,10 @@
   },
   "fx": {
     "usdkrw": {
-      "rate": 1347.57,
-      "mid_rate": 1347.07,
+      "rate": 1347.62,
+      "mid_rate": 1347.12,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-27T03:54:01+09:00"
+      "fetched_at": "2026-11-27T03:55:02+09:00"
     }
   }
 }
