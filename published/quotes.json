@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-27T00:58:02+09:00",
+  "fetched_at": "2026-11-27T00:59:02+09:00",
   "quotes": {
     "000660": {
       "price": 1055000.0,
@@ -176,11 +176,6 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:59.000+09:00"
     },
-    "ETHA": {
-      "price": 38.3,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:58:55.000+09:00"
-    },
     "VST": {
       "price": 122.6,
       "currency": "USD",
@@ -191,6 +186,11 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:57.000+09:00"
     },
+    "ETHA": {
+      "price": 38.3,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:58:55.000+09:00"
+    },
     "IBIT": {
       "price": 34.25,
       "currency": "USD",
@@ -199,10 +199,10 @@
   },
   "fx": {
     "usdkrw": {
-      "rate": 1347.54,
-      "mid_rate": 1347.04,
+      "rate": 1347.75,
+      "mid_rate": 1347.25,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-27T00:58:02+09:00"
+      "fetched_at": "2026-11-27T00:59:02+09:00"
     }
   }
 }
