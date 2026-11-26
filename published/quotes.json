@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-27T05:07:02+09:00",
+  "fetched_at": "2026-11-27T05:08:01+09:00",
   "quotes": {
     "000660": {
       "price": 1055000.0,
@@ -61,6 +61,11 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:54.000+09:00"
     },
+    "AMAT": {
+      "price": 315.1411,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:59:55.000+09:00"
+    },
     "AMD": {
       "price": 413.84,
       "currency": "USD",
@@ -70,11 +75,6 @@
       "price": 1313.8793,
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:37.000+09:00"
-    },
-    "CAT": {
-      "price": 549.75,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:59:55.000+09:00"
     },
     "GOOGL": {
       "price": 274.99,
@@ -96,11 +96,6 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:51.000+09:00"
     },
-    "MRK": {
-      "price": 140.84,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:58:44.000+09:00"
-    },
     "MRNA": {
       "price": 222.5,
       "currency": "USD",
@@ -113,6 +108,11 @@
     },
     "MU": {
       "price": 615.21,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:59:59.000+09:00"
+    },
+    "NVDA": {
+      "price": 151.23,
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:59.000+09:00"
     },
@@ -156,20 +156,10 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:58.000+09:00"
     },
-    "STX": {
-      "price": 483.01,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:59:14.000+09:00"
-    },
     "TSLA": {
       "price": 383.28,
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:54.000+09:00"
-    },
-    "TSM": {
-      "price": 347.2,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:59:59.000+09:00"
     },
     "VST": {
       "price": 122.6,
@@ -181,18 +171,28 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:57.000+09:00"
     },
-    "NVDA": {
-      "price": 151.23,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:59:59.000+09:00"
-    },
     "ETHA": {
       "price": 38.3,
       "currency": "USD",
       "timestamp": "2026-11-26T09:58:55.000+09:00"
     },
-    "AMAT": {
-      "price": 315.1411,
+    "STX": {
+      "price": 483.01,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:59:14.000+09:00"
+    },
+    "MRK": {
+      "price": 140.84,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:58:44.000+09:00"
+    },
+    "TSM": {
+      "price": 347.2,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:59:59.000+09:00"
+    },
+    "CAT": {
+      "price": 549.75,
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:55.000+09:00"
     }
@@ -202,7 +202,7 @@
       "rate": 1347.1,
       "mid_rate": 1346.6,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-27T05:07:02+09:00"
+      "fetched_at": "2026-11-27T05:08:01+09:00"
     }
   }
 }
