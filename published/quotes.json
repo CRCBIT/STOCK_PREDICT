@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-26T15:27:02+09:00",
+  "fetched_at": "2026-11-26T15:28:02+09:00",
   "quotes": {
     "000660": {
       "price": 1053000.0,
@@ -116,11 +116,6 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:59.000+09:00"
     },
-    "NVO": {
-      "price": 40.9668,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:59:45.000+09:00"
-    },
     "OKLO": {
       "price": 19.89,
       "currency": "USD",
@@ -181,6 +176,11 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:57.000+09:00"
     },
+    "NVO": {
+      "price": 40.9668,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:59:45.000+09:00"
+    },
     "ETHA": {
       "price": 38.3,
       "currency": "USD",
@@ -199,10 +199,10 @@
   },
   "fx": {
     "usdkrw": {
-      "rate": 1343.1,
-      "mid_rate": 1342.95,
+      "rate": 1342.9,
+      "mid_rate": 1342.75,
       "basis_point": 1.0,
-      "fetched_at": "2026-11-26T15:27:02+09:00"
+      "fetched_at": "2026-11-26T15:28:02+09:00"
     }
   }
 }
