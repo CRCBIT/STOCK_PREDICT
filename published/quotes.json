@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-26T21:59:01+09:00",
+  "fetched_at": "2026-11-26T22:00:02+09:00",
   "quotes": {
     "000660": {
       "price": 1055000.0,
@@ -75,6 +75,16 @@
       "price": 1313.8793,
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:37.000+09:00"
+    },
+    "CAT": {
+      "price": 549.75,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:59:55.000+09:00"
+    },
+    "ETHA": {
+      "price": 38.3,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:58:55.000+09:00"
     },
     "GOOGL": {
       "price": 274.99,
@@ -161,11 +171,6 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:58.000+09:00"
     },
-    "STX": {
-      "price": 483.01,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:59:14.000+09:00"
-    },
     "TSLA": {
       "price": 383.28,
       "currency": "USD",
@@ -186,23 +191,18 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:57.000+09:00"
     },
-    "ETHA": {
-      "price": 38.3,
+    "STX": {
+      "price": 483.01,
       "currency": "USD",
-      "timestamp": "2026-11-26T09:58:55.000+09:00"
-    },
-    "CAT": {
-      "price": 549.75,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:59:55.000+09:00"
+      "timestamp": "2026-11-26T09:59:14.000+09:00"
     }
   },
   "fx": {
     "usdkrw": {
-      "rate": 1348.19,
-      "mid_rate": 1347.69,
+      "rate": 1348.1,
+      "mid_rate": 1347.6,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-26T21:59:01+09:00"
+      "fetched_at": "2026-11-26T22:00:02+09:00"
     }
   }
 }
