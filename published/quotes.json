@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-27T04:20:01+09:00",
+  "fetched_at": "2026-11-27T04:21:01+09:00",
   "quotes": {
     "000660": {
       "price": 1055000.0,
@@ -61,40 +61,20 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:54.000+09:00"
     },
-    "AMAT": {
-      "price": 315.1411,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:59:55.000+09:00"
-    },
     "AMD": {
       "price": 413.84,
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:49.000+09:00"
-    },
-    "ASML": {
-      "price": 1313.8793,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:59:37.000+09:00"
     },
     "CAT": {
       "price": 549.75,
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:55.000+09:00"
     },
-    "ETHA": {
-      "price": 38.3,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:58:55.000+09:00"
-    },
     "GOOGL": {
       "price": 274.99,
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:56.000+09:00"
-    },
-    "IBIT": {
-      "price": 34.25,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:59:37.000+09:00"
     },
     "KLAC": {
       "price": 136.0,
@@ -195,14 +175,34 @@
       "price": 277.0,
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:57.000+09:00"
+    },
+    "ETHA": {
+      "price": 38.3,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:58:55.000+09:00"
+    },
+    "ASML": {
+      "price": 1313.8793,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:59:37.000+09:00"
+    },
+    "AMAT": {
+      "price": 315.1411,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:59:55.000+09:00"
+    },
+    "IBIT": {
+      "price": 34.25,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:59:37.000+09:00"
     }
   },
   "fx": {
     "usdkrw": {
-      "rate": 1347.25,
-      "mid_rate": 1346.75,
+      "rate": 1347.28,
+      "mid_rate": 1346.78,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-27T04:20:01+09:00"
+      "fetched_at": "2026-11-27T04:21:01+09:00"
     }
   }
 }
