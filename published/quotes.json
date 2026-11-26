@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-26T21:39:02+09:00",
+  "fetched_at": "2026-11-26T21:40:02+09:00",
   "quotes": {
     "000660": {
       "price": 1055000.0,
@@ -96,10 +96,20 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:37.000+09:00"
     },
+    "KLAC": {
+      "price": 136.0,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:58:59.000+09:00"
+    },
     "LLY": {
       "price": 1395.4267,
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:51.000+09:00"
+    },
+    "MRK": {
+      "price": 140.84,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:58:44.000+09:00"
     },
     "MRNA": {
       "price": 222.5,
@@ -185,24 +195,14 @@
       "price": 277.0,
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:57.000+09:00"
-    },
-    "MRK": {
-      "price": 140.84,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:58:44.000+09:00"
-    },
-    "KLAC": {
-      "price": 136.0,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:58:59.000+09:00"
     }
   },
   "fx": {
     "usdkrw": {
-      "rate": 1348.48,
-      "mid_rate": 1347.98,
+      "rate": 1348.49,
+      "mid_rate": 1347.99,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-26T21:39:02+09:00"
+      "fetched_at": "2026-11-26T21:40:02+09:00"
     }
   }
 }
