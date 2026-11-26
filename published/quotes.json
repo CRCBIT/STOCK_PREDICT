@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-27T00:17:02+09:00",
+  "fetched_at": "2026-11-27T00:18:01+09:00",
   "quotes": {
     "000660": {
       "price": 1055000.0,
@@ -76,11 +76,6 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:37.000+09:00"
     },
-    "CAT": {
-      "price": 549.75,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:59:55.000+09:00"
-    },
     "GOOGL": {
       "price": 274.99,
       "currency": "USD",
@@ -121,11 +116,6 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:59.000+09:00"
     },
-    "NVO": {
-      "price": 40.9668,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:59:45.000+09:00"
-    },
     "OKLO": {
       "price": 19.89,
       "currency": "USD",
@@ -161,6 +151,11 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:58.000+09:00"
     },
+    "STX": {
+      "price": 483.01,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:59:14.000+09:00"
+    },
     "TSLA": {
       "price": 383.28,
       "currency": "USD",
@@ -181,15 +176,20 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:57.000+09:00"
     },
+    "NVO": {
+      "price": 40.9668,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:59:45.000+09:00"
+    },
     "ETHA": {
       "price": 38.3,
       "currency": "USD",
       "timestamp": "2026-11-26T09:58:55.000+09:00"
     },
-    "STX": {
-      "price": 483.01,
+    "CAT": {
+      "price": 549.75,
       "currency": "USD",
-      "timestamp": "2026-11-26T09:59:14.000+09:00"
+      "timestamp": "2026-11-26T09:59:55.000+09:00"
     },
     "IBIT": {
       "price": 34.25,
@@ -199,10 +199,10 @@
   },
   "fx": {
     "usdkrw": {
-      "rate": 1347.88,
-      "mid_rate": 1347.38,
+      "rate": 1348.14,
+      "mid_rate": 1347.64,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-27T00:17:02+09:00"
+      "fetched_at": "2026-11-27T00:18:01+09:00"
     }
   }
 }
