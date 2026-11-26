@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-27T01:43:02+09:00",
+  "fetched_at": "2026-11-27T01:44:02+09:00",
   "quotes": {
     "000660": {
       "price": 1055000.0,
@@ -61,25 +61,10 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:54.000+09:00"
     },
-    "AMAT": {
-      "price": 315.1411,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:59:55.000+09:00"
-    },
     "AMD": {
       "price": 413.84,
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:49.000+09:00"
-    },
-    "ASML": {
-      "price": 1313.8793,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:59:37.000+09:00"
-    },
-    "CAT": {
-      "price": 549.75,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:59:55.000+09:00"
     },
     "ETHA": {
       "price": 38.3,
@@ -95,6 +80,11 @@
       "price": 34.25,
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:37.000+09:00"
+    },
+    "KLAC": {
+      "price": 136.0,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:58:59.000+09:00"
     },
     "LLY": {
       "price": 1395.4267,
@@ -191,18 +181,28 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:49.000+09:00"
     },
-    "KLAC": {
-      "price": 136.0,
+    "ASML": {
+      "price": 1313.8793,
       "currency": "USD",
-      "timestamp": "2026-11-26T09:58:59.000+09:00"
+      "timestamp": "2026-11-26T09:59:37.000+09:00"
+    },
+    "CAT": {
+      "price": 549.75,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:59:55.000+09:00"
+    },
+    "AMAT": {
+      "price": 315.1411,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:59:55.000+09:00"
     }
   },
   "fx": {
     "usdkrw": {
-      "rate": 1347.74,
-      "mid_rate": 1347.24,
+      "rate": 1347.72,
+      "mid_rate": 1347.22,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-27T01:43:02+09:00"
+      "fetched_at": "2026-11-27T01:44:02+09:00"
     }
   }
 }
