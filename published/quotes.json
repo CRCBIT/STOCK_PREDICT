@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-27T05:00:02+09:00",
+  "fetched_at": "2026-11-27T05:01:02+09:00",
   "quotes": {
     "000660": {
       "price": 1055000.0,
@@ -81,11 +81,6 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:55.000+09:00"
     },
-    "ETHA": {
-      "price": 38.3,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:58:55.000+09:00"
-    },
     "GOOGL": {
       "price": 274.99,
       "currency": "USD",
@@ -136,20 +131,10 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:12.000+09:00"
     },
-    "PFE": {
-      "price": 28.48,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:58:18.000+09:00"
-    },
     "PLTR": {
       "price": 165.35,
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:57.000+09:00"
-    },
-    "RAM": {
-      "price": 3.88,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:59:51.000+09:00"
     },
     "SMR": {
       "price": 3.3,
@@ -191,6 +176,21 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:57.000+09:00"
     },
+    "ETHA": {
+      "price": 38.3,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:58:55.000+09:00"
+    },
+    "RAM": {
+      "price": 3.88,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:59:51.000+09:00"
+    },
+    "PFE": {
+      "price": 28.48,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:58:18.000+09:00"
+    },
     "IBIT": {
       "price": 34.25,
       "currency": "USD",
@@ -199,10 +199,10 @@
   },
   "fx": {
     "usdkrw": {
-      "rate": 1347.25,
-      "mid_rate": 1346.75,
+      "rate": 1346.82,
+      "mid_rate": 1346.32,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-27T05:00:02+09:00"
+      "fetched_at": "2026-11-27T05:01:02+09:00"
     }
   }
 }
