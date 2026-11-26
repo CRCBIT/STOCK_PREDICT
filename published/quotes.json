@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-26T21:23:02+09:00",
+  "fetched_at": "2026-11-26T21:24:02+09:00",
   "quotes": {
     "000660": {
       "price": 1055000.0,
@@ -146,6 +146,11 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:51.000+09:00"
     },
+    "SMR": {
+      "price": 3.3,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:57:34.000+09:00"
+    },
     "SNDK": {
       "price": 76.6789,
       "currency": "USD",
@@ -181,11 +186,6 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:57.000+09:00"
     },
-    "SMR": {
-      "price": 3.3,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:57:34.000+09:00"
-    },
     "ETHA": {
       "price": 38.3,
       "currency": "USD",
@@ -199,10 +199,10 @@
   },
   "fx": {
     "usdkrw": {
-      "rate": 1348.25,
-      "mid_rate": 1347.75,
+      "rate": 1348.29,
+      "mid_rate": 1347.79,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-26T21:23:02+09:00"
+      "fetched_at": "2026-11-26T21:24:02+09:00"
     }
   }
 }
