@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-26T20:51:02+09:00",
+  "fetched_at": "2026-11-26T20:52:02+09:00",
   "quotes": {
     "000660": {
       "price": 1055000.0,
@@ -91,11 +91,6 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:56.000+09:00"
     },
-    "IBIT": {
-      "price": 34.25,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:59:37.000+09:00"
-    },
     "KLAC": {
       "price": 136.0,
       "currency": "USD",
@@ -130,11 +125,6 @@
       "price": 151.23,
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:59.000+09:00"
-    },
-    "NVO": {
-      "price": 40.9668,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:59:45.000+09:00"
     },
     "OKLO": {
       "price": 19.89,
@@ -195,14 +185,24 @@
       "price": 277.0,
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:57.000+09:00"
+    },
+    "NVO": {
+      "price": 40.9668,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:59:45.000+09:00"
+    },
+    "IBIT": {
+      "price": 34.25,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:59:37.000+09:00"
     }
   },
   "fx": {
     "usdkrw": {
-      "rate": 1348.32,
-      "mid_rate": 1347.82,
+      "rate": 1348.27,
+      "mid_rate": 1347.77,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-26T20:51:02+09:00"
+      "fetched_at": "2026-11-26T20:52:02+09:00"
     }
   }
 }
