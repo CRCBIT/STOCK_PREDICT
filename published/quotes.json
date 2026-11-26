@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-27T01:17:01+09:00",
+  "fetched_at": "2026-11-27T01:18:02+09:00",
   "quotes": {
     "000660": {
       "price": 1055000.0,
@@ -131,6 +131,11 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:12.000+09:00"
     },
+    "PFE": {
+      "price": 28.48,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:58:18.000+09:00"
+    },
     "PLTR": {
       "price": 165.35,
       "currency": "USD",
@@ -186,11 +191,6 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:58:55.000+09:00"
     },
-    "PFE": {
-      "price": 28.48,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:58:18.000+09:00"
-    },
     "IBIT": {
       "price": 34.25,
       "currency": "USD",
@@ -202,7 +202,7 @@
       "rate": 1347.85,
       "mid_rate": 1347.35,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-27T01:17:01+09:00"
+      "fetched_at": "2026-11-27T01:18:02+09:00"
     }
   }
 }
