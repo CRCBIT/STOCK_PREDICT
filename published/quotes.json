@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-26T23:50:02+09:00",
+  "fetched_at": "2026-11-26T23:51:02+09:00",
   "quotes": {
     "000660": {
       "price": 1055000.0,
@@ -76,6 +76,11 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:37.000+09:00"
     },
+    "CAT": {
+      "price": 549.75,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:59:55.000+09:00"
+    },
     "GOOGL": {
       "price": 274.99,
       "currency": "USD",
@@ -131,11 +136,6 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:12.000+09:00"
     },
-    "PFE": {
-      "price": 28.48,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:58:18.000+09:00"
-    },
     "PLTR": {
       "price": 165.35,
       "currency": "USD",
@@ -160,11 +160,6 @@
       "price": 128.9594,
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:58.000+09:00"
-    },
-    "STX": {
-      "price": 483.01,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:59:14.000+09:00"
     },
     "TSLA": {
       "price": 383.28,
@@ -191,18 +186,23 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:58:55.000+09:00"
     },
-    "CAT": {
-      "price": 549.75,
+    "STX": {
+      "price": 483.01,
       "currency": "USD",
-      "timestamp": "2026-11-26T09:59:55.000+09:00"
+      "timestamp": "2026-11-26T09:59:14.000+09:00"
+    },
+    "PFE": {
+      "price": 28.48,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:58:18.000+09:00"
     }
   },
   "fx": {
     "usdkrw": {
-      "rate": 1347.35,
-      "mid_rate": 1346.85,
+      "rate": 1347.32,
+      "mid_rate": 1346.82,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-26T23:50:02+09:00"
+      "fetched_at": "2026-11-26T23:51:02+09:00"
     }
   }
 }
