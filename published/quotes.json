@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-27T03:23:01+09:00",
+  "fetched_at": "2026-11-27T03:24:01+09:00",
   "quotes": {
     "000660": {
       "price": 1055000.0,
@@ -61,30 +61,25 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:54.000+09:00"
     },
+    "AMAT": {
+      "price": 315.1411,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:59:55.000+09:00"
+    },
     "AMD": {
       "price": 413.84,
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:49.000+09:00"
     },
-    "ASML": {
-      "price": 1313.8793,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:59:37.000+09:00"
-    },
-    "CAT": {
-      "price": 549.75,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:59:55.000+09:00"
-    },
-    "ETHA": {
-      "price": 38.3,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:58:55.000+09:00"
-    },
     "GOOGL": {
       "price": 274.99,
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:56.000+09:00"
+    },
+    "KLAC": {
+      "price": 136.0,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:58:59.000+09:00"
     },
     "LLY": {
       "price": 1395.4267,
@@ -105,6 +100,11 @@
       "price": 491.59,
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:53.000+09:00"
+    },
+    "MU": {
+      "price": 615.21,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:59:59.000+09:00"
     },
     "NVDA": {
       "price": 151.23,
@@ -176,33 +176,33 @@
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:45.000+09:00"
     },
-    "AMAT": {
-      "price": 315.1411,
+    "ETHA": {
+      "price": 38.3,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:58:55.000+09:00"
+    },
+    "ASML": {
+      "price": 1313.8793,
+      "currency": "USD",
+      "timestamp": "2026-11-26T09:59:37.000+09:00"
+    },
+    "CAT": {
+      "price": 549.75,
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:55.000+09:00"
-    },
-    "MU": {
-      "price": 615.21,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:59:59.000+09:00"
     },
     "IBIT": {
       "price": 34.25,
       "currency": "USD",
       "timestamp": "2026-11-26T09:59:37.000+09:00"
-    },
-    "KLAC": {
-      "price": 136.0,
-      "currency": "USD",
-      "timestamp": "2026-11-26T09:58:59.000+09:00"
     }
   },
   "fx": {
     "usdkrw": {
-      "rate": 1347.38,
-      "mid_rate": 1346.88,
+      "rate": 1347.39,
+      "mid_rate": 1346.89,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-27T03:23:01+09:00"
+      "fetched_at": "2026-11-27T03:24:01+09:00"
     }
   }
 }
