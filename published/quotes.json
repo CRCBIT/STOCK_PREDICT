@@ -1,60 +1,60 @@
 {
-  "fetched_at": "2026-11-27T09:49:01+09:00",
+  "fetched_at": "2026-11-27T09:50:02+09:00",
   "quotes": {
     "000660": {
-      "price": 1041000.0,
+      "price": 1040000.0,
       "currency": "KRW",
-      "timestamp": "2026-11-27T09:49:00.000+09:00"
+      "timestamp": "2026-11-27T09:50:02.000+09:00"
     },
     "005380": {
       "price": 265500.0,
       "currency": "KRW",
-      "timestamp": "2026-11-27T09:49:00.000+09:00"
+      "timestamp": "2026-11-27T09:50:01.000+09:00"
     },
     "005930": {
-      "price": 171300.0,
+      "price": 170900.0,
       "currency": "KRW",
-      "timestamp": "2026-11-27T09:49:01.000+09:00"
+      "timestamp": "2026-11-27T09:50:02.000+09:00"
     },
     "006400": {
-      "price": 438500.0,
+      "price": 439000.0,
       "currency": "KRW",
-      "timestamp": "2026-11-27T09:49:00.000+09:00"
+      "timestamp": "2026-11-27T09:50:02.000+09:00"
     },
     "034020": {
-      "price": 42650.0,
+      "price": 42600.0,
       "currency": "KRW",
-      "timestamp": "2026-11-27T09:49:01.000+09:00"
+      "timestamp": "2026-11-27T09:50:01.000+09:00"
     },
     "042700": {
-      "price": 149700.0,
+      "price": 149600.0,
       "currency": "KRW",
-      "timestamp": "2026-11-27T09:49:01.000+09:00"
+      "timestamp": "2026-11-27T09:50:01.000+09:00"
     },
     "096770": {
-      "price": 94000.0,
+      "price": 94100.0,
       "currency": "KRW",
-      "timestamp": "2026-11-27T09:49:00.000+09:00"
+      "timestamp": "2026-11-27T09:50:02.000+09:00"
     },
     "247540": {
-      "price": 87500.0,
+      "price": 87400.0,
       "currency": "KRW",
-      "timestamp": "2026-11-27T09:49:00.000+09:00"
+      "timestamp": "2026-11-27T09:50:02.000+09:00"
     },
     "373220": {
       "price": 311500.0,
       "currency": "KRW",
-      "timestamp": "2026-11-27T09:49:00.000+09:00"
+      "timestamp": "2026-11-27T09:50:01.000+09:00"
     },
     "353200": {
-      "price": 69500.0,
+      "price": 69400.0,
       "currency": "KRW",
-      "timestamp": "2026-11-27T09:49:01.000+09:00"
+      "timestamp": "2026-11-27T09:50:02.000+09:00"
     },
     "403870": {
-      "price": 38300.0,
+      "price": 38200.0,
       "currency": "KRW",
-      "timestamp": "2026-11-27T09:49:00.000+09:00"
+      "timestamp": "2026-11-27T09:50:02.000+09:00"
     },
     "AAPL": {
       "price": 355.58,
@@ -76,23 +76,8 @@
       "currency": "USD",
       "timestamp": null
     },
-    "CAT": {
-      "price": 543.69,
-      "currency": "USD",
-      "timestamp": null
-    },
-    "ETHA": {
-      "price": 38.17,
-      "currency": "USD",
-      "timestamp": null
-    },
     "GOOGL": {
       "price": 273.1,
-      "currency": "USD",
-      "timestamp": null
-    },
-    "IBIT": {
-      "price": 34.07,
       "currency": "USD",
       "timestamp": null
     },
@@ -141,11 +126,6 @@
       "currency": "USD",
       "timestamp": null
     },
-    "PFE": {
-      "price": 28.46,
-      "currency": "USD",
-      "timestamp": null
-    },
     "PLTR": {
       "price": 163.59,
       "currency": "USD",
@@ -191,18 +171,38 @@
       "currency": "USD",
       "timestamp": null
     },
+    "ETHA": {
+      "price": 38.17,
+      "currency": "USD",
+      "timestamp": null
+    },
     "WDC": {
       "price": 272.45,
+      "currency": "USD",
+      "timestamp": null
+    },
+    "CAT": {
+      "price": 543.69,
+      "currency": "USD",
+      "timestamp": null
+    },
+    "PFE": {
+      "price": 28.46,
+      "currency": "USD",
+      "timestamp": null
+    },
+    "IBIT": {
+      "price": 34.07,
       "currency": "USD",
       "timestamp": null
     }
   },
   "fx": {
     "usdkrw": {
-      "rate": 1343.0,
-      "mid_rate": 1342.85,
+      "rate": 1343.1,
+      "mid_rate": 1342.95,
       "basis_point": 1.0,
-      "fetched_at": "2026-11-27T09:49:01+09:00"
+      "fetched_at": "2026-11-27T09:50:02+09:00"
     }
   }
 }
