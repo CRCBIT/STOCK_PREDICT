@@ -1,63 +1,68 @@
 {
-  "fetched_at": "2026-11-27T09:37:01+09:00",
+  "fetched_at": "2026-11-27T09:38:01+09:00",
   "quotes": {
     "000660": {
-      "price": 1033000.0,
+      "price": 1035000.0,
       "currency": "KRW",
-      "timestamp": "2026-11-27T09:37:01.000+09:00"
+      "timestamp": "2026-11-27T09:38:01.000+09:00"
     },
     "005380": {
-      "price": 263000.0,
+      "price": 263500.0,
       "currency": "KRW",
-      "timestamp": "2026-11-27T09:37:00.000+09:00"
+      "timestamp": "2026-11-27T09:37:59.000+09:00"
     },
     "005930": {
-      "price": 170600.0,
+      "price": 170900.0,
       "currency": "KRW",
-      "timestamp": "2026-11-27T09:37:01.000+09:00"
+      "timestamp": "2026-11-27T09:38:01.000+09:00"
     },
     "006400": {
-      "price": 437000.0,
+      "price": 438500.0,
       "currency": "KRW",
-      "timestamp": "2026-11-27T09:37:01.000+09:00"
+      "timestamp": "2026-11-27T09:38:01.000+09:00"
     },
     "034020": {
-      "price": 42150.0,
+      "price": 42250.0,
       "currency": "KRW",
-      "timestamp": "2026-11-27T09:36:59.000+09:00"
+      "timestamp": "2026-11-27T09:38:01.000+09:00"
     },
     "042700": {
-      "price": 148300.0,
+      "price": 148600.0,
       "currency": "KRW",
-      "timestamp": "2026-11-27T09:37:01.000+09:00"
+      "timestamp": "2026-11-27T09:38:01.000+09:00"
     },
     "096770": {
-      "price": 93600.0,
+      "price": 94100.0,
       "currency": "KRW",
-      "timestamp": "2026-11-27T09:37:00.000+09:00"
+      "timestamp": "2026-11-27T09:37:58.000+09:00"
     },
     "247540": {
-      "price": 86400.0,
+      "price": 86800.0,
       "currency": "KRW",
-      "timestamp": "2026-11-27T09:36:59.000+09:00"
+      "timestamp": "2026-11-27T09:38:01.000+09:00"
     },
     "373220": {
-      "price": 309500.0,
+      "price": 310500.0,
       "currency": "KRW",
-      "timestamp": "2026-11-27T09:36:58.000+09:00"
+      "timestamp": "2026-11-27T09:38:00.000+09:00"
     },
     "353200": {
-      "price": 68600.0,
+      "price": 69000.0,
       "currency": "KRW",
-      "timestamp": "2026-11-27T09:37:00.000+09:00"
+      "timestamp": "2026-11-27T09:38:01.000+09:00"
     },
     "403870": {
-      "price": 38450.0,
+      "price": 38500.0,
       "currency": "KRW",
-      "timestamp": "2026-11-27T09:36:59.000+09:00"
+      "timestamp": "2026-11-27T09:38:01.000+09:00"
     },
     "AAPL": {
       "price": 355.58,
+      "currency": "USD",
+      "timestamp": null
+    },
+    "AMAT": {
+      "price": 311.18,
       "currency": "USD",
       "timestamp": null
     },
@@ -86,18 +91,8 @@
       "currency": "USD",
       "timestamp": null
     },
-    "KLAC": {
-      "price": 134.2,
-      "currency": "USD",
-      "timestamp": null
-    },
     "LLY": {
       "price": 1392.22,
-      "currency": "USD",
-      "timestamp": null
-    },
-    "MRK": {
-      "price": 140.29,
       "currency": "USD",
       "timestamp": null
     },
@@ -128,6 +123,11 @@
     },
     "OKLO": {
       "price": 19.47,
+      "currency": "USD",
+      "timestamp": null
+    },
+    "PFE": {
+      "price": 28.46,
       "currency": "USD",
       "timestamp": null
     },
@@ -171,11 +171,6 @@
       "currency": "USD",
       "timestamp": null
     },
-    "VST": {
-      "price": 121.32,
-      "currency": "USD",
-      "timestamp": null
-    },
     "WDC": {
       "price": 272.45,
       "currency": "USD",
@@ -186,23 +181,28 @@
       "currency": "USD",
       "timestamp": null
     },
-    "AMAT": {
-      "price": 311.18,
+    "VST": {
+      "price": 121.32,
       "currency": "USD",
       "timestamp": null
     },
-    "PFE": {
-      "price": 28.46,
+    "MRK": {
+      "price": 140.29,
+      "currency": "USD",
+      "timestamp": null
+    },
+    "KLAC": {
+      "price": 134.2,
       "currency": "USD",
       "timestamp": null
     }
   },
   "fx": {
     "usdkrw": {
-      "rate": 1342.7,
-      "mid_rate": 1342.5,
+      "rate": 1343.1,
+      "mid_rate": 1342.95,
       "basis_point": 1.0,
-      "fetched_at": "2026-11-27T09:37:01+09:00"
+      "fetched_at": "2026-11-27T09:38:01+09:00"
     }
   }
 }
