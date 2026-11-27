@@ -1,63 +1,68 @@
 {
-  "fetched_at": "2026-11-27T09:51:01+09:00",
+  "fetched_at": "2026-11-27T09:52:02+09:00",
   "quotes": {
     "000660": {
-      "price": 1040000.0,
+      "price": 1039000.0,
       "currency": "KRW",
-      "timestamp": "2026-11-27T09:51:01.000+09:00"
+      "timestamp": "2026-11-27T09:52:02.000+09:00"
     },
     "005380": {
-      "price": 265000.0,
+      "price": 264000.0,
       "currency": "KRW",
-      "timestamp": "2026-11-27T09:51:00.000+09:00"
+      "timestamp": "2026-11-27T09:52:02.000+09:00"
     },
     "005930": {
-      "price": 171200.0,
+      "price": 171000.0,
       "currency": "KRW",
-      "timestamp": "2026-11-27T09:51:01.000+09:00"
+      "timestamp": "2026-11-27T09:52:02.000+09:00"
     },
     "006400": {
-      "price": 439000.0,
+      "price": 437000.0,
       "currency": "KRW",
-      "timestamp": "2026-11-27T09:50:59.000+09:00"
+      "timestamp": "2026-11-27T09:52:02.000+09:00"
     },
     "034020": {
-      "price": 42500.0,
+      "price": 42450.0,
       "currency": "KRW",
-      "timestamp": "2026-11-27T09:51:01.000+09:00"
+      "timestamp": "2026-11-27T09:52:02.000+09:00"
     },
     "042700": {
-      "price": 149600.0,
+      "price": 149300.0,
       "currency": "KRW",
-      "timestamp": "2026-11-27T09:51:00.000+09:00"
+      "timestamp": "2026-11-27T09:52:01.000+09:00"
     },
     "096770": {
-      "price": 94000.0,
+      "price": 93900.0,
       "currency": "KRW",
-      "timestamp": "2026-11-27T09:50:59.000+09:00"
+      "timestamp": "2026-11-27T09:52:01.000+09:00"
     },
     "247540": {
-      "price": 87200.0,
+      "price": 87000.0,
       "currency": "KRW",
-      "timestamp": "2026-11-27T09:51:01.000+09:00"
+      "timestamp": "2026-11-27T09:52:02.000+09:00"
     },
     "373220": {
-      "price": 311500.0,
+      "price": 311000.0,
       "currency": "KRW",
-      "timestamp": "2026-11-27T09:51:00.000+09:00"
+      "timestamp": "2026-11-27T09:51:58.000+09:00"
     },
     "353200": {
-      "price": 69400.0,
+      "price": 69100.0,
       "currency": "KRW",
-      "timestamp": "2026-11-27T09:51:01.000+09:00"
+      "timestamp": "2026-11-27T09:52:01.000+09:00"
     },
     "403870": {
-      "price": 38200.0,
+      "price": 38050.0,
       "currency": "KRW",
-      "timestamp": "2026-11-27T09:51:01.000+09:00"
+      "timestamp": "2026-11-27T09:52:02.000+09:00"
     },
     "AAPL": {
       "price": 355.58,
+      "currency": "USD",
+      "timestamp": null
+    },
+    "AMAT": {
+      "price": 311.18,
       "currency": "USD",
       "timestamp": null
     },
@@ -73,11 +78,6 @@
     },
     "CAT": {
       "price": 543.69,
-      "currency": "USD",
-      "timestamp": null
-    },
-    "ETHA": {
-      "price": 38.17,
       "currency": "USD",
       "timestamp": null
     },
@@ -98,11 +98,6 @@
     },
     "LLY": {
       "price": 1392.22,
-      "currency": "USD",
-      "timestamp": null
-    },
-    "MRK": {
-      "price": 140.29,
       "currency": "USD",
       "timestamp": null
     },
@@ -191,18 +186,23 @@
       "currency": "USD",
       "timestamp": null
     },
-    "AMAT": {
-      "price": 311.18,
+    "ETHA": {
+      "price": 38.17,
+      "currency": "USD",
+      "timestamp": null
+    },
+    "MRK": {
+      "price": 140.29,
       "currency": "USD",
       "timestamp": null
     }
   },
   "fx": {
     "usdkrw": {
-      "rate": 1343.0,
-      "mid_rate": 1342.8,
+      "rate": 1343.2,
+      "mid_rate": 1343.05,
       "basis_point": 1.0,
-      "fetched_at": "2026-11-27T09:51:01+09:00"
+      "fetched_at": "2026-11-27T09:52:02+09:00"
     }
   }
 }
