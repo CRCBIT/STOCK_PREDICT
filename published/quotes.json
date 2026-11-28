@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-28T16:25:02+09:00",
+  "fetched_at": "2026-11-28T16:26:01+09:00",
   "quotes": {
     "000660": {
       "price": 1111000.0,
@@ -91,6 +91,11 @@
       "currency": "USD",
       "timestamp": "2026-11-28T06:59:37.000+09:00"
     },
+    "MRK": {
+      "price": 142.5,
+      "currency": "USD",
+      "timestamp": "2026-11-28T06:59:18.000+09:00"
+    },
     "MRNA": {
       "price": 227.74,
       "currency": "USD",
@@ -116,6 +121,11 @@
       "currency": "USD",
       "timestamp": "2026-11-28T06:58:40.000+09:00"
     },
+    "OKLO": {
+      "price": 20.87,
+      "currency": "USD",
+      "timestamp": "2026-11-28T06:57:56.000+09:00"
+    },
     "PFE": {
       "price": 28.6,
       "currency": "USD",
@@ -130,11 +140,6 @@
       "price": 4.24,
       "currency": "USD",
       "timestamp": "2026-11-28T06:58:02.000+09:00"
-    },
-    "SMR": {
-      "price": 3.48,
-      "currency": "USD",
-      "timestamp": "2026-11-28T06:59:13.000+09:00"
     },
     "SNDK": {
       "price": 85.4,
@@ -171,20 +176,15 @@
       "currency": "USD",
       "timestamp": "2026-11-28T06:59:41.000+09:00"
     },
+    "SMR": {
+      "price": 3.48,
+      "currency": "USD",
+      "timestamp": "2026-11-28T06:59:13.000+09:00"
+    },
     "ETHA": {
       "price": 37.59,
       "currency": "USD",
       "timestamp": "2026-11-28T06:59:51.000+09:00"
-    },
-    "OKLO": {
-      "price": 20.87,
-      "currency": "USD",
-      "timestamp": "2026-11-28T06:57:56.000+09:00"
-    },
-    "MRK": {
-      "price": 142.5,
-      "currency": "USD",
-      "timestamp": "2026-11-28T06:59:18.000+09:00"
     },
     "CAT": {
       "price": 562.0,
@@ -202,7 +202,7 @@
       "rate": 1338.5,
       "mid_rate": 1338.0,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-28T16:25:02+09:00"
+      "fetched_at": "2026-11-28T16:26:01+09:00"
     }
   }
 }
