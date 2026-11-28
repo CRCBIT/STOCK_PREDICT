@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-28T22:54:01+09:00",
+  "fetched_at": "2026-11-28T22:55:02+09:00",
   "quotes": {
     "000660": {
       "price": 1111000.0,
@@ -71,11 +71,6 @@
       "currency": "USD",
       "timestamp": "2026-11-28T06:59:49.000+09:00"
     },
-    "ASML": {
-      "price": 1324.89,
-      "currency": "USD",
-      "timestamp": "2026-11-28T06:59:36.000+09:00"
-    },
     "GOOGL": {
       "price": 275.96,
       "currency": "USD",
@@ -86,10 +81,10 @@
       "currency": "USD",
       "timestamp": "2026-11-28T06:59:01.000+09:00"
     },
-    "MRK": {
-      "price": 142.5,
+    "LLY": {
+      "price": 1398.5,
       "currency": "USD",
-      "timestamp": "2026-11-28T06:59:18.000+09:00"
+      "timestamp": "2026-11-28T06:59:37.000+09:00"
     },
     "MRNA": {
       "price": 227.74,
@@ -166,6 +161,11 @@
       "currency": "USD",
       "timestamp": "2026-11-28T06:59:51.000+09:00"
     },
+    "VST": {
+      "price": 123.0,
+      "currency": "USD",
+      "timestamp": "2026-11-28T06:59:52.000+09:00"
+    },
     "WDC": {
       "price": 291.5,
       "currency": "USD",
@@ -176,15 +176,15 @@
       "currency": "USD",
       "timestamp": "2026-11-28T06:59:51.000+09:00"
     },
-    "VST": {
-      "price": 123.0,
+    "MRK": {
+      "price": 142.5,
       "currency": "USD",
-      "timestamp": "2026-11-28T06:59:52.000+09:00"
+      "timestamp": "2026-11-28T06:59:18.000+09:00"
     },
-    "LLY": {
-      "price": 1398.5,
+    "ASML": {
+      "price": 1324.89,
       "currency": "USD",
-      "timestamp": "2026-11-28T06:59:37.000+09:00"
+      "timestamp": "2026-11-28T06:59:36.000+09:00"
     },
     "CAT": {
       "price": 562.0,
@@ -202,7 +202,7 @@
       "rate": 1338.5,
       "mid_rate": 1338.0,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-28T22:54:01+09:00"
+      "fetched_at": "2026-11-28T22:55:02+09:00"
     }
   }
 }
