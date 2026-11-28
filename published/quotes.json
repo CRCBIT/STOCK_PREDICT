@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-28T14:10:02+09:00",
+  "fetched_at": "2026-11-28T14:11:02+09:00",
   "quotes": {
     "000660": {
       "price": 1111000.0,
@@ -70,6 +70,11 @@
       "price": 423.0,
       "currency": "USD",
       "timestamp": "2026-11-28T06:59:49.000+09:00"
+    },
+    "ASML": {
+      "price": 1324.89,
+      "currency": "USD",
+      "timestamp": "2026-11-28T06:59:36.000+09:00"
     },
     "CAT": {
       "price": 562.0,
@@ -176,20 +181,15 @@
       "currency": "USD",
       "timestamp": "2026-11-28T06:59:52.000+09:00"
     },
-    "ETHA": {
-      "price": 37.59,
-      "currency": "USD",
-      "timestamp": "2026-11-28T06:59:51.000+09:00"
-    },
-    "ASML": {
-      "price": 1324.89,
-      "currency": "USD",
-      "timestamp": "2026-11-28T06:59:36.000+09:00"
-    },
     "WDC": {
       "price": 291.5,
       "currency": "USD",
       "timestamp": "2026-11-28T06:59:41.000+09:00"
+    },
+    "ETHA": {
+      "price": 37.59,
+      "currency": "USD",
+      "timestamp": "2026-11-28T06:59:51.000+09:00"
     },
     "IBIT": {
       "price": 33.84,
@@ -202,7 +202,7 @@
       "rate": 1338.5,
       "mid_rate": 1338.0,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-28T14:10:02+09:00"
+      "fetched_at": "2026-11-28T14:11:02+09:00"
     }
   }
 }
