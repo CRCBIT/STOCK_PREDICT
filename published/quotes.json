@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-28T18:21:02+09:00",
+  "fetched_at": "2026-11-28T18:22:02+09:00",
   "quotes": {
     "000660": {
       "price": 1111000.0,
@@ -76,16 +76,6 @@
       "currency": "USD",
       "timestamp": "2026-11-28T06:59:36.000+09:00"
     },
-    "CAT": {
-      "price": 562.0,
-      "currency": "USD",
-      "timestamp": "2026-11-28T06:57:23.000+09:00"
-    },
-    "ETHA": {
-      "price": 37.59,
-      "currency": "USD",
-      "timestamp": "2026-11-28T06:59:51.000+09:00"
-    },
     "GOOGL": {
       "price": 275.96,
       "currency": "USD",
@@ -100,11 +90,6 @@
       "price": 140.0,
       "currency": "USD",
       "timestamp": "2026-11-28T06:59:01.000+09:00"
-    },
-    "LLY": {
-      "price": 1398.5,
-      "currency": "USD",
-      "timestamp": "2026-11-28T06:59:37.000+09:00"
     },
     "MRK": {
       "price": 142.5,
@@ -130,11 +115,6 @@
       "price": 149.8,
       "currency": "USD",
       "timestamp": "2026-11-28T06:59:59.000+09:00"
-    },
-    "NVO": {
-      "price": 41.07,
-      "currency": "USD",
-      "timestamp": "2026-11-28T06:58:40.000+09:00"
     },
     "OKLO": {
       "price": 20.87,
@@ -171,11 +151,6 @@
       "currency": "USD",
       "timestamp": "2026-11-28T06:59:58.000+09:00"
     },
-    "STX": {
-      "price": 507.11,
-      "currency": "USD",
-      "timestamp": "2026-11-28T06:59:28.000+09:00"
-    },
     "TSLA": {
       "price": 398.92,
       "currency": "USD",
@@ -195,6 +170,31 @@
       "price": 291.5,
       "currency": "USD",
       "timestamp": "2026-11-28T06:59:41.000+09:00"
+    },
+    "NVO": {
+      "price": 41.07,
+      "currency": "USD",
+      "timestamp": "2026-11-28T06:58:40.000+09:00"
+    },
+    "ETHA": {
+      "price": 37.59,
+      "currency": "USD",
+      "timestamp": "2026-11-28T06:59:51.000+09:00"
+    },
+    "STX": {
+      "price": 507.11,
+      "currency": "USD",
+      "timestamp": "2026-11-28T06:59:28.000+09:00"
+    },
+    "LLY": {
+      "price": 1398.5,
+      "currency": "USD",
+      "timestamp": "2026-11-28T06:59:37.000+09:00"
+    },
+    "CAT": {
+      "price": 562.0,
+      "currency": "USD",
+      "timestamp": "2026-11-28T06:57:23.000+09:00"
     }
   },
   "fx": {
@@ -202,7 +202,7 @@
       "rate": 1338.5,
       "mid_rate": 1338.0,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-28T18:21:02+09:00"
+      "fetched_at": "2026-11-28T18:22:02+09:00"
     }
   }
 }
