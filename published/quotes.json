@@ -1,5 +1,5 @@
 {
-  "fetched_at": "2026-11-28T10:36:01+09:00",
+  "fetched_at": "2026-11-28T10:37:01+09:00",
   "quotes": {
     "000660": {
       "price": 1111000.0,
@@ -86,6 +86,11 @@
       "currency": "USD",
       "timestamp": "2026-11-28T06:59:51.000+09:00"
     },
+    "GOOGL": {
+      "price": 275.96,
+      "currency": "USD",
+      "timestamp": "2026-11-28T06:59:55.000+09:00"
+    },
     "IBIT": {
       "price": 33.84,
       "currency": "USD",
@@ -130,6 +135,11 @@
       "price": 41.07,
       "currency": "USD",
       "timestamp": "2026-11-28T06:58:40.000+09:00"
+    },
+    "OKLO": {
+      "price": 20.87,
+      "currency": "USD",
+      "timestamp": "2026-11-28T06:57:56.000+09:00"
     },
     "PFE": {
       "price": 28.6,
@@ -185,16 +195,6 @@
       "price": 291.5,
       "currency": "USD",
       "timestamp": "2026-11-28T06:59:41.000+09:00"
-    },
-    "GOOGL": {
-      "price": 275.96,
-      "currency": "USD",
-      "timestamp": "2026-11-28T06:59:55.000+09:00"
-    },
-    "OKLO": {
-      "price": 20.87,
-      "currency": "USD",
-      "timestamp": "2026-11-28T06:57:56.000+09:00"
     }
   },
   "fx": {
@@ -202,7 +202,7 @@
       "rate": 1338.5,
       "mid_rate": 1338.0,
       "basis_point": 4.0,
-      "fetched_at": "2026-11-28T10:36:01+09:00"
+      "fetched_at": "2026-11-28T10:37:01+09:00"
     }
   }
 }
